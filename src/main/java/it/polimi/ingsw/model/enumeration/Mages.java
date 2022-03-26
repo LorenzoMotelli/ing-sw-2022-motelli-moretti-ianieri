@@ -1,9 +1,8 @@
 package it.polimi.ingsw.model.enumeration;
 
-public class Mages {
-
-    public Mages mage1;
-    public Mages mage2;
-    public Mages mage3;
-    public Mages mage4;
+public enum Mages {
+    MAGE1,
+    MAGE2,
+    MAGE3,
+    MAGE4
 }
