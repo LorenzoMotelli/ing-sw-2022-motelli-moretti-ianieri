@@ -7,13 +7,13 @@ import java.util.List;
 
 public class Island {
 
-    private List<Student> students;
+    private List<Student> students = new ArrayList<Student>();
 
-    private List<Tower> playerTower;
+    private List<Tower> playerTower = new ArrayList<Tower>();
 
-    private boolean motherNature;
+    private boolean motherNature = false;
 
-    private int prohibitionCard;
+    private int prohibitionCard = 0;
 
     public List<Student> getStudents() {
         return students;
@@ -77,6 +77,10 @@ public class Island {
         }
 
         return yellowStudents;
+    }
+
+    public void addStudents(List<Student> studentsToAdd){
+        getStudents().addAll(studentsToAdd);
     }
 
 }
