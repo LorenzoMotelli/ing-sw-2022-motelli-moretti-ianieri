@@ -14,7 +14,14 @@ public class HallTest {
     public void setUp(){
         hall = new Hall();
         hall.setHallColor(StudentColor.BLUE);
-        hall.getHallColor();
+    }
+
+    @Test //ensures that exists the table hall with references to students
+    public void getTableHall_ShouldReturnStudentsList(){
+        assertNotNull(hall.getTableHall());
+        for(int i = 0; i< 10; i++){
+            assertNotNull(hall.getTableHall()[i]);
+        }
     }
 
     @Test

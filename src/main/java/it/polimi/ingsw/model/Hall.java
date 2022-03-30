@@ -6,9 +6,10 @@ import it.polimi.ingsw.model.enumeration.StudentColor;
 public class Hall {
 
     private StudentColor hallColor;
-    private Student[] tableHall = new Student[10];
+    private Student[] tableHall;
 
     public Hall(){
+        tableHall = new Student[10];
         for(int i = 0; i < 10; i++){
             getTableHall()[i] = new Student();
         }

@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Table {
-    private List<Island> islands = new ArrayList<>();
-    private List<Cloud> clouds = new ArrayList<>();
-    private List<Student> studentBag = new ArrayList<>();
+    private List<Island> islands;
+    private List<Cloud> clouds;
+    private List<Student> studentBag;
+    private List<Professor> professors;
     private int coins = 20;
-    private Character[] playableCharacters = new Character[3];
+    private Character[] playableCharacters;
+    private final int MAX_STUDENT = 26;
 
     /**
      * new constructor, initialize the main variables
@@ -21,42 +23,61 @@ public class Table {
      */
     public Table(int numberOfPlayers, Variant variantOfTheGame, Character[] charactersOfTheGame){
         //creation of the 12 islands of the game
+        islands = new ArrayList<>();
         for(int i = 0; i < 12; i++){
-            Island island = new Island();
-            getIslands().add(island);
+            islands.add(new Island());
         }
-        //if it is an expert game there are characters and coins
-        if(variantOfTheGame.equals(Variant.EXPERT)){
-            setCoins(20-numberOfPlayers);
-            for(int i = 0; i < 3; i++){
-                getPlayableCharacters()[i] = charactersOfTheGame[i];
-            }
+        //creation of the clouds based on the number of player
+        clouds = new ArrayList<>();
+        for(int i = 0; i < numberOfPlayers; i++){
+            clouds.add(new Cloud());
         }
         //creation of the 130 students, 26 for each of one of the 5 color in the game
-        for(int i = 0; i < 26; i++){
+        studentBag = new ArrayList<>();
+        //26 blue students
+        for(int i = 0; i < MAX_STUDENT; i++){
             Student blueStudent = new Student();
             blueStudent.setColor(StudentColor.BLUE);
             studentBag.add(blueStudent);
         }
-        for(int i = 0; i < 26; i++){
+        //26 green students
+        for(int i = 0; i < MAX_STUDENT; i++){
             Student greenStudent = new Student();
             greenStudent.setColor(StudentColor.GREEN);
             studentBag.add(greenStudent);
         }
-        for(int i = 0; i < 26; i++){
+        //26 pink students
+        for(int i = 0; i < MAX_STUDENT; i++){
             Student pinkStudent = new Student();
             pinkStudent.setColor(StudentColor.PINK);
             studentBag.add(pinkStudent);
         }
-        for(int i = 0; i < 26; i++){
+        //26 red students
+        for(int i = 0; i < MAX_STUDENT; i++){
             Student redStudent = new Student();
             redStudent.setColor(StudentColor.RED);
             studentBag.add(redStudent);
         }
-        for(int i = 0; i < 26; i++){
+        //26 yellow students
+        for(int i = 0; i < MAX_STUDENT; i++){
             Student yellowStudent = new Student();
             yellowStudent.setColor(StudentColor.YELLOW);
             studentBag.add(yellowStudent);
+        }
+        //creation of the 5 professors
+        professors = new ArrayList<>();
+        professors.add(0,new Professor(StudentColor.BLUE));
+        professors.add(1,new Professor(StudentColor.GREEN));
+        professors.add(2,new Professor(StudentColor.PINK));
+        professors.add(3,new Professor(StudentColor.RED));
+        professors.add(4,new Professor(StudentColor.YELLOW));
+        //if it is an expert game there are characters and coins
+        if(variantOfTheGame.equals(Variant.EXPERT)){
+            setCoins(20-numberOfPlayers);
+            playableCharacters = new Character[3];
+            for(int i = 0; i < 3; i++){
+                playableCharacters[i] = charactersOfTheGame[i];
+            }
         }
     }
 
@@ -70,6 +91,14 @@ public class Table {
 
     public List<Cloud> getClouds() {
         return clouds;
+    }
+
+    public List<Student> getStudentBag() {
+        return studentBag;
+    }
+
+    public List<Professor> getProfessors() {
+        return professors;
     }
 
     public int getCoins() {

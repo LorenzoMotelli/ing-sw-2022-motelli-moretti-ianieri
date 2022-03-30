@@ -25,25 +25,40 @@ public class SchoolTest {
         school.getEntranceStudent().add(blueStudent);
         school.getEntranceStudent().add(pinkStudent);
 
-        //placement of a blue and pink student
+        //placement of a blue student
         school.placeStudentInHall(blueStudent);
-        school.placeStudentInHall(pinkStudent);
     }
 
     @Test
-    public void placeStudentInHall_Student_ShouldPlaceBlueStudentAndRemoveOneFromTheEntrance(){
-        assertEquals(2, school.getEntranceStudent().size());
+    public void getHall_ShouldReturnHall(){
+        assertNotNull(school.getSchoolHall());
+        assertEquals(StudentColor.BLUE, school.getSchoolHall()[0].getHallColor());
+        assertEquals(StudentColor.GREEN, school.getSchoolHall()[1].getHallColor());
+        assertEquals(StudentColor.PINK, school.getSchoolHall()[2].getHallColor());
+        assertEquals(StudentColor.RED, school.getSchoolHall()[3].getHallColor());
+        assertEquals(StudentColor.YELLOW, school.getSchoolHall()[4].getHallColor());
+    }
+
+    @Test
+    public void getSchoolProfessor_ShouldReturnProfessors(){
+        assertNotNull(school.getSchoolProfessor());
+    }
+
+    @Test
+    public void getSchoolEntranceStudent_ShouldReturnStudents(){
+        assertNotNull(school.getEntranceStudent());
+    }
+
+    @Test
+    public void getSchoolTower_ShouldReturnTowers(){
+        assertNotNull(school.getPlayersTowers());
+    }
+
+    @Test
+    public void placeStudentInHall_Student(){
         //the student is placed
         assertNotNull(school.getSchoolHall()[0].getTableHall()[0]);
         //the student is the correct color
         assertEquals(StudentColor.BLUE, school.getSchoolHall()[0].getTableHall()[0].getColor());
-        //the student is removed from the entrance
-        assertEquals(1, school.getEntranceStudent().size());
-        //the student is placed
-        assertNotNull(school.getSchoolHall()[2].getTableHall()[0]);
-        //the student is the correct color
-        assertEquals(StudentColor.BLUE, school.getSchoolHall()[2].getTableHall()[0].getColor());
-        //the student is removed from the entrance
-        assertEquals(0, school.getEntranceStudent().size());
     }
 }

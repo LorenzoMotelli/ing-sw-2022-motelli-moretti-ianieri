@@ -4,18 +4,19 @@ import it.polimi.ingsw.model.enumeration.StudentColor;
 
 import java.util.*;
 
-//TODO add the method giveCoin()
 public class School {
 
-    private Hall[] schoolHall = new Hall[5];
-    private List<Professor> schoolProfessor = new ArrayList<>();
-    private List<Student> entranceStudent = new ArrayList<>();
-    private List<Tower> playersTowers = new ArrayList<>();
+    private Hall[] schoolHall;
+    private List<Professor> schoolProfessor;
+    private List<Student> entranceStudent;
+    private List<Tower> playersTowers;
 
     /**
      * Initialize the halls in the school in order BLUE[0], GREEN[1], PINK[2], RED[3], YELLOW[4]
      */
-    public School(){
+    public School(/*int numOfPlayer, int playerInitialized*/){
+        //initialization of the halls
+        schoolHall = new Hall[5];
         for(int i = 0; i < 5; i++){
             schoolHall[i] = new Hall();
         }
@@ -24,6 +25,58 @@ public class School {
         getSchoolHall()[2].setHallColor(StudentColor.PINK);
         getSchoolHall()[3].setHallColor(StudentColor.RED);
         getSchoolHall()[4].setHallColor(StudentColor.YELLOW);
+        //initialization of the 5 professors (everyone is null)
+        schoolProfessor = new ArrayList<>();
+        //initialization of the students in the entrance (no students when the game is created)
+        entranceStudent = new ArrayList<>();
+        //initialization of the towers
+        playersTowers = new ArrayList<>();
+        /*
+        switch(numberOfPlayer){
+            case 2:{
+                if(1 == playerInitialized){
+                    for(int i = 0; i < 8; i++){
+                        playersTower[i] = new Tower(WHITE);
+                    }
+                }
+                if(2 == playerInitialized){
+                    for(int i = 0; i < 8; i++){
+                        playersTower[i] = new Tower(BLACK);
+                    }
+                }
+            }
+            case 3:{
+                if(1 == playerInitialized){
+                    for(int i = 0; i < 6; i++){
+                        playersTower[i] = new Tower(WHITE);
+                    }
+                }
+                if(2 == playerInitialized){
+                    for(int i = 0; i < 6; i++){
+                        playersTower[i] = new Tower(BLACK);
+                    }
+                }
+                if(3 == playerInitialized){
+                    for(int i = 0; i < 6; i++){
+                        playersTower[i] = new Tower(WHITE);
+                    }
+                }
+            }
+            case 4:{
+                //only two player has the towers
+                if(1 == playerInitialized){
+                    for(int i = 0; i < 8; i++){
+                        playersTower[i] = new Tower(WHITE);
+                    }
+                }
+                if(2 == playerInitialized){
+                    for(int i = 0; i < 8; i++){
+                        playersTower[i] = new Tower(BLACK);
+                    }
+                }
+            }
+        }
+        */
     }
 
     public Hall[] getSchoolHall() {
@@ -93,34 +146,23 @@ public class School {
      * @param studentToPlace the student that the players select to place in the hall
      */
     public void placeStudentInHall(Student studentToPlace){
-        System.out.println("Students in entrance are: ");
-        for(Student s: getEntranceStudent()){
-            System.out.println("Student " + s.getColor());
-        }
-        System.out.println();
         for(int i = 0; i < 5; i++){
             //searching the right hall
             if(getSchoolHall()[i].getHallColor().equals(studentToPlace.getColor())){
                 //if it is not full
-                System.out.println("The school hall is " + getSchoolHall()[i].getHallColor());
                 if(getSchoolHall()[i].getTableHall()[9] != null){
                     //finding the first free spot
                     for(int k = 0; k < 10; k++){
                         if(getSchoolHall()[i].getTableHall()[k].getColor() == null){
-                            System.out.println("The table spot have index: " + k);
                             getSchoolHall()[i].getTableHall()[k] = studentToPlace;
                             getEntranceStudent().remove(studentToPlace);
-                            /*
-                            if(k == 2 || k == 5 || k == 8){
-                                giveCoin();
-                            }
-                            */
+                            break;
                         }
                     }
                 }
                 break;
             }
         }
-        System.out.println("Method end");
     }
+
 }

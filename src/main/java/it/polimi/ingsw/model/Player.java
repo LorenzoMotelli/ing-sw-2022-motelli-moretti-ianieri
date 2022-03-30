@@ -1,19 +1,37 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.cards.AssistantCard;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private School schoolDashboard = new School();
-    private List<AssistantCard> assistantDeck = new ArrayList<>();
+    private School schoolDashboard;
+    private AssistantCard[] assistantDeck ;
     private int playerCoins = 1;
     private int playerWeight = 0;
+    //private TowerColor playerTeam = null;
 
     /**
      * new constructor to initialize the player
      */
-    public Player(){
+    public Player(/*int numOfPlayer, int playerInitialized*/){
+        assistantDeck = new AssistantCard[10];
+        for(int i = 0; i< 10; i++){
+            getAssistantDeck()[i] = new AssistantCard(i);
+        }
+        /*
+        if(4 == numOfPlayer){
+            if(1 == playerInitialized || 3 == playerInitialized){
+                setPlayerTeam(WHITE);
+            }
+            if(2 == playerInitialized || 4 == playerInitialized){
+                setPlayerTeam(BLACK);
+            }
 
+        }
+        */
+        schoolDashboard = new School(/*int numOfPlayer, int playerInitialized*/);
     }
 
     public int getPlayerCoins() {
@@ -24,7 +42,7 @@ public class Player {
         this.playerCoins = playerCoins;
     }
 
-    public List<AssistantCard> getAssistantDeck() {
+    public AssistantCard[] getAssistantDeck() {
         return assistantDeck;
     }
 
@@ -34,6 +52,10 @@ public class Player {
 
     public void setPlayerWeight(int playerWeight) {
         this.playerWeight = playerWeight;
+    }
+
+    public School getSchoolDashboard() {
+        return schoolDashboard;
     }
 
     /**
