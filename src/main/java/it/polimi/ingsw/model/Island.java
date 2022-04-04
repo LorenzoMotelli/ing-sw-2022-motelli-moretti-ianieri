@@ -7,16 +7,25 @@ import java.util.List;
 
 public class Island {
 
-    private List<Student> students = new ArrayList<Student>();
+    private List<Student> students;
+    private List<Tower> playerTower;
+    private boolean motherNature;
+    private int prohibitionCard;
+    //private int influence = 0;
 
-    private List<Tower> playerTower = new ArrayList<Tower>();
-
-    private boolean motherNature = false;
-
-    private int prohibitionCard = 0;
+    public Island(){
+        students = new ArrayList<>();
+        playerTower = new ArrayList<>();
+        motherNature = false;
+        prohibitionCard = 0;
+    }
 
     public List<Student> getStudents() {
         return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 
     public List<Student> getBlueStudents() {
@@ -79,8 +88,27 @@ public class Island {
         return yellowStudents;
     }
 
+    public List<Tower> getPlayerTower() {
+        return playerTower;
+    }
+
+    public void setPlayerTower(List<Tower> playerTower) {
+        this.playerTower = playerTower;
+    }
+
+    /*
+    public int getInfluence() {
+        return influence;
+    }
+
+    public void setInfluence(int influence) {
+        this.influence = influence;
+    }
+     */
+
+    //maybe the parameter is just Student and not a List of Students, add one student at time
     public void addStudents(List<Student> studentsToAdd){
-        getStudents().addAll(studentsToAdd);
+        students.addAll(studentsToAdd);
     }
 
 }

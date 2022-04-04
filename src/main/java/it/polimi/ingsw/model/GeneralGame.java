@@ -8,11 +8,17 @@ import java.util.List;
 
 public class GeneralGame {
 
-    private List<Player> gamingPlayers;
+    //list of the players in the game
+    private Player[] gamingPlayers;
+    //the phase in which the player plays
     private Phases gamePhase;
+    //the variant selected
     private Variant variant = Variant.NORMAL;
+    //all the possible characters in the game
     private Character[] allCharacters;
+    //the table with clouds, islands, students...
     private Table gamingTable;
+    //the number of turn for understand the
 
     /**
      * when the game is created the first player has to select:
@@ -31,9 +37,9 @@ public class GeneralGame {
             //selection of the 3 character that will be in the game
         }
          */
-        gamingPlayers = new ArrayList<>();
+        gamingPlayers = new Player[numberOfPlayer];
         for(int i = 0; i < numberOfPlayer; i++){
-            gamingPlayers.add(new Player(/*numberOfPlayer, i*/));
+            gamingPlayers[i] = new Player(numberOfPlayer, i+1);
         }
         gamingTable = new Table(numberOfPlayer, variantSelected, charactersToPlay);
     }
@@ -46,7 +52,7 @@ public class GeneralGame {
         return variant;
     }
 
-    public List<Player> getGamingPlayers() {
+    public Player[] getGamingPlayers() {
         return gamingPlayers;
     }
 
@@ -58,7 +64,7 @@ public class GeneralGame {
         return allCharacters;
     }
 
-    public void setGamingPlayers(List<Player> gamingPlayers) {
+    public void setGamingPlayers(Player[] gamingPlayers) {
         this.gamingPlayers = gamingPlayers;
     }
 
@@ -73,5 +79,9 @@ public class GeneralGame {
     public void setAllCharacters(Character[] allCharacters) {
         this.allCharacters = allCharacters;
     }
+
+    /*public Player currentPlayer(){
+
+    }*/
 
 }

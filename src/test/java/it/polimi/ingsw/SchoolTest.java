@@ -15,7 +15,7 @@ public class SchoolTest {
 
     @BeforeEach
     public void setUp(){
-        school = new School(); //creation of the test school
+        school = new School(1,1); //creation of the test school
         //creation of two different students
         Student blueStudent = new Student();
         blueStudent.setColor(StudentColor.BLUE);

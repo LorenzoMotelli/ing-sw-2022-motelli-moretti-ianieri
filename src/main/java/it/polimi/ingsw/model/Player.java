@@ -1,37 +1,41 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.AssistantCard;
+import it.polimi.ingsw.model.enumeration.TowerColor;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 
 public class Player {
     private School schoolDashboard;
     private AssistantCard[] assistantDeck ;
     private int playerCoins = 1;
     private int playerWeight = 0;
-    //private TowerColor playerTeam = null;
+    private int playerInfluence = 0;
+    private TowerColor playerTeam = null;
 
     /**
      * new constructor to initialize the player
      */
-    public Player(/*int numOfPlayer, int playerInitialized*/){
+    public Player(int numOfPlayer, int playerToInitialize){
         assistantDeck = new AssistantCard[10];
         for(int i = 0; i< 10; i++){
             getAssistantDeck()[i] = new AssistantCard(i);
         }
         /*
         if(4 == numOfPlayer){
-            if(1 == playerInitialized || 3 == playerInitialized){
+            if(1 == playerToInitialize || 3 == playerToInitialize){
                 setPlayerTeam(WHITE);
             }
-            if(2 == playerInitialized || 4 == playerInitialized){
+            if(2 == playerToInitialize || 4 == playerToInitialize){
                 setPlayerTeam(BLACK);
             }
 
         }
-        */
-        schoolDashboard = new School(/*int numOfPlayer, int playerInitialized*/);
+         */
+        schoolDashboard = new School(numOfPlayer, playerToInitialize);
     }
 
     public int getPlayerCoins() {
@@ -56,6 +60,22 @@ public class Player {
 
     public School getSchoolDashboard() {
         return schoolDashboard;
+    }
+
+    public int getPlayerInfluence() {
+        return playerInfluence;
+    }
+
+    public void setPlayerInfluence(int playerInfluence) {
+        this.playerInfluence = playerInfluence;
+    }
+
+    public TowerColor getPlayerTeam() {
+        return playerTeam;
+    }
+
+    public void setPlayerTeam(TowerColor playerTeam) {
+        this.playerTeam = playerTeam;
     }
 
     /**

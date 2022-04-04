@@ -25,6 +25,5 @@ public class GeneralGameTest {
     @Test
     public void getPlayers_ShouldReturnPlayers(){
         assertNotNull(generalGame.getGamingPlayers());
-        assertEquals(2, generalGame.getGamingPlayers().size());
     }
 }
