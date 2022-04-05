@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.enumeration.StudentColor;
+import it.polimi.ingsw.model.enumeration.PawnColor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class Island {
 
         for(Student s:getStudents())
         {
-            if(s.getColor().equals(StudentColor.BLUE))
+            if(s.getColor().equals(PawnColor.BLUE))
             {  blueStudents.add(s);  }
         }
 
@@ -45,7 +45,7 @@ public class Island {
 
         for(Student s:getStudents())
         {
-            if(s.getColor().equals(StudentColor.GREEN))
+            if(s.getColor().equals(PawnColor.GREEN))
             {  greenStudents.add(s);  }
         }
 
@@ -57,7 +57,7 @@ public class Island {
 
         for(Student s:getStudents())
         {
-            if(s.getColor().equals(StudentColor.PINK))
+            if(s.getColor().equals(PawnColor.PINK))
             {  pinkStudents.add(s);  }
         }
 
@@ -69,7 +69,7 @@ public class Island {
 
         for(Student s:getStudents())
         {
-            if(s.getColor().equals(StudentColor.RED))
+            if(s.getColor().equals(PawnColor.RED))
             {  redStudents.add(s);  }
         }
 
@@ -81,7 +81,7 @@ public class Island {
 
         for(Student s:getStudents())
         {
-            if(s.getColor().equals(StudentColor.YELLOW))
+            if(s.getColor().equals(PawnColor.YELLOW))
             {  yellowStudents.add(s);  }
         }
 
@@ -94,6 +94,14 @@ public class Island {
 
     public void setPlayerTower(List<Tower> playerTower) {
         this.playerTower = playerTower;
+    }
+
+    public boolean hasMotherNature() {
+        return motherNature;
+    }
+
+    public void setMotherNature(boolean motherNature) {
+        this.motherNature = motherNature;
     }
 
     /*

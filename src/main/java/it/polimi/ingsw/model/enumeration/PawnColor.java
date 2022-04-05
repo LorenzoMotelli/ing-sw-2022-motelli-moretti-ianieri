@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.enumeration;
 
-public enum StudentColor {
+public enum PawnColor {
     BLUE,
     GREEN,
     PINK,

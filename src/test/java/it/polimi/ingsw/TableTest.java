@@ -1,17 +1,15 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.enumeration.StudentColor;
-import it.polimi.ingsw.model.enumeration.TowerColor;
+import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.Variant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import static it.polimi.ingsw.model.enumeration.StudentColor.*;
+import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,10 +31,33 @@ public class TableTest {
         yellowStudent.setColor(YELLOW);
     }
 
+    //TODO review of the test phase because of the change in the creation of the table
+
     @Test
     public void getIslands(){
         assertNotNull(table.getIslands());
         assertEquals(12, table.getIslands().size());
+        Island islandWithNoStudents = new Island();
+        for(int i = 0; i < 12; i++){
+           if(table.getIslands().get(i).equals(table.getIslandWithMotherNature())) {
+               if(i < 6){
+                   islandWithNoStudents = table.getIslands().get(i+6);
+               }
+               else{
+                   islandWithNoStudents = table.getIslands().get(i-6);
+               }
+               break;
+           }
+        }
+        for(Island island : table.getIslands()){
+            if(island.equals(table.getIslandWithMotherNature()) || island.equals(islandWithNoStudents)){
+                assertEquals(0, island.getStudents().size());
+            }
+            else{
+                assertEquals(2, island.getStudents().size());
+            }
+        }
+        assertEquals(110, table.getStudentBag().size());
     }
 
     @Test
@@ -89,11 +110,11 @@ public class TableTest {
     public void getProfessor_ShouldReturnProfessors(){
         assertNotNull(table.getProfessors());
         assertEquals(5, table.getProfessors().size());
-        assertEquals(BLUE, table.getProfessors().get(0).getProfessorColor());
-        assertEquals(StudentColor.GREEN, table.getProfessors().get(1).getProfessorColor());
-        assertEquals(StudentColor.PINK, table.getProfessors().get(2).getProfessorColor());
-        assertEquals(StudentColor.RED, table.getProfessors().get(3).getProfessorColor());
-        assertEquals(StudentColor.YELLOW, table.getProfessors().get(4).getProfessorColor());
+        assertEquals(BLUE, table.getProfessors().get(0).getColor());
+        assertEquals(PawnColor.GREEN, table.getProfessors().get(1).getColor());
+        assertEquals(PawnColor.PINK, table.getProfessors().get(2).getColor());
+        assertEquals(PawnColor.RED, table.getProfessors().get(3).getColor());
+        assertEquals(PawnColor.YELLOW, table.getProfessors().get(4).getColor());
     }
 
     @Test

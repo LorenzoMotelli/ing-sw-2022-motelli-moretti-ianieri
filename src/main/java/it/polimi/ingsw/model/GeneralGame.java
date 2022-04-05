@@ -18,7 +18,7 @@ public class GeneralGame {
     private Character[] allCharacters;
     //the table with clouds, islands, students...
     private Table gamingTable;
-    //the number of turn for understand the
+    private boolean teamGame = false;
 
     /**
      * when the game is created the first player has to select:
@@ -41,8 +41,13 @@ public class GeneralGame {
         for(int i = 0; i < numberOfPlayer; i++){
             gamingPlayers[i] = new Player(numberOfPlayer, i+1);
         }
+        if(4 == numberOfPlayer){
+            teamGame = true;
+        }
         gamingTable = new Table(numberOfPlayer, variantSelected, charactersToPlay);
     }
+
+    //---------------- GETTERS AND SETTERS --------------\\
 
     public Phases getGamePhase() {
         return gamePhase;

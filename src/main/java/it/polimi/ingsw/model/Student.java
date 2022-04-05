@@ -1,15 +1,7 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.enumeration.StudentColor;
+import it.polimi.ingsw.model.enumeration.PawnColor;
 
-public class Student {
-    private StudentColor color;
+public class Student extends Pawn {
 
-    public StudentColor getColor() {
-        return color;
-    }
-
-    public void setColor(StudentColor color) {
-        this.color = color;
-    }
 }

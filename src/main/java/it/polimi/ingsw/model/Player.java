@@ -22,7 +22,7 @@ public class Player {
     public Player(int numOfPlayer, int playerToInitialize){
         assistantDeck = new AssistantCard[10];
         for(int i = 0; i< 10; i++){
-            getAssistantDeck()[i] = new AssistantCard(i);
+            assistantDeck[i] = new AssistantCard(i/*, mage*/);
         }
         /*
         if(4 == numOfPlayer){
@@ -37,6 +37,8 @@ public class Player {
          */
         schoolDashboard = new School(numOfPlayer, playerToInitialize);
     }
+
+    //---------------- GETTERS AND SETTERS --------------\\
 
     public int getPlayerCoins() {
         return playerCoins;
@@ -86,16 +88,32 @@ public class Player {
         setPlayerCoins(getPlayerCoins()- costCoin);
     }
 
+    //----------------- MANAGEMENT OF THE SCHOOL --------------------\\
+
     /**
-     * use the assistant card selected
-     * @param assistantSelected the assistant that the player has selected
+     * place a student from the entrance into the correct hall
+     * @param studentToPlace the student selected from the entrance
      */
-    public void useAssistantCard(AssistantCard assistantSelected){
-        for(AssistantCard assistantCard: getAssistantDeck()){
-            if(assistantCard.equals(assistantSelected)){
-                setPlayerWeight(assistantCard.getTurnHeaviness());
-                assistantCard.setAvailable(false);
+    public void placeStudentInHall(Student studentToPlace){
+        schoolDashboard.placeStudentInHall(studentToPlace);
+        schoolDashboard.removeStudentFromEntrance(studentToPlace);
+    }
+
+    //----------------- MANAGEMENT OF THE ASSISTANT DECK ---------------\\
+
+    /**
+     * use the assistant card to change the player weight for the next turn
+     * remove the assistant card from the deck
+     * @param assistant the assistant card selected by the player
+     */
+    public /*int*/ void useAssistant(AssistantCard assistant){
+        playerWeight = assistant.getTurnHeaviness();
+        for(int i = 0; i < 10; i++){
+            if(assistantDeck[i].equals(assistant)){
+                assistantDeck[i] = null;
+                break;
             }
         }
+        //return assistant.getMovementMotherNature();
     }
 }

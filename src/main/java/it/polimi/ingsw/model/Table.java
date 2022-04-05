@@ -1,14 +1,15 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.enumeration.StudentColor;
+import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.model.enumeration.Variant;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
-import static it.polimi.ingsw.model.enumeration.StudentColor.*;
+import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 
 public class Table {
     private final int MAX_STUDENT = 26;
@@ -78,6 +79,24 @@ public class Table {
         professors.add(2,new Professor(PINK));
         professors.add(3,new Professor(RED));
         professors.add(4,new Professor(YELLOW));
+        /*
+        MAYBE MOVE THIS INTO A NEW METHOD
+        Random random = new Random();
+        int randIndex = random.nextInt(12);
+        islands.get(randIndex).setMotherNature(true);
+        int indexSpecularIsland = 0;
+        if(randIndex < 6){
+            indexSpecularIsland = randIndex + 6;
+        }
+        else{
+            indexSpecularIsland = randIndex - 6;
+        }
+        for(Island island: islands){
+            if(!(island.hasMotherNature()) && !(island.equals(islands.get(indexSpecularIsland)))){
+                island.addStudents(randomStudentFromBag());
+            }
+        }
+         */
         //if it is an expert game there are characters and coins
         if(variantOfTheGame.equals(Variant.EXPERT)){
             setCoins(20-numberOfPlayers);
@@ -87,6 +106,22 @@ public class Table {
             }
         }
     }
+
+    /**
+     * select two random students from the bag in which there are all the 130 students
+     * and remove them from the bag
+     * @return the two students randomly selected
+     */
+    public List<Student> randomStudentFromBag(){
+        List<Student> studentsList = new ArrayList<>();
+        Random random = new Random();
+        studentsList.add(studentBag.get(random.nextInt(studentBag.size())));
+        studentsList.add(studentBag.get(random.nextInt(studentBag.size())));
+        studentBag.removeAll(studentsList);
+        return studentsList;
+    }
+
+    //---------------- GETTERS AND SETTERS --------------\\
 
     public List<Island> getIslands() {
         return islands;
@@ -108,6 +143,15 @@ public class Table {
         return professors;
     }
 
+    public Island getIslandWithMotherNature(){
+        for(Island island : islands){
+            if(island.hasMotherNature()){
+                return island;
+            }
+        }
+        return islands.get(0);
+    }
+
     public int getCoins() {
         return coins;
     }
@@ -122,7 +166,7 @@ public class Table {
 
     public void useCharacterAbility(Character characterSelected){}
 
-    public void incrementCostAbility(Character characterSelected){}
+    ///------------------- MANAGEMENT OF THE ISLANDS -----------------\\
 
     /**
      * place a student in the selected island
@@ -166,6 +210,8 @@ public class Table {
         }
     }
 
+    //------------------- MANAGEMENT OF THE CLOUDS -----------------\\
+
     /**
      * remove the students in the student bag and place it on the clouds
      * @param numberOfPlayer is equal to the number of student to be placed in the clouds
@@ -191,4 +237,6 @@ public class Table {
         cloud.getCloudStudents().removeAll(studentToGive);
         return studentToGive;
     }
+
+    //------------------- MANAGEMENT OF THE CHARACTERS -----------------\\
 }

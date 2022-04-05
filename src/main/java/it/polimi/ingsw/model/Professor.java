@@ -1,19 +1,10 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.enumeration.StudentColor;
+import it.polimi.ingsw.model.enumeration.PawnColor;
 
-public class Professor {
-    private StudentColor professorColor;
-
-    public Professor(StudentColor color){
-        setProfessorColor(color);
-    }
-
-    public StudentColor getProfessorColor() {
-        return professorColor;
-    }
-
-    public void setProfessorColor(StudentColor professorColor) {
-        this.professorColor = professorColor;
+public class Professor extends Pawn {
+    //new constructor, faster way for create a new instance
+    public Professor(PawnColor color){
+        setColor(color);
     }
 }

@@ -2,7 +2,7 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.model.Island;
 import it.polimi.ingsw.model.Student;
-import it.polimi.ingsw.model.enumeration.StudentColor;
+import it.polimi.ingsw.model.enumeration.PawnColor;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,31 +25,31 @@ public class IslandTest {
             switch (i) {
                 case 0: {
                     Student blueStudent = new Student();
-                    blueStudent.setColor(StudentColor.BLUE);
+                    blueStudent.setColor(PawnColor.BLUE);
                     studentList.add(blueStudent);
                     break;
                 }
                 case 1: {
                     Student greenStudent = new Student();
-                    greenStudent.setColor(StudentColor.GREEN);
+                    greenStudent.setColor(PawnColor.GREEN);
                     studentList.add(greenStudent);
                     break;
                 }
                 case 2: {
                     Student pinkStudent = new Student();
-                    pinkStudent.setColor(StudentColor.PINK);
+                    pinkStudent.setColor(PawnColor.PINK);
                     studentList.add(pinkStudent);
                     break;
                 }
                 case 3: {
                     Student redStudent = new Student();
-                    redStudent.setColor(StudentColor.RED);
+                    redStudent.setColor(PawnColor.RED);
                     studentList.add(redStudent);
                     break;
                 }
                 case 4: {
                     Student yellowStudent = new Student();
-                    yellowStudent.setColor(StudentColor.YELLOW);
+                    yellowStudent.setColor(PawnColor.YELLOW);
                     studentList.add(yellowStudent);
                     break;
                 }
@@ -70,23 +70,23 @@ public class IslandTest {
         for(int i = 0; i < 5; i++){
             switch (i) {
                 case 0: {
-                    assertEquals(island.getStudents().get(i).getColor(), StudentColor.BLUE);
+                    assertEquals(island.getStudents().get(i).getColor(), PawnColor.BLUE);
                     break;
                 }
                 case 1: {
-                    assertEquals(island.getStudents().get(i).getColor(), StudentColor.GREEN);
+                    assertEquals(island.getStudents().get(i).getColor(), PawnColor.GREEN);
                     break;
                 }
                 case 2: {
-                    assertEquals(island.getStudents().get(i).getColor(), StudentColor.PINK);
+                    assertEquals(island.getStudents().get(i).getColor(), PawnColor.PINK);
                     break;
                 }
                 case 3: {
-                    assertEquals(island.getStudents().get(i).getColor(), StudentColor.RED);
+                    assertEquals(island.getStudents().get(i).getColor(), PawnColor.RED);
                     break;
                 }
                 case 4: {
-                    assertEquals(island.getStudents().get(i).getColor(), StudentColor.YELLOW);
+                    assertEquals(island.getStudents().get(i).getColor(), PawnColor.YELLOW);
                     break;
                 }
             }
@@ -97,7 +97,7 @@ public class IslandTest {
     public void getBlueStudents_ShouldReturnListStudent(){
         List<Student> blueStudentsList = island.getBlueStudents();
         for(Student s: blueStudentsList){
-            assertEquals(s.getColor(), StudentColor.BLUE);
+            assertEquals(s.getColor(), PawnColor.BLUE);
         }
     }
 
@@ -105,7 +105,7 @@ public class IslandTest {
     public void getGreenStudents_ShouldReturnListStudent(){
         List<Student> greenStudentsList = island.getGreenStudents();
         for(Student s: greenStudentsList){
-            assertEquals(s.getColor(), StudentColor.GREEN);
+            assertEquals(s.getColor(), PawnColor.GREEN);
         }
     }
 
@@ -113,7 +113,7 @@ public class IslandTest {
     public void getPinkStudents_ShouldReturnListStudent(){
         List<Student> pinkStudentsList = island.getPinkStudents();
         for(Student s: pinkStudentsList){
-            assertEquals(s.getColor(), StudentColor.PINK);
+            assertEquals(s.getColor(), PawnColor.PINK);
         }
     }
 
@@ -121,7 +121,7 @@ public class IslandTest {
     public void getRedStudents_ShouldReturnListStudent(){
         List<Student> redStudentsList = island.getRedStudents();
         for(Student s: redStudentsList){
-            assertEquals(s.getColor(), StudentColor.RED);
+            assertEquals(s.getColor(), PawnColor.RED);
         }
     }
 
@@ -129,7 +129,7 @@ public class IslandTest {
     public void getYellowStudents_ShouldReturnListStudent(){
         List<Student> yellowStudentsList = island.getYellowStudents();
         for(Student s: yellowStudentsList){
-            assertEquals(s.getColor(), StudentColor.YELLOW);
+            assertEquals(s.getColor(), PawnColor.YELLOW);
         }
     }
 }

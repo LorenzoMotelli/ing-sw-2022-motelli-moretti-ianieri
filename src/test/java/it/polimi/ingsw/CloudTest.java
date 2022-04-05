@@ -2,14 +2,14 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.model.Cloud;
 import it.polimi.ingsw.model.Student;
-import it.polimi.ingsw.model.enumeration.StudentColor;
+import it.polimi.ingsw.model.enumeration.PawnColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static it.polimi.ingsw.model.enumeration.StudentColor.*;
+import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CloudTest {
