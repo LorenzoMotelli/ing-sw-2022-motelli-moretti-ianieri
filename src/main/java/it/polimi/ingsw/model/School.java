@@ -20,7 +20,7 @@ public class School {
      * Initialize the list of students in the entrance
      * Initialize the tower list (and set with them the team eventually)
      */
-    public School(int numOfPlayer, int playerToInitialize){
+    public School(int numOfPlayer, int playerToInitialize, List<Student> initialStudents){
         //initialization of the halls
         schoolHall = new Hall[5];
         for(int i = 0; i < 5; i++){
@@ -33,8 +33,9 @@ public class School {
         getSchoolHall()[4].setHallColor(PawnColor.YELLOW);
         //initialization of the 5 professors (everyone is null)
         schoolProfessor = new ArrayList<>(5);
-        //initialization of the students in the entrance (no students when the game is created)
+        //initialization of the students in the entrance
         entranceStudent = new ArrayList<>(7);
+        setEntranceStudent(initialStudents);
         //initialization of the towers
         playersTowers = new ArrayList<>(8);
         //set the color of the player's towers based on the number of player

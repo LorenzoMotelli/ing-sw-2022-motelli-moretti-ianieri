@@ -1,11 +1,9 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.model.enumeration.Variant;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -79,8 +77,22 @@ public class Table {
         professors.add(2,new Professor(PINK));
         professors.add(3,new Professor(RED));
         professors.add(4,new Professor(YELLOW));
-        /*
-        MAYBE MOVE THIS INTO A NEW METHOD
+        //if it is an expert game there are characters and coins
+        if(variantOfTheGame.equals(Variant.EXPERT)){
+            setCoins(20-numberOfPlayers);
+            playableCharacters = new Character[3];
+            for(int i = 0; i < 3; i++){
+                playableCharacters[i] = charactersOfTheGame[i];
+            }
+        }
+        initializeIslands();
+        initializeClouds();
+    }
+
+    /**
+     * initialize each island with 2 students unless the one with mother nature and its opposite
+     */
+    public void initializeIslands(){
         Random random = new Random();
         int randIndex = random.nextInt(12);
         islands.get(randIndex).setMotherNature(true);
@@ -93,30 +105,40 @@ public class Table {
         }
         for(Island island: islands){
             if(!(island.hasMotherNature()) && !(island.equals(islands.get(indexSpecularIsland)))){
-                island.addStudents(randomStudentFromBag());
-            }
-        }
-         */
-        //if it is an expert game there are characters and coins
-        if(variantOfTheGame.equals(Variant.EXPERT)){
-            setCoins(20-numberOfPlayers);
-            playableCharacters = new Character[3];
-            for(int i = 0; i < 3; i++){
-                playableCharacters[i] = charactersOfTheGame[i];
+                island.addStudents(randomStudentFromBag(2));
             }
         }
     }
 
     /**
-     * select two random students from the bag in which there are all the 130 students
-     * and remove them from the bag
+     * initialize each cloud with 3 students if there are 2 or 4 player, with 4 if there are 3 players
+     */
+    public void initializeClouds(){
+        //with 2 or 4 clouds each cloud has 3 students
+        if(2 == clouds.size() || 4 == clouds.size()){
+            for(Cloud cloud : clouds){
+                cloud.setCloudStudents(randomStudentFromBag(3));
+            }
+        }
+        //with 3 clouds they have 4 students
+        else{
+            for(Cloud cloud : clouds){
+                cloud.setCloudStudents(randomStudentFromBag(4));
+            }
+        }
+    }
+
+    /**
+     * select random students from the bag and remove them from the bag
+     * @param repetitions the number of students to take from the brag
      * @return the two students randomly selected
      */
-    public List<Student> randomStudentFromBag(){
+    public List<Student> randomStudentFromBag(int repetitions){
         List<Student> studentsList = new ArrayList<>();
         Random random = new Random();
-        studentsList.add(studentBag.get(random.nextInt(studentBag.size())));
-        studentsList.add(studentBag.get(random.nextInt(studentBag.size())));
+        for(int i = 0; i < repetitions; i++){
+            studentsList.add(studentBag.get(random.nextInt(studentBag.size())));
+        }
         studentBag.removeAll(studentsList);
         return studentsList;
     }
@@ -166,7 +188,7 @@ public class Table {
 
     public void useCharacterAbility(Character characterSelected){}
 
-    ///------------------- MANAGEMENT OF THE ISLANDS -----------------\\
+    //------------------- MANAGEMENT OF THE ISLANDS -----------------\\
 
     /**
      * place a student in the selected island

@@ -10,14 +10,14 @@ import org.junit.jupiter.api.Test;
 
 import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 import static org.junit.jupiter.api.Assertions.*;
-
+//TODO CHANGE TESTS
 public class SchoolTest {
 
     private School school;
 
     @BeforeEach
     public void setUp(){
-        school = new School(1,1); //creation of the test school
+        school = new School(1,1, null); //creation of the test school
         //creation of two different students
         Student blueStudent = new Student();
         blueStudent.setColor(BLUE);

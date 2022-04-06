@@ -19,7 +19,7 @@ public class Player {
     /**
      * new constructor to initialize the player
      */
-    public Player(int numOfPlayer, int playerToInitialize){
+    public Player(int numOfPlayer, int playerToInitialize, List<Student> initialStudents){
         assistantDeck = new AssistantCard[10];
         for(int i = 0; i< 10; i++){
             assistantDeck[i] = new AssistantCard(i/*, mage*/);
@@ -35,7 +35,7 @@ public class Player {
 
         }
          */
-        schoolDashboard = new School(numOfPlayer, playerToInitialize);
+        schoolDashboard = new School(numOfPlayer, playerToInitialize, initialStudents);
     }
 
     //---------------- GETTERS AND SETTERS --------------\\

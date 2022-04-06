@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.enumeration.Variant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GeneralGame {
 
@@ -37,14 +38,38 @@ public class GeneralGame {
             //selection of the 3 character that will be in the game
         }
          */
-        gamingPlayers = new Player[numberOfPlayer];
-        for(int i = 0; i < numberOfPlayer; i++){
-            gamingPlayers[i] = new Player(numberOfPlayer, i+1);
-        }
-        if(4 == numberOfPlayer){
-            teamGame = true;
-        }
+        //the table has to be created before the players because of the student bag
         gamingTable = new Table(numberOfPlayer, variantSelected, charactersToPlay);
+        //creation of players
+        gamingPlayers = new Player[numberOfPlayer];
+        if(2 == numberOfPlayer || 4 == numberOfPlayer){
+            for(int i = 0; i < numberOfPlayer; i++){
+                gamingPlayers[i] = new Player(numberOfPlayer, i+1, randomStudentFromBag(7));
+            }
+            if(4 == numberOfPlayer){
+                teamGame = true;
+            }
+        }
+        else{
+            for(int i = 0; i < numberOfPlayer; i++){
+                gamingPlayers[i] = new Player(numberOfPlayer, i+1, randomStudentFromBag(9));
+            }
+        }
+    }
+
+    /**
+     * select random students from the bag and remove them from the bag
+     * @param repetitions the number of students to take from the brag
+     * @return the two students randomly selected
+     */
+    public List<Student> randomStudentFromBag(int repetitions){
+        List<Student> studentsList = new ArrayList<>();
+        Random random = new Random();
+        for(int i = 0; i < repetitions; i++){
+            studentsList.add(gamingTable.getStudentBag().get(random.nextInt(gamingTable.getStudentBag().size())));
+        }
+        gamingTable.getStudentBag().removeAll(studentsList);
+        return studentsList;
     }
 
     //---------------- GETTERS AND SETTERS --------------\\
@@ -89,4 +114,5 @@ public class GeneralGame {
 
     }*/
 
+    //---------------- MANAGEMENT OF THE GAME --------------\\
 }
