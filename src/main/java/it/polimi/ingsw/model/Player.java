@@ -88,7 +88,7 @@ public class Player {
         setPlayerCoins(getPlayerCoins()- costCoin);
     }
 
-    //----------------- MANAGEMENT OF THE SCHOOL --------------------\\
+    //----------------- SCHOOL MANAGEMENT --------------------\\
 
     /**
      * place a student from the entrance into the correct hall
@@ -96,17 +96,16 @@ public class Player {
      */
     public void placeStudentInHall(Student studentToPlace){
         schoolDashboard.placeStudentInHall(studentToPlace);
-        schoolDashboard.removeStudentFromEntrance(studentToPlace);
     }
 
-    //----------------- MANAGEMENT OF THE ASSISTANT DECK ---------------\\
+    //----------------- ASSISTANT DECK MANAGEMENT ---------------\\
 
     /**
      * use the assistant card to change the player weight for the next turn
      * remove the assistant card from the deck
      * @param assistant the assistant card selected by the player
      */
-    public /*int*/ void useAssistant(AssistantCard assistant){
+    public int useAssistant(AssistantCard assistant){
         playerWeight = assistant.getTurnHeaviness();
         for(int i = 0; i < 10; i++){
             if(assistantDeck[i].equals(assistant)){
@@ -114,6 +113,6 @@ public class Player {
                 break;
             }
         }
-        //return assistant.getMovementMotherNature();
+        return assistant.getMovementMotherNature();
     }
 }

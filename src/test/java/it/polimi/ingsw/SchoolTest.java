@@ -3,12 +3,15 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.model.Professor;
 import it.polimi.ingsw.model.School;
 import it.polimi.ingsw.model.Student;
-import it.polimi.ingsw.model.enumeration.PawnColor;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static it.polimi.ingsw.model.enumeration.PawnColor.*;
+import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 import static org.junit.jupiter.api.Assertions.*;
 //TODO CHANGE TESTS
 public class SchoolTest {
@@ -17,25 +20,23 @@ public class SchoolTest {
 
     @BeforeEach
     public void setUp(){
-        school = new School(1,1, null); //creation of the test school
+        List<Student> studentList = new ArrayList<>();
         //creation of two different students
-        Student blueStudent = new Student();
-        blueStudent.setColor(BLUE);
-        Student pinkStudent = new Student();
-        pinkStudent.setColor(PINK);
-        //creation of initial list of students in the entrance
-        school.getEntranceStudent().add(blueStudent);
-        school.getEntranceStudent().add(pinkStudent);
+        Student blueStudent = new Student(BLUE);
+        Student pinkStudent = new Student(PINK);
+        studentList.add(blueStudent);
+        studentList.add(pinkStudent);
+        school = new School(2,1, studentList); //creation of the test school
     }
 
     @Test
     public void getHall_ShouldReturnHall(){
         assertNotNull(school.getSchoolHall());
-        assertEquals(PawnColor.BLUE, school.getSchoolHall()[0].getHallColor());
-        assertEquals(PawnColor.GREEN, school.getSchoolHall()[1].getHallColor());
+        assertEquals(BLUE, school.getSchoolHall()[0].getHallColor());
+        assertEquals(GREEN, school.getSchoolHall()[1].getHallColor());
         assertEquals(PINK, school.getSchoolHall()[2].getHallColor());
-        assertEquals(PawnColor.RED, school.getSchoolHall()[3].getHallColor());
-        assertEquals(PawnColor.YELLOW, school.getSchoolHall()[4].getHallColor());
+        assertEquals(RED, school.getSchoolHall()[3].getHallColor());
+        assertEquals(YELLOW, school.getSchoolHall()[4].getHallColor());
     }
 
     @Test
@@ -51,12 +52,17 @@ public class SchoolTest {
     @Test
     public void getSchoolTower_ShouldReturnTowers(){
         assertNotNull(school.getPlayersTowers());
+        for(int i = 0; i < school.getPlayersTowers().size(); i++){
+            assertEquals(WHITE, school.getPlayersTowers().get(i).getColor());
+        }
+
     }
 
     @Test
     public void placeStudentInHall_Student(){
         school.placeStudentInHall(school.getEntranceStudent().get(1));
         assertEquals(PINK, school.getSchoolHall()[2].getTableHall()[0].getColor());
+        assertEquals(1, school.getEntranceStudent().size());
         assertEquals(1, school.getEntranceStudent().size());
     }
 

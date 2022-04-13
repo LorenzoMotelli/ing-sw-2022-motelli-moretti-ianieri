@@ -27,10 +27,10 @@ public class School {
             schoolHall[i] = new Hall();
         }
         getSchoolHall()[0].setHallColor(BLUE);
-        getSchoolHall()[1].setHallColor(PawnColor.GREEN);
-        getSchoolHall()[2].setHallColor(PawnColor.PINK);
-        getSchoolHall()[3].setHallColor(PawnColor.RED);
-        getSchoolHall()[4].setHallColor(PawnColor.YELLOW);
+        getSchoolHall()[1].setHallColor(GREEN);
+        getSchoolHall()[2].setHallColor(PINK);
+        getSchoolHall()[3].setHallColor(RED);
+        getSchoolHall()[4].setHallColor(YELLOW);
         //initialization of the 5 professors (everyone is null)
         schoolProfessor = new ArrayList<>(5);
         //initialization of the students in the entrance
@@ -112,6 +112,10 @@ public class School {
         return schoolProfessor;
     }
 
+    public void setSchoolProfessor(List<Professor> schoolProfessor) {
+        this.schoolProfessor = schoolProfessor;
+    }
+
     public List<Student> getEntranceStudent() {
         return entranceStudent;
     }
@@ -169,7 +173,7 @@ public class School {
         return null;
     }
 
-    //-------------- MANAGEMENT OF THE SCHOOL --------------\\
+    //-------------- SCHOOL MANAGEMENT --------------\\
 
     /**
      * Place a student in the first possible place in the correct hall

@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.enumeration.Variant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 
@@ -165,6 +166,51 @@ public class Table {
         return professors;
     }
 
+    public Professor getBlueProfessor(){
+        for(Professor professor : professors){
+            if(professor.getColor().equals(BLUE)){
+                return professor;
+            }
+        }
+        return null;
+    }
+
+    public Professor getGreenProfessor(){
+        for(Professor professor : professors){
+            if(professor.getColor().equals(GREEN)){
+                return professor;
+            }
+        }
+        return null;
+    }
+
+    public Professor getPinkProfessor(){
+        for(Professor professor : professors){
+            if(professor.getColor().equals(PINK)){
+                return professor;
+            }
+        }
+        return null;
+    }
+
+    public Professor getRedProfessor(){
+        for(Professor professor : professors){
+            if(professor.getColor().equals(RED)){
+                return professor;
+            }
+        }
+        return null;
+    }
+
+    public Professor getYellowProfessor(){
+        for(Professor professor : professors){
+            if(professor.getColor().equals(YELLOW)){
+                return professor;
+            }
+        }
+        return null;
+    }
+
     public Island getIslandWithMotherNature(){
         for(Island island : islands){
             if(island.hasMotherNature()){
@@ -188,28 +234,44 @@ public class Table {
 
     public void useCharacterAbility(Character characterSelected){}
 
-    //------------------- MANAGEMENT OF THE ISLANDS -----------------\\
+    //------------------- ISLANDS MANAGEMENT -----------------\\
 
     /**
      * place a student in the selected island
      * @param studentToPlace the student selected by the player form its school
      * @param islandSelected the island selected by the player
      */
-    public void placeStudentInIsland(Student studentToPlace, Island islandSelected){
+    public void placeStudentOnIsland(Student studentToPlace, Island islandSelected){
         islandSelected.getStudents().add(studentToPlace);
     }
 
     /**
      * link two islands to form an archipelago
-     * take all the students and towers in the teo islands/archipelagos and merge them into a new island
+     * take all the students and towers in the two islands/archipelagos and merge them into a new island
      * @param island1 the first island/archipelago to be linked
      * @param island2 the second island/archipelago to be linked
      */
     public /*island*/ void linkIslands(Island island1, Island island2){
-        island1.getPlayerTower().addAll(island2.getPlayerTower());
-        island1.addStudents(island2.getStudents());
-        //add other things in expert game
-        islands.remove(island2);
+        if(islands.indexOf(island1) < islands.indexOf(island2)){
+            island1.getPlayerTower().addAll(island2.getPlayerTower());
+            island1.addStudents(island2.getStudents());
+            if(island2.hasMotherNature()){
+                island1.setMotherNature(true);
+                island2.setMotherNature(false);
+            }
+            //add other things in expert game
+            islands.remove(island2);
+        }
+        else{
+            island2.getPlayerTower().addAll(island1.getPlayerTower());
+            island2.addStudents(island1.getStudents());
+            if(island1.hasMotherNature()){
+                island2.setMotherNature(true);
+                island1.setMotherNature(false);
+            }
+            //add other things in expert game
+            islands.remove(island1);
+        }
     }
 
     /**
@@ -236,16 +298,19 @@ public class Table {
 
     /**
      * remove the students in the student bag and place it on the clouds
-     * @param numberOfPlayer is equal to the number of student to be placed in the clouds
+     * @param numberOfPlayer determines the number of students in the clouds
      */
     public void placeStudentsInCloud(int numberOfPlayer){
-        List<Student> studentList = new ArrayList<>(numberOfPlayer);
         for(Cloud cloud : clouds){
-            for(int i = 0; i < numberOfPlayer; i++){
-                studentList.add(studentBag.get(0));
-                studentBag.remove(0);
+            List<Student> studentList;
+            if(2 == numberOfPlayer || 4 == numberOfPlayer){
+                studentList = studentBag.stream().limit(3).collect(Collectors.toList());
+            }
+            else{
+                studentList = studentBag.stream().limit(4).collect(Collectors.toList());
             }
             cloud.setCloudStudents(studentList);
+            studentBag.removeAll(studentList);
         }
     }
 
@@ -255,7 +320,7 @@ public class Table {
      * @return the students placed on it
      */
     public List<Student> giveStudentsFromCloud(Cloud cloud){
-        List <Student> studentToGive = cloud.getCloudStudents();
+        List <Student> studentToGive = new ArrayList<>(cloud.getCloudStudents());
         cloud.getCloudStudents().removeAll(studentToGive);
         return studentToGive;
     }
