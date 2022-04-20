@@ -248,30 +248,13 @@ public class Table {
     /**
      * link two islands to form an archipelago
      * take all the students and towers in the two islands/archipelagos and merge them into a new island
-     * @param island1 the first island/archipelago to be linked
-     * @param island2 the second island/archipelago to be linked
+     * @param islandTarget the first island/archipelago to be linked, this will have all the students and towers
+     * @param islandOrigin the second island/archipelago to be linked, this will be removed
      */
-    public /*island*/ void linkIslands(Island island1, Island island2){
-        if(islands.indexOf(island1) < islands.indexOf(island2)){
-            island1.getPlayerTower().addAll(island2.getPlayerTower());
-            island1.addStudents(island2.getStudents());
-            if(island2.hasMotherNature()){
-                island1.setMotherNature(true);
-                island2.setMotherNature(false);
-            }
-            //add other things in expert game
-            islands.remove(island2);
-        }
-        else{
-            island2.getPlayerTower().addAll(island1.getPlayerTower());
-            island2.addStudents(island1.getStudents());
-            if(island1.hasMotherNature()){
-                island2.setMotherNature(true);
-                island1.setMotherNature(false);
-            }
-            //add other things in expert game
-            islands.remove(island1);
-        }
+    public /*island*/ void linkIslands(Island islandTarget, Island islandOrigin){
+        islandTarget.addTower(islandOrigin.getPlayerTower());
+        islandTarget.addStudents(islandOrigin.getStudents());
+        //add other things in expert game
     }
 
     /**
@@ -294,7 +277,7 @@ public class Table {
         }
     }
 
-    //------------------- MANAGEMENT OF THE CLOUDS -----------------\\
+    //------------------- CLOUDS MANAGEMENT -----------------\\
 
     /**
      * remove the students in the student bag and place it on the clouds

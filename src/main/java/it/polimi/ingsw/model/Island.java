@@ -11,7 +11,7 @@ public class Island {
     private List<Tower> playerTower;
     private boolean motherNature;
     private int prohibitionCard;
-    //private int influence = 0;
+    //private boolean toBeRemoved = false;
 
     public Island(){
         students = new ArrayList<>();
@@ -104,19 +104,13 @@ public class Island {
         this.motherNature = motherNature;
     }
 
-    /*
-    public int getInfluence() {
-        return influence;
-    }
-
-    public void setInfluence(int influence) {
-        this.influence = influence;
-    }
-     */
-
     //maybe the parameter is just Student and not a List of Students, add one student at time
     public void addStudents(List<Student> studentsToAdd){
         students.addAll(studentsToAdd);
+    }
+
+    public void addTower(List<Tower> towersToAdd){
+        playerTower.addAll(towersToAdd);
     }
 
 }

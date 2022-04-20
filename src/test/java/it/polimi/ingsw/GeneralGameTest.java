@@ -29,32 +29,32 @@ public class GeneralGameTest {
 
     @Test
     public void getTable_ShouldReturnTable(){
-        assertNotNull(generalGame.getGamingTable());
+        assertNotNull(generalGame.getTable());
     }
 
     @Test
     public void getPlayers_ShouldReturnPlayers(){
-        assertNotNull(generalGame.getGamingPlayers());
+        assertNotNull(generalGame.getPlayers());
     }
 
     @Test
     public void initialization(){
-        assertEquals(12, generalGame.getGamingTable().getIslands().size());
-        assertEquals(2, generalGame.getGamingTable().getClouds().size());
+        assertEquals(12, generalGame.getTable().getIslands().size());
+        assertEquals(2, generalGame.getTable().getClouds().size());
         //check islands
         Island islandWithNoStudents = new Island();
         for(int i = 0; i < 12; i++){
-            if(generalGame.getGamingTable().getIslands().get(i).equals(generalGame.getGamingTable().getIslandWithMotherNature())) {
+            if(generalGame.getTable().getIslands().get(i).equals(generalGame.getTable().getIslandWithMotherNature())) {
                 if(i < 6){
-                    islandWithNoStudents = generalGame.getGamingTable().getIslands().get(i+6);
+                    islandWithNoStudents = generalGame.getTable().getIslands().get(i+6);
                 }
                 else{
-                    islandWithNoStudents = generalGame.getGamingTable().getIslands().get(i-6);
+                    islandWithNoStudents = generalGame.getTable().getIslands().get(i-6);
                 }
                 break;
             }
         }
-        for (Island island: generalGame.getGamingTable().getIslands()) {
+        for (Island island: generalGame.getTable().getIslands()) {
             if(island.equals(islandWithNoStudents) || island.hasMotherNature()){
                 assertEquals(0, island.getStudents().size());
             }
@@ -63,11 +63,11 @@ public class GeneralGameTest {
             }
         }
         //check clouds
-        for(Cloud cloud : generalGame.getGamingTable().getClouds()){
+        for(Cloud cloud : generalGame.getTable().getClouds()){
             assertEquals(3, cloud.getCloudStudents().size());
         }
         //check player
-        for(Player player : generalGame.getGamingPlayers()){
+        for(Player player : generalGame.getPlayers()){
             assertEquals(7, player.getSchoolDashboard().getEntranceStudent().size());
         }
     }
@@ -75,21 +75,21 @@ public class GeneralGameTest {
     @Test
     public void newTurn(){
         generalGame.setTurn(3);
-        generalGame.getGamingPlayers()[0].setPlayerWeight(4);
-        generalGame.getGamingPlayers()[1].setPlayerWeight(1);
+        generalGame.getPlayers()[0].setPlayerWeight(4);
+        generalGame.getPlayers()[1].setPlayerWeight(1);
         //empty clouds
-        generalGame.getGamingTable().getClouds().get(0).getCloudStudents().clear();
-        generalGame.getGamingTable().getClouds().get(1).getCloudStudents().clear();
-        assertEquals(0, generalGame.getGamingTable().getClouds().get(0).getCloudStudents().size());
-        assertEquals(0, generalGame.getGamingTable().getClouds().get(1).getCloudStudents().size());
-        int numberOfBagStudents = generalGame.getGamingTable().getStudentBag().size();
+        generalGame.getTable().getClouds().get(0).getCloudStudents().clear();
+        generalGame.getTable().getClouds().get(1).getCloudStudents().clear();
+        assertEquals(0, generalGame.getTable().getClouds().get(0).getCloudStudents().size());
+        assertEquals(0, generalGame.getTable().getClouds().get(1).getCloudStudents().size());
+        int numberOfBagStudents = generalGame.getTable().getStudentBag().size();
         generalGame.newTurn();
         assertEquals(0, generalGame.getTurn());
-        assertEquals(1, generalGame.getGamingPlayers()[0].getPlayerWeight());
-        assertEquals(4, generalGame.getGamingPlayers()[1].getPlayerWeight());
-        assertEquals(3, generalGame.getGamingTable().getClouds().get(0).getCloudStudents().size());
-        assertEquals(3, generalGame.getGamingTable().getClouds().get(1).getCloudStudents().size());
-        assertEquals(numberOfBagStudents - 6, generalGame.getGamingTable().getStudentBag().size());
+        assertEquals(1, generalGame.getPlayers()[0].getPlayerWeight());
+        assertEquals(4, generalGame.getPlayers()[1].getPlayerWeight());
+        assertEquals(3, generalGame.getTable().getClouds().get(0).getCloudStudents().size());
+        assertEquals(3, generalGame.getTable().getClouds().get(1).getCloudStudents().size());
+        assertEquals(numberOfBagStudents - 6, generalGame.getTable().getStudentBag().size());
         assertEquals(PLANNING, generalGame.getGamePhase());
     }
 
@@ -114,10 +114,10 @@ public class GeneralGameTest {
         studentInCloud.add(redStudent);
         Student yellowStudent = new Student(YELLOW);
         studentInCloud.add(yellowStudent);
-        generalGame.getGamingTable().getClouds().get(0).setCloudStudents(studentInCloud);
-        assertEquals(PINK, generalGame.getGamingTable().getClouds().get(0).getCloudStudents().get(0).getColor());
-        assertEquals(RED, generalGame.getGamingTable().getClouds().get(0).getCloudStudents().get(1).getColor());
-        assertEquals(YELLOW, generalGame.getGamingTable().getClouds().get(0).getCloudStudents().get(2).getColor());
+        generalGame.getTable().getClouds().get(0).setCloudStudents(studentInCloud);
+        assertEquals(PINK, generalGame.getTable().getClouds().get(0).getCloudStudents().get(0).getColor());
+        assertEquals(RED, generalGame.getTable().getClouds().get(0).getCloudStudents().get(1).getColor());
+        assertEquals(YELLOW, generalGame.getTable().getClouds().get(0).getCloudStudents().get(2).getColor());
         int numBlueStudents = 0;
         int numGreenStudents = 0;
         int numPinkStudents = 0;
@@ -152,7 +152,7 @@ public class GeneralGameTest {
         assertEquals(1, numPinkStudents);
         assertEquals(1, numRedStudents);
         assertEquals(0, numYellowStudents);
-        generalGame.giveStudentsFromCloudToPlayer(generalGame.getGamingTable().getClouds().get(0));
+        generalGame.giveStudentsFromCloudToPlayer(generalGame.getTable().getClouds().get(0));
 
         numBlueStudents = 0;
         numGreenStudents = 0;
@@ -229,13 +229,13 @@ public class GeneralGameTest {
     public void giveProfessorFromTheBag(){
         assertEquals(0, generalGame.getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().size());
         generalGame.getCurrentPlayer().getSchoolDashboard().getSchoolHall()[0].getTableHall()[0] = new Student(BLUE);
-        assertNull(generalGame.getGamingPlayers()[1].getSchoolDashboard().getSchoolHall()[0].getTableHall()[0].getColor());
-        assertEquals(5, generalGame.getGamingTable().getProfessors().size());
+        assertNull(generalGame.getPlayers()[1].getSchoolDashboard().getSchoolHall()[0].getTableHall()[0].getColor());
+        assertEquals(5, generalGame.getTable().getProfessors().size());
         generalGame.giveProfessor(BLUE);
-        assertEquals(4, generalGame.getGamingTable().getProfessors().size());
+        assertEquals(4, generalGame.getTable().getProfessors().size());
         assertEquals(BLUE, generalGame.getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().get(0).getColor());
         assertEquals(1, generalGame.getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().size());
-        assertEquals(0, generalGame.getGamingPlayers()[1].getSchoolDashboard().getSchoolProfessor().size());
+        assertEquals(0, generalGame.getPlayers()[1].getSchoolDashboard().getSchoolProfessor().size());
     }
 
     @Test
@@ -249,57 +249,57 @@ public class GeneralGameTest {
         generalGame.getCurrentPlayer().getSchoolDashboard().getSchoolHall()[0].getTableHall()[1] = new Student(BLUE);
         generalGame.giveProfessor(BLUE);
         assertEquals(1, generalGame.getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().size());
-        assertEquals(0, generalGame.getGamingPlayers()[0].getSchoolDashboard().getSchoolProfessor().size());
+        assertEquals(0, generalGame.getPlayers()[0].getSchoolDashboard().getSchoolProfessor().size());
     }
 
     @Test
     public void placeStudentOnIsland(){
-        int numberOfStudentBeforePlacing = generalGame.getGamingTable().getIslands().get(0).getStudents().size();
-        int numberOfBlueStudentBeforePlacing = generalGame.getGamingTable().getIslands().get(0).getBlueStudents().size();
-        int numberOfGreenStudentBeforePlacing = generalGame.getGamingTable().getIslands().get(0).getGreenStudents().size();
-        int numberOfPinkStudentBeforePlacing = generalGame.getGamingTable().getIslands().get(0).getPinkStudents().size();
-        int numberOfRedStudentBeforePlacing = generalGame.getGamingTable().getIslands().get(0).getRedStudents().size();
-        int numberOfYellowStudentBeforePlacing = generalGame.getGamingTable().getIslands().get(0).getYellowStudents().size();
+        int numberOfStudentBeforePlacing = generalGame.getTable().getIslands().get(0).getStudents().size();
+        int numberOfBlueStudentBeforePlacing = generalGame.getTable().getIslands().get(0).getBlueStudents().size();
+        int numberOfGreenStudentBeforePlacing = generalGame.getTable().getIslands().get(0).getGreenStudents().size();
+        int numberOfPinkStudentBeforePlacing = generalGame.getTable().getIslands().get(0).getPinkStudents().size();
+        int numberOfRedStudentBeforePlacing = generalGame.getTable().getIslands().get(0).getRedStudents().size();
+        int numberOfYellowStudentBeforePlacing = generalGame.getTable().getIslands().get(0).getYellowStudents().size();
         Student studentToBePlaced = generalGame.getCurrentPlayer().getSchoolDashboard().getEntranceStudent().get(0);
-        generalGame.placeStudentOnIsland(generalGame.getCurrentPlayer().getSchoolDashboard().getEntranceStudent().get(0), generalGame.getGamingTable().getIslands().get(0));
-        assertEquals(numberOfStudentBeforePlacing+1, generalGame.getGamingTable().getIslands().get(0).getStudents().size());
+        generalGame.placeStudentOnIsland(generalGame.getCurrentPlayer().getSchoolDashboard().getEntranceStudent().get(0), generalGame.getTable().getIslands().get(0));
+        assertEquals(numberOfStudentBeforePlacing+1, generalGame.getTable().getIslands().get(0).getStudents().size());
         switch(studentToBePlaced.getColor()){
             case BLUE:{
-                assertEquals(numberOfBlueStudentBeforePlacing+1, generalGame.getGamingTable().getIslands().get(0).getBlueStudents().size());
+                assertEquals(numberOfBlueStudentBeforePlacing+1, generalGame.getTable().getIslands().get(0).getBlueStudents().size());
                 break;
             }
             case GREEN:{
-                assertEquals(numberOfGreenStudentBeforePlacing+1, generalGame.getGamingTable().getIslands().get(0).getGreenStudents().size());
+                assertEquals(numberOfGreenStudentBeforePlacing+1, generalGame.getTable().getIslands().get(0).getGreenStudents().size());
                 break;
             }
             case PINK:{
-                assertEquals(numberOfPinkStudentBeforePlacing+1, generalGame.getGamingTable().getIslands().get(0).getPinkStudents().size());
+                assertEquals(numberOfPinkStudentBeforePlacing+1, generalGame.getTable().getIslands().get(0).getPinkStudents().size());
                 break;
             }
             case RED:{
-                assertEquals(numberOfRedStudentBeforePlacing+1, generalGame.getGamingTable().getIslands().get(0).getRedStudents().size());
+                assertEquals(numberOfRedStudentBeforePlacing+1, generalGame.getTable().getIslands().get(0).getRedStudents().size());
                 break;
             }
             case YELLOW:{
-                assertEquals(numberOfYellowStudentBeforePlacing+1, generalGame.getGamingTable().getIslands().get(0).getYellowStudents().size());
+                assertEquals(numberOfYellowStudentBeforePlacing+1, generalGame.getTable().getIslands().get(0).getYellowStudents().size());
                 break;
             }
         }
         assertEquals(6, generalGame.getCurrentPlayer().getSchoolDashboard().getEntranceStudent().size());
     }
 
-    @RepeatedTest(value = 12, name = "Test {currentRepetition}")
+    @RepeatedTest(value = 12, name = "NCNL {currentRepetition}")
     public void moveMotherNatureNoConquerorBeforeNoLink(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(0));
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(1));
+        studentList1.add(generalGame.getTable().getStudentBag().get(0));
+        studentList1.add(generalGame.getTable().getStudentBag().get(1));
         List<Student> studentList2 = new ArrayList<>();
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(2));
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(3));
+        studentList2.add(generalGame.getTable().getStudentBag().get(2));
+        studentList2.add(generalGame.getTable().getStudentBag().get(3));
         int iter = 1;
         //all island now has 2 student on them, no one has mother nature
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
            if(0 == island.getStudents().size() ){
                 if(1 == iter){
                     island.setStudents(studentList1);
@@ -310,33 +310,39 @@ public class GeneralGameTest {
                 }
             }
         }
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             assertEquals(2, island.getStudents().size());
         }
         //give every professor to the player, so it will be the conqueror
-        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getGamingTable().getProfessors());
-        generalGame.moveMotherNature(generalGame.getGamingTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12));
-        assertEquals(12, generalGame.getGamingTable().getIslands().size());
-        assertFalse(generalGame.getGamingTable().getIslands().get(indexOfIslandWithMotherNature).hasMotherNature());
-        assertEquals(generalGame.getGamingTable().getIslandWithMotherNature(), generalGame.getGamingTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12));
-        assertEquals(2, generalGame.getGamingTable().getIslandWithMotherNature().getStudents().size());
-        assertEquals(1, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().size());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(0).getColor());
+        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getTable().getProfessors());
+        generalGame.moveMotherNature(generalGame.getTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12));
+        assertEquals(12, generalGame.getTable().getIslands().size());
+        assertFalse(generalGame.getTable().getIslands().get(indexOfIslandWithMotherNature).hasMotherNature());
+        assertEquals(generalGame.getTable().getIslandWithMotherNature(), generalGame.getTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12));
+        assertEquals(2, generalGame.getTable().getIslandWithMotherNature().getStudents().size());
+        assertEquals(1, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().size());
+        assertEquals(WHITE, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().get(0).getColor());
         assertEquals(7, generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().size());
+        for(Island island : generalGame.getTable().getIslands()){
+            if(!island.hasMotherNature()){
+                assertEquals(0, island.getPlayerTower().size());
+                assertEquals(2, island.getStudents().size());
+            }
+        }
     }
 
-    @RepeatedTest(value = 12, name = "Test {currentRepetition}")
+    @RepeatedTest(value = 12, name = "NCLA {currentRepetition}")
     public void moveMotherNatureNoConquerorBeforeWithLinkAhead(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(0));
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(1));
+        studentList1.add(generalGame.getTable().getStudentBag().get(0));
+        studentList1.add(generalGame.getTable().getStudentBag().get(1));
         List<Student> studentList2 = new ArrayList<>();
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(2));
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(3));
+        studentList2.add(generalGame.getTable().getStudentBag().get(2));
+        studentList2.add(generalGame.getTable().getStudentBag().get(3));
         int iter = 1;
         //all island now has 2 student on them, no one has mother nature
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             if(0 == island.getStudents().size() ){
                 if(1 == iter){
                     island.setStudents(studentList1);
@@ -347,54 +353,64 @@ public class GeneralGameTest {
                 }
             }
         }
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             assertEquals(2, island.getStudents().size());
         }
         //give every professor to the player, so it will be the conqueror
-        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getGamingTable().getProfessors());
+        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getTable().getProfessors());
         //place a tower of the player on the island selected
         List<Tower> whiteTower = new ArrayList<>();
         whiteTower.add(generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().get(0));
         generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().remove(0);
         //set the island what will be linked, 12 island before moving and linking
-        assertEquals(12, generalGame.getGamingTable().getIslands().size());
+        assertEquals(12, generalGame.getTable().getIslands().size());
         int indexIslandAhead = (indexOfIslandWithMotherNature+2) % 12;
         //the new index with 12 islands
         int newIndexIslandWithMotherNature = (indexOfIslandWithMotherNature+1) % 12;
-        generalGame.getGamingTable().getIslands().get(indexIslandAhead).setPlayerTower(whiteTower);
-        generalGame.moveMotherNature(generalGame.getGamingTable().getIslands().get(newIndexIslandWithMotherNature));
+        generalGame.getTable().getIslands().get(indexIslandAhead).setPlayerTower(whiteTower);
+        generalGame.moveMotherNature(generalGame.getTable().getIslands().get(newIndexIslandWithMotherNature));
         //11 island after the link
-        assertEquals(11, generalGame.getGamingTable().getIslands().size());
+        assertEquals(11, generalGame.getTable().getIslands().size());
         int numIslandsWithMotherNature = 0;
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             if(island.hasMotherNature()){
                 numIslandsWithMotherNature++;
             }
         }
         assertEquals(1, numIslandsWithMotherNature);
         //new index with 11 islands
-        newIndexIslandWithMotherNature = newIndexIslandWithMotherNature%11;
-        Island newIslandWithMotherNature = generalGame.getGamingTable().getIslandWithMotherNature();
-        assertEquals(newIndexIslandWithMotherNature, generalGame.getGamingTable().getIslands().indexOf(newIslandWithMotherNature));
-        assertEquals(2, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().size());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(0).getColor());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(1).getColor());
-        assertEquals(4, generalGame.getGamingTable().getIslandWithMotherNature().getStudents().size());
+        int count = 0;
+        if(indexIslandAhead < newIndexIslandWithMotherNature){
+            count++;
+        }
+        int finalIndexMotherNature = (newIndexIslandWithMotherNature-count)%11;
+        Island newIslandWithMotherNature = generalGame.getTable().getIslandWithMotherNature();
+        assertEquals(finalIndexMotherNature, generalGame.getTable().getIslands().indexOf(newIslandWithMotherNature));
+        assertEquals(2, newIslandWithMotherNature.getPlayerTower().size());
+        assertEquals(WHITE, newIslandWithMotherNature.getPlayerTower().get(0).getColor());
+        assertEquals(WHITE, newIslandWithMotherNature.getPlayerTower().get(1).getColor());
+        assertEquals(4, newIslandWithMotherNature.getStudents().size());
         assertEquals(6,generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().size());
+        for(Island island : generalGame.getTable().getIslands()){
+            if(!island.hasMotherNature()){
+                assertEquals(0, island.getPlayerTower().size());
+                assertEquals(2, island.getStudents().size());
+            }
+        }
     }
 
-    @RepeatedTest(value = 12, name = "Test {currentRepetition}")
+    @RepeatedTest(value = 12, name = "NCLB {currentRepetition}")
     public void moveMotherNatureNoConquerorBeforeWithLinkBehind(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(0));
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(1));
+        studentList1.add(generalGame.getTable().getStudentBag().get(0));
+        studentList1.add(generalGame.getTable().getStudentBag().get(1));
         List<Student> studentList2 = new ArrayList<>();
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(2));
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(3));
+        studentList2.add(generalGame.getTable().getStudentBag().get(2));
+        studentList2.add(generalGame.getTable().getStudentBag().get(3));
         int iter = 1;
         //all island now has 2 student on them, no one has mother nature
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             if(0 == island.getStudents().size() ){
                 if(1 == iter){
                     island.setStudents(studentList1);
@@ -405,26 +421,26 @@ public class GeneralGameTest {
                 }
             }
         }
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             assertEquals(2, island.getStudents().size());
         }
         //give every professor to the player, so it will be the conqueror
-        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getGamingTable().getProfessors());
+        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getTable().getProfessors());
         //place a tower of the player on the island selected
         List<Tower> whiteTower = new ArrayList<>();
         whiteTower.add(generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().get(0));
         generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().remove(0);
         //set the island what will be linked, 12 island before moving and linking
-        assertEquals(12, generalGame.getGamingTable().getIslands().size());
+        assertEquals(12, generalGame.getTable().getIslands().size());
         int indexIslandBehind = (indexOfIslandWithMotherNature+1) % 12;
         //the new index with 12 islands
         int newIndexIslandWithMotherNature = (indexOfIslandWithMotherNature+2) % 12;
-        generalGame.getGamingTable().getIslands().get(indexIslandBehind).setPlayerTower(whiteTower);
-        generalGame.moveMotherNature(generalGame.getGamingTable().getIslands().get(newIndexIslandWithMotherNature));
+        generalGame.getTable().getIslands().get(indexIslandBehind).setPlayerTower(whiteTower);
+        generalGame.moveMotherNature(generalGame.getTable().getIslands().get(newIndexIslandWithMotherNature));
         //11 island after the link
-        assertEquals(11, generalGame.getGamingTable().getIslands().size());
+        assertEquals(11, generalGame.getTable().getIslands().size());
         int numIslandsWithMotherNature = 0;
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             if(island.hasMotherNature()){
                 numIslandsWithMotherNature++;
             }
@@ -432,27 +448,33 @@ public class GeneralGameTest {
         assertEquals(1, numIslandsWithMotherNature);
         //new index with 11 islands
         newIndexIslandWithMotherNature = indexIslandBehind%11;
-        Island newIslandWithMotherNature = generalGame.getGamingTable().getIslandWithMotherNature();
-        assertEquals(newIndexIslandWithMotherNature, generalGame.getGamingTable().getIslands().indexOf(newIslandWithMotherNature));
-        assertEquals(2, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().size());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(0).getColor());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(1).getColor());
-        assertEquals(4, generalGame.getGamingTable().getIslandWithMotherNature().getStudents().size());
+        Island newIslandWithMotherNature = generalGame.getTable().getIslandWithMotherNature();
+        //assertEquals(newIndexIslandWithMotherNature, generalGame.getGamingTable().getIslands().indexOf(newIslandWithMotherNature));
+        assertEquals(2, newIslandWithMotherNature.getPlayerTower().size());
+        assertEquals(WHITE, newIslandWithMotherNature.getPlayerTower().get(0).getColor());
+        assertEquals(WHITE, newIslandWithMotherNature.getPlayerTower().get(1).getColor());
+        assertEquals(4, newIslandWithMotherNature.getStudents().size());
         assertEquals(6,generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().size());
+        for(Island island : generalGame.getTable().getIslands()){
+            if(!island.hasMotherNature()){
+                assertEquals(0, island.getPlayerTower().size());
+                assertEquals(2, island.getStudents().size());
+            }
+        }
     }
 
-    @RepeatedTest(value = 12, name = "Test {currentRepetition}")
+    @RepeatedTest(value = 12, name = "WCNL {currentRepetition}")
     public void moveMotherNatureWithConquerorBeforeNoLink(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(0));
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(1));
+        studentList1.add(generalGame.getTable().getStudentBag().get(0));
+        studentList1.add(generalGame.getTable().getStudentBag().get(1));
         List<Student> studentList2 = new ArrayList<>();
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(2));
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(3));
+        studentList2.add(generalGame.getTable().getStudentBag().get(2));
+        studentList2.add(generalGame.getTable().getStudentBag().get(3));
         int iter = 1;
         //all island now has 2 student on them, no one has mother nature
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             if(0 == island.getStudents().size() ){
                 if(1 == iter){
                     island.setStudents(studentList1);
@@ -464,40 +486,46 @@ public class GeneralGameTest {
                 }
             }
         }
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             assertEquals(2, island.getStudents().size());
         }
         //give every professor to the player, so it will be the conqueror
-        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getGamingTable().getProfessors());
+        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getTable().getProfessors());
         List<Tower> blackTower = new ArrayList<>();
         blackTower.add(new Tower(BLACK));
         //remove one tower from the other player because is placed
-        generalGame.getGamingPlayers()[1].getSchoolDashboard().getPlayersTowers().remove(0);
-        generalGame.getGamingTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12).setPlayerTower(blackTower);
-        assertEquals(BLACK, generalGame.getGamingTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12).getPlayerTower().get(0).getColor());
-        generalGame.moveMotherNature(generalGame.getGamingTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12));
-        assertEquals(12, generalGame.getGamingTable().getIslands().size());
-        assertFalse(generalGame.getGamingTable().getIslands().get(indexOfIslandWithMotherNature).hasMotherNature());
-        assertEquals(generalGame.getGamingTable().getIslandWithMotherNature(), generalGame.getGamingTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12));
-        assertEquals(2, generalGame.getGamingTable().getIslandWithMotherNature().getStudents().size());
-        assertEquals(1, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().size());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(0).getColor());
+        generalGame.getPlayers()[1].getSchoolDashboard().getPlayersTowers().remove(0);
+        generalGame.getTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12).setPlayerTower(blackTower);
+        assertEquals(BLACK, generalGame.getTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12).getPlayerTower().get(0).getColor());
+        generalGame.moveMotherNature(generalGame.getTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12));
+        assertEquals(12, generalGame.getTable().getIslands().size());
+        assertFalse(generalGame.getTable().getIslands().get(indexOfIslandWithMotherNature).hasMotherNature());
+        assertEquals(generalGame.getTable().getIslandWithMotherNature(), generalGame.getTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12));
+        assertEquals(2, generalGame.getTable().getIslandWithMotherNature().getStudents().size());
+        assertEquals(1, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().size());
+        assertEquals(WHITE, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().get(0).getColor());
         assertEquals(7, generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().size());
-        assertEquals(8, generalGame.getGamingPlayers()[1].getSchoolDashboard().getPlayersTowers().size());
+        assertEquals(8, generalGame.getPlayers()[1].getSchoolDashboard().getPlayersTowers().size());
+        for(Island island : generalGame.getTable().getIslands()){
+            if(!island.hasMotherNature()){
+                assertEquals(0, island.getPlayerTower().size());
+                assertEquals(2, island.getStudents().size());
+            }
+        }
     }
 
-    @RepeatedTest(value = 12, name = "Test {currentRepetition}")
+    @RepeatedTest(value = 12, name = "WCLA {currentRepetition}")
     public void moveMotherNatureWithConquerorWithLinkAhead(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(0));
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(1));
+        studentList1.add(generalGame.getTable().getStudentBag().get(0));
+        studentList1.add(generalGame.getTable().getStudentBag().get(1));
         List<Student> studentList2 = new ArrayList<>();
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(2));
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(3));
+        studentList2.add(generalGame.getTable().getStudentBag().get(2));
+        studentList2.add(generalGame.getTable().getStudentBag().get(3));
         int iter = 1;
         //all island now has 2 student on them, no one has mother nature
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             if(0 == island.getStudents().size() ){
                 if(1 == iter){
                     island.setStudents(studentList1);
@@ -508,60 +536,70 @@ public class GeneralGameTest {
                 }
             }
         }
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             assertEquals(2, island.getStudents().size());
         }
         List<Tower> blackTower = new ArrayList<>();
         blackTower.add(new Tower(BLACK));
-        generalGame.getGamingPlayers()[1].getSchoolDashboard().getPlayersTowers().remove(0);
-        generalGame.getGamingTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12).setPlayerTower(blackTower);
-        assertEquals(BLACK, generalGame.getGamingTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12).getPlayerTower().get(0).getColor());
+        generalGame.getPlayers()[1].getSchoolDashboard().getPlayersTowers().remove(0);
+        generalGame.getTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12).setPlayerTower(blackTower);
+        assertEquals(BLACK, generalGame.getTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12).getPlayerTower().get(0).getColor());
         //give every professor to the player, so it will be the conqueror
-        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getGamingTable().getProfessors());
+        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getTable().getProfessors());
         //place a tower of the player on the island selected
         List<Tower> whiteTower = new ArrayList<>();
         whiteTower.add(generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().get(0));
         generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().remove(0);
         //set the island what will be linked, 12 island before moving and linking
-        assertEquals(12, generalGame.getGamingTable().getIslands().size());
+        assertEquals(12, generalGame.getTable().getIslands().size());
         int indexIslandAhead = (indexOfIslandWithMotherNature+2) % 12;
         //the new index with 12 islands
         int newIndexIslandWithMotherNature = (indexOfIslandWithMotherNature+1) % 12;
-        generalGame.getGamingTable().getIslands().get(indexIslandAhead).setPlayerTower(whiteTower);
-        generalGame.moveMotherNature(generalGame.getGamingTable().getIslands().get(newIndexIslandWithMotherNature));
+        generalGame.getTable().getIslands().get(indexIslandAhead).setPlayerTower(whiteTower);
+        generalGame.moveMotherNature(generalGame.getTable().getIslands().get(newIndexIslandWithMotherNature));
         //11 island after the link
-        assertEquals(11, generalGame.getGamingTable().getIslands().size());
+        assertEquals(11, generalGame.getTable().getIslands().size());
         int numIslandsWithMotherNature = 0;
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             if(island.hasMotherNature()){
                 numIslandsWithMotherNature++;
             }
         }
         assertEquals(1, numIslandsWithMotherNature);
         //new index with 11 islands
-        newIndexIslandWithMotherNature = newIndexIslandWithMotherNature%11;
-        Island newIslandWithMotherNature = generalGame.getGamingTable().getIslandWithMotherNature();
-        assertEquals(newIndexIslandWithMotherNature, generalGame.getGamingTable().getIslands().indexOf(newIslandWithMotherNature));
-        assertEquals(2, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().size());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(0).getColor());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(1).getColor());
-        assertEquals(4, generalGame.getGamingTable().getIslandWithMotherNature().getStudents().size());
+        int count = 0;
+        if(indexIslandAhead < newIndexIslandWithMotherNature){
+            count++;
+        }
+        int finalIndexMotherNature = (newIndexIslandWithMotherNature-count)%11;
+        Island newIslandWithMotherNature = generalGame.getTable().getIslandWithMotherNature();
+        assertEquals(finalIndexMotherNature, generalGame.getTable().getIslands().indexOf(newIslandWithMotherNature));
+        assertEquals(2, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().size());
+        assertEquals(WHITE, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().get(0).getColor());
+        assertEquals(WHITE, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().get(1).getColor());
+        assertEquals(4, generalGame.getTable().getIslandWithMotherNature().getStudents().size());
         assertEquals(6, generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().size());
-        assertEquals(8, generalGame.getGamingPlayers()[1].getSchoolDashboard().getPlayersTowers().size());
+        assertEquals(8, generalGame.getPlayers()[1].getSchoolDashboard().getPlayersTowers().size());
+        for(Island island : generalGame.getTable().getIslands()){
+            if(!island.hasMotherNature()){
+                assertEquals(0, island.getPlayerTower().size());
+                assertEquals(2, island.getStudents().size());
+            }
+        }
     }
 
-    @RepeatedTest(value = 12, name = "Test {currentRepetition}")
+    @RepeatedTest(value = 12, name = "WCLB {currentRepetition}")
     public void moveMotherNatureWithConquerorWithLinkBehind(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(0));
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(1));
+        studentList1.add(generalGame.getTable().getStudentBag().get(0));
+        studentList1.add(generalGame.getTable().getStudentBag().get(1));
         List<Student> studentList2 = new ArrayList<>();
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(2));
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(3));
+        studentList2.add(generalGame.getTable().getStudentBag().get(2));
+        studentList2.add(generalGame.getTable().getStudentBag().get(3));
         int iter = 1;
         //all island now has 2 student on them, no one has mother nature
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             if(0 == island.getStudents().size() ){
                 if(1 == iter){
                     island.setStudents(studentList1);
@@ -572,31 +610,31 @@ public class GeneralGameTest {
                 }
             }
         }
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             assertEquals(2, island.getStudents().size());
         }
         List<Tower> blackTower = new ArrayList<>();
         blackTower.add(new Tower(BLACK));
-        generalGame.getGamingPlayers()[1].getSchoolDashboard().getPlayersTowers().remove(0);
-        generalGame.getGamingTable().getIslands().get((indexOfIslandWithMotherNature+2) % 12).setPlayerTower(blackTower);
-        assertEquals(BLACK, generalGame.getGamingTable().getIslands().get((indexOfIslandWithMotherNature+2) % 12).getPlayerTower().get(0).getColor());
+        generalGame.getPlayers()[1].getSchoolDashboard().getPlayersTowers().remove(0);
+        generalGame.getTable().getIslands().get((indexOfIslandWithMotherNature+2) % 12).setPlayerTower(blackTower);
+        assertEquals(BLACK, generalGame.getTable().getIslands().get((indexOfIslandWithMotherNature+2) % 12).getPlayerTower().get(0).getColor());
         //give every professor to the player, so it will be the conqueror
-        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getGamingTable().getProfessors());
+        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getTable().getProfessors());
         //place a tower of the player on the island selected
         List<Tower> whiteTower = new ArrayList<>();
         whiteTower.add(generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().get(0));
         generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().remove(0);
         //set the island what will be linked, 12 island before moving and linking
-        assertEquals(12, generalGame.getGamingTable().getIslands().size());
+        assertEquals(12, generalGame.getTable().getIslands().size());
         int indexIslandBehind = (indexOfIslandWithMotherNature+1) % 12;
         //the new index with 12 islands
         int newIndexIslandWithMotherNature = (indexOfIslandWithMotherNature+2) % 12;
-        generalGame.getGamingTable().getIslands().get(indexIslandBehind).setPlayerTower(whiteTower);
-        generalGame.moveMotherNature(generalGame.getGamingTable().getIslands().get(newIndexIslandWithMotherNature));
+        generalGame.getTable().getIslands().get(indexIslandBehind).setPlayerTower(whiteTower);
+        generalGame.moveMotherNature(generalGame.getTable().getIslands().get(newIndexIslandWithMotherNature));
         //11 island after the link
-        assertEquals(11, generalGame.getGamingTable().getIslands().size());
+        assertEquals(11, generalGame.getTable().getIslands().size());
         int numIslandsWithMotherNature = 0;
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             if(island.hasMotherNature()){
                 numIslandsWithMotherNature++;
             }
@@ -604,28 +642,34 @@ public class GeneralGameTest {
         assertEquals(1, numIslandsWithMotherNature);
         //new index with 11 islands
         newIndexIslandWithMotherNature = indexIslandBehind%11;
-        Island newIslandWithMotherNature = generalGame.getGamingTable().getIslandWithMotherNature();
-        assertEquals(newIndexIslandWithMotherNature, generalGame.getGamingTable().getIslands().indexOf(newIslandWithMotherNature));
-        assertEquals(2, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().size());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(0).getColor());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(1).getColor());
-        assertEquals(4, generalGame.getGamingTable().getIslandWithMotherNature().getStudents().size());
+        Island newIslandWithMotherNature = generalGame.getTable().getIslandWithMotherNature();
+        assertEquals(newIndexIslandWithMotherNature, generalGame.getTable().getIslands().indexOf(newIslandWithMotherNature));
+        assertEquals(2, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().size());
+        assertEquals(WHITE, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().get(0).getColor());
+        assertEquals(WHITE, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().get(1).getColor());
+        assertEquals(4, generalGame.getTable().getIslandWithMotherNature().getStudents().size());
         assertEquals(6, generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().size());
-        assertEquals(8, generalGame.getGamingPlayers()[1].getSchoolDashboard().getPlayersTowers().size());
+        assertEquals(8, generalGame.getPlayers()[1].getSchoolDashboard().getPlayersTowers().size());
+        for(Island island : generalGame.getTable().getIslands()){
+            if(!island.hasMotherNature()){
+                assertEquals(0, island.getPlayerTower().size());
+                assertEquals(2, island.getStudents().size());
+            }
+        }
     }
 
-    @RepeatedTest(value = 12, name = "Test {currentRepetition}")
+    @RepeatedTest(value = 12, name = "NCDL {currentRepetition}")
     public void moveMotherNatureNoConquerorBeforeWithDoubleLink(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(0));
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(1));
+        studentList1.add(generalGame.getTable().getStudentBag().get(0));
+        studentList1.add(generalGame.getTable().getStudentBag().get(1));
         List<Student> studentList2 = new ArrayList<>();
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(2));
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(3));
+        studentList2.add(generalGame.getTable().getStudentBag().get(2));
+        studentList2.add(generalGame.getTable().getStudentBag().get(3));
         int iter = 1;
         //all island now has 2 student on them, no one has mother nature
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             if(0 == island.getStudents().size() ){
                 if(1 == iter){
                     island.setStudents(studentList1);
@@ -636,59 +680,72 @@ public class GeneralGameTest {
                 }
             }
         }
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             assertEquals(2, island.getStudents().size());
         }
         //give every professor to the player, so it will be the conqueror
-        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getGamingTable().getProfessors());
+        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getTable().getProfessors());
         List<Tower> whiteTower = new ArrayList<>();
         whiteTower.add(new Tower(WHITE));
         //set the island what will be linked, 12 island before moving and linking
-        assertEquals(12, generalGame.getGamingTable().getIslands().size());
+        assertEquals(12, generalGame.getTable().getIslands().size());
         int indexIslandAhead = (indexOfIslandWithMotherNature+2) % 12;
         int indexIslandBehind = indexOfIslandWithMotherNature;
         //the new index with 12 islands
         int newIndexIslandWithMotherNature = (indexOfIslandWithMotherNature+1) % 12;
-        generalGame.getGamingTable().getIslands().get(indexIslandAhead).setPlayerTower(whiteTower);
+        int count = 0;
+        if(indexIslandAhead < newIndexIslandWithMotherNature){
+           count++;
+        }
+        if(indexIslandBehind < newIndexIslandWithMotherNature){
+            count++;
+        }
+        int finalIndexMotherNature = (newIndexIslandWithMotherNature-count)%10;
+        generalGame.getTable().getIslands().get(indexIslandAhead).setPlayerTower(whiteTower);
         generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().remove(0);
-        generalGame.getGamingTable().getIslands().get(indexIslandBehind).setPlayerTower(whiteTower);
+        generalGame.getTable().getIslands().get(indexIslandBehind).setPlayerTower(whiteTower);
         generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().remove(0);
         assertEquals(6, generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().size());
-        generalGame.moveMotherNature(generalGame.getGamingTable().getIslands().get(newIndexIslandWithMotherNature));
-        //11 island after the link
-        assertEquals(10, generalGame.getGamingTable().getIslands().size());
+        generalGame.moveMotherNature(generalGame.getTable().getIslands().get(newIndexIslandWithMotherNature));
+        //10 island after the link
+        assertEquals(10, generalGame.getTable().getIslands().size());
         int numIslandsWithMotherNature = 0;
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             if(island.hasMotherNature()){
                 numIslandsWithMotherNature++;
             }
         }
         assertEquals(1, numIslandsWithMotherNature);
         //new index with 10 islands
-        newIndexIslandWithMotherNature = Math.min(Math.min(indexIslandAhead, indexIslandBehind), newIndexIslandWithMotherNature);
-        Island newIslandWithMotherNature = generalGame.getGamingTable().getIslandWithMotherNature();
-        assertEquals(newIndexIslandWithMotherNature, generalGame.getGamingTable().getIslands().indexOf(newIslandWithMotherNature));
-        assertEquals(3, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().size());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(0).getColor());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(1).getColor());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(2).getColor());
-        assertEquals(6, generalGame.getGamingTable().getIslandWithMotherNature().getStudents().size());
+        Island newIslandWithMotherNature = generalGame.getTable().getIslandWithMotherNature();
+        assertEquals(finalIndexMotherNature, generalGame.getTable().getIslands().indexOf(newIslandWithMotherNature));
+        assertEquals(3, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().size());
+        assertEquals(WHITE, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().get(0).getColor());
+        assertEquals(WHITE, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().get(1).getColor());
+        assertEquals(WHITE, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().get(2).getColor());
+        assertEquals(6, generalGame.getTable().getIslandWithMotherNature().getStudents().size());
         assertEquals(5, generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().size());
-        assertEquals(8, generalGame.getGamingPlayers()[1].getSchoolDashboard().getPlayersTowers().size());
+        assertEquals(8, generalGame.getPlayers()[1].getSchoolDashboard().getPlayersTowers().size());
+        for(Island island : generalGame.getTable().getIslands()){
+            if(!island.hasMotherNature()){
+                assertEquals(0, island.getPlayerTower().size());
+                assertEquals(2, island.getStudents().size());
+            }
+        }
     }
 
-    @RepeatedTest(value = 12, name = "Test {currentRepetition}")
+    @RepeatedTest(value = 12, name = "WCDL {currentRepetition}")
     public void moveMotherNatureWithConquerorBeforeWithDoubleLink(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(0));
-        studentList1.add(generalGame.getGamingTable().getStudentBag().get(1));
+        studentList1.add(generalGame.getTable().getStudentBag().get(0));
+        studentList1.add(generalGame.getTable().getStudentBag().get(1));
         List<Student> studentList2 = new ArrayList<>();
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(2));
-        studentList2.add(generalGame.getGamingTable().getStudentBag().get(3));
+        studentList2.add(generalGame.getTable().getStudentBag().get(2));
+        studentList2.add(generalGame.getTable().getStudentBag().get(3));
         int iter = 1;
         //all island now has 2 student on them, no one has mother nature
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             if(0 == island.getStudents().size() ){
                 if(1 == iter){
                     island.setStudents(studentList1);
@@ -699,48 +756,61 @@ public class GeneralGameTest {
                 }
             }
         }
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             assertEquals(2, island.getStudents().size());
         }
         List<Tower> blackTower = new ArrayList<>();
         blackTower.add(new Tower(BLACK));
-        generalGame.getGamingTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12).setPlayerTower(blackTower);
-        generalGame.getGamingPlayers()[1].getSchoolDashboard().getPlayersTowers().remove(0);
-        assertEquals(BLACK, generalGame.getGamingTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12).getPlayerTower().get(0).getColor());
+        generalGame.getTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12).setPlayerTower(blackTower);
+        generalGame.getPlayers()[1].getSchoolDashboard().getPlayersTowers().remove(0);
+        assertEquals(BLACK, generalGame.getTable().getIslands().get((indexOfIslandWithMotherNature+1) % 12).getPlayerTower().get(0).getColor());
         //give every professor to the player, so it will be the conqueror
-        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getGamingTable().getProfessors());
+        generalGame.getCurrentPlayer().getSchoolDashboard().setSchoolProfessor(generalGame.getTable().getProfessors());
         List<Tower> whiteTower = new ArrayList<>();
         whiteTower.add(new Tower(WHITE));
         //set the island what will be linked, 12 island before moving and linking
-        assertEquals(12, generalGame.getGamingTable().getIslands().size());
+        assertEquals(12, generalGame.getTable().getIslands().size());
         int indexIslandAhead = (indexOfIslandWithMotherNature+2) % 12;
         int indexIslandBehind = indexOfIslandWithMotherNature;
         //the new index with 12 islands
         int newIndexIslandWithMotherNature = (indexOfIslandWithMotherNature+1) % 12;
-        generalGame.getGamingTable().getIslands().get(indexIslandAhead).setPlayerTower(whiteTower);
+        int count = 0;
+        if(indexIslandAhead < newIndexIslandWithMotherNature){
+            count++;
+        }
+        if(indexIslandBehind < newIndexIslandWithMotherNature){
+            count++;
+        }
+        int finalIndexMotherNature = (newIndexIslandWithMotherNature-count)%10;
+        generalGame.getTable().getIslands().get(indexIslandAhead).setPlayerTower(whiteTower);
         generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().remove(0);
-        generalGame.getGamingTable().getIslands().get(indexIslandBehind).setPlayerTower(whiteTower);
+        generalGame.getTable().getIslands().get(indexIslandBehind).setPlayerTower(whiteTower);
         generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().remove(0);
-        generalGame.moveMotherNature(generalGame.getGamingTable().getIslands().get(newIndexIslandWithMotherNature));
-        //11 island after the link
-        assertEquals(10, generalGame.getGamingTable().getIslands().size());
+        generalGame.moveMotherNature(generalGame.getTable().getIslands().get(newIndexIslandWithMotherNature));
+        //10 island after the link
+        assertEquals(10, generalGame.getTable().getIslands().size());
         int numIslandsWithMotherNature = 0;
-        for(Island island : generalGame.getGamingTable().getIslands()){
+        for(Island island : generalGame.getTable().getIslands()){
             if(island.hasMotherNature()){
                 numIslandsWithMotherNature++;
             }
         }
         assertEquals(1, numIslandsWithMotherNature);
         //new index with 10 islands
-        newIndexIslandWithMotherNature = Math.min(Math.min(indexIslandAhead, indexIslandBehind), newIndexIslandWithMotherNature);
-        Island newIslandWithMotherNature = generalGame.getGamingTable().getIslandWithMotherNature();
-        assertEquals(newIndexIslandWithMotherNature, generalGame.getGamingTable().getIslands().indexOf(newIslandWithMotherNature));
-        assertEquals(3, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().size());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(0).getColor());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(1).getColor());
-        assertEquals(WHITE, generalGame.getGamingTable().getIslandWithMotherNature().getPlayerTower().get(2).getColor());
-        assertEquals(6, generalGame.getGamingTable().getIslandWithMotherNature().getStudents().size());
+        Island newIslandWithMotherNature = generalGame.getTable().getIslandWithMotherNature();
+        assertEquals(finalIndexMotherNature, generalGame.getTable().getIslands().indexOf(newIslandWithMotherNature));
+        assertEquals(3, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().size());
+        assertEquals(WHITE, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().get(0).getColor());
+        assertEquals(WHITE, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().get(1).getColor());
+        assertEquals(WHITE, generalGame.getTable().getIslandWithMotherNature().getPlayerTower().get(2).getColor());
+        assertEquals(6, generalGame.getTable().getIslandWithMotherNature().getStudents().size());
         assertEquals(5, generalGame.getCurrentPlayer().getSchoolDashboard().getPlayersTowers().size());
-        assertEquals(8, generalGame.getGamingPlayers()[1].getSchoolDashboard().getPlayersTowers().size());
+        assertEquals(8, generalGame.getPlayers()[1].getSchoolDashboard().getPlayersTowers().size());
+        for(Island island : generalGame.getTable().getIslands()){
+            if(!island.hasMotherNature()){
+                assertEquals(0, island.getPlayerTower().size());
+                assertEquals(2, island.getStudents().size());
+            }
+        }
     }
 }
