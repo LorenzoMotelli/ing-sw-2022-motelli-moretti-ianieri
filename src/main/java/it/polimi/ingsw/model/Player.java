@@ -3,12 +3,12 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.cards.AssistantCard;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static it.polimi.ingsw.model.enumeration.TowerColor.*;
-
+// TODO add nickname
 public class Player {
+    private String playerName;
     private School schoolDashboard;
     private AssistantCard[] assistantDeck ;
     private int playerCoins = 1;
@@ -19,12 +19,12 @@ public class Player {
     /**
      * new constructor to initialize the player
      */
-    public Player(int numOfPlayer, int playerToInitialize, List<Student> initialStudents){
+    public Player(String name, int numOfPlayer, int playerToInitialize, List<Student> initialStudents){
+        playerName = name;
         assistantDeck = new AssistantCard[10];
         for(int i = 0; i< 10; i++){
             assistantDeck[i] = new AssistantCard(i/*, mage*/);
         }
-        /*
         if(4 == numOfPlayer){
             if(1 == playerToInitialize || 3 == playerToInitialize){
                 setPlayerTeam(WHITE);
@@ -34,7 +34,6 @@ public class Player {
             }
 
         }
-         */
         schoolDashboard = new School(numOfPlayer, playerToInitialize, initialStudents);
     }
 

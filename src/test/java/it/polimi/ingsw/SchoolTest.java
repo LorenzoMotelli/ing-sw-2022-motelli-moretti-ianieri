@@ -13,7 +13,7 @@ import java.util.List;
 import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 import static org.junit.jupiter.api.Assertions.*;
-//TODO CHANGE TESTS
+
 public class SchoolTest {
 
     private School school;

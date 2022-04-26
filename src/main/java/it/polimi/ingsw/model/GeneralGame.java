@@ -12,11 +12,13 @@ import java.util.Random;
 
 import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 import static it.polimi.ingsw.model.enumeration.Phases.*;
+import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 
 public class GeneralGame {
 
     //list of the players in the game
     private Player[] players;
+    int playerAdded = 0;
     //use for check the actual player
     private int turn = 0;
     private int maxTurn = 0;
@@ -33,11 +35,9 @@ public class GeneralGame {
     //the table with clouds, islands, students...
     private Table table;
     private boolean teamGame = false;
-
+    //TODO change initialization and adding players
     /**
-     * when the game is created the first player has to select:
-     * the number of player (between 2 and 4)
-     * the variant of the game (NORMAL or EXPERT), default is NORMAL
+     * creation of the initial board, the initial players and characters
      * @param numberOfPlayer the number of player selected by the first player
      * @param variantSelected the variant that the first player has selected
      */
@@ -56,20 +56,26 @@ public class GeneralGame {
         table = new Table(numberOfPlayer, variantSelected, charactersToPlay);
         //creation of players
         players = new Player[numberOfPlayer];
-        if(2 == numberOfPlayer || 4 == numberOfPlayer){
-            for(int i = 0; i < numberOfPlayer; i++){
-                players[i] = new Player(numberOfPlayer, i+1, randomStudentFromBag(7));
-            }
-            if(4 == numberOfPlayer){
-                teamGame = true;
-            }
-        }
-        else{
-            for(int i = 0; i < numberOfPlayer; i++){
-                players[i] = new Player(numberOfPlayer, i+1, randomStudentFromBag(9));
-            }
-        }
         maxTurn = numberOfPlayer;
+    }
+
+    /**
+     * add a player to the list of players in the game
+     * @param name the name selected by the player
+     */
+    public /*Player*/ void addPlayer(String name){
+        if(playerAdded < players.length){
+            Player player;
+            if(2 == players.length || 4 == players.length){
+                player = new Player(name, players.length, playerAdded+1,randomStudentFromBag(7));
+            }
+            else{
+                player = new Player(name, players.length, playerAdded+1,randomStudentFromBag(9));
+            }
+            players[playerAdded] = player;
+            playerAdded++;
+            /*return player*/
+        }
     }
 
     /**
@@ -251,7 +257,7 @@ public class GeneralGame {
      * if the current player has more student of that color in the corresponding hall of that color
      * @param colorStudentPlaced the color of the student placed so also the professor's color
      */
-    public /*Player*/ void giveProfessor(PawnColor colorStudentPlaced){
+    public /*Professor*/ void giveProfessor(PawnColor colorStudentPlaced){
         Player playerWithProfessor = checkProfessorBeforePlacement(colorStudentPlaced);
         //the current player already has the professor, no check needed
         if(null != playerWithProfessor && playerWithProfessor.equals(getCurrentPlayer())){
@@ -464,11 +470,23 @@ public class GeneralGame {
                 break;
             }
         }
-        //check if there is a conqueror of the island
-        Player conqueror = checkInfluence(islandSelected);
-        if(null != conqueror){
-            checkPlaceTower(islandSelected, conqueror);
-            checkLinkIslands(islandSelected);
+        islandSelected.setMotherNature(true);
+        //check only the single players
+        if(!teamGame){
+            //check if there is a conqueror of the island
+            Player conqueror = checkInfluence(islandSelected);
+            if(null != conqueror){
+                checkPlaceTower(islandSelected, conqueror);
+                checkLinkIslands(islandSelected);
+            }
+        }
+        //team game, different checking
+        else{
+            TowerColor conquerorColor = checkInfluenceTeam(islandSelected);
+            if(null != conquerorColor){
+                checkPlaceTowerTeam(islandSelected, conquerorColor);
+                checkLinkIslands(islandSelected);
+            }
         }
     }
 
@@ -478,42 +496,88 @@ public class GeneralGame {
      * @param conqueror the player that has conquered the island
      */
     public void checkPlaceTower(Island islandSelected, Player conqueror){
-        //search the new island with mother nature
-        islandSelected.setMotherNature(true);
-            //no tower is already placed on this island
-            if(0 == islandSelected.getPlayerTower().size()){
-                //place a tower on the island
-                table.placeTower(islandSelected, conqueror.getSchoolDashboard().getPlayersTowers().get(0));
-                //remove the tower from the player
-                conqueror.getSchoolDashboard().getPlayersTowers().remove(0);
-            }
-            //tower is already placed on this island
-            else{
-                //the color of the towers of the conqueror
-                TowerColor conquerorColor = conqueror.getSchoolDashboard().getPlayersTowers().get(0).getColor();
-                //the color of the towers on the island
-                TowerColor islandColor = islandSelected.getPlayerTower().get(0).getColor();
-                //the color of the towers on the island is different from the one of the player
-                if(!(islandColor.equals(conquerorColor))){
-                    //give back the tower to the old conqueror
-                    for(Player player : players){
-                        //the color of the towers of the player now checked
-                        TowerColor playerColor = player.getSchoolDashboard().getPlayersTowers().get(0).getColor();
-                        //the player is the old conqueror
-                        if(playerColor.equals(islandColor)){
-                            //give back all the towers of the island
-                            player.getSchoolDashboard().getPlayersTowers().addAll(islandSelected.getPlayerTower());
-                            break;
-                        }
+        //no tower is already placed on this island
+        if(0 == islandSelected.getPlayerTower().size()){
+            //place a tower on the island
+            table.placeTower(islandSelected, conqueror.getSchoolDashboard().getPlayersTowers().get(0));
+            //remove the tower from the player
+            conqueror.getSchoolDashboard().getPlayersTowers().remove(0);
+        }
+        //tower is already placed on this island
+        else{
+            //the color of the towers of the conqueror
+            TowerColor conquerorColor = conqueror.getSchoolDashboard().getPlayersTowers().get(0).getColor();
+            //the color of the towers on the island
+            TowerColor islandColor = islandSelected.getPlayerTower().get(0).getColor();
+            //the color of the towers on the island is different from the one of the player
+            if(!(islandColor.equals(conquerorColor))){
+                //give back the tower to the old conqueror
+                for(Player player : players){
+                    //the color of the towers of the player now checked
+                    TowerColor playerColor = player.getSchoolDashboard().getPlayersTowers().get(0).getColor();
+                    //the player is the old conqueror
+                    if(playerColor.equals(islandColor)){
+                        //give back all the towers of the island
+                        player.getSchoolDashboard().getPlayersTowers().addAll(islandSelected.getPlayerTower());
+                        break;
                     }
-                    //switch the color of the towers
-                    table.replaceTower(islandSelected, conquerorColor);
-                    //remove the towers from the new conqueror
-                    for(Tower towerOnIsland : islandSelected.getPlayerTower()){
-                        conqueror.getSchoolDashboard().getPlayersTowers().remove(0);
+                }
+                //switch the color of the towers
+                table.replaceTower(islandSelected, conquerorColor);
+                //TODO sublist?
+                //remove the towers from the new conqueror
+                for(Tower towerOnIsland : islandSelected.getPlayerTower()){
+                    conqueror.getSchoolDashboard().getPlayersTowers().remove(0);
+                }
+            }
+        }
+    }
+
+    /**
+     * check if on the island the tower(s) must be changed
+     * @param islandSelected the island selected by the player
+     * @param conquerorColor the color of the team that has conquered the island
+     */
+    public void checkPlaceTowerTeam(Island islandSelected, TowerColor conquerorColor){
+        if(0 == islandSelected.getPlayerTower().size()){
+            for(Player player : players){
+                if(player.getPlayerTeam().equals(conquerorColor)){
+                    if(player.getSchoolDashboard().getPlayersTowers().size() > 0){
+                        table.placeTower(islandSelected, player.getSchoolDashboard().getPlayersTowers().get(0));
+                        player.getSchoolDashboard().getPlayersTowers().remove(0);
+                        break;
                     }
                 }
             }
+        }
+        else{
+            TowerColor islandColor = islandSelected.getPlayerTower().get(0).getColor();
+            Player conquerorWithTowers = null;
+            Player conqueredWithTowers = null;
+            //search conqueror and conquered
+            for(Player player : players){
+                if(player.getPlayerTeam().equals(conquerorColor)){
+                    if(player.getSchoolDashboard().getPlayersTowers().size() > 0){
+                        conquerorWithTowers = player;
+                    }
+                }
+                if(player.getPlayerTeam().equals(islandColor)){
+                    if(player.getSchoolDashboard().getPlayersTowers().size() > 0){
+                        conqueredWithTowers = player;
+                    }
+                }
+            }
+            //the island is conquered by the other team
+            if(null != conquerorWithTowers && null != conqueredWithTowers){
+                if(!conquerorWithTowers.equals(conqueredWithTowers)){
+                    //remove the tower(s) from the player of the team that conquer
+                    conquerorWithTowers.getSchoolDashboard().getPlayersTowers().subList(0, islandSelected.getPlayerTower().size()).clear();
+                    //give back the tower(s) to the player of the team conquered
+                    conqueredWithTowers.getSchoolDashboard().getPlayersTowers().addAll(islandSelected.getPlayerTower());
+                    table.replaceTower(islandSelected, conquerorColor);
+                }
+            }
+        }
     }
 
     /**
@@ -563,7 +627,7 @@ public class GeneralGame {
     }
 
     /**
-     * calculate the influence on the island
+     * calculate the influence of each player on the island
      * @param islandWithMotherNature the island where the mother nature is placed in the current player's turn
      * @return the player with more influence on that island
      */
@@ -633,6 +697,86 @@ public class GeneralGame {
             player.setPlayerInfluence(0);
         }
         return conqueror;
+    }
+
+    /**
+     * calculate the influence of each team on the island
+     * @param islandSelected the island selected by the current player
+     * @return the color of the team which conquer the island
+     */
+    public TowerColor checkInfluenceTeam(Island islandSelected){
+        //number of students on the island by color
+        int blueStudents = islandSelected.getBlueStudents().size();
+        int greenStudents = islandSelected.getGreenStudents().size();
+        int pinkStudents = islandSelected.getPinkStudents().size();
+        int redStudents = islandSelected.getRedStudents().size();
+        int yellowStudents = islandSelected.getYellowStudents().size();
+        int whiteInfluence = 0;
+        int blackInfluence = 0;
+        //set the influence of the team on the island
+        for(Player player : players){
+            for(Professor prof : player.getSchoolDashboard().getSchoolProfessor()){
+                switch(prof.getColor()){
+                    case BLUE:{
+                        if(player.getPlayerTeam().equals(WHITE)){
+                            whiteInfluence = whiteInfluence + blueStudents;
+                        }
+                        else{
+                            blackInfluence = blackInfluence + blueStudents;
+                        }
+                    }
+                    case GREEN:{
+                        if(player.getPlayerTeam().equals(WHITE)){
+                            whiteInfluence = whiteInfluence + greenStudents;
+                        }
+                        else{
+                            blackInfluence = blackInfluence + greenStudents;
+                        }
+                    }
+                    case PINK:{
+                        if(player.getPlayerTeam().equals(WHITE)){
+                            whiteInfluence = whiteInfluence + pinkStudents;
+                        }
+                        else{
+                            blackInfluence = blackInfluence + pinkStudents;
+                        }
+                    }
+                    case RED:{
+                        if(player.getPlayerTeam().equals(WHITE)){
+                            whiteInfluence = whiteInfluence + redStudents;
+                        }
+                        else{
+                            blackInfluence = blackInfluence + redStudents;
+                        }
+                    }
+                    case YELLOW:{
+                        if(player.getPlayerTeam().equals(WHITE)){
+                            whiteInfluence = whiteInfluence + yellowStudents;
+                        }
+                        else{
+                            blackInfluence = blackInfluence + yellowStudents;
+                        }
+                    }
+                }
+            }
+        }
+        if(islandSelected.getPlayerTower().size() > 0){
+            if(islandSelected.getPlayerTower().get(0).getColor().equals(WHITE)){
+                whiteInfluence = whiteInfluence + islandSelected.getPlayerTower().size();
+            }
+            else{
+                blackInfluence = blackInfluence + islandSelected.getPlayerTower().size();
+            }
+        }
+        if(whiteInfluence > blackInfluence){
+            return WHITE;
+        }
+        else if(blackInfluence > whiteInfluence){
+            return BLACK;
+        }
+        else{
+            return null;
+        }
     }
 
     /**

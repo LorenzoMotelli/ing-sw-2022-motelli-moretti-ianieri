@@ -24,8 +24,6 @@ public class TableTest {
 
     }
 
-    //TODO review of the tests because of the change in the creation of the table
-
     @Test
     public void getClouds(){
         assertNotNull(table.getClouds());
@@ -73,23 +71,7 @@ public class TableTest {
         assertEquals(BLACK, table.getIslands().get(0).getPlayerTower().get(0).getColor());
     }
 
-    @Test
-    public void linkIsland_ShouldReturnIsland(){
-        Tower tower = new Tower();
-        tower.setColor(WHITE);
-        //preparation of the first island
-        table.getIslands().get(2).getPlayerTower().add(tower);
-        //preparation of the second island
-        table.getIslands().get(3).getPlayerTower().add(tower);
-        table.linkIslands(table.getIslands().get(2), table.getIslands().get(3));
-        assertEquals(4, table.getIslands().get(2).getStudents().size());
-        assertEquals(2, table.getIslands().get(2).getPlayerTower().size());
-        assertEquals(WHITE, table.getIslands().get(2).getPlayerTower().get(0).getColor());
-        assertEquals(WHITE, table.getIslands().get(2).getPlayerTower().get(1).getColor());
-        assertEquals(11, table.getIslands().size());
-    }
-
-    @RepeatedTest(value = 12, name = "Test {currentRepetition}")
+    @RepeatedTest(value = 12, name = "LinkAhead {currentRepetition}")
     public void linkIslandsAhead(RepetitionInfo repetitionInfo){
         for(Island island : table.getIslands()){
             island.setMotherNature(false);
@@ -97,18 +79,14 @@ public class TableTest {
         List<Tower> whiteTower = new ArrayList<>();
         whiteTower.add(new Tower(WHITE));
         int indexIsland1 = repetitionInfo.getCurrentRepetition() - 1;
+        //island ahead for island1
         int indexIsland2 = repetitionInfo.getCurrentRepetition() % 12;
         Island island1 = table.getIslands().get(indexIsland1);
         island1.setPlayerTower(whiteTower);
         Island island2 = table.getIslands().get(indexIsland2);
         island2.setPlayerTower(whiteTower);
-        //set mother nature to the island with the smallest index
-        if(indexIsland1 < indexIsland2){
-            island1.setMotherNature(true);
-        }
-        else{
-            island2.setMotherNature(true);
-        }
+        //set mother nature to the island1
+        island1.setMotherNature(true);
         int blueStudents1 = island1.getBlueStudents().size();
         int greenStudents1 = island1.getGreenStudents().size();
         int pinkStudents1 = island1.getPinkStudents().size();
@@ -123,24 +101,16 @@ public class TableTest {
         int towers2 = island2.getPlayerTower().size();
         table.linkIslands(island1, island2);
         Island islandWithMotherNature = table.getIslandWithMotherNature();
-        if(indexIsland1 < indexIsland2){
-            assertEquals(indexIsland1, table.getIslands().indexOf(islandWithMotherNature));
-        }
-        else{
-            assertEquals(indexIsland2, table.getIslands().indexOf(islandWithMotherNature));
-        }
-
         assertEquals(blueStudents1+blueStudents2, islandWithMotherNature.getBlueStudents().size());
         assertEquals(greenStudents1+greenStudents2, islandWithMotherNature.getGreenStudents().size());
         assertEquals(pinkStudents1+pinkStudents2, islandWithMotherNature.getPinkStudents().size());
         assertEquals(redStudents1+redStudents2, islandWithMotherNature.getRedStudents().size());
         assertEquals(yellowStudents1+yellowStudents2, islandWithMotherNature.getYellowStudents().size());
         assertEquals(towers1+towers2, islandWithMotherNature.getPlayerTower().size());
-        assertEquals(11, table.getIslands().size());
+        assertEquals(12, table.getIslands().size());
     }
 
-
-    @RepeatedTest(value = 12, name = "Test {currentRepetition}")
+    @RepeatedTest(value = 12, name = "LinkBehind {currentRepetition}")
     public void linkIslandsBehind(RepetitionInfo repetitionInfo){
         for(Island island : table.getIslands()){
             island.setMotherNature(false);
@@ -148,18 +118,14 @@ public class TableTest {
         List<Tower> whiteTower = new ArrayList<>();
         whiteTower.add(new Tower(WHITE));
         int indexIsland1 = repetitionInfo.getCurrentRepetition() - 1;
+        //island ahead for island1
         int indexIsland2 = (repetitionInfo.getCurrentRepetition()) % 12;
         Island island1 = table.getIslands().get(indexIsland1);
         island1.setPlayerTower(whiteTower);
         Island island2 = table.getIslands().get(indexIsland2);
         island2.setPlayerTower(whiteTower);
-        //set mother nature to the island with the smallest index
-        if(indexIsland1 < indexIsland2){
-            island1.setMotherNature(true);
-        }
-        else{
-            island2.setMotherNature(true);
-        }
+        //set mother nature to the island ahead, that is the island selected by the player
+        island2.setMotherNature(true);
         int blueStudents1 = island1.getBlueStudents().size();
         int greenStudents1 = island1.getGreenStudents().size();
         int pinkStudents1 = island1.getPinkStudents().size();
@@ -172,13 +138,7 @@ public class TableTest {
         int redStudents2 = island2.getRedStudents().size();
         int yellowStudents2 = island2.getYellowStudents().size();
         int towers2 = island2.getPlayerTower().size();
-        table.linkIslands(island1, island2);
-        if(indexIsland1 < indexIsland2){
-            assertEquals(indexIsland1, table.getIslands().indexOf(table.getIslandWithMotherNature()));
-        }
-        else{
-            assertEquals(indexIsland2, table.getIslands().indexOf(table.getIslandWithMotherNature()));
-        }
+        table.linkIslands(island2, island1);
         Island islandWithMotherNature = table.getIslandWithMotherNature();
         assertEquals(blueStudents1+blueStudents2, islandWithMotherNature.getBlueStudents().size());
         assertEquals(greenStudents1+greenStudents2, islandWithMotherNature.getGreenStudents().size());
@@ -186,7 +146,8 @@ public class TableTest {
         assertEquals(redStudents1+redStudents2, islandWithMotherNature.getRedStudents().size());
         assertEquals(yellowStudents1+yellowStudents2, islandWithMotherNature.getYellowStudents().size());
         assertEquals(towers1+towers2, islandWithMotherNature.getPlayerTower().size());
-        assertEquals(11, table.getIslands().size());
+        //the number of island does not change in table, general game will change it
+        assertEquals(12, table.getIslands().size());
     }
 
     @Test

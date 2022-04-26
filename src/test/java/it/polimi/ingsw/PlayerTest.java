@@ -10,13 +10,13 @@ import java.util.List;
 
 import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 import static org.junit.jupiter.api.Assertions.*;
-//TODO CHANGE TESTS
+
 public class PlayerTest {
     private Player player;
 
     @BeforeEach
     public void setUp(){
-        player = new Player(1,1, null);
+        player = new Player("Player1", 1,1, null);
         List<Student> studentList = new ArrayList<>();
         Student blueStudent = new Student();
         blueStudent.setColor(BLUE);
