@@ -39,12 +39,9 @@ public class Player {
 
     //---------------- GETTERS AND SETTERS --------------\\
 
-    public int getPlayerCoins() {
-        return playerCoins;
-    }
 
-    public void setPlayerCoins(int playerCoins) {
-        this.playerCoins = playerCoins;
+    public String getPlayerName() {
+        return playerName;
     }
 
     public AssistantCard[] getAssistantDeck() {
@@ -79,6 +76,14 @@ public class Player {
         this.playerTeam = playerTeam;
     }
 
+    public int getPlayerCoins() {
+        return playerCoins;
+    }
+
+    public void setPlayerCoins(int playerCoins) {
+        this.playerCoins = playerCoins;
+    }
+
     /**
      * take the coins equals to the cost of the character that the player has selected
      * @param costCoin the cost of the character selected
@@ -104,14 +109,12 @@ public class Player {
      * remove the assistant card from the deck
      * @param assistant the assistant card selected by the player
      */
-    public int useAssistant(AssistantCard assistant){
-        playerWeight = assistant.getTurnHeaviness();
+    public void removeAssistant(AssistantCard assistant){
         for(int i = 0; i < 10; i++){
             if(assistantDeck[i].equals(assistant)){
                 assistantDeck[i] = null;
                 break;
             }
         }
-        return assistant.getMovementMotherNature();
     }
 }

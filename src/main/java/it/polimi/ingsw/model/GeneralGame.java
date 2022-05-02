@@ -21,7 +21,7 @@ public class GeneralGame {
     int playerAdded = 0;
     //use for check the actual player
     private int turn = 0;
-    private int maxTurn = 0;
+    private int maxTurn;
     //the phase in which the player plays
     private Phases gamePhase;
     //the list of assistant cards use in the current round
@@ -109,6 +109,10 @@ public class GeneralGame {
 
     public Player getCurrentPlayer(){
         return players[turn];
+    }
+
+    public int getMotherNatureMovement() {
+        return motherNatureMovement;
     }
 
     public Table getTable() {
@@ -212,13 +216,24 @@ public class GeneralGame {
     //---------------- PLANNING PHASE MANAGEMENT --------------\\
 
     /**
+     * set the max movement of mother nature and the weight of the player
+     * than add the card to to list of card that can no more be used in this turn
+     * @param assistantCard the assistant card selected by the player
+     */
+    public void useAssistantCard(AssistantCard assistantCard){
+        motherNatureMovement = assistantCard.getMovementMotherNature();
+        getCurrentPlayer().setPlayerWeight(assistantCard.getTurnHeaviness());
+        getCurrentPlayer().removeAssistant(assistantCard);
+        addAssistantCardUsed(assistantCard);
+    }
+
+    /**
      * when an assistant card is used the other player can not use that assistant in this turn
      * moreover set the max mother nature movement (number of island)
      * @param assistantCard the assistant card selected by the current player
      * @return the list of the assistant cards used in this turn
      */
     public List<AssistantCard> addAssistantCardUsed(AssistantCard assistantCard){
-        motherNatureMovement = getCurrentPlayer().useAssistant(assistantCard);
         assistantCardsUsed.add(assistantCard);
         nextPhase(gamePhase);
         return assistantCardsUsed;

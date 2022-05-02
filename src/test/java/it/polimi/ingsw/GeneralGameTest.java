@@ -260,6 +260,23 @@ public class GeneralGameTest {
     }
 
     @Test
+    public void useAssistantCard(){
+        gameWith2Players.useAssistantCard(gameWith2Players.getCurrentPlayer().getAssistantDeck()[0]);
+        assertEquals(1, gameWith2Players.getMotherNatureMovement());
+        assertEquals(1, gameWith2Players.getCurrentPlayer().getPlayerWeight());
+        assertEquals(1, gameWith2Players.getAssistantCardsUsed().size());
+        assertEquals(1, gameWith2Players.getAssistantCardsUsed().get(0).getMovementMotherNature());
+        assertEquals(1, gameWith2Players.getAssistantCardsUsed().get(0).getTurnHeaviness());
+        assertNull(gameWith2Players.getCurrentPlayer().getAssistantDeck()[0]);
+        for(int i = 1; i < 10; i++){
+            assertNotNull(gameWith2Players.getCurrentPlayer().getAssistantDeck()[1]);
+        }
+        for(int i = 0; i < 10;i++){
+            assertNotNull(gameWith2Players.getPlayers()[1].getAssistantDeck()[i]);
+        }
+    }
+
+    @Test
     public void giveProfessorFromTheBag(){
         assertEquals(0, gameWith2Players.getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().size());
         gameWith2Players.getCurrentPlayer().getSchoolDashboard().getSchoolHall()[0].getTableHall()[0] = new Student(BLUE);
