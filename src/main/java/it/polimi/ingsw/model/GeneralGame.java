@@ -5,6 +5,8 @@ import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.Phases;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.model.enumeration.Variant;
+import it.polimi.ingsw.network.messages.Message;
+import it.polimi.ingsw.utils.Observable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,7 @@ import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 import static it.polimi.ingsw.model.enumeration.Phases.*;
 import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 
-public class GeneralGame {
+public class GeneralGame extends Observable<Message> {
 
     //list of the players in the game
     private Player[] players;

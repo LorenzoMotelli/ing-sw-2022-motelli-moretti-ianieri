@@ -15,6 +15,21 @@ public class Player {
     private int playerWeight = 0;
     private int playerInfluence = 0;
     private TowerColor playerTeam = null;
+//
+    //
+    /**
+     * easy constructor to initialize the player
+     */
+    /*Da vedere in gruppo*/
+    public Player(String name){
+        playerName=name;
+        assistantDeck = new AssistantCard[10];
+        for(int i = 0; i< 10; i++){
+            assistantDeck[i] = new AssistantCard(i/*, mage*/);
+        }
+    }
+    //
+//
 
     /**
      * new constructor to initialize the player
@@ -83,6 +98,7 @@ public class Player {
     public void setPlayerCoins(int playerCoins) {
         this.playerCoins = playerCoins;
     }
+
 
     /**
      * take the coins equals to the cost of the character that the player has selected
