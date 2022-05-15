@@ -52,6 +52,11 @@ public class Player {
         schoolDashboard = new School(numOfPlayer, playerToInitialize, initialStudents);
     }
 
+    //public Player(String name) {
+      //  playerName=name;
+        //TODO CHECKTOGHETHER
+    //}
+
     //---------------- GETTERS AND SETTERS --------------\\
 
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.network.view.userinterface.CliClientInterface;
+import it.polimi.ingsw.network.view.userinterface.GuiClientInterface;
 
 import java.util.Scanner;
 
@@ -13,9 +14,21 @@ public class ClientMain
         String input;
         boolean interfaceSelection = true;
 
-        //TODO: I.implementare un metodo più bello
-        //launcher of client interface
-        System.out.print("Select what you want to start (CLI or GUI): ");
+        System.out.println("────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+        System.out.println("\n" +
+                " █████╗ ██╗   ██╗ █████╗ ██╗██╗      █████╗ ██████╗ ██╗     ███████╗     ██████╗ ██████╗ ████████╗██╗ ██████╗ ███╗   ██╗       \n" +
+                "██╔══██╗██║   ██║██╔══██╗██║██║     ██╔══██╗██╔══██╗██║     ██╔════╝    ██╔═══██╗██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║    ██╗\n" +
+                "███████║██║   ██║███████║██║██║     ███████║██████╔╝██║     █████╗      ██║   ██║██████╔╝   ██║   ██║██║   ██║██╔██╗ ██║    ╚═╝\n" +
+                "██╔══██║╚██╗ ██╔╝██╔══██║██║██║     ██╔══██║██╔══██╗██║     ██╔══╝      ██║   ██║██╔═══╝    ██║   ██║██║   ██║██║╚██╗██║    ██╗\n" +
+                "██║  ██║ ╚████╔╝ ██║  ██║██║███████╗██║  ██║██████╔╝███████╗███████╗    ╚██████╔╝██║        ██║   ██║╚██████╔╝██║ ╚████║    ╚═╝\n" +
+                "╚═╝  ╚═╝  ╚═══╝  ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝     ╚═════╝ ╚═╝        ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝       \n" +
+                "                                                                                                                               ");
+
+
+        System.out.println("────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+        System.out.println("\n\n * 0 >>> CLI");
+        System.out.println("\n * 1 >>> GUI");
+        System.out.println("\nSELECTION: ");
 
         while (interfaceSelection)
         {
@@ -24,16 +37,18 @@ public class ClientMain
             input = input.toUpperCase();
 
             switch (input) {
-                case "CLI":
+                case "0":
+                    System.out.println("\n\n * GREAT CHOICE! *");
                     new CliClientInterface();
                     interfaceSelection = false;
                     break;
-                case "GUI":
-                    System.out.println("GUI yet to be implemented");
+                case "1":
+                    System.out.println("\n\n * GREAT CHOICE! *");
+                    new GuiClientInterface();
                     interfaceSelection = false;
                     break;
                 default:
-                    System.out.println("Invalid entry, try again");
+                    System.out.println("\n\n * Invalid entry, try again *");
             }
         }
     }
