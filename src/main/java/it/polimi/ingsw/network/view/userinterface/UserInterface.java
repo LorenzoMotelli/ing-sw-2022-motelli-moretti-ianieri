@@ -14,6 +14,7 @@ public interface UserInterface {
     public void askLobbySize();
 
     public void lobbySizeResponse(LobbySizeMessage message);
+    public void lobbyIsFull();
 
-    public void start_game();
+    void readyToPlay();
 }

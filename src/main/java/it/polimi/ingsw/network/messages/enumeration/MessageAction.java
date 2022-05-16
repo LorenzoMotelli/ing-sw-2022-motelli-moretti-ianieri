@@ -5,6 +5,10 @@ public enum MessageAction
     // SYSTEM MESSAGE
     CHOSE_USERNAME(MessageType.SYSTEM),
     LOBBY_SIZE(MessageType.SYSTEM),
+    READY(MessageType.SYSTEM),
+    LOBBY_IS_FULL(MessageType.SYSTEM),
+    IS_READY(MessageType.SYSTEM),
+
 
     // GAME MESSAGE
     SELECT_ASSISTANT_CARD(MessageType.GAME),

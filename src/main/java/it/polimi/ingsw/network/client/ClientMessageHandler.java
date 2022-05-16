@@ -50,6 +50,8 @@ public class ClientMessageHandler implements Observer<Message>
         {
             case CHOSE_USERNAME -> userInterface.usernameResponse((ServerUsernameMessage) message);
             case LOBBY_SIZE -> userInterface.lobbySizeResponse((LobbySizeMessage) message);
+            case LOBBY_IS_FULL -> userInterface.lobbyIsFull();
+            case IS_READY -> userInterface.readyToPlay();
 
             //TODO: L&G. gestire prossimi messaggi
             case END_TURN -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);

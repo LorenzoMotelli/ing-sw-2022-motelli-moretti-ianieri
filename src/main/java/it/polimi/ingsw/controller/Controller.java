@@ -17,11 +17,12 @@ public class Controller implements Observer<Message> {
 
     private List<VirtualView> clients;
 
-    public Controller(Server server) {
+    public Controller(Server server,int players) {
         this.server = server;
-        this.modelController = new ModelController();
+        this.modelController = new ModelController(players);
         this.clients = new ArrayList<>();
     }
+
 
     public void addClient(Connection c, String username) {
 
@@ -30,13 +31,8 @@ public class Controller implements Observer<Message> {
         VirtualView v = new VirtualView(c, player);
         clients.add(v);
 
-        // TODO: All.gestire chi osserva chi
-        //  All.gestione update del model
-
-        //ESEMPIO
-        // model.addObserver(v);
-        // v.addObserver(this);
-
+        modelController.getGameInstance().addObserver(v);
+        v.addObserver(this);
     }
 
     @Override

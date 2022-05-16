@@ -115,4 +115,21 @@ public class Connection extends Observable<Message> implements Runnable
         this.name = name;
     }
 
+    public void close()
+    {
+        if (isActive())
+        {
+            synchronized (outLock) {
+                isActive=false;
+            }
+            try {
+                in.close();
+                out.close();
+                socket.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 }

@@ -41,9 +41,4 @@ public class GuiClientInterface{
 
         frame.setVisible(true);
     }
-
-    public static void main(String[] args){
-        new GuiClientInterface();
-    }
-
 }

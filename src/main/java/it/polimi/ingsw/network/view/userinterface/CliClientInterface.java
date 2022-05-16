@@ -16,7 +16,7 @@ public class CliClientInterface implements UserInterface
     //default address
     private String serverIp = "localhost";
     //default choose port
-    private int serverPort = 8080;
+    private int serverPort =2000 ;
     //client name
     private String username;
     //handler that manage the communication from the server
@@ -86,7 +86,7 @@ public class CliClientInterface implements UserInterface
             askLobbySize();
         } else {
             System.out.println("Username accepted");
-            start_game();
+            messageHandler.sendMessage(new Message(MessageAction.READY, this.username));
         }
     }
 
@@ -116,12 +116,18 @@ public class CliClientInterface implements UserInterface
         {
             System.out.println("Lobby size accepted");
             System.out.println("Waiting for other players...");
+            messageHandler.sendMessage(new Message(MessageAction.READY, this.username));
         }
     }
 
     @Override
-    public void start_game()
+    public void lobbyIsFull() {
+        System.out.println("The lobby is full\n");
+    }
+
+    @Override
+    public void readyToPlay()
     {
-        System.out.println("Game can start");
+        System.out.println("Ready to start");
     }
 }

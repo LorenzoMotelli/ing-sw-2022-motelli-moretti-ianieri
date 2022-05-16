@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
 public class Server
 {
     //Default PORT
-    private final int PORT=8080;
+    private final int PORT=2000;// ???????
     //Socket to accept connection
     private ServerSocket serverSocket;
     //List of client connected
@@ -28,9 +28,11 @@ public class Server
     //Map of the connections accepted
     private final Map<String, Connection> clientsConnected = new HashMap<>();
     //
-    ModelController modelController = new ModelController();
+    Controller controller;
     //
     int lobbySize = -1;
+    //
+    int tempLobby=0;
     //
     boolean lobbySizeAsked = false;
 
@@ -49,7 +51,7 @@ public class Server
 
         System.out.println("Server ready...\n");
 
-        while (!Thread.currentThread().isInterrupted()) // or True
+        while (true)//!Thread.currentThread().isInterrupted()) // or True
         {
             try {
                 Socket socket = serverSocket.accept();
@@ -146,28 +148,31 @@ public class Server
 
         c.sendMessage(message);
 
-        initLobby();
+        //initLobby(); ??
     }
 
-    private void initLobby()
+    private void initLobby(Connection c, Message msg)
     {
-        // TODO: G.gestire ogni volta che un giocatore si connette
-
-        if (clientsConnected.size() == lobbySize)
+        if (clientsConnected.size() > lobbySize)
         {
-            //TODO: CREARE LA PARTITA
-            Controller controller = new Controller(this);
+            c.sendMessage(new Message(MessageAction.LOBBY_IS_FULL,c.getName()));
+            c.close();
+            System.err.println("Client disconnected");
 
-            for (String username : clientsConnected.keySet()) {
-                controller.addClient(clientsConnected.get(username), username);
-            }
+            //clientConnectionException(c);
 
-            controller.startGame();
-
+            //Thread.currentThread().interrupt();
         }
-
-        System.out.println("Lobby initialized, when all players are connected, the game will start soon...");
-
+        else {
+            controller = new Controller(this, lobbySize);
+            controller.addClient(c, c.getName());
+            tempLobby++;
+            System.out.println("Lobby initialized, when all players are connected, the game will start soon...");
+            c.sendMessage(new Message(MessageAction.IS_READY, c.getName()));
+            if (tempLobby == lobbySize) {
+                controller.startGame();
+            }
+        }
     }
 
     public void handleMessage(Message message, Connection c)
@@ -176,6 +181,8 @@ public class Server
             case CHOSE_USERNAME -> loginPlayer(c, message);
 
             case LOBBY_SIZE -> checkLobbySize(c, (LobbySizeMessage) message);
+
+            case READY ->initLobby(c,message);
 
             default -> {
                 System.out.println("MessageAction not recognized");
