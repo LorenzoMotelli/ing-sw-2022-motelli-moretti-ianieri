@@ -5,6 +5,7 @@ import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 import it.polimi.ingsw.network.messages.specific.LobbySizeMessage;
 import it.polimi.ingsw.network.messages.specific.ServerUsernameMessage;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Scanner;
 
@@ -105,7 +106,7 @@ public class CliClientInterface implements UserInterface
 
     //response to the message for the lobbySize
     @Override
-    public void lobbySizeResponse(LobbySizeMessage message)
+    public void lobbySizeResponse(@NotNull LobbySizeMessage message)
     {
         if (message.getLobbySize() == -1)
         {
@@ -120,6 +121,7 @@ public class CliClientInterface implements UserInterface
         }
     }
 
+    //TODO MANU FAI MEGLIO TUTTI I MESSSGGI 
     @Override
     public void lobbyIsFull() {
         System.out.println("The lobby is full\n");
