@@ -7,8 +7,8 @@ import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 public class SelectAssistantCardMessage extends Message {
     private final AssistantCard assistantCard;
 
-    public SelectAssistantCardMessage(AssistantCard assistantCard, String player) {
-        super(MessageAction.SELECT_ASSISTANT_CARD, player);
+    public SelectAssistantCardMessage(AssistantCard assistantCard) {
+        super(MessageAction.SELECT_ASSISTANT_CARD, null);
         this.assistantCard = assistantCard;
     }
 

@@ -2,9 +2,7 @@ package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
-import it.polimi.ingsw.network.messages.specific.DisconnectMessage;
-import it.polimi.ingsw.network.messages.specific.RoomSizeMessage;
-import it.polimi.ingsw.network.messages.specific.ServerUsernameMessage;
+import it.polimi.ingsw.network.messages.specific.*;
 import it.polimi.ingsw.network.view.userinterface.UserInterface;
 import it.polimi.ingsw.utils.Observer;
 
@@ -50,6 +48,10 @@ public class ClientMessageHandler implements Observer<Message> {
             case WAITING_PLAYERS -> userInterface.waitingForOtherPlayers();
             case DISCONNECT, DISCONNECT_IN_GAME -> userInterface.someoneDisconnected((DisconnectMessage) message);
             case START -> userInterface.startingMatch();
+            case UPDATE -> userInterface.boardUpdate((UpdateBoardMessage) message);
+
+            // PLANNING
+            case SELECT_ASSISTANT_CARD -> userInterface.selectAssistantCard((AskAssistantCardsMessage) message);
 
             // TODO: L&G. gestire prossimi messaggi
             case END_TURN -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);

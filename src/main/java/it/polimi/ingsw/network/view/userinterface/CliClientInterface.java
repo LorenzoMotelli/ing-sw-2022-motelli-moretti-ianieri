@@ -1,11 +1,11 @@
 package it.polimi.ingsw.network.view.userinterface;
 
+import it.polimi.ingsw.model.GeneralGame;
+import it.polimi.ingsw.model.cards.AssistantCard;
 import it.polimi.ingsw.network.client.ClientMessageHandler;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
-import it.polimi.ingsw.network.messages.specific.DisconnectMessage;
-import it.polimi.ingsw.network.messages.specific.RoomSizeMessage;
-import it.polimi.ingsw.network.messages.specific.ServerUsernameMessage;
+import it.polimi.ingsw.network.messages.specific.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStreamReader;
@@ -192,5 +192,41 @@ public class CliClientInterface implements UserInterface {
             case DISCONNECT_IN_GAME -> System.out.println("A player has disconnected, quitting...");
             default -> System.out.println("The server has disconnected you");
         }
+    }
+
+    @Override
+    public void boardUpdate(UpdateBoardMessage updateBoardMessage){
+        GeneralGame game = updateBoardMessage.getGame();
+        System.out.println("ISLAND SITUATION:");
+        for(int i = 0; i < game.getTable().getIslands().size(); i++){
+            for(int j = 0; j < game.getTable().getIslands().get(i).getStudents().size(); j++){
+                System.out.print(game.getTable().getIslands().get(i).getStudents().get(j).getColor());
+            }
+            System.out.println();
+        }
+    }
+
+    @Override
+    public void selectAssistantCard(AskAssistantCardsMessage message){
+        for(int i = 0; i < 10; i++){
+            int moveMN = message.getAssistantCards()[i].getMovementMotherNature();
+            int weight = message.getAssistantCards()[i].getTurnHeaviness();
+            System.out.println( "Card " + i + " has movement MN " + moveMN + " and heaviness " + weight) ;
+        }
+
+        // ASK USER FOR AN INT
+
+
+        //TODO: validate user input
+        cmdIn = new Scanner(System.in);
+        int choice = cmdIn.nextInt();
+
+        AssistantCard chosenCard = message.getAssistantCards()[choice];
+
+
+        messageHandler.sendMessage(
+                new SelectAssistantCardMessage(chosenCard)
+        );
+
     }
 }

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.controller.ModelController;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 import it.polimi.ingsw.network.messages.specific.DisconnectMessage;

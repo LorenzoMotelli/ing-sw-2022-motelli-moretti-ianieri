@@ -12,6 +12,7 @@ public enum MessageAction {
     // GAME MESSAGE
     START(MessageType.GAME),
     DISCONNECT_IN_GAME(MessageType.GAME),
+    UPDATE(MessageType.GAME),
     SELECT_ASSISTANT_CARD(MessageType.GAME),
     PLACE_IN_HALL(MessageType.GAME),
     PLACE_ON_ISLAND(MessageType.GAME),

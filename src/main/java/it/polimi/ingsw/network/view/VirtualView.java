@@ -40,4 +40,8 @@ public class VirtualView extends Observable<Message> implements Observer<Message
         connection.sendMessage(message);
     }
 
+    public void sendMessage(Message message){
+        connection.sendMessage(message);
+    }
+
 }

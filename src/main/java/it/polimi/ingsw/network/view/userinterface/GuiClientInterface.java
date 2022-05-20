@@ -1,12 +1,11 @@
 package it.polimi.ingsw.network.view.userinterface;
 
 
+import it.polimi.ingsw.model.GeneralGame;
 import it.polimi.ingsw.network.client.ClientMessageHandler;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
-import it.polimi.ingsw.network.messages.specific.DisconnectMessage;
-import it.polimi.ingsw.network.messages.specific.RoomSizeMessage;
-import it.polimi.ingsw.network.messages.specific.ServerUsernameMessage;
+import it.polimi.ingsw.network.messages.specific.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -208,6 +207,16 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     @Override
     public void someoneDisconnected(DisconnectMessage message) {
         // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void boardUpdate(UpdateBoardMessage updateBoardMessage){
+
+    }
+
+    @Override
+    public void selectAssistantCard(AskAssistantCardsMessage message){
 
     }
 }

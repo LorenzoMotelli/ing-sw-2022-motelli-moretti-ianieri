@@ -3,14 +3,17 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.cards.AssistantCard;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 
+import java.io.Serializable;
 import java.util.List;
 
 import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 // TODO add nickname
-public class Player {
+public class Player implements Serializable {
     private String playerName;
     private School schoolDashboard;
     private AssistantCard[] assistantDeck;
+
+    private AssistantCard assistantCardUsed;
     private int playerCoins = 1;
     private int playerWeight = 0;
     private int playerInfluence = 0;
@@ -108,9 +111,10 @@ public class Player {
      * remove the assistant card from the deck
      * @param assistant the assistant card selected by the player
      */
-    public void removeAssistant(AssistantCard assistant){
+    public void selectAssistant(AssistantCard assistant){
         for(int i = 0; i < 10; i++){
             if(assistantDeck[i].equals(assistant)){
+                assistantCardUsed = assistantDeck[i];
                 assistantDeck[i] = null;
                 break;
             }

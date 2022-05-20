@@ -74,7 +74,7 @@ public class PlayerTest {
 
     @Test
     public void useAssistant_AssistantCard(){
-        player1.removeAssistant(player1.getAssistantDeck()[2]);
+        player1.selectAssistant(player1.getAssistantDeck()[2]);
         for(int i = 0; i < 10; i++){
             if(i == 2){
                 assertNull(player1.getAssistantDeck()[2]);

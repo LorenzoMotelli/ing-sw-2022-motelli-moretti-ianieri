@@ -2,9 +2,7 @@ package it.polimi.ingsw.network.view.userinterface;
 
 
 import it.polimi.ingsw.network.messages.Message;
-import it.polimi.ingsw.network.messages.specific.DisconnectMessage;
-import it.polimi.ingsw.network.messages.specific.RoomSizeMessage;
-import it.polimi.ingsw.network.messages.specific.ServerUsernameMessage;
+import it.polimi.ingsw.network.messages.specific.*;
 
 public interface UserInterface {
 
@@ -23,4 +21,8 @@ public interface UserInterface {
     public void startingMatch();
 
     public void someoneDisconnected(DisconnectMessage message);
+
+    public void boardUpdate(UpdateBoardMessage updateBoardMessage);
+
+    public void selectAssistantCard(AskAssistantCardsMessage message);
 }

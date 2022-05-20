@@ -6,8 +6,10 @@ import it.polimi.ingsw.model.enumeration.Phases;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.model.enumeration.Variant;
 import it.polimi.ingsw.network.messages.Message;
+import it.polimi.ingsw.network.messages.specific.UpdateBoardMessage;
 import it.polimi.ingsw.utils.Observable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,7 +18,7 @@ import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 import static it.polimi.ingsw.model.enumeration.Phases.*;
 import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 
-public class GeneralGame extends Observable<Message> {
+public class GeneralGame extends Observable<Message> implements Serializable {
 
     //list of the players in the game
     private Player[] players;
@@ -94,6 +96,7 @@ public class GeneralGame extends Observable<Message> {
                 }
             }
         }
+        notify(new UpdateBoardMessage(this));
     }
 
     /**
@@ -198,7 +201,8 @@ public class GeneralGame extends Observable<Message> {
      * the cloud will be refilled
      */
     public void newTurn(){
-        turn++;
+        turn = (turn+1) % players.length;
+        /*turn++;
         if(turn > maxTurn-1){
             //a new round will begin
             setNewOrder();
@@ -207,7 +211,8 @@ public class GeneralGame extends Observable<Message> {
             gamePhase = PLANNING;
             //reset of the list of the assistant card used
             assistantCardsUsed = new ArrayList<>();
-        }
+        }*/
+        notify(new UpdateBoardMessage(this));
     }
 
     /**
@@ -260,8 +265,9 @@ public class GeneralGame extends Observable<Message> {
     public void useAssistantCard(AssistantCard assistantCard){
         motherNatureMovement = assistantCard.getMovementMotherNature();
         getCurrentPlayer().setPlayerWeight(assistantCard.getTurnHeaviness());
-        getCurrentPlayer().removeAssistant(assistantCard);
+        getCurrentPlayer().selectAssistant(assistantCard);
         addAssistantCardUsed(assistantCard);
+        notify(new UpdateBoardMessage(this));
     }
 
     /**
@@ -272,7 +278,7 @@ public class GeneralGame extends Observable<Message> {
      */
     public List<AssistantCard> addAssistantCardUsed(AssistantCard assistantCard){
         assistantCardsUsed.add(assistantCard);
-        nextPhase(gamePhase);
+        //nextPhase(gamePhase);
         return assistantCardsUsed;
     }
 
@@ -286,6 +292,7 @@ public class GeneralGame extends Observable<Message> {
     public void placeStudentInHall(Student studentToBePlaced){
         getCurrentPlayer().placeStudentInHall(studentToBePlaced);
         giveProfessor(studentToBePlaced.getColor());
+        notify(new UpdateBoardMessage(this));
     }
 
     /**
@@ -493,6 +500,7 @@ public class GeneralGame extends Observable<Message> {
             }
         }
         //return getCurrentPlayer();
+        notify(new UpdateBoardMessage(this));
     }
 
     /**
@@ -507,6 +515,7 @@ public class GeneralGame extends Observable<Message> {
             }
         }
         getCurrentPlayer().getSchoolDashboard().getEntranceStudent().remove(studentToBePlaced);
+        notify(new UpdateBoardMessage(this));
     }
 
     /**
@@ -540,6 +549,7 @@ public class GeneralGame extends Observable<Message> {
                 checkLinkIslands(islandSelected);
             }
         }
+        notify(new UpdateBoardMessage(this));
     }
 
     /**
@@ -832,5 +842,6 @@ public class GeneralGame extends Observable<Message> {
      */
     public void giveStudentsFromCloudToPlayer(Cloud cloudSelected){
         getCurrentPlayer().getSchoolDashboard().getEntranceStudent().addAll(table.giveStudentsFromCloud(cloudSelected));
+        notify(new UpdateBoardMessage(this));
     }
 }

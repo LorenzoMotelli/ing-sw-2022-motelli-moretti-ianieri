@@ -3,12 +3,13 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 
+import java.io.Serializable;
 import java.util.*;
 
 import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 
-public class School {
+public class School implements Serializable {
 
     private Hall[] schoolHall;
     private List<Professor> schoolProfessor;
