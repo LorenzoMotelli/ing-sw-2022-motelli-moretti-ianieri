@@ -21,7 +21,7 @@ public class HallTest {
     public void getTableHall_ShouldReturnStudentsList(){
         assertNotNull(hall.getTableHall());
         for(int i = 0; i< 10; i++){
-            assertNotNull(hall.getTableHall()[i]);
+            assertNull(hall.getTableHall()[i]);
         }
     }
 
@@ -32,12 +32,11 @@ public class HallTest {
 
     @Test
     public void placeStudent(){
-        Student blueStudent = new Student();
-        blueStudent.setColor(PawnColor.BLUE);
+        Student blueStudent = new Student(PawnColor.BLUE);
         hall.placeStudent(blueStudent);
         assertEquals(PawnColor.BLUE, hall.getTableHall()[0].getColor());
         for(int i = 1; i < 10; i++){
-            assertNull(hall.getTableHall()[i].getColor());
+            assertNull(hall.getTableHall()[i]);
         }
     }
 }

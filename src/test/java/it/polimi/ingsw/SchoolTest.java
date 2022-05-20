@@ -26,7 +26,7 @@ public class SchoolTest {
         Student pinkStudent = new Student(PINK);
         studentList.add(blueStudent);
         studentList.add(pinkStudent);
-        school = new School(2,1, studentList); //creation of the test school
+        school = new School(); //creation of the test school
     }
 
     @Test
@@ -59,7 +59,13 @@ public class SchoolTest {
     }
 
     @Test
-    public void placeStudentInHall_Student(){
+    public void placeStudentInHall(){
+        List<Student> students = new ArrayList<>();
+        for(int i = 0; i < 2; i++){
+            Student student = new Student(PINK);
+            students.add(student);
+        }
+        school.setEntranceStudent(students);
         school.placeStudentInHall(school.getEntranceStudent().get(1));
         assertEquals(PINK, school.getSchoolHall()[2].getTableHall()[0].getColor());
         assertEquals(1, school.getEntranceStudent().size());

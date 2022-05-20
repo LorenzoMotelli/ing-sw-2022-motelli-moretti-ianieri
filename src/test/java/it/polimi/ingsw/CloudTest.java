@@ -2,7 +2,6 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.model.Cloud;
 import it.polimi.ingsw.model.Student;
-import it.polimi.ingsw.model.enumeration.PawnColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

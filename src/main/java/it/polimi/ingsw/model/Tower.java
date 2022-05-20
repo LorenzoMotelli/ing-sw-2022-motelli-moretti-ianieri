@@ -2,7 +2,9 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumeration.TowerColor;
 
-public class Tower {
+import java.io.Serializable;
+
+public class Tower implements Serializable {
     private TowerColor color;
 
     public Tower(){}

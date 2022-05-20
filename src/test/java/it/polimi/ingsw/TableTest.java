@@ -154,7 +154,7 @@ public class TableTest {
     public void placeStudentInCloud(){
         //empty clouds
         table.getClouds().get(0).getCloudStudents().clear();
-        table.getClouds().get(1).getCloudStudents().clear();;
+        table.getClouds().get(1).getCloudStudents().clear();
         assertEquals(0, table.getClouds().get(0).getCloudStudents().size());
         assertEquals(0, table.getClouds().get(1).getCloudStudents().size());
         int numberOfBagStudents = table.getStudentBag().size();

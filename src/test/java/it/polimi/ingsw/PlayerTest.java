@@ -16,7 +16,7 @@ public class PlayerTest {
 
     @BeforeEach
     public void setUp(){
-        player1 = new Player("Player1", 1,1, null);
+        player1 = new Player("Player1");
         List<Student> studentList = new ArrayList<>();
         Student blueStudent = new Student();
         blueStudent.setColor(BLUE);
