@@ -2,10 +2,11 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumeration.PawnColor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Island {
+public class Island implements Serializable {
 
     private List<Student> students;
     private List<Tower> playerTower;

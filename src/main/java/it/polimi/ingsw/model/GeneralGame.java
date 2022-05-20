@@ -20,7 +20,7 @@ public class GeneralGame extends Observable<Message> {
 
     //list of the players in the game
     private Player[] players;
-    int playerAdded = 0;
+    private int playerAdded = 0;
     //use for check the actual player
     private int turn = 0;
     private int maxTurn;
@@ -54,41 +54,71 @@ public class GeneralGame extends Observable<Message> {
             //selection of the 3 character that will be in the game
         }
          */
-        //the table has to be created before the players because of the student bag
-        table = new Table(numberOfPlayer, variantSelected, charactersToPlay);
         //creation of players
         players = new Player[numberOfPlayer];
         maxTurn = numberOfPlayer;
+        if(maxTurn == 4){
+            teamGame = true;
+        }
+    }
+
+    public void startGeneralGame(){
+        //the table has to be created before the players because of the student bag
+        table = new Table(players.length, variant, allCharacters);
+        for(int i = 0; i < players.length; i++){
+            if(players.length == 3){
+                players[i].getSchoolDashboard().setEntranceStudent(randomStudentFromBag(9));
+                if(0 == i){
+                    players[i].getSchoolDashboard().setPlayersTowers(6, WHITE);
+                }
+                if(1 == i){
+                    players[i].getSchoolDashboard().setPlayersTowers(6, BLACK);
+                }
+                else{
+                    players[i].getSchoolDashboard().setPlayersTowers(6, GREY);
+                }
+            }
+            else{
+                players[i].getSchoolDashboard().setEntranceStudent(randomStudentFromBag(7));
+                if(i % 2 == 0){
+                    players[i].getSchoolDashboard().setPlayersTowers(8, WHITE);
+                    if(teamGame){
+                        players[i].setPlayerTeam(WHITE);
+                    }
+                }
+                else{
+                    players[i].getSchoolDashboard().setPlayersTowers(8, BLACK);
+                    if(teamGame){
+                        players[i].setPlayerTeam(BLACK);
+                    }
+                }
+            }
+        }
     }
 
     /**
      * add a player to the list of players in the game
      * @param name the name selected by the player
      */
-    public /*Player*/ void addPlayer(String name){
+    public Player addPlayer(String name){
+        Player player = new Player(name);
         if(playerAdded < players.length){
-            Player player;
-            if(2 == players.length || 4 == players.length){
-                player = new Player(name, players.length, playerAdded+1,randomStudentFromBag(7));
-            }
-            else{
-                player = new Player(name, players.length, playerAdded+1,randomStudentFromBag(9));
-            }
             players[playerAdded] = player;
             playerAdded++;
-            /*return player*/
+            return player;
         }
+        return null;
     }
 
     /**
      * select random students from the bag and remove them from the bag
-     * @param repetitions the number of students to take from the brag
+     * @param numStudToGive the number of students to take from the brag
      * @return the two students randomly selected
      */
-    public List<Student> randomStudentFromBag(int repetitions){
+    public List<Student> randomStudentFromBag(int numStudToGive){
         List<Student> studentsList = new ArrayList<>();
         Random random = new Random();
-        for(int i = 0; i < repetitions; i++){
+        for(int i = 0; i < numStudToGive; i++){
             studentsList.add(table.getStudentBag().get(random.nextInt(table.getStudentBag().size())));
         }
         table.getStudentBag().removeAll(studentsList);
@@ -200,16 +230,21 @@ public class GeneralGame extends Observable<Message> {
      */
     public void nextPhase(Phases currentPhase){
         switch (currentPhase){
-            case PLANNING:{
-                gamePhase = ACTION;
-                break;
-            }
-            case ACTION:{
-                gamePhase = ENDING;
-                break;
-            }
-            case ENDING:{
+            case STARTING:
+            case ENDING: {
                 gamePhase = PLANNING;
+                break;
+            }
+            case PLANNING:{
+                gamePhase = PLACE_STUDENT;
+                break;
+            }
+            case PLACE_STUDENT:{
+                gamePhase = PLACE_MOTHER_NATURE;
+                break;
+            }
+            case PLACE_MOTHER_NATURE:{
+                gamePhase = ENDING;
                 break;
             }
         }
@@ -286,7 +321,7 @@ public class GeneralGame extends Observable<Message> {
                 if(null != playerWithProfessor){
                     int maxBlueStudents = 0;
                     for(int i = 0; i < 10; i++){
-                        if(null != playerWithProfessor.getSchoolDashboard().getSchoolHall()[0].getTableHall()[i].getColor()){
+                        if(null != playerWithProfessor.getSchoolDashboard().getSchoolHall()[0].getTableHall()[i]){
                             maxBlueStudents++;
                         }
                         //there are no more students in the hall
@@ -296,7 +331,7 @@ public class GeneralGame extends Observable<Message> {
                     }
                     int blueStudents = 0;
                     for(int i = 0; i < 10; i++){
-                        if(null != getCurrentPlayer().getSchoolDashboard().getSchoolHall()[0].getTableHall()[i].getColor()){
+                        if(null != getCurrentPlayer().getSchoolDashboard().getSchoolHall()[0].getTableHall()[i]){
                             blueStudents++;
                         }
                         //there are no more students in the hall
@@ -321,7 +356,7 @@ public class GeneralGame extends Observable<Message> {
                 if(null != playerWithProfessor){
                     int maxGreenStudents = 0;
                     for(int i = 0; i < 10; i++){
-                        if(null != playerWithProfessor.getSchoolDashboard().getSchoolHall()[1].getTableHall()[i].getColor()){
+                        if(null != playerWithProfessor.getSchoolDashboard().getSchoolHall()[1].getTableHall()[i]){
                             maxGreenStudents++;
                         }
                         //there are no more students in the hall
@@ -331,7 +366,7 @@ public class GeneralGame extends Observable<Message> {
                     }
                     int greenStudents = 0;
                     for(int i = 0; i < 10; i++){
-                        if(null != getCurrentPlayer().getSchoolDashboard().getSchoolHall()[1].getTableHall()[i].getColor()){
+                        if(null != getCurrentPlayer().getSchoolDashboard().getSchoolHall()[1].getTableHall()[i]){
                             greenStudents++;
                         }
                         //there are no more students in the hall
@@ -356,7 +391,7 @@ public class GeneralGame extends Observable<Message> {
                 if(null != playerWithProfessor){
                     int maxPinkStudents = 0;
                     for(int i = 0; i < 10; i++){
-                        if(null != playerWithProfessor.getSchoolDashboard().getSchoolHall()[2].getTableHall()[i].getColor()){
+                        if(null != playerWithProfessor.getSchoolDashboard().getSchoolHall()[2].getTableHall()[i]){
                             maxPinkStudents++;
                         }
                         //there are no more students in the hall
@@ -366,7 +401,7 @@ public class GeneralGame extends Observable<Message> {
                     }
                     int pinkStudents = 0;
                     for(int i = 0; i < 10; i++){
-                        if(null != getCurrentPlayer().getSchoolDashboard().getSchoolHall()[2].getTableHall()[i].getColor()){
+                        if(null != getCurrentPlayer().getSchoolDashboard().getSchoolHall()[2].getTableHall()[i]){
                             pinkStudents++;
                         }
                         //there are no more students in the hall
@@ -391,7 +426,7 @@ public class GeneralGame extends Observable<Message> {
                 if(null != playerWithProfessor){
                     int maxRedStudents = 0;
                     for(int i = 0; i < 10; i++){
-                        if(null != playerWithProfessor.getSchoolDashboard().getSchoolHall()[3].getTableHall()[i].getColor()){
+                        if(null != playerWithProfessor.getSchoolDashboard().getSchoolHall()[3].getTableHall()[i]){
                             maxRedStudents++;
                         }
                         //there are no more students in the hall
@@ -401,7 +436,7 @@ public class GeneralGame extends Observable<Message> {
                     }
                     int redStudents = 0;
                     for(int i = 0; i < 10; i++){
-                        if(null != getCurrentPlayer().getSchoolDashboard().getSchoolHall()[3].getTableHall()[i].getColor()){
+                        if(null != getCurrentPlayer().getSchoolDashboard().getSchoolHall()[3].getTableHall()[i]){
                             redStudents++;
                         }
                         //there are no more students in the hall
@@ -426,7 +461,7 @@ public class GeneralGame extends Observable<Message> {
                 if(null != playerWithProfessor){
                     int maxYellowStudents = 0;
                     for(int i = 0; i < 10; i++){
-                        if(null != playerWithProfessor.getSchoolDashboard().getSchoolHall()[4].getTableHall()[i].getColor()){
+                        if(null != playerWithProfessor.getSchoolDashboard().getSchoolHall()[4].getTableHall()[i]){
                             maxYellowStudents++;
                         }
                         //there are no more students in the hall
@@ -436,7 +471,7 @@ public class GeneralGame extends Observable<Message> {
                     }
                     int yellowStudents = 0;
                     for(int i = 0; i < 10; i++){
-                        if(null != getCurrentPlayer().getSchoolDashboard().getSchoolHall()[4].getTableHall()[i].getColor()){
+                        if(null != getCurrentPlayer().getSchoolDashboard().getSchoolHall()[4].getTableHall()[i]){
                             yellowStudents++;
                         }
                         //there are no more students in the hall
@@ -559,40 +594,35 @@ public class GeneralGame extends Observable<Message> {
         if(0 == islandSelected.getPlayerTower().size()){
             for(Player player : players){
                 if(player.getPlayerTeam().equals(conquerorColor)){
-                    if(player.getSchoolDashboard().getPlayersTowers().size() > 0){
-                        table.placeTower(islandSelected, player.getSchoolDashboard().getPlayersTowers().get(0));
-                        player.getSchoolDashboard().getPlayersTowers().remove(0);
-                        break;
-                    }
+                    player.getSchoolDashboard().getPlayersTowers().remove(0);
                 }
             }
+            table.placeTower(islandSelected, new Tower(conquerorColor));
         }
         else{
             TowerColor islandColor = islandSelected.getPlayerTower().get(0).getColor();
-            Player conquerorWithTowers = null;
-            Player conqueredWithTowers = null;
+            List<Player> conqueror = new ArrayList<>();
+            List<Player> conquered = new ArrayList<>();
             //search conqueror and conquered
             for(Player player : players){
                 if(player.getPlayerTeam().equals(conquerorColor)){
-                    if(player.getSchoolDashboard().getPlayersTowers().size() > 0){
-                        conquerorWithTowers = player;
-                    }
+                    conqueror.add(player);
                 }
                 if(player.getPlayerTeam().equals(islandColor)){
-                    if(player.getSchoolDashboard().getPlayersTowers().size() > 0){
-                        conqueredWithTowers = player;
-                    }
+                    conquered.add(player);
                 }
             }
             //the island is conquered by the other team
-            if(null != conquerorWithTowers && null != conqueredWithTowers){
-                if(!conquerorWithTowers.equals(conqueredWithTowers)){
-                    //remove the tower(s) from the player of the team that conquer
-                    conquerorWithTowers.getSchoolDashboard().getPlayersTowers().subList(0, islandSelected.getPlayerTower().size()).clear();
-                    //give back the tower(s) to the player of the team conquered
-                    conqueredWithTowers.getSchoolDashboard().getPlayersTowers().addAll(islandSelected.getPlayerTower());
-                    table.replaceTower(islandSelected, conquerorColor);
+            if(!conqueror.equals(conquered)){
+                //remove the tower(s) from each player of the team that conquer
+                for(Player p : conqueror){
+                    p.getSchoolDashboard().getPlayersTowers().subList(0, islandSelected.getPlayerTower().size()).clear();
                 }
+                //give back the tower(s) to each player of the team conquered
+                for(Player p : conquered){
+                    p.getSchoolDashboard().getPlayersTowers().addAll(islandSelected.getPlayerTower());
+                }
+                table.replaceTower(islandSelected, conquerorColor);
             }
         }
     }

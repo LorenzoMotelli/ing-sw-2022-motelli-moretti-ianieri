@@ -10,7 +10,7 @@ import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 public class Player {
     private String playerName;
     private School schoolDashboard;
-    private AssistantCard[] assistantDeck ;
+    private AssistantCard[] assistantDeck;
     private int playerCoins = 1;
     private int playerWeight = 0;
     private int playerInfluence = 0;
@@ -18,38 +18,16 @@ public class Player {
 //
     //
     /**
-     * easy constructor to initialize the player
+     * constructor to initialize the player
      */
     /*Da vedere in gruppo*/
     public Player(String name){
-        playerName=name;
-        assistantDeck = new AssistantCard[10];
-        for(int i = 0; i< 10; i++){
-            assistantDeck[i] = new AssistantCard(i/*, mage*/);
-        }
-    }
-    //
-//
-
-    /**
-     * new constructor to initialize the player
-     */
-    public Player(String name, int numOfPlayer, int playerToInitialize, List<Student> initialStudents){
         playerName = name;
         assistantDeck = new AssistantCard[10];
         for(int i = 0; i< 10; i++){
             assistantDeck[i] = new AssistantCard(i/*, mage*/);
         }
-        if(4 == numOfPlayer){
-            if(1 == playerToInitialize || 3 == playerToInitialize){
-                setPlayerTeam(WHITE);
-            }
-            if(2 == playerToInitialize || 4 == playerToInitialize){
-                setPlayerTeam(BLACK);
-            }
-
-        }
-        schoolDashboard = new School(numOfPlayer, playerToInitialize, initialStudents);
+        schoolDashboard = new School();
     }
 
     //public Player(String name) {

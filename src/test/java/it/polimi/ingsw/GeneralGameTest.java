@@ -38,6 +38,10 @@ public class GeneralGameTest {
         gameWith4Players.addPlayer("P2");
         gameWith4Players.addPlayer("P3");
         gameWith4Players.addPlayer("P4");
+
+        gameWith2Players.startGeneralGame();
+        gameWith3Players.startGeneralGame();
+        gameWith4Players.startGeneralGame();
     }
 
     @Test
@@ -279,8 +283,9 @@ public class GeneralGameTest {
     @Test
     public void giveProfessorFromTheBag(){
         assertEquals(0, gameWith2Players.getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().size());
-        gameWith2Players.getCurrentPlayer().getSchoolDashboard().getSchoolHall()[0].getTableHall()[0] = new Student(BLUE);
-        assertNull(gameWith2Players.getPlayers()[1].getSchoolDashboard().getSchoolHall()[0].getTableHall()[0].getColor());
+        gameWith2Players.getCurrentPlayer().placeStudentInHall(new Student(BLUE));
+        //gameWith2Players.getCurrentPlayer().getSchoolDashboard().getSchoolHall()[0].getTableHall()[0] = new Student(BLUE);
+        assertNull(gameWith2Players.getPlayers()[1].getSchoolDashboard().getSchoolHall()[0].getTableHall()[0]);
         assertEquals(5, gameWith2Players.getTable().getProfessors().size());
         gameWith2Players.giveProfessor(BLUE);
         assertEquals(4, gameWith2Players.getTable().getProfessors().size());

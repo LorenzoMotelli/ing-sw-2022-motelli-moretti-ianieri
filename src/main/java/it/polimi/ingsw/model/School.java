@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.TowerColor;
 
 import java.util.*;
 
@@ -14,13 +15,14 @@ public class School {
     private List<Student> entranceStudent;
     private List<Tower> playersTowers;
 
+
     /**
      * Initialize the halls in the school in order BLUE[0], GREEN[1], PINK[2], RED[3], YELLOW[4]
      * Initialize the professors list
      * Initialize the list of students in the entrance
-     * Initialize the tower list (and set with them the team eventually)
+     * Initialize the tower list
      */
-    public School(int numOfPlayer, int playerToInitialize, List<Student> initialStudents){
+    public School(){
         //initialization of the halls
         schoolHall = new Hall[5];
         for(int i = 0; i < 5; i++){
@@ -32,74 +34,11 @@ public class School {
         getSchoolHall()[3].setHallColor(RED);
         getSchoolHall()[4].setHallColor(YELLOW);
         //initialization of the 5 professors (everyone is null)
-        schoolProfessor = new ArrayList<>(5);
+        schoolProfessor = new ArrayList<>();
         //initialization of the students in the entrance
-        entranceStudent = new ArrayList<>(7);
-        setEntranceStudent(initialStudents);
+        entranceStudent = new ArrayList<>();
         //initialization of the towers
-        playersTowers = new ArrayList<>(8);
-        //set the color of the player's towers based on the number of player
-        switch(numOfPlayer){
-            case 2:{
-                if(1 == playerToInitialize){
-                    for(int i = 0; i < 8; i++){
-                        Tower t = new Tower();
-                        t.setColor(WHITE);
-                        playersTowers.add(t);
-                    }
-                }
-                if(2 == playerToInitialize){
-                    for(int i = 0; i < 8; i++){
-                        Tower t = new Tower();
-                        t.setColor(BLACK);
-                        playersTowers.add(t);
-                    }
-                }
-                break;
-            }
-            case 3:{
-                if(1 == playerToInitialize){
-                    for(int i = 0; i < 6; i++){
-                        Tower t = new Tower();
-                        t.setColor(WHITE);
-                        playersTowers.add(t);
-                    }
-                }
-                if(2 == playerToInitialize){
-                    for(int i = 0; i < 6; i++){
-                        Tower t = new Tower();
-                        t.setColor(BLACK);
-                        playersTowers.add(t);
-                    }
-                }
-                if(3 == playerToInitialize){
-                    for(int i = 0; i < 6; i++){
-                        Tower t = new Tower();
-                        t.setColor(GREY);
-                        playersTowers.add(t);
-                    }
-                }
-                break;
-            }
-            case 4:{
-                //only two player has the towers
-                if(3 == playerToInitialize){
-                    for(int i = 0; i < 8; i++){
-                        Tower t = new Tower();
-                        t.setColor(WHITE);
-                        playersTowers.add(t);
-                    }
-                }
-                if(4 == playerToInitialize){
-                    for(int i = 0; i < 8; i++){
-                        Tower t = new Tower();
-                        t.setColor(BLACK);
-                        playersTowers.add(t);
-                    }
-                }
-                break;
-            }
-        }
+        playersTowers = new ArrayList<>();
     }
 
     //---------------- GETTERS AND SETTERS --------------\\
@@ -122,6 +61,12 @@ public class School {
 
     public void setEntranceStudent(List<Student> entranceStudent) {
         this.entranceStudent = entranceStudent;
+    }
+
+    public void setPlayersTowers(int numOfTowers, TowerColor color){
+        for(int i = 0; i < numOfTowers; i++){
+            playersTowers.add(new Tower(color));
+        }
     }
 
     public List<Tower> getPlayersTowers() {
@@ -221,5 +166,4 @@ public class School {
     public void addProfessor(Professor prof){
         schoolProfessor.add(prof);
     }
-
 }
