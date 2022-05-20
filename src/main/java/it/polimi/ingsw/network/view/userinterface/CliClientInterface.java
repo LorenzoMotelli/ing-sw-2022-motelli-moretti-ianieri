@@ -8,12 +8,19 @@ import it.polimi.ingsw.network.messages.specific.RoomSizeMessage;
 import it.polimi.ingsw.network.messages.specific.ServerUsernameMessage;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.InputStreamReader;
+import java.net.UnknownHostException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
  * CLIENT INTERFACE with CLI
  */
 public class CliClientInterface implements UserInterface {
+    //
+    private InputStreamReader inputStreamReader;
+    //
+    Scanner cmdIn;
     // default address
     private String serverIp = "localhost";
     // default choose port
@@ -25,6 +32,7 @@ public class CliClientInterface implements UserInterface {
 
     public CliClientInterface() {
         messageHandler = new ClientMessageHandler(this);
+        inputStreamReader = new InputStreamReader(System.in);
         System.out.println("\n\n\n");
         System.out.println(
                 "────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
@@ -53,22 +61,52 @@ public class CliClientInterface implements UserInterface {
 
     // asking the address and the port
     private void connectToServer() {
-        System.out.print("Insert the server IP: ");
-        Scanner in = new Scanner(System.in);
-        String ip = in.nextLine();
-        this.serverIp = ip;
 
-        System.out.println("Enter the server PORT: ");
-        try{
-            String PORT = in.nextLine();
-            if(PORT.length()!=0 ){
-                serverPort = Integer.parseInt(PORT);
+        boolean addresselected= false;
+        boolean portselected=false;
+        String choice;
+        do {
+            if(!addresselected) {
+                System.out.println("Insert the server IP: ");
             }
-        } catch (NumberFormatException e) {}
+            if(addresselected && !portselected) {
+                System.out.println("Insert the server PORT: ");
+            }
 
-        if (!messageHandler.connect(serverIp, serverPort)) {
-            connectToServer();
-        }
+            cmdIn = new Scanner(inputStreamReader);
+            try {
+                choice = cmdIn.nextLine();
+            }catch (InputMismatchException e){
+                continue;
+            }
+
+            if(!addresselected) {
+                addresselected = true;
+                if (!choice.equals("")) {
+                    serverIp = choice;
+                }
+                continue;
+            }
+
+            if(!portselected){
+                portselected = true;
+                if (!choice.equals("")) {
+                    try {
+                        serverPort = Integer.parseInt(choice);
+                    }
+                    catch (NumberFormatException e) {
+                        portselected = false;
+                    }
+                }
+            }
+
+            if (!messageHandler.connect(serverIp, serverPort)) {
+                serverPort = 12345;
+                serverIp = "localhost";
+                connectToServer();
+            }
+
+        } while (!(addresselected && portselected));
 
         askUsername();
     }
