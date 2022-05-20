@@ -2,7 +2,9 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumeration.PawnColor;
 
-public abstract class Pawn {
+import java.io.Serializable;
+
+public abstract class Pawn implements Serializable {
     private PawnColor color;
 
     public PawnColor getColor() {

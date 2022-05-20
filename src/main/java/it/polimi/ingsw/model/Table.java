@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.model.enumeration.Variant;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,7 +11,7 @@ import java.util.stream.Collectors;
 
 import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 
-public class Table {
+public class Table implements Serializable {
     private final int MAX_STUDENT = 26;
 
     private List<Island> islands;

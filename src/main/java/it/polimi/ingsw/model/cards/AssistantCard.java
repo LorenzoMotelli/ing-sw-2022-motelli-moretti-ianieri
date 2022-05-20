@@ -2,7 +2,10 @@ package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.enumeration.Mages;
 
-public class AssistantCard {
+
+import java.io.Serializable;
+
+public class AssistantCard implements Serializable{
 
     private int turnHeaviness;
     private int movementMotherNature;

@@ -10,11 +10,11 @@ public class Room {
 
     private List<String> players = new ArrayList<>();
 
-    private final int roomSize;
+    private int roomSize;
 
-    public Room(int roomId, int roomSize) {
+    public Room(int roomId) {
         this.roomId = roomId;
-        this.roomSize = roomSize;
+        roomSize = 0;
     }
 
     public int getPlayersNumber() {
@@ -23,6 +23,10 @@ public class Room {
 
     public boolean isFull() {
         return players.size() == roomSize;
+    }
+
+    public int getRoomSize() {
+        return roomSize;
     }
 
     public void addClient(String playerName) {
@@ -51,4 +55,7 @@ public class Room {
         return roomId;
     }
 
+    public void setRoomSize(int roomSize) {
+        this.roomSize = roomSize;
+    }
 }
