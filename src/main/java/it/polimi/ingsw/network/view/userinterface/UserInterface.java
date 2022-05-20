@@ -2,7 +2,8 @@ package it.polimi.ingsw.network.view.userinterface;
 
 
 import it.polimi.ingsw.network.messages.Message;
-import it.polimi.ingsw.network.messages.specific.LobbySizeMessage;
+import it.polimi.ingsw.network.messages.specific.DisconnectMessage;
+import it.polimi.ingsw.network.messages.specific.RoomSizeMessage;
 import it.polimi.ingsw.network.messages.specific.ServerUsernameMessage;
 
 public interface UserInterface {
@@ -11,10 +12,15 @@ public interface UserInterface {
 
     public void usernameResponse(ServerUsernameMessage message);
 
-    public void askLobbySize();
+    public void askRoomCreation();
 
-    public void lobbySizeResponse(LobbySizeMessage message);
-    public void lobbyIsFull();
+    public void roomSizeResponse(RoomSizeMessage message);
 
-    void readyToPlay();
+    public void roomIsFull();
+
+    public void waitingForOtherPlayers();
+
+    public void startingMatch();
+
+    public void someoneDisconnected(DisconnectMessage message);
 }

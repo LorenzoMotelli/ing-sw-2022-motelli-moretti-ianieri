@@ -14,46 +14,38 @@ import java.net.Socket;
 public class ClientConnectionHandler extends Observable<Message> implements Runnable {
 
     private Socket socket;
-    private boolean running;
-    private final Object outLock;
-
     private ObjectOutputStream out;
     private ObjectInputStream in;
 
-    public ClientConnectionHandler(String ip, int port) throws IOException
-    {
+    public ClientConnectionHandler(String ip, int port) throws IOException {
         this.socket = new Socket(ip, port);
-        System.out.println("Connected to "+ip+ " on port: "+ port);
-        this.running = true;
+        System.out.println("Connected to " + ip + " on port: " + port);
 
         out = new ObjectOutputStream(socket.getOutputStream());
         out.flush();
         in = new ObjectInputStream(socket.getInputStream());
 
-        outLock = new Object();
     }
 
     @Override
     public void run()
     {
-        boolean isRunning;
-
-        synchronized (outLock) {
-            isRunning = running;
-        }
-
         try {
-            while (isRunning) {
+            while (!Thread.currentThread().isInterrupted()) {
                 Message message = (Message) in.readObject();
                 notify(message);
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error reading from socket");
+            try {
+                socket.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            System.err.println("Server connection closed");
         }
     }
 
-    public synchronized void sendRequestToServer(Message message)
-    {
+    public synchronized void sendRequestToServer(Message message) {
         try {
             out.writeObject(message);
             out.flush();

@@ -1,16 +1,17 @@
 package it.polimi.ingsw.network.messages.enumeration;
 
-public enum MessageAction
-{
+public enum MessageAction {
     // SYSTEM MESSAGE
     CHOSE_USERNAME(MessageType.SYSTEM),
-    LOBBY_SIZE(MessageType.SYSTEM),
-    READY(MessageType.SYSTEM),
-    LOBBY_IS_FULL(MessageType.SYSTEM),
-    IS_READY(MessageType.SYSTEM),
-
+    ROOM_SIZE(MessageType.SYSTEM),
+    CLIENT_READY(MessageType.SYSTEM),
+    ROOM_IS_FULL(MessageType.SYSTEM),
+    WAITING_PLAYERS(MessageType.SYSTEM),
+    DISCONNECT(MessageType.SYSTEM),
 
     // GAME MESSAGE
+    START(MessageType.GAME),
+    DISCONNECT_IN_GAME(MessageType.GAME),
     SELECT_ASSISTANT_CARD(MessageType.GAME),
     PLACE_IN_HALL(MessageType.GAME),
     PLACE_ON_ISLAND(MessageType.GAME),

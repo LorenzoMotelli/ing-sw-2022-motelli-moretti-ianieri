@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.server;
 
+import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 import it.polimi.ingsw.network.view.CommandHandler;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.network.messages.Message;
@@ -12,30 +13,22 @@ import java.net.Socket;
 /**
  * CONNECTION HANDLER WITH CLIENT
  */
-public class Connection extends Observable<Message> implements Runnable
-{
+public class Connection extends Observable<Message> implements Runnable {
     //
     private Socket socket;
     //
-    private boolean isActive;
-    //
     private String name;
-    //
-    private final Object outLock = new Object();
-
-    //server that manages SYSTEM message
+    // server that manages SYSTEM message
     private Server server;
-    //handler that manages GAME message
+    // handler that manages GAME message
     private CommandHandler handler;
 
     private ObjectInputStream in;
     private ObjectOutputStream out;
 
-    public Connection(Socket socket, Server server)
-    {
+    public Connection(Socket socket, Server server) {
         this.server = server;
         this.socket = socket;
-        this.isActive = true;
 
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
@@ -47,48 +40,40 @@ public class Connection extends Observable<Message> implements Runnable
 
     @Override
     public void run() {
-        while (isActive) {
+        while (!Thread.currentThread().isInterrupted()) {
             try {
                 Message message = (Message) in.readObject();
 
-                switch (message.getMessageType()){
+                switch (message.getMessageType()) {
                     case SYSTEM:
-                        server.handleMessage(message,this);
+                        server.handleMessage(message, this);
                         break;
                     case GAME:
                         handler.processCommand(message);
                         break;
                 }
             } catch (IOException | ClassNotFoundException e) {
-                System.err.println(e.getMessage());
 
                 try {
                     socket.close();
                 } catch (IOException ex) {
-                    System.err.println(ex.getMessage());
+                    this.sendMessage(new Message(MessageAction.DISCONNECT, this.name));
                 }
-                System.err.println("Client disconnected");
 
-                server.clientConnectionException(this);
+                System.err.println("Client " + this.name + " disconnected");
 
+                server.clientConnectionException(this, this.name);
                 Thread.currentThread().interrupt();
-                System.err.println("Server is quitting...");
             }
         }
     }
-    public boolean isActive()
-    {
-        return isActive;
-    }
 
-    public void sendMessage(Message message)
-    {
-        if (isActive()) {
+    public synchronized void sendMessage(Message message) {
+        if (!Thread.currentThread().isInterrupted()) {
             try {
-                synchronized (outLock) {
                     out.writeObject(message);
                     out.flush();
-                }
+
             } catch (IOException ex) {
                 try {
                     socket.close();
@@ -100,36 +85,16 @@ public class Connection extends Observable<Message> implements Runnable
         }
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setCommandHandler(CommandHandler commandHandler)
-    {
+    public void setCommandHandler(CommandHandler commandHandler) {
         handler = commandHandler;
     }
 
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void close()
-    {
-        if (isActive())
-        {
-            synchronized (outLock) {
-                isActive=false;
-            }
-            try {
-                in.close();
-                out.close();
-                socket.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 
 }

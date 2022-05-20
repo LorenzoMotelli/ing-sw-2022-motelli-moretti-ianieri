@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.network.view.userinterface.CliClientInterface;
 import it.polimi.ingsw.network.view.userinterface.GuiClientInterface;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -33,8 +34,7 @@ public class ClientMain
         while (interfaceSelection)
         {
             Scanner in = new Scanner(System.in);
-            input = in.nextLine();
-            input = input.toUpperCase();
+            input = in.nextLine().toUpperCase();
 
             switch (input) {
                 case "0":
@@ -45,6 +45,10 @@ public class ClientMain
                 case "1":
                     System.out.println("\n\n * GREAT CHOICE! *");
                     new GuiClientInterface();
+                    interfaceSelection = false;
+                    break;
+                case "":
+                    new CliClientInterface();
                     interfaceSelection = false;
                     break;
                 default:

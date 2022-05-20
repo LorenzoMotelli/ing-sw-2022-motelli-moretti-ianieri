@@ -4,7 +4,8 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.ModelController;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
-import it.polimi.ingsw.network.messages.specific.LobbySizeMessage;
+import it.polimi.ingsw.network.messages.specific.DisconnectMessage;
+import it.polimi.ingsw.network.messages.specific.RoomSizeMessage;
 import it.polimi.ingsw.network.messages.specific.ServerUsernameMessage;
 
 import java.io.IOException;
@@ -19,49 +20,52 @@ import java.util.concurrent.Executors;
  */
 public class Server
 {
-    //Default PORT
-    private final int PORT=2000;// ???????
-    //Socket to accept connection
+    // Default PORT
+    private  int PORT = 12345;
+    // Socket to accept connection
     private ServerSocket serverSocket;
-    //List of client connected
-    private final List<Connection> connections = new ArrayList<>();
-    //Map of the connections accepted
+    // List of client connected
+    private final List<Connection> waitingRoomConnections = new ArrayList<>();
+    // Map of the connections accepted
     private final Map<String, Connection> clientsConnected = new HashMap<>();
-    //
+    // Map of the connections in the rooms
+    private final Map<Integer, List<Connection>> roomsIdConnection = new HashMap<>();
+
     Controller controller;
     //
-    int lobbySize = -1;
+    Room waitingRoom = null;
     //
-    int tempLobby=0;
-    //
-    boolean lobbySizeAsked = false;
+    int currentRoomId = 1;
 
-
-    public void startServer()throws IOException
-    {
-        System.out.println("Server started on port: " +PORT);
+    public void startServer() throws IOException {
         ExecutorService executor = Executors.newCachedThreadPool();
 
-        try {
-            serverSocket = new ServerSocket(PORT);
-        } catch (IOException e) {
-            System.err.println("Error opening socket on port: " + PORT);
-            return;
-        }
+        //Method to enter server port (Default on 12345)
+        insertPORT();
 
-        System.out.println("Server ready...\n");
+        // Thread for cli command to force server shutdown
+        new Thread(() -> {
+            System.out.println("'exit' to shout down the server");
+            Scanner quitter = new Scanner(System.in);
 
-        while (true)//!Thread.currentThread().isInterrupted()) // or True
-        {
+            while (quitter.hasNext()) {
+                if (quitter.nextLine().toLowerCase().equals("exit")) {
+                    System.out.println("Closing server ...");
+                    System.exit(0);
+                }
+            }
+        }).start();
+
+        while (!Thread.currentThread().isInterrupted()) {
             try {
                 Socket socket = serverSocket.accept();
-                System.out.println("Client "+socket.getInetAddress() +" connected\n");
+                System.out.println("Client " + socket.getInetAddress() + " connected\n");
 
-                //Create the connection with the client
-                Connection c = new Connection(socket,this);
+                // Create the connection with the client
+                Connection c = new Connection(socket, this);
 
-                //Connection registration
-                connections.add(c);
+                // Connection registration
+                waitingRoomConnections.add(c);
                 executor.submit(c);
             } catch (IOException e) {
                 System.err.println("Error accepting connection");
@@ -72,117 +76,161 @@ public class Server
             }
         }
     }
-
-    // if there is an exception by client connection
-    public void clientConnectionException(Connection c)
+    private void insertPORT()
     {
-        if (connections.contains(c))
-        {
-            clientsConnected.remove(c.getName());
-            connections.remove(c);
-
-            Map.Entry<String, Connection> entry = clientsConnected.entrySet().iterator().next();
-            Connection value = entry.getValue();
-            askLobbySize(value);
-            return;
-        } else
-        {
-            connections.remove(c);
+        System.out.println("Enter the server PORT: ");
+        Scanner in= new Scanner(System.in);
+        try{
+            String serverPort = in.nextLine();
+            if(serverPort.length()!=0 ){
+                PORT = Integer.parseInt(serverPort);
+            }
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(e);
         }
 
-        //TODO: G.gestire disconnessioni
-
-        // ModelController modelController = searchConnectionInRooms(c);
-        // String userDisconnected = c.getName();
-        // modelController.clientConnectionException(userDisconnected);
+        try {
+            serverSocket = new ServerSocket(PORT);
+            System.out.println("Server ready...\nAccepting connections on port:" + PORT);
+        } catch (IOException e) {
+            System.err.println("Error opening socket on port: " + PORT);
+            insertPORT();
+        }
 
     }
 
-    private void askLobbySize(Connection c)
-    {
-        Message message = new Message(MessageAction.LOBBY_SIZE, null);
-        c.sendMessage(message);
+    // Exceptions by client connection are handled here
+    public void clientConnectionException(Connection conn, String disconnectedClient) {
+
+        // if the client is in the waiting room
+        if (waitingRoom != null && waitingRoom.contains(disconnectedClient)) {
+            waitingRoom.removeClient(disconnectedClient);
+            waitingRoomConnections.remove(conn);
+
+            // notify other players that one has disconnected while inside the waiting room
+            for (Connection connection : waitingRoomConnections) {
+                if (connection != conn) {
+                    connection.sendMessage(new DisconnectMessage(connection.getName(), disconnectedClient));
+                }
+            }
+        } else {
+            // if the client is in a room
+            for (Map.Entry<Integer, List<Connection>> roomId : roomsIdConnection.entrySet()) {
+                List<Connection> connections = roomId.getValue();
+                for (Connection connection : connections) {
+                    if (connection == conn) {
+                        if (clientsConnected.containsKey(disconnectedClient)) {
+                            clientsConnected.remove(disconnectedClient);
+                        }
+                    }
+                    connection.sendMessage(
+                            new DisconnectMessage(MessageAction.DISCONNECT_IN_GAME, connection.getName(),
+                                    disconnectedClient));
+                }
+            }
+        }
+
     }
 
-    private void checkLobbySize(Connection c, LobbySizeMessage message)
+    private void createRoom(Connection c, RoomSizeMessage message)
     {
+        System.out.println("Creating room number " + currentRoomId + " ...\n");
+
         Message messageToSend;
-        if (!lobbySizeAsked) {
-            if (!(message.getLobbySize() >= 1 && message.getLobbySize() <= 3)) {
+        int size = message.getRoomSize();
 
-                messageToSend = new LobbySizeMessage(-1, message.getPlayerName());
-                System.err.println("Lobby size is not valid");
+        if (waitingRoom == null) {
+            if (!(size >= 2 && size <= 4)) {
+
+                messageToSend = new RoomSizeMessage(-1, message.getPlayerName());
+                System.err.println("Room size is not valid, asking again");
                 return;
             }
-            System.out.println("Lobby size is valid");
-            lobbySize = message.getLobbySize();
+            System.out.println("A new room has been created");
 
-            messageToSend = new LobbySizeMessage(lobbySize, message.getPlayerName());
-            lobbySizeAsked = true;
+            waitingRoom = new Room(currentRoomId, message.getRoomSize());
+            List<Connection> connections = new ArrayList<>();
+            connections.add(c);
+            roomsIdConnection.put(currentRoomId, connections);
+
+            messageToSend = new RoomSizeMessage(size, message.getPlayerName());
             c.sendMessage(messageToSend);
         }
     }
 
-    public void loginPlayer(Connection c, Message msg)
+    public void loginClient(Connection c, Message msg)
     {
-        if (clientsConnected.containsKey(msg.getPlayerName()))
-        {
+        System.out.println("Login client...");
+        String username = msg.getPlayerName();
+
+        // verification of the correctness of the username
+        if (clientsConnected.containsKey(username) || !username.matches("[a-zA-Z0-9]+")
+                || username.length() > 12 || username.length() < 3) {
             Message message = new ServerUsernameMessage(false, "None", false);
             c.sendMessage(message);
+
+            System.err.println("Username is not valid, asking again");
             return;
         }
 
         Message message;
+        boolean newRoom;
 
-        if (clientsConnected.size() == 0) {
-            clientsConnected.put(msg.getPlayerName(), c);
-            c.setName(msg.getPlayerName());
-            message = new ServerUsernameMessage(true, msg.getPlayerName(), true);
+        if (waitingRoom == null) {
+            // room needs to be created
+            newRoom = true;
+            System.out.println("No room available, asking client to create a room");
         } else {
-            clientsConnected.put(msg.getPlayerName(), c);
-            c.setName(msg.getPlayerName());
-            message = new ServerUsernameMessage(true, msg.getPlayerName(), false);
+            // a room already exists
+            newRoom = false;
         }
+
+        // add client and map username to connection
+        clientsConnected.put(msg.getPlayerName(), c);
+        c.setName(msg.getPlayerName());
+
+        message = new ServerUsernameMessage(true, msg.getPlayerName(), newRoom);
 
         System.out.println("Player " + msg.getPlayerName() + " logged in");
-
         c.sendMessage(message);
-
-        //initLobby(); ??
     }
 
-    private void initLobby(Connection c, Message msg)
+    private void clientReady(Connection c, Message msg)
     {
-        if (clientsConnected.size() > lobbySize)
-        {
-            c.sendMessage(new Message(MessageAction.LOBBY_IS_FULL,c.getName()));
-            c.close();
-            System.err.println("Client disconnected");
+        String username = msg.getPlayerName();
+        waitingRoom.addClient(username);
 
-            //clientConnectionException(c);
+        //registration of the connection in the room map
+        List<Connection> connections = roomsIdConnection.get(waitingRoom.getRoomId());
+        if (!connections.contains(c))
+            connections.add(c);
+        roomsIdConnection.put(currentRoomId, connections);
 
-            //Thread.currentThread().interrupt();
-        }
-        else {
-            controller = new Controller(this, lobbySize);
-            controller.addClient(c, c.getName());
-            tempLobby++;
-            System.out.println("Lobby initialized, when all players are connected, the game will start soon...");
-            c.sendMessage(new Message(MessageAction.IS_READY, c.getName()));
-            if (tempLobby == lobbySize) {
-                controller.startGame();
+        // room size reached, the game can start
+        if (waitingRoom.isFull()) {
+            controller = new Controller(this, waitingRoom.getPlayersNumber());
+            for (Connection connection : waitingRoomConnections) {
+                controller.addClient(connection, connection.getName());
             }
+            controller.startGame();
+
+            // reset the room and the temporary connections
+            waitingRoomConnections.clear();
+            waitingRoom = null;
+            currentRoomId++;
         }
+        // players have to wait for other players to connect
+        else {
+            c.sendMessage(new Message(MessageAction.WAITING_PLAYERS, c.getName()));
+        }
+
     }
 
-    public void handleMessage(Message message, Connection c)
-    {
+    public void handleMessage(Message message, Connection c) {
         switch (message.getMessageAction()) {
-            case CHOSE_USERNAME -> loginPlayer(c, message);
-
-            case LOBBY_SIZE -> checkLobbySize(c, (LobbySizeMessage) message);
-
-            case READY ->initLobby(c,message);
+            case CHOSE_USERNAME -> loginClient(c, message);
+            case ROOM_SIZE -> createRoom(c, (RoomSizeMessage) message);
+            case CLIENT_READY -> clientReady(c, message);
 
             default -> {
                 System.out.println("MessageAction not recognized");
@@ -191,6 +239,7 @@ public class Server
     }
 
 }
+
 
 
 

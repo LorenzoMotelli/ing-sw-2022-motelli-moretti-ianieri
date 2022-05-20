@@ -24,7 +24,7 @@ public class ServerUsernameMessage extends Message {
         return username;
     }
 
-    public boolean hasToCreateLobby() {
+    public boolean hasToCreateRoom() {
         return isFirst;
     }
 

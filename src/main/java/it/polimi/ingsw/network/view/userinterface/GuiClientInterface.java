@@ -4,7 +4,8 @@ package it.polimi.ingsw.network.view.userinterface;
 import it.polimi.ingsw.network.client.ClientMessageHandler;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
-import it.polimi.ingsw.network.messages.specific.LobbySizeMessage;
+import it.polimi.ingsw.network.messages.specific.DisconnectMessage;
+import it.polimi.ingsw.network.messages.specific.RoomSizeMessage;
 import it.polimi.ingsw.network.messages.specific.ServerUsernameMessage;
 
 import java.awt.event.ActionEvent;
@@ -17,7 +18,6 @@ import java.awt.*;
  * CLIENT INTERFACE with GUI
  */
 public class GuiClientInterface implements UserInterface, ActionListener {
-
 
     private static JLabel label;
     private static JLabel messageOutput;
@@ -33,7 +33,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private static JFrame frame;
 
     private String serverIp = "localhost";
-    private int serverPort =2000 ;
+    private int serverPort = 2000;
     private String username;
     private ClientMessageHandler messageHandler;
 
@@ -85,11 +85,10 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         buttonLobby.addActionListener(this);
 
         messageOutput = new JLabel("");
-        messageOutput.setBounds(10,110,300,25);
+        messageOutput.setBounds(10, 110, 300, 25);
         panel.add(messageOutput);
 
         frame.setVisible(true);
-
 
         messageHandler = new ClientMessageHandler(this);
 
@@ -118,20 +117,20 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         System.out.println("sono username response");
         if (!message.isAccepted()) {
             messageOutput.setText("Username already taken");
-        } else if (message.hasToCreateLobby()) {
+        } else if (message.hasToCreateRoom()) {
             this.username = message.getUsername();
             messageOutput.setText("Username accepted");
             panel.add(buttonNextLobby);
             buttonConfirm.setVisible(false);
         } else {
             messageOutput.setText("Username accepted");
-            messageHandler.sendMessage(new Message(MessageAction.READY, this.username));
+            messageHandler.sendMessage(new Message(MessageAction.CLIENT_READY, this.username));
         }
 
     }
 
     @Override
-    public void askLobbySize() {
+    public void askRoomCreation() {
 
         buttonNextLobby.setVisible(false);
         buttonConfirm.setVisible(false);
@@ -145,74 +144,70 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     }
 
     @Override
-    public void lobbySizeResponse(LobbySizeMessage message) {
+    public void roomSizeResponse(RoomSizeMessage message) {
         System.out.println("sono lobby size respose");
-        if (message.getLobbySize() == -1)
-        {
+        if (message.getRoomSize() == -1) {
             messageOutput.setText("Lobby size is not valid");
 
-        }
-        else
-        {
+        } else {
             messageOutput.setText("Lobby size accepted");
             messageOutput.setText("Waiting for other players...");
-            messageHandler.sendMessage(new Message(MessageAction.READY, this.username));
+            messageHandler.sendMessage(new Message(MessageAction.CLIENT_READY, this.username));
         }
 
     }
 
     @Override
-    public void lobbyIsFull() {
+    public void roomIsFull() {
         messageOutput.setText("The lobby is full");
     }
 
     @Override
-    public void readyToPlay() {
+    public void waitingForOtherPlayers() {
         messageOutput.setText("Ready to start");
     }
 
-    //connectToServer
+    // connectToServer
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource()==buttonServer)
-        {
-            String ip=serverIPField.getText();
+        if (e.getSource() == buttonServer) {
+            String ip = serverIPField.getText();
             this.serverIp = ip;
 
-            if (!messageHandler.connect(serverIp, serverPort))
-            {
+            if (!messageHandler.connect(serverIp, serverPort)) {
                 messageOutput.setText("Connection error!");
-            }else
-            {
+            } else {
                 messageOutput.setText("Connected!");
                 buttonServer.setVisible(false);
                 panel.add(buttonNext);
             }
-        }
-        else if (e.getSource()==buttonNext)
-        {
-           askUsername();
-        }
-        else if (e.getSource()==buttonConfirm)
-        {
-            //askUsername
-            username=usernameField.getText();
+        } else if (e.getSource() == buttonNext) {
+            askUsername();
+        } else if (e.getSource() == buttonConfirm) {
+            // askUsername
+            username = usernameField.getText();
             messageHandler.sendMessage(new Message(MessageAction.CHOSE_USERNAME, username));
 
-        }
-        else if(e.getSource()==buttonNextLobby)
-        {
-            askLobbySize();
-        }
-        else if(e.getSource()==buttonLobby)
-        {
-            //ask lobby
+        } else if (e.getSource() == buttonNextLobby) {
+            askRoomCreation();
+        } else if (e.getSource() == buttonLobby) {
+            // ask lobby
             int size = Integer.parseInt(lobbyField.getText());
-            messageHandler.sendMessage(new LobbySizeMessage(size, this.username));
+            messageHandler.sendMessage(new RoomSizeMessage(size, this.username));
         }
 
+    }
 
+    @Override
+    public void startingMatch() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void someoneDisconnected(DisconnectMessage message) {
+        // TODO Auto-generated method stub
 
     }
 }
