@@ -11,6 +11,7 @@ import it.polimi.ingsw.utils.Observable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -303,6 +304,34 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         //nextPhase(gamePhase);
         return assistantCardsUsed;
     }*/
+    public List<AssistantCard> getAvailableCards() {
+        List<AssistantCard> availableCards = new ArrayList<>();
+
+        // get current deck of the current player (deck without already played cards)
+        AssistantCard[] currentDeck = getCurrentPlayer().getAssistantDeck();
+
+        // one card is available only if not already played by someone else in this round
+        for (AssistantCard assistantCard : currentDeck) {
+            boolean isContained = false;
+            for (AssistantCard usedCard : getAssistantCardsUsed()) {
+                if (usedCard.getTurnHeaviness() == assistantCard.getTurnHeaviness()) {
+                    isContained = true;
+                }
+            }
+
+            if (!isContained) {
+                availableCards.add(assistantCard);
+            }
+        }
+
+        // if all the cards in the current deck have already been played
+        // return the remaining current deck
+        if (availableCards.size() == 0) {
+            Collections.addAll(availableCards, currentDeck);
+        }
+
+        return availableCards;
+    }
 
     //---------------- ACTION PHASE MANAGEMENT --------------\\
 

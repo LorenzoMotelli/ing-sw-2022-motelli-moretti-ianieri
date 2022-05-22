@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.InputStreamReader;
 import java.net.UnknownHostException;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -254,9 +255,10 @@ public class CliClientInterface implements UserInterface {
 
     @Override
     public void selectAssistantCard(AskAssistantCardsMessage message){
-        for(int i = 0; i < 10; i++){
-            int moveMN = message.getAssistantCards()[i].getMovementMotherNature();
-            int weight = message.getAssistantCards()[i].getTurnHeaviness();
+        List<AssistantCard> cards = message.getAssistantCards();
+        for(int i = 0; i < cards.size(); i++){
+            int moveMN = cards.get(i).getMovementMotherNature();
+            int weight = cards.get(i).getTurnHeaviness();
             System.out.println( "Card " + i + " has movement MN " + moveMN + " and heaviness " + weight) ;
         }
         // ASK USER FOR AN INT

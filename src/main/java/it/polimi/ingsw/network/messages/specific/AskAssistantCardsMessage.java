@@ -4,15 +4,17 @@ import it.polimi.ingsw.model.cards.AssistantCard;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 
-public class AskAssistantCardsMessage extends Message {
-    private final AssistantCard[] assistantCards;
+import java.util.List;
 
-    public AskAssistantCardsMessage(AssistantCard[] assistantCards){
+public class AskAssistantCardsMessage extends Message {
+    private final List<AssistantCard> assistantCards;
+
+    public AskAssistantCardsMessage(List<AssistantCard> assistantCards){
         super(MessageAction.SELECT_ASSISTANT_CARD, "SERVER");
         this.assistantCards = assistantCards;
     }
 
-    public AssistantCard[] getAssistantCards() {
+    public List<AssistantCard> getAssistantCards() {
         return assistantCards;
     }
 }

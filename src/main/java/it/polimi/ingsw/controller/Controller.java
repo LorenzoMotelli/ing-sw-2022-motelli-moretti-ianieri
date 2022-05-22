@@ -143,7 +143,7 @@ public class Controller implements Observer<Message> {
     }
 
     public void askPlayerAssistantCard(){
-        sendToCurrentPlayer(new AskAssistantCardsMessage(game.getCurrentPlayer().getAssistantDeck()));
+        sendToCurrentPlayer(new AskAssistantCardsMessage(game.getAvailableCards()));
     }
 
     /**
@@ -271,7 +271,7 @@ public class Controller implements Observer<Message> {
         }
         else{
             game.newTurn();
-            sendToCurrentPlayer(new AskAssistantCardsMessage(game.getCurrentPlayer().getAssistantDeck()));
+            askPlayerAssistantCard();
         }
     }
 
