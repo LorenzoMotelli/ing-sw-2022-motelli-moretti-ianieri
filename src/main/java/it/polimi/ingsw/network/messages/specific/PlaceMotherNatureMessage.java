@@ -1,15 +1,14 @@
 package it.polimi.ingsw.network.messages.specific;
 
-import it.polimi.ingsw.model.Island;
-import it.polimi.ingsw.model.Student;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 
-public class PlaceOnIslandMessage extends Message {
+public class PlaceMotherNatureMessage extends Message {
+
     private final int islandIndex;
 
-    public PlaceOnIslandMessage(int islandIndex) {
-        super(MessageAction.PLACE_ON_ISLAND, null);
+    public PlaceMotherNatureMessage(int islandIndex) {
+        super(MessageAction.SELECT_ISLAND_MOTHER_NATURE, null);
         this.islandIndex = islandIndex;
     }
 

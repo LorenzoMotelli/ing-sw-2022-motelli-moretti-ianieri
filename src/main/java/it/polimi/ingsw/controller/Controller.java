@@ -6,6 +6,7 @@ import it.polimi.ingsw.controller.exceptions.HallAlreadyFullException;
 import it.polimi.ingsw.controller.exceptions.IslandOutOfBound;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.AssistantCard;
+import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.Phases;
 import it.polimi.ingsw.model.enumeration.Variant;
 import it.polimi.ingsw.network.messages.Message;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static it.polimi.ingsw.model.enumeration.Phases.*;
+import static it.polimi.ingsw.model.enumeration.Phases.SELECT_CLOUD;
 import static it.polimi.ingsw.network.messages.enumeration.MessageAction.*;
 import static it.polimi.ingsw.network.messages.enumeration.MessageAction.END_TURN;
 
@@ -65,11 +67,18 @@ public class Controller implements Observer<Message> {
         switch (message.getMessageAction()) {
 
             case SELECT_ASSISTANT_CARD -> assistantCardSelected((SelectAssistantCardMessage) message);
+            case SELECT_STUDENT -> studentSelected((SelectStudentMessage) message);
+            case PLACE_IN_HALL -> placeInHallSelected((PlaceInHallMessage) message);
+            case PLACE_ON_ISLAND -> placeOnIslandSelected((PlaceOnIslandMessage) message);
+            case SELECT_ISLAND_MOTHER_NATURE -> placeMotherNatureOnIsland((PlaceMotherNatureMessage) message);
+            case SELECT_CLOUD -> selectCloud((SelectCloudMessage) message);
         }
 
 
 
     }
+
+
 
     public void startGame() {
         // TODO Auto-generated method stub
@@ -218,130 +227,223 @@ public class Controller implements Observer<Message> {
      * @throws AssistantAlreadyUsedException only one assistant can be played in one turn
      */
     public void assistantCardSelected(SelectAssistantCardMessage message){
-        AssistantCard assistantCard = message.getAssistantCard();
+        //System.out.println("The assistant that is arrived has weight " +  message.getAssistantCard().getTurnHeaviness() + " and move MN " + message.getAssistantCard().getMovementMotherNature());
+        AssistantCard assistantCard = game.getCurrentPlayer().getAssistantDeck()[message.getIndexAssistantCard()];
         //List<AssistantCard> assistantCardUseOnThisTurn = game.getAssistantCardsUsed();
-        List<AssistantCard> assistantOfThePlayer = new ArrayList<>();
-        if(game.getGamePhase() == PLANNING){
+        //List<AssistantCard> assistantOfThePlayer = new ArrayList<>();
+        /*if(game.getGamePhase() == PLANNING){
             //the current player can play its assistant only if that assistant is not already used or if
             //its remaining assistants are already used
-
+            boolean isContained = true;
             for(int i = 0; i < 9; i++){
-                if(game.getCurrentPlayer().getAssistantDeck()[i] != null){
-                    assistantOfThePlayer.add(game.getCurrentPlayer().getAssistantDeck()[i]);
+                AssistantCard card = game.getCurrentPlayer().getAssistantDeck()[i];
+                if(card != null){
+                    //assistantOfThePlayer.add(game.getCurrentPlayer().getAssistantDeck()[i]);
+                    if(!game.getAssistantCardsUsed().contains(card)){
+                        isContained = false;
+                    }
                 }
             }
-            if(!game.getAssistantCardsUsed().containsAll(assistantOfThePlayer)){
+            //if(!game.getAssistantCardsUsed().containsAll(assistantOfThePlayer)){
+            if(isContained){
                 if(game.getAssistantCardsUsed().contains(assistantCard)){
-                    // richiedo nuovamente la scelta
+                    // ask again the choice
                     sendToCurrentPlayer(new AskAssistantCardsMessage(game.getCurrentPlayer().getAssistantDeck()));
                     return;
                 }
             }
             game.addAssistantCardUsed(assistantCard);
         }
-
-        if (game.getAssistantCardsUsed().size() == game.getPlayers().length) {
+        if (game.getAssistantCardsUsed().size() == game.getPlayers().length){
             nextAction(PLANNING, 1);
         } else {
+            game.newTurn();
+            sendToCurrentPlayer(new AskAssistantCardsMessage(game.getCurrentPlayer().getAssistantDeck()));
+        }*/
+        game.getAssistantCardsUsed().add(assistantCard);
+        game.getCurrentPlayer().selectAssistant(assistantCard);
+        System.out.println("Player " + game.getCurrentPlayer().getPlayerName() + " has heaviness " + game.getCurrentPlayer().getPlayerWeight());
+        if(game.getAssistantCardsUsed().size() >= game.getPlayers().length){
+            game.setNewOrder();
+            nextAction(PLANNING/*,1*/);
+            System.out.println("Starting action phase");
+            askPlaceStudent();
+        }
+        else{
             game.newTurn();
             sendToCurrentPlayer(new AskAssistantCardsMessage(game.getCurrentPlayer().getAssistantDeck()));
         }
     }
 
-    /**
-     * place the student selected in the hall
-     * @param message the message that requires a placement in the hall
-     * @param num the number of placement on this action phase
-     * @throws HallAlreadyFullException the hall of the color of the student selected is full
-     */
-    public void placeInHallSelected(PlaceInHallMessage message, int num) throws HallAlreadyFullException{
-        School playerSchool = game.getCurrentPlayer().getSchoolDashboard();
-        switch (message.getStudent().getColor()){
-            case BLUE:{
-                if(playerSchool.getSchoolHall()[0].getTableHall()[9] != null) throw new HallAlreadyFullException();
-                game.placeStudentInHall(message.getStudent());
-                break;
-            }
-            case GREEN:{
-                if(playerSchool.getSchoolHall()[1].getTableHall()[9] != null) throw new HallAlreadyFullException();
-                game.placeStudentInHall(message.getStudent());
-                break;
-            }
-            case PINK:{
-                if(playerSchool.getSchoolHall()[2].getTableHall()[9] != null) throw new HallAlreadyFullException();
-                game.placeStudentInHall(message.getStudent());
-                break;
-            }
-            case RED:{
-                if(playerSchool.getSchoolHall()[3].getTableHall()[9] != null) throw new HallAlreadyFullException();
-                game.placeStudentInHall(message.getStudent());
-                break;
-            }
-            case YELLOW:{
-                if(playerSchool.getSchoolHall()[4].getTableHall()[9] != null) throw new HallAlreadyFullException();
-                game.placeStudentInHall(message.getStudent());
+    public void askPlaceStudent(){
+        //if(2 == game.getPlayers().length){
+            List<Student> playerStudents = game.getCurrentPlayer().getSchoolDashboard().getEntranceStudent();
+            sendToCurrentPlayer(new AskStudentMessage(playerStudents));
+        //}
+    }
+
+    public void studentSelected(SelectStudentMessage message){
+        //game.getCurrentPlayer().setStudentSelected(message.getStudent());
+        //List<Island> islandsList = game.getTable().getIslands();
+
+        // check if hall is full before asking where to place student
+
+
+
+        /*
+        for(int i = 0; i < 5; i++){
+            if(game.getCurrentPlayer().getSchoolDashboard().getSchoolHall()[i].getHallColor().equals(message.getStudent().getColor())){
+                hall = game.getCurrentPlayer().getSchoolDashboard().getSchoolHall()[i];
                 break;
             }
         }
-        nextAction(PLACE_STUDENT, num);
+        */
+
+        int islandsNumAvailable = game.getTable().getIslands().size();
+
+        Student student = game.getCurrentPlayer().getSchoolDashboard().getStudent(message.getStudent()); //message.getStudent();
+        game.getCurrentPlayer().setStudentSelected(student);
+        boolean hallAvailable = game.checkHallAvailability(student);
+
+        sendToPlayer(game.getCurrentPlayer(), new AskWherePlaceMessage(islandsNumAvailable, hallAvailable));
+    }
+
+    /**
+     * place the student selected in the hall
+     * @param message the message that requires a placement in the hall
+     //* @param num the number of placement on this action phase
+     //* @throws HallAlreadyFullException the hall of the color of the student selected is full
+     */
+    public void placeInHallSelected(PlaceInHallMessage message/*, int num*/){
+        /*School playerSchool = game.getCurrentPlayer().getSchoolDashboard();
+        PawnColor studentColor = game.getCurrentPlayer().getStudentSelected().getColor();
+        Hall hallWherePlace = game.getColorHall(studentColor);
+        for(int i = 0; i < 5; i++){
+            if(playerSchool.getSchoolHall()[i].getHallColor().equals(message.getHall().getHallColor())){
+                game.placeStudentInHall(game.getCurrentPlayer().getStudentSelected());
+                break;
+            }
+        }*/
+        game.placeStudentInHall(game.getCurrentPlayer().getStudentSelected());
+
+        nextAction(PLACE_STUDENT);
+
+
     }
 
     /**
      * place the student selected in the hall
      * @param message the message that requires a placement on an island
-     * @param num the number of placement on this action phase
+     //* @param num the number of placement on this action phase
      */
-    public void placeOnIslandSelected(PlaceOnIslandMessage message, int num){
-        for(Island island : game.getTable().getIslands()){
+    public void placeOnIslandSelected(PlaceOnIslandMessage message/*, int num*/){
+        /*for(Island island : game.getTable().getIslands()){
             if(island.equals(message.getIsland())){
                 game.placeStudentOnIsland(message.getStudent(), island);
                 break;
             }
         }
         nextAction(PLACE_STUDENT, num);
+        Student student = game.getCurrentPlayer().getStudentSelected();
+        Island islandSelected = game.getTable().getIslands().get(message.getIslandIndex());*/
+        game.placeStudentOnIsland(message.getIslandIndex());
+
+        nextAction(PLACE_STUDENT);
+
     }
+
+    private void askMoveMotherNature() {
+        // prendere quanto vale il valore di madre natura della carta associata all'assistant card selezionata
+        int movementMN = game.getCurrentPlayer().getAssistantCardUsed().getMovementMotherNature();
+
+        List<Island> availableIsland = game.getAvailableIslands();
+
+
+        sendToCurrentPlayer(new AskMotherNatureMessage(availableIsland));
+
+    }
+
 
     /**
      * place mother nature on the island selected
      * @param message the message that requires the placement of the mother nature
-     * @throws IslandOutOfBound if the island is not reachable by mother nature
+     //* @throws IslandOutOfBound if the island is not reachable by mother nature
      */
-    public void placeMotherNatureOnIsland(PlaceMotherNaturedMessage message) throws IslandOutOfBound{
-        for(Island island : game.getTable().getIslands()){
-            if(island.equals(message.getIsland())){
+    public void placeMotherNatureOnIsland(PlaceMotherNatureMessage message){
+        /*for(Island island : game.getTable().getIslands()){
+            if(island.equals(message.getIslandIndex())){
                 int indexOfTheIsland = game.getTable().getIslands().indexOf(island);
                 if( indexOfTheIsland > game.getMotherNatureMovement()) throw new IslandOutOfBound();
                 game.moveMotherNature(island);
             }
-        }
-        nextAction(PLACE_MOTHER_NATURE, 0);
+        }*/
+
+        // check if int is valid
+        // do something
+
+        nextAction(PLACE_MOTHER_NATURE);
+    }
+
+    public void askSelectCloud() {
+
+        List<Cloud> clouds = game.getTable().getClouds();
+
+
+        sendToCurrentPlayer(new AskCloudMessage(clouds));
+
+    }
+
+
+    private void selectCloud(SelectCloudMessage message) {
+
+        // check cloud is valid
+
+        int choice = message.getSelectedCloud();
+
+        game.getTable().getClouds().get(choice);
+
+        // aggiorna il model
+
+        game.newTurn();
+        nextAction(SELECT_CLOUD);
+
     }
 
     /**
      * give to current player the students from the cloud selected
      * @param message the message that requires to take
-     * @throws CloudEmptyException if the cloud selected is empty then the player must select another one
+     //* @throws CloudEmptyException if the cloud selected is empty then the player must select another one
      */
-    public void takeStudentFromCloudSelected(TakeStudentFromCloudMessage message) throws CloudEmptyException{
-        for(Cloud cloud : game.getTable().getClouds()){
+    public void takeStudentFromCloudSelected(TakeStudentFromCloudMessage message){
+        /*for(Cloud cloud : game.getTable().getClouds()){
             if(cloud.equals(message.getCloud())){
                 if(0 == cloud.getCloudStudents().size()) throw new CloudEmptyException();
                 game.getTable().giveStudentsFromCloud(cloud);
                 break;
             }
-        }
+        }*/
     }
 
     public void endTurn(EndTurnMessage message){
         game.newTurn();
     }
 
+    private void endRound() {
+
+        // complete round
+        // do something
+
+        nextAction(ENDING);
+
+    }
+
     /**
      * determine the next action that the player can do
      * @param currentPhase the phase in which the action is performed
-     * @param num the number of iteration of the current phase
+     //* @param num the number of iteration of the current phase
      */
-    public void nextAction(Phases currentPhase, int num){
+    public void nextAction(Phases currentPhase/*, int num*/){
+        /*
         switch (currentPhase){
             case STARTING:
             case PLANNING:
@@ -363,5 +465,22 @@ public class Controller implements Observer<Message> {
                 break;
             }
         }
+         */
+        //TODO check if it's the action that change the phase
+        game.nextPhase(currentPhase);
+
+        if (game.getGamePhase() == PLANNING) {
+            askPlayerAssistantCard();
+        } else if (game.getGamePhase() == PLACE_STUDENT)
+            askPlaceStudent();
+        else if (game.getGamePhase() == PLACE_MOTHER_NATURE) {
+            askMoveMotherNature();
+        } else if (game.getGamePhase() == SELECT_CLOUD) {
+            askSelectCloud();
+        } else if (game.getGamePhase() == ENDING) {
+            endRound();
+        }
     }
+
+
 }

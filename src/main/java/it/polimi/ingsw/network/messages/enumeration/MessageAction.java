@@ -14,9 +14,15 @@ public enum MessageAction {
     DISCONNECT_IN_GAME(MessageType.GAME),
     UPDATE(MessageType.GAME),
     SELECT_ASSISTANT_CARD(MessageType.GAME),
+
+    ASK_STUDENT(MessageType.GAME),
+    SELECT_STUDENT(MessageType.GAME),
+    ASK_PLACE(MessageType.GAME),
     PLACE_IN_HALL(MessageType.GAME),
     PLACE_ON_ISLAND(MessageType.GAME),
-    MOVE_MOTHER_NATURE(MessageType.GAME),
+    ASK_MOVE_MOTHER_NATURE(MessageType.GAME),
+    SELECT_ISLAND_MOTHER_NATURE(MessageType.GAME),
+    ASK_CLOUD(MessageType.GAME),
     SELECT_CLOUD(MessageType.GAME),
     END_TURN(MessageType.GAME);
 

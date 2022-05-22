@@ -219,4 +219,19 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     public void selectAssistantCard(AskAssistantCardsMessage message){
 
     }
+
+    @Override
+    public void selectStudent(AskStudentMessage message){}
+    @Override
+    public void selectPlace(AskWherePlaceMessage message){}
+
+    @Override
+    public void selectMotherNatureIsland(AskMotherNatureMessage message) {
+
+    }
+
+    @Override
+    public void selectCloud(AskCloudMessage message) {
+
+    }
 }

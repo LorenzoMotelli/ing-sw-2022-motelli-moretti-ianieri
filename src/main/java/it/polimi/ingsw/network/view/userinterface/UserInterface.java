@@ -1,7 +1,6 @@
 package it.polimi.ingsw.network.view.userinterface;
 
 
-import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.specific.*;
 
 public interface UserInterface {
@@ -25,4 +24,12 @@ public interface UserInterface {
     public void boardUpdate(UpdateBoardMessage updateBoardMessage);
 
     public void selectAssistantCard(AskAssistantCardsMessage message);
+
+    public void selectStudent(AskStudentMessage message);
+
+    public void selectPlace(AskWherePlaceMessage message);
+
+    void selectMotherNatureIsland(AskMotherNatureMessage message);
+
+    void selectCloud(AskCloudMessage message);
 }

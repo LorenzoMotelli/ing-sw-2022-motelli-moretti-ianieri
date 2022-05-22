@@ -5,14 +5,14 @@ import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 
 public class SelectAssistantCardMessage extends Message {
-    private final AssistantCard assistantCard;
+    private final int indexAssistantCard;
 
-    public SelectAssistantCardMessage(AssistantCard assistantCard) {
+    public SelectAssistantCardMessage(int indexAssistantCard) {
         super(MessageAction.SELECT_ASSISTANT_CARD, null);
-        this.assistantCard = assistantCard;
+        this.indexAssistantCard = indexAssistantCard;
     }
 
-    public AssistantCard getAssistantCard() {
-        return assistantCard;
+    public int getIndexAssistantCard() {
+        return indexAssistantCard;
     }
 }

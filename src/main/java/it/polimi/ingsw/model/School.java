@@ -60,6 +60,11 @@ public class School implements Serializable {
         return entranceStudent;
     }
 
+    public Student getStudent(int index) {
+        // TODO: check index bounds
+        return entranceStudent.get(index);
+    }
+
     public void setEntranceStudent(List<Student> entranceStudent) {
         this.entranceStudent = entranceStudent;
     }

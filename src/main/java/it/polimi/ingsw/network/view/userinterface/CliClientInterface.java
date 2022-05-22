@@ -1,6 +1,9 @@
 package it.polimi.ingsw.network.view.userinterface;
 
 import it.polimi.ingsw.model.GeneralGame;
+import it.polimi.ingsw.model.Island;
+import it.polimi.ingsw.model.School;
+import it.polimi.ingsw.model.Student;
 import it.polimi.ingsw.model.cards.AssistantCard;
 import it.polimi.ingsw.network.client.ClientMessageHandler;
 import it.polimi.ingsw.network.messages.Message;
@@ -11,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.InputStreamReader;
 import java.net.UnknownHostException;
 import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -199,11 +203,53 @@ public class CliClientInterface implements UserInterface {
         GeneralGame game = updateBoardMessage.getGame();
         System.out.println("ISLAND SITUATION:");
         for(int i = 0; i < game.getTable().getIslands().size(); i++){
+            System.out.print("Island " + i +  " : ");
             for(int j = 0; j < game.getTable().getIslands().get(i).getStudents().size(); j++){
-                System.out.print(game.getTable().getIslands().get(i).getStudents().get(j).getColor());
+                System.out.print(game.getTable().getIslands().get(i).getStudents().get(j).getColor() + " ");
+                if(game.getTable().getIslands().get(i).equals(game.getTable().getIslandWithMotherNature())){
+                    System.out.print(" MN ");
+                }
             }
             System.out.println();
         }
+        System.out.println("CLOUD SITUATION:");
+        for(int i = 0; i < game.getTable().getClouds().size(); i++){
+            System.out.print("Cloud " + i + " has ");{
+                for(int j = 0; j < game.getTable().getClouds().get(i).getCloudStudents().size(); j++){
+                    System.out.print(game.getTable().getClouds().get(i).getCloudStudents().get(j).getColor() + " ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println("SCHOOLS SITUATION:");
+        for(int i = 0; i < game.getPlayers().length; i++){
+            System.out.print("Player " + game.getPlayers()[i].getPlayerName() + " has :\n");
+            System.out.print("Entrance students: ");
+            for(Student student : game.getPlayers()[i].getSchoolDashboard().getEntranceStudent()){
+                System.out.print(student.getColor() +  " ");
+            }
+            for(int j = 0; j < 5; j++){
+
+                System.out.println();
+                System.out.print("Hall " + game.getPlayers()[i].getSchoolDashboard().getSchoolHall()[j].getHallColor() + " with ");
+                for(int k = 0; k < 10; k++){
+                    if(null != game.getPlayers()[i].getSchoolDashboard().getSchoolHall()[j].getTableHall()[k]){
+                        System.out.print(game.getPlayers()[i].getSchoolDashboard().getSchoolHall()[j].getTableHall()[k].getColor());
+                    }
+                    else{
+                        break;
+                    }
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
+
+        System.out.println("PLAYER ORDER:");
+        for(int i = 0; i < game.getPlayers().length; i++){
+            System.out.print(game.getPlayers()[i].getPlayerName() + " ");
+        }
+        System.out.println();
     }
 
     @Override
@@ -213,20 +259,95 @@ public class CliClientInterface implements UserInterface {
             int weight = message.getAssistantCards()[i].getTurnHeaviness();
             System.out.println( "Card " + i + " has movement MN " + moveMN + " and heaviness " + weight) ;
         }
-
         // ASK USER FOR AN INT
-
-
         //TODO: validate user input
         cmdIn = new Scanner(System.in);
         int choice = cmdIn.nextInt();
+        //System.out.println("You select the assistant with MN movement " + chosenCard.getMovementMotherNature() + " and weight " + chosenCard.getTurnHeaviness());
+        messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
+    }
 
-        AssistantCard chosenCard = message.getAssistantCards()[choice];
+    @Override
+    public void selectStudent(AskStudentMessage message){
+        System.out.println("Please select one student:\n");
+        for(Student student : message.getStudent()){
+            System.out.print(student.getColor() +  " ");
+        }
+        System.out.println();
+        cmdIn = new Scanner(System.in);
+        int choice = cmdIn.nextInt();
+       // Student studentChosen = message.getStudent().get(choice);
 
+        messageHandler.sendMessage(new SelectStudentMessage(choice));
+    }
 
-        messageHandler.sendMessage(
-                new SelectAssistantCardMessage(chosenCard)
-        );
+    @Override
+    public void selectPlace(AskWherePlaceMessage message){
+        /*
+        System.out.println("ISLAND SITUATION:\n");
+        for(int i = 0; i < message.getIslands().size(); i++){
+            System.out.print("Island " + i + " ");
+            for(int j = 0; j < message.getIslands().get(i).getStudents().size(); j++){
+                System.out.print(message.getIslands().get(i).getStudents().get(j).getColor() + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("HALL " + message.getHall().getHallColor() +  " SITUATION:\n");
+        for(int i = 0; i < message.getHall().getTableHall().length; i++){
+            if(null != message.getHall().getTableHall()[i]){
+                System.out.print(message.getHall().getTableHall()[i] +  " ");
+            }
+            else{
+                break;
+            }
+        }
+        System.out.println();
+        cmdIn = new Scanner(System.in);
+        String choice = cmdIn.nextLine().toUpperCase();
+        switch (choice.charAt(0)){
+            case 'I' -> messageHandler.sendMessage(new PlaceOnIslandMessage(message.getIslands().get(choice.charAt(1)-48)));
+            case 'H' -> messageHandler.sendMessage(new PlaceInHallMessage(message.getHall()));
+            default -> selectPlace(message);
+        }
+         */
+        int islandsNumAvailable = message.getIslandsNumAvailable();
+        boolean hallAvailability = message.isHallAvailable();
+        System.out.println("Select in Island or the hall, the index of the island for island, everything else for place in hall if available");
+
+        cmdIn = new Scanner(System.in);
+        int choice = cmdIn.nextInt();
+        if(choice < islandsNumAvailable){
+            messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
+        }
+        else{
+            if(hallAvailability){
+                messageHandler.sendMessage(new PlaceInHallMessage());
+            }
+            else{
+                selectPlace(message);
+            }
+        }
+    }
+
+    @Override
+    public void selectMotherNatureIsland(AskMotherNatureMessage message) {
+        // il client deve inserire di quanto si vuole spostare madre natura
+
+        int choice = 0;
+
+        messageHandler.sendMessage(new PlaceMotherNatureMessage(choice));
+    }
+
+    @Override
+    public void selectCloud(AskCloudMessage message) {
+
+        //
+
+        int choice = 0;
+
+        messageHandler.sendMessage(new SelectCloudMessage(choice));
 
     }
+
+
 }

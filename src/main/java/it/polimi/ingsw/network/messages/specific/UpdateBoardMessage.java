@@ -1,7 +1,6 @@
 package it.polimi.ingsw.network.messages.specific;
 
 import it.polimi.ingsw.model.GeneralGame;
-import it.polimi.ingsw.model.Table;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 

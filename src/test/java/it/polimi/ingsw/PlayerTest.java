@@ -73,7 +73,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void useAssistant_AssistantCard(){
+    public void selectAssistantTest(){
         player1.selectAssistant(player1.getAssistantDeck()[2]);
         for(int i = 0; i < 10; i++){
             if(i == 2){
@@ -82,5 +82,6 @@ public class PlayerTest {
             }
             assertNotNull(player1.getAssistantDeck()[i]);
         }
+        assertEquals(3, player1.getPlayerWeight());
     }
 }

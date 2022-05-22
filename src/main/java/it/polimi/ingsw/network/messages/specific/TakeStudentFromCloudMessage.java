@@ -5,14 +5,14 @@ import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 
 public class TakeStudentFromCloudMessage extends Message {
-    private final Cloud cloud;
+    private final int cloud;
 
-    public TakeStudentFromCloudMessage(Cloud cloud, String player) {
-        super(MessageAction.SELECT_CLOUD, player);
+    public TakeStudentFromCloudMessage(int cloud) {
+        super(MessageAction.SELECT_CLOUD, null);
         this.cloud = cloud;
     }
 
-    public Cloud getCloud() {
+    public int getCloud() {
         return cloud;
     }
 }

@@ -52,13 +52,17 @@ public class ClientMessageHandler implements Observer<Message> {
 
             // PLANNING
             case SELECT_ASSISTANT_CARD -> userInterface.selectAssistantCard((AskAssistantCardsMessage) message);
+            case ASK_STUDENT -> userInterface.selectStudent((AskStudentMessage) message);
+            case ASK_PLACE -> userInterface.selectPlace((AskWherePlaceMessage) message);
+            case ASK_MOVE_MOTHER_NATURE -> userInterface.selectMotherNatureIsland((AskMotherNatureMessage) message);
+            case ASK_CLOUD -> userInterface.selectCloud((AskCloudMessage) message);
+
+
 
             // TODO: L&G. gestire prossimi messaggi
             case END_TURN -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);
-            case MOVE_MOTHER_NATURE -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);
             case PLACE_IN_HALL -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);
             case PLACE_ON_ISLAND -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);
-            case SELECT_CLOUD -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);
             default -> throw new IllegalArgumentException("Unexpected value: " + messageAction);
         }
 

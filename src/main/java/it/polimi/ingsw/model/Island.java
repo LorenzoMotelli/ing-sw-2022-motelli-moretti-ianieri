@@ -110,6 +110,8 @@ public class Island implements Serializable {
         students.addAll(studentsToAdd);
     }
 
+    public void addStudent(Student student){students.add(student);}
+
     public void addTower(List<Tower> towersToAdd){
         playerTower.addAll(towersToAdd);
     }

@@ -227,6 +227,8 @@ public class GeneralGame extends Observable<Message> implements Serializable {
                 players[i+1] = tmpPlayer;
             }
        }
+       turn = 0;
+        notify(new UpdateBoardMessage(this));
     }
 
     /**
@@ -245,11 +247,31 @@ public class GeneralGame extends Observable<Message> implements Serializable {
                 break;
             }
             case PLACE_STUDENT:{
-                gamePhase = PLACE_MOTHER_NATURE;
+                // partita a giocatori pari devi piazziare 3 student
+                if(players.length % 2 == 0){
+                    if(getCurrentPlayer().getSchoolDashboard().getEntranceStudent().size() == 4) {
+                        // quindi ne ho piazzati già 3  (7 - 3 = 4)
+                        gamePhase = PLACE_MOTHER_NATURE;
+                    }
+                } else {
+                    if (getCurrentPlayer().getSchoolDashboard().getEntranceStudent().size() == 5) {
+                        gamePhase = PLACE_MOTHER_NATURE;
+                    }
+                }
                 break;
             }
             case PLACE_MOTHER_NATURE:{
-                gamePhase = ENDING;
+                gamePhase = SELECT_CLOUD;
+                break;
+            }
+            case SELECT_CLOUD: {
+                // se player iniziale finisce il round
+                if (this.getCurrentPlayer() == this.players[0]) {
+                    gamePhase = ENDING;
+                } else {
+                    // altrimenti turno del prossimo giocatore
+                    gamePhase = PLACE_STUDENT;
+                }
                 break;
             }
         }
@@ -259,30 +281,53 @@ public class GeneralGame extends Observable<Message> implements Serializable {
 
     /**
      * set the max movement of mother nature and the weight of the player
-     * than add the card to to list of card that can no more be used in this turn
+     * than add the card to the list of card that can no more be used in this turn
      * @param assistantCard the assistant card selected by the player
      */
-    public void useAssistantCard(AssistantCard assistantCard){
+    /*public void useAssistantCard(AssistantCard assistantCard){
         motherNatureMovement = assistantCard.getMovementMotherNature();
         getCurrentPlayer().setPlayerWeight(assistantCard.getTurnHeaviness());
         getCurrentPlayer().selectAssistant(assistantCard);
         addAssistantCardUsed(assistantCard);
         notify(new UpdateBoardMessage(this));
-    }
+    }*/
 
     /**
      * when an assistant card is used the other player can not use that assistant in this turn
      * moreover set the max mother nature movement (number of island)
-     * @param assistantCard the assistant card selected by the current player
+     //* @param assistantCard the assistant card selected by the current player
      * @return the list of the assistant cards used in this turn
      */
-    public List<AssistantCard> addAssistantCardUsed(AssistantCard assistantCard){
+    /*public List<AssistantCard> addAssistantCardUsed(AssistantCard assistantCard){
         assistantCardsUsed.add(assistantCard);
         //nextPhase(gamePhase);
         return assistantCardsUsed;
-    }
+    }*/
 
     //---------------- ACTION PHASE MANAGEMENT --------------\\
+
+    public boolean checkHallAvailability(Student student){
+        for(int i = 0; i < 5; i++) {
+            if(student.getColor().equals(getCurrentPlayer().getSchoolDashboard().getSchoolHall()[i].getHallColor())){
+                if(null == getCurrentPlayer().getSchoolDashboard().getSchoolHall()[i].getTableHall()[9]){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Hall getColorHall(PawnColor color){
+        for(int i = 0; i < 5; i++){
+            if(getCurrentPlayer().getSchoolDashboard().getSchoolHall()[i].getHallColor().equals(color)){
+                return getCurrentPlayer().getSchoolDashboard().getSchoolHall()[i];
+            }
+        }
+        return null;
+    }
 
     /**
      * the current player selects to place a student in the hall
@@ -505,16 +550,21 @@ public class GeneralGame extends Observable<Message> implements Serializable {
 
     /**
      * search the island in the list of island in the table and place the student
-     * @param studentToBePlaced the student from the entrance of the school selected by the player
-     * @param islandSelected the island from the all possible island selected by the player
+     //* @param studentToBePlaced the student from the entrance of the school selected by the player
+     //* @param islandSelected the island from the all possible island selected by the player
      */
-    public void placeStudentOnIsland(Student studentToBePlaced, Island islandSelected){
+    public void placeStudentOnIsland(int islandIndex){
+        /*
         for(int i = 0; i < table.getIslands().size(); i++){
             if(table.getIslands().get(i).equals(islandSelected)){
                 table.placeStudentOnIsland(studentToBePlaced, table.getIslands().get(i));
             }
         }
         getCurrentPlayer().getSchoolDashboard().getEntranceStudent().remove(studentToBePlaced);
+        */
+        getTable().getIslands().get(islandIndex).addStudent(getCurrentPlayer().getStudentSelected());
+        getCurrentPlayer().getSchoolDashboard().removeStudentFromEntrance(getCurrentPlayer().getStudentSelected());
+        //getCurrentPlayer().getSchoolDashboard().getEntranceStudent().remove(getCurrentPlayer().getStudentSelected());
         notify(new UpdateBoardMessage(this));
     }
 
@@ -843,5 +893,18 @@ public class GeneralGame extends Observable<Message> implements Serializable {
     public void giveStudentsFromCloudToPlayer(Cloud cloudSelected){
         getCurrentPlayer().getSchoolDashboard().getEntranceStudent().addAll(table.giveStudentsFromCloud(cloudSelected));
         notify(new UpdateBoardMessage(this));
+    }
+
+    public List<Island> getAvailableIslands() {
+        int startingIndex = getTable().getIslands().indexOf(getTable().getIslandWithMotherNature()) + 1;
+        int finalIndex = startingIndex + getCurrentPlayer().getAssistantCardUsed().getMovementMotherNature();
+
+        List<Island> islands = new ArrayList<>();
+
+        for (int i = startingIndex; i < finalIndex; i++ ) {
+            islands.add(getTable().getIslands().get(i % getTable().getIslands().size()));
+        }
+
+        return islands;
     }
 }

@@ -71,6 +71,7 @@ public class Connection extends Observable<Message> implements Runnable {
     public synchronized void sendMessage(Message message) {
         if (!Thread.currentThread().isInterrupted()) {
             try {
+                    out.reset();
                     out.writeObject(message);
                     out.flush();
 

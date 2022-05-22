@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.AssistantCard;
+import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 
 import java.io.Serializable;
@@ -12,8 +13,8 @@ public class Player implements Serializable {
     private String playerName;
     private School schoolDashboard;
     private AssistantCard[] assistantDeck;
-
     private AssistantCard assistantCardUsed;
+    private Student studentSelected;
     private int playerCoins = 1;
     private int playerWeight = 0;
     private int playerInfluence = 0;
@@ -77,6 +78,18 @@ public class Player implements Serializable {
         this.playerTeam = playerTeam;
     }
 
+    public AssistantCard getAssistantCardUsed() {
+        return assistantCardUsed;
+    }
+
+    public Student getStudentSelected() {
+        return studentSelected;
+    }
+
+    public void setStudentSelected(Student studentSelected) {
+        this.studentSelected = studentSelected;
+    }
+
     public int getPlayerCoins() {
         return playerCoins;
     }
@@ -115,6 +128,7 @@ public class Player implements Serializable {
         for(int i = 0; i < 10; i++){
             if(assistantDeck[i].equals(assistant)){
                 assistantCardUsed = assistantDeck[i];
+                setPlayerWeight(assistantCardUsed.getTurnHeaviness());
                 assistantDeck[i] = null;
                 break;
             }
