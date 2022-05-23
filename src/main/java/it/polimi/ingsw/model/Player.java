@@ -5,39 +5,34 @@ import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import static it.polimi.ingsw.model.enumeration.TowerColor.*;
-// TODO add nickname
+
 public class Player implements Serializable {
     private String playerName;
     private School schoolDashboard;
-    private AssistantCard[] assistantDeck;
+    private List<AssistantCard> assistantDeck;
     private AssistantCard assistantCardUsed;
     private Student studentSelected;
     private int playerCoins = 1;
     private int playerWeight = 0;
     private int playerInfluence = 0;
     private TowerColor playerTeam = null;
-//
-    //
+
+
     /**
      * constructor to initialize the player
      */
-    /*Da vedere in gruppo*/
     public Player(String name){
         playerName = name;
-        assistantDeck = new AssistantCard[10];
+        assistantDeck = new ArrayList<>();
         for(int i = 0; i< 10; i++){
-            assistantDeck[i] = new AssistantCard(i/*, mage*/);
+            assistantDeck.add(new AssistantCard(i/*, mage*/));
         }
         schoolDashboard = new School();
     }
-
-    //public Player(String name) {
-      //  playerName=name;
-        //TODO CHECKTOGHETHER
-    //}
 
     //---------------- GETTERS AND SETTERS --------------\\
 
@@ -46,7 +41,7 @@ public class Player implements Serializable {
         return playerName;
     }
 
-    public AssistantCard[] getAssistantDeck() {
+    public List<AssistantCard> getAssistantDeck() {
         return assistantDeck;
     }
 
@@ -90,22 +85,27 @@ public class Player implements Serializable {
         this.studentSelected = studentSelected;
     }
 
-    public int getPlayerCoins() {
+    //this will be used in an expert game, it is not already implemented
+    /*public int getPlayerCoins() {
         return playerCoins;
-    }
+    }*/
 
-    public void setPlayerCoins(int playerCoins) {
+   //this will be used in an expert game, it is not already implemented
+    /*public void setPlayerCoins(int playerCoins) {
         this.playerCoins = playerCoins;
-    }
+    }*/
 
 
+
+    /*
+    this will be used in an expert game, it is not already implemented
     /**
      * take the coins equals to the cost of the character that the player has selected
      * @param costCoin the cost of the character selected
      */
-    public void takeCoin(int costCoin){
+    /*public void takeCoin(int costCoin){
         setPlayerCoins(getPlayerCoins()- costCoin);
-    }
+    }*/
 
     //----------------- SCHOOL MANAGEMENT --------------------\\
 
@@ -126,10 +126,10 @@ public class Player implements Serializable {
      */
     public void selectAssistant(AssistantCard assistant){
         for(int i = 0; i < 10; i++){
-            if(assistantDeck[i].equals(assistant)){
-                assistantCardUsed = assistantDeck[i];
+            if(assistantDeck.get(i).equals(assistant)){
+                assistantCardUsed = assistantDeck.get(i);
                 setPlayerWeight(assistantCardUsed.getTurnHeaviness());
-                assistantDeck[i] = null;
+                assistantDeck.remove(assistantCardUsed);
                 break;
             }
         }

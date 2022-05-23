@@ -40,7 +40,7 @@ public class Table implements Serializable {
         for(int i = 0; i < numberOfPlayers; i++){
             clouds.add(new Cloud());
         }
-        //creation of the 130 students, 26 for each of one of the 5 color in the game
+        //creation of the 130 students, 26 for each of the 5 color in the game
         studentBag = new ArrayList<>();
         //26 blue students
         for(int i = 0; i < MAX_STUDENT; i++){
@@ -80,13 +80,13 @@ public class Table implements Serializable {
         professors.add(3,new Professor(RED));
         professors.add(4,new Professor(YELLOW));
         //if it is an expert game there are characters and coins
-        if(variantOfTheGame.equals(Variant.EXPERT)){
+        /*if(variantOfTheGame.equals(Variant.EXPERT)){
             setCoins(20-numberOfPlayers);
             playableCharacters = new Character[3];
             for(int i = 0; i < 3; i++){
                 playableCharacters[i] = charactersOfTheGame[i];
             }
-        }
+        }*/
         initializeIslands();
         initializeClouds();
     }
@@ -151,9 +151,9 @@ public class Table implements Serializable {
         return islands;
     }
 
-    public void setIslands(List<Island> islands) {
+    /*public void setIslands(List<Island> islands) {
         this.islands = islands;
-    }
+    }*/
 
     public List<Cloud> getClouds() {
         return clouds;
@@ -218,22 +218,25 @@ public class Table implements Serializable {
                 return island;
             }
         }
-        return islands.get(0);
+        return null;
     }
 
-    public int getCoins() {
+    //expert game not implemented
+    /*public int getCoins() {
         return coins;
-    }
+    }*/
 
-    public void setCoins(int coins) {
+    //expert game not implemented
+    /*public void setCoins(int coins) {
         this.coins = coins;
-    }
+    }*/
 
-    public Character[] getPlayableCharacters() {
+    //expert game not implemented
+    /*public Character[] getPlayableCharacters() {
         return playableCharacters;
-    }
+    }*/
 
-    public void useCharacterAbility(Character characterSelected){}
+    //public void useCharacterAbility(Character characterSelected){}
 
     //------------------- ISLANDS MANAGEMENT -----------------\\
 
@@ -287,7 +290,7 @@ public class Table implements Serializable {
     public void placeStudentsInCloud(int numberOfPlayer){
         for(Cloud cloud : clouds){
             List<Student> studentList;
-            if(2 == numberOfPlayer || 4 == numberOfPlayer){
+            if(numberOfPlayer % 2 == 0){
                 studentList = studentBag.stream().limit(3).collect(Collectors.toList());
             }
             else{

@@ -47,7 +47,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
      * @param variantSelected the variant that the first player has selected
      */
     public GeneralGame(int numberOfPlayer, Variant variantSelected){
-        Character[] charactersToPlay = new Character[3];
+        //Character[] charactersToPlay = new Character[3];
         setGamePhase(Phases.STARTING);
         assistantCardsUsed = new ArrayList<>();
         setVariant(variantSelected);
@@ -97,6 +97,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
                 }
             }
         }
+        nextPhase(STARTING);
         notify(new UpdateBoardMessage(this));
     }
 
@@ -197,9 +198,6 @@ public class GeneralGame extends Observable<Message> implements Serializable {
 
     /**
      * the turn number sets the current player
-     * if the turn number is greater than the number of players than a new cycle starts:
-     * the players will have a new turn order
-     * the cloud will be refilled
      */
     public void newTurn(){
         turn = (turn+1) % players.length;
@@ -217,19 +215,25 @@ public class GeneralGame extends Observable<Message> implements Serializable {
     }
 
     /**
-     * when all the players ends their turn the new order for the next turn is set
+     * when all the players ends their turn the new order for the next phase is set
      */
     public void setNewOrder(){
        Player tmpPlayer;
-       for(int i = 0; i < players.length-1; i++){
-            if(players[i].getPlayerWeight() > players[i+1].getPlayerWeight()){
-                tmpPlayer = players[i];
-                players[i] = players[i+1];
-                players[i+1] = tmpPlayer;
+       for(int i = 0; i < players.length; i++){
+           boolean sorted = false;
+           for(int j = 0; j < players.length-1; j++)
+            if(players[j].getPlayerWeight() > players[j+1].getPlayerWeight()){
+                tmpPlayer = players[j];
+                players[j] = players[j+1];
+                players[j+1] = tmpPlayer;
+                sorted = true;
             }
+           if(!sorted){
+               break;
+           }
        }
        turn = 0;
-        notify(new UpdateBoardMessage(this));
+       notify(new UpdateBoardMessage(this));
     }
 
     /**
@@ -248,13 +252,16 @@ public class GeneralGame extends Observable<Message> implements Serializable {
                 break;
             }
             case PLACE_STUDENT:{
-                // partita a giocatori pari devi piazziare 3 student
+                //in a game with even players you have to place 3 students
                 if(players.length % 2 == 0){
                     if(getCurrentPlayer().getSchoolDashboard().getEntranceStudent().size() == 4) {
-                        // quindi ne ho piazzati già 3  (7 - 3 = 4)
+                        //already 3 placed  (7 - 3 = 4)
                         gamePhase = PLACE_MOTHER_NATURE;
                     }
-                } else {
+                }
+                //in a game with odd players you have to place 4 students
+                else {
+                    //already 4 placed  (9 - 4 = 5)
                     if (getCurrentPlayer().getSchoolDashboard().getEntranceStudent().size() == 5) {
                         gamePhase = PLACE_MOTHER_NATURE;
                     }
@@ -266,16 +273,30 @@ public class GeneralGame extends Observable<Message> implements Serializable {
                 break;
             }
             case SELECT_CLOUD: {
-                // se player iniziale finisce il round
-                if (this.getCurrentPlayer() == this.players[0]) {
+                //if initial player the round ends IF ALL THE CLOUDS HAVE NO MORE STUDENTS
+                if (allCloudsEmpty()/*this.getCurrentPlayer() == this.players[0]*/) {
                     gamePhase = ENDING;
-                } else {
-                    // altrimenti turno del prossimo giocatore
+                }
+                else {
+                    //otherwise the other players has to game their action phase
                     gamePhase = PLACE_STUDENT;
                 }
                 break;
             }
         }
+    }
+
+    /**
+     * check if in all clouds of the game there are students
+     * @return true if all clouds are empty, false otherwise
+     */
+    public boolean allCloudsEmpty(){
+        for(Cloud cloud : getTable().getClouds()){
+            if(cloud.getCloudStudents().size() != 0){
+                return false;
+            }
+        }
+        return true;
     }
 
     //---------------- PLANNING PHASE MANAGEMENT --------------\\
@@ -308,7 +329,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         List<AssistantCard> availableCards = new ArrayList<>();
 
         // get current deck of the current player (deck without already played cards)
-        AssistantCard[] currentDeck = getCurrentPlayer().getAssistantDeck();
+        List<AssistantCard> currentDeck = getCurrentPlayer().getAssistantDeck();
 
         // one card is available only if not already played by someone else in this round
         for (AssistantCard assistantCard : currentDeck) {
@@ -327,7 +348,8 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         // if all the cards in the current deck have already been played
         // return the remaining current deck
         if (availableCards.size() == 0) {
-            Collections.addAll(availableCards, currentDeck);
+            //Collections.addAll(availableCards, currentDeck);
+            availableCards.addAll(currentDeck);
         }
 
         return availableCards;
@@ -364,8 +386,13 @@ public class GeneralGame extends Observable<Message> implements Serializable {
      * @param studentToBePlaced the student selected, from those in the entrance, by the player
      */
     public void placeStudentInHall(Student studentToBePlaced){
-        getCurrentPlayer().placeStudentInHall(studentToBePlaced);
-        giveProfessor(studentToBePlaced.getColor());
+        if(!checkHallAvailability(studentToBePlaced)){
+            return;
+        }
+        else {
+            getCurrentPlayer().placeStudentInHall(studentToBePlaced);
+            giveProfessor(studentToBePlaced.getColor());
+        }
         notify(new UpdateBoardMessage(this));
     }
 

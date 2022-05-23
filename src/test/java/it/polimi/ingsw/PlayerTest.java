@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Student;
+import it.polimi.ingsw.model.cards.AssistantCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,16 +19,11 @@ public class PlayerTest {
     public void setUp(){
         player1 = new Player("Player1");
         List<Student> studentList = new ArrayList<>();
-        Student blueStudent = new Student();
-        blueStudent.setColor(BLUE);
-        Student greenStudent = new Student();
-        greenStudent.setColor(GREEN);
-        Student pinkStudent = new Student();
-        pinkStudent.setColor(PINK);
-        Student redStudent = new Student();
-        redStudent.setColor(RED);
-        Student yellowStudent = new Student();
-        yellowStudent.setColor(YELLOW);
+        Student blueStudent = new Student(BLUE);
+        Student greenStudent = new Student(GREEN);
+        Student pinkStudent = new Student(PINK);
+        Student redStudent = new Student(RED);
+        Student yellowStudent = new Student(YELLOW);
         studentList.add(blueStudent);
         studentList.add(greenStudent);
         studentList.add(pinkStudent);
@@ -46,23 +42,23 @@ public class PlayerTest {
         assertNotNull(player1.getAssistantDeck());
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10 && j != i; j++){
-                assertNotEquals(player1.getAssistantDeck()[i],player1.getAssistantDeck()[j]);
+                assertNotEquals(player1.getAssistantDeck().get(i),player1.getAssistantDeck().get(j));
             }
         }
         for(int i = 0; i < 10; i++){
-            assertEquals(i+1, player1.getAssistantDeck()[i].getTurnHeaviness());
+            assertEquals(i+1, player1.getAssistantDeck().get(i).getTurnHeaviness());
         }
 
-        assertEquals(1, player1.getAssistantDeck()[0].getMovementMotherNature());
-        assertEquals(1, player1.getAssistantDeck()[1].getMovementMotherNature());
-        assertEquals(2, player1.getAssistantDeck()[2].getMovementMotherNature());
-        assertEquals(2, player1.getAssistantDeck()[3].getMovementMotherNature());
-        assertEquals(3, player1.getAssistantDeck()[4].getMovementMotherNature());
-        assertEquals(3, player1.getAssistantDeck()[5].getMovementMotherNature());
-        assertEquals(4, player1.getAssistantDeck()[6].getMovementMotherNature());
-        assertEquals(4, player1.getAssistantDeck()[7].getMovementMotherNature());
-        assertEquals(5, player1.getAssistantDeck()[8].getMovementMotherNature());
-        assertEquals(5, player1.getAssistantDeck()[9].getMovementMotherNature());
+        assertEquals(1, player1.getAssistantDeck().get(0).getMovementMotherNature());
+        assertEquals(1, player1.getAssistantDeck().get(1).getMovementMotherNature());
+        assertEquals(2, player1.getAssistantDeck().get(2).getMovementMotherNature());
+        assertEquals(2, player1.getAssistantDeck().get(3).getMovementMotherNature());
+        assertEquals(3, player1.getAssistantDeck().get(4).getMovementMotherNature());
+        assertEquals(3, player1.getAssistantDeck().get(5).getMovementMotherNature());
+        assertEquals(4, player1.getAssistantDeck().get(6).getMovementMotherNature());
+        assertEquals(4, player1.getAssistantDeck().get(7).getMovementMotherNature());
+        assertEquals(5, player1.getAssistantDeck().get(8).getMovementMotherNature());
+        assertEquals(5, player1.getAssistantDeck().get(9).getMovementMotherNature());
     }
 
     @Test
@@ -73,15 +69,12 @@ public class PlayerTest {
     }
 
     @Test
-    public void selectAssistantTest(){
-        player1.selectAssistant(player1.getAssistantDeck()[2]);
-        for(int i = 0; i < 10; i++){
-            if(i == 2){
-                assertNull(player1.getAssistantDeck()[2]);
-                continue;
-            }
-            assertNotNull(player1.getAssistantDeck()[i]);
-        }
+    public void selectAssistant(){
+        assertNull(player1.getAssistantCardUsed());
+        AssistantCard assistantCard = player1.getAssistantDeck().get(2);
+        player1.selectAssistant(assistantCard);
+        assertEquals(9, player1.getAssistantDeck().size());
         assertEquals(3, player1.getPlayerWeight());
+        assertEquals(assistantCard, player1.getAssistantCardUsed());
     }
 }

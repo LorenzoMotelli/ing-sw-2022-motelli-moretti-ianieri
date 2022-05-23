@@ -23,7 +23,10 @@ public class SchoolTest {
         List<Student> studentList = new ArrayList<>();
         //creation of two different students
         Student blueStudent = new Student(BLUE);
+        Student greenStudent = new Student(GREEN);
         Student pinkStudent = new Student(PINK);
+        Student redStudent = new Student(RED);
+        Student yellowStudent = new Student(YELLOW);
         studentList.add(blueStudent);
         studentList.add(pinkStudent);
         school = new School(); //creation of the test school
@@ -55,7 +58,6 @@ public class SchoolTest {
         for(int i = 0; i < school.getPlayersTowers().size(); i++){
             assertEquals(WHITE, school.getPlayersTowers().get(i).getColor());
         }
-
     }
 
     @Test
@@ -69,7 +71,14 @@ public class SchoolTest {
         school.placeStudentInHall(school.getEntranceStudent().get(1));
         assertEquals(PINK, school.getSchoolHall()[2].getTableHall()[0].getColor());
         assertEquals(1, school.getEntranceStudent().size());
-        assertEquals(1, school.getEntranceStudent().size());
+        for(int i = 0; i < 5; i++){
+            if(i != 2) {
+                assertNull(school.getSchoolHall()[i].getTableHall()[0]);
+            }
+            else {
+                assertEquals(PINK, school.getSchoolHall()[i].getTableHall()[0].getColor());
+            }
+        }
     }
 
     @Test
@@ -83,5 +92,6 @@ public class SchoolTest {
         assertNull(school.getPinkProfessor());
         assertNull(school.getRedProfessor());
         assertNotNull(school.getYellowProfessor());
+        assertEquals(YELLOW, school.getYellowProfessor().getColor());
     }
 }
