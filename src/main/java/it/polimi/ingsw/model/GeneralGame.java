@@ -40,7 +40,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
     //the table with clouds, islands, students...
     private Table table;
     private boolean teamGame = false;
-    //TODO change initialization and adding players
+    //TODO generate GeneralGame4Players extends GeneralGame
     /**
      * creation of the initial board, the initial players and characters
      * @param numberOfPlayer the number of player selected by the first player
@@ -156,9 +156,9 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         return table;
     }
 
-    public Character[] getAllCharacters() {
+    /*public Character[] getAllCharacters() {
         return allCharacters;
-    }
+    }*/
 
     public void setPlayers(Player[] players) {
         this.players = players;

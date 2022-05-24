@@ -77,6 +77,10 @@ public class Player implements Serializable {
         return assistantCardUsed;
     }
 
+    public void setAssistantCardUsed(AssistantCard assistantCardUsed) {
+        this.assistantCardUsed = assistantCardUsed;
+    }
+
     public Student getStudentSelected() {
         return studentSelected;
     }

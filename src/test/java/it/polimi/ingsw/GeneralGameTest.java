@@ -1858,4 +1858,184 @@ public class GeneralGameTest {
     }
 
     //TODO switch color conquer black && getAvailableIslands() for all island index and all assistantCards
+
+    @RepeatedTest(value = 12, name = "getAvailableIslands_OneIslandAvailable_FirstAssistantUsed{currentRepetition}")
+    public void getAvailableIslands_OneIslandAvailable_FirstAssistantUsed(RepetitionInfo repetitionInfo){
+        int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
+        List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
+        gameWith2Players.getTable().getIslandWithMotherNature().setMotherNature(false);
+        gameWith2Players.getTable().getIslands().get(indexOfIslandWithMotherNature).setMotherNature(true);
+        gameWith2Players.getCurrentPlayer().setAssistantCardUsed(gameWith2Players.getCurrentPlayer().getAssistantDeck().get(0));
+        List<Island> islandsAvailable = gameWith2Players.getAvailableIslands();
+        assertEquals(1, islandsAvailable.size());
+        assertEquals(islandsAvailable.get(0), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+1)%12));
+        assertEquals(12, gameWith2Players.getTable().getIslands().size());
+        for(int i = 0; i < 12; i++){
+            assertEquals(oldIslandSituation.get(i), gameWith2Players.getTable().getIslands().get(i));
+        }
+    }
+
+    @RepeatedTest(value = 12, name = "getAvailableIslands_OneIslandAvailable_SecondAssistantUsed{currentRepetition}")
+    public void getAvailableIslands_OneIslandAvailable_SecondAssistantUsed(RepetitionInfo repetitionInfo){
+        int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
+        List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
+        gameWith2Players.getTable().getIslandWithMotherNature().setMotherNature(false);
+        gameWith2Players.getTable().getIslands().get(indexOfIslandWithMotherNature).setMotherNature(true);
+        gameWith2Players.getCurrentPlayer().setAssistantCardUsed(gameWith2Players.getCurrentPlayer().getAssistantDeck().get(1));
+        List<Island> islandsAvailable = gameWith2Players.getAvailableIslands();
+        assertEquals(1, islandsAvailable.size());
+        assertEquals(islandsAvailable.get(0), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+1)%12));
+        assertEquals(12, gameWith2Players.getTable().getIslands().size());
+        for(int i = 0; i < 12; i++){
+            assertEquals(oldIslandSituation.get(i), gameWith2Players.getTable().getIslands().get(i));
+        }
+    }
+
+    @RepeatedTest(value = 12, name = "getAvailableIslands_TwoIslandAvailable_ThirdAssistantUsed{currentRepetition}")
+    public void getAvailableIslands_TwoIslandAvailable_ThirdAssistantUsed(RepetitionInfo repetitionInfo){
+        int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
+        List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
+        gameWith2Players.getTable().getIslandWithMotherNature().setMotherNature(false);
+        gameWith2Players.getTable().getIslands().get(indexOfIslandWithMotherNature).setMotherNature(true);
+        gameWith2Players.getCurrentPlayer().setAssistantCardUsed(gameWith2Players.getCurrentPlayer().getAssistantDeck().get(2));
+        List<Island> islandsAvailable = gameWith2Players.getAvailableIslands();
+        assertEquals(2, islandsAvailable.size());
+        assertEquals(islandsAvailable.get(0), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+1)%12));
+        assertEquals(islandsAvailable.get(1), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+2)%12));
+        assertEquals(12, gameWith2Players.getTable().getIslands().size());
+        for(int i = 0; i < 12; i++){
+            assertEquals(oldIslandSituation.get(i), gameWith2Players.getTable().getIslands().get(i));
+        }
+    }
+
+    @RepeatedTest(value = 12, name = "getAvailableIslands_TwoIslandAvailable_FourthAssistantUsed{currentRepetition}")
+    public void getAvailableIslands_TwoIslandAvailable_FourthAssistantUsed(RepetitionInfo repetitionInfo){
+        int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
+        List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
+        gameWith2Players.getTable().getIslandWithMotherNature().setMotherNature(false);
+        gameWith2Players.getTable().getIslands().get(indexOfIslandWithMotherNature).setMotherNature(true);
+        gameWith2Players.getCurrentPlayer().setAssistantCardUsed(gameWith2Players.getCurrentPlayer().getAssistantDeck().get(3));
+        List<Island> islandsAvailable = gameWith2Players.getAvailableIslands();
+        assertEquals(2, islandsAvailable.size());
+        assertEquals(islandsAvailable.get(0), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+1)%12));
+        assertEquals(islandsAvailable.get(1), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+2)%12));
+        assertEquals(12, gameWith2Players.getTable().getIslands().size());
+        for(int i = 0; i < 12; i++){
+            assertEquals(oldIslandSituation.get(i), gameWith2Players.getTable().getIslands().get(i));
+        }
+    }
+
+    @RepeatedTest(value = 12, name = "getAvailableIslands_ThreeIslandAvailable_FifthAssistantUsed{currentRepetition}")
+    public void getAvailableIslands_ThreeIslandAvailable_FifthAssistantUsed(RepetitionInfo repetitionInfo){
+        int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
+        List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
+        gameWith2Players.getTable().getIslandWithMotherNature().setMotherNature(false);
+        gameWith2Players.getTable().getIslands().get(indexOfIslandWithMotherNature).setMotherNature(true);
+        gameWith2Players.getCurrentPlayer().setAssistantCardUsed(gameWith2Players.getCurrentPlayer().getAssistantDeck().get(4));
+        List<Island> islandsAvailable = gameWith2Players.getAvailableIslands();
+        assertEquals(3, islandsAvailable.size());
+        assertEquals(islandsAvailable.get(0), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+1)%12));
+        assertEquals(islandsAvailable.get(1), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+2)%12));
+        assertEquals(islandsAvailable.get(2), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+3)%12));
+        assertEquals(12, gameWith2Players.getTable().getIslands().size());
+        for(int i = 0; i < 12; i++){
+            assertEquals(oldIslandSituation.get(i), gameWith2Players.getTable().getIslands().get(i));
+        }
+    }
+
+    @RepeatedTest(value = 12, name = "getAvailableIslands_ThreeIslandAvailable_SixthAssistantUsed{currentRepetition}")
+    public void getAvailableIslands_ThreeIslandAvailable_SixthAssistantUsed(RepetitionInfo repetitionInfo){
+        int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
+        List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
+        gameWith2Players.getTable().getIslandWithMotherNature().setMotherNature(false);
+        gameWith2Players.getTable().getIslands().get(indexOfIslandWithMotherNature).setMotherNature(true);
+        gameWith2Players.getCurrentPlayer().setAssistantCardUsed(gameWith2Players.getCurrentPlayer().getAssistantDeck().get(5));
+        List<Island> islandsAvailable = gameWith2Players.getAvailableIslands();
+        assertEquals(3, islandsAvailable.size());
+        assertEquals(islandsAvailable.get(0), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+1)%12));
+        assertEquals(islandsAvailable.get(1), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+2)%12));
+        assertEquals(islandsAvailable.get(2), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+3)%12));
+        assertEquals(12, gameWith2Players.getTable().getIslands().size());
+        for(int i = 0; i < 12; i++){
+            assertEquals(oldIslandSituation.get(i), gameWith2Players.getTable().getIslands().get(i));
+        }
+    }
+
+    @RepeatedTest(value = 12, name = "getAvailableIslands_fourIslandAvailable_SeventhAssistantUsed{currentRepetition}")
+    public void getAvailableIslands_FourIslandAvailable_SeventhAssistantUsed(RepetitionInfo repetitionInfo){
+        int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
+        List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
+        gameWith2Players.getTable().getIslandWithMotherNature().setMotherNature(false);
+        gameWith2Players.getTable().getIslands().get(indexOfIslandWithMotherNature).setMotherNature(true);
+        gameWith2Players.getCurrentPlayer().setAssistantCardUsed(gameWith2Players.getCurrentPlayer().getAssistantDeck().get(6));
+        List<Island> islandsAvailable = gameWith2Players.getAvailableIslands();
+        assertEquals(4, islandsAvailable.size());
+        assertEquals(islandsAvailable.get(0), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+1)%12));
+        assertEquals(islandsAvailable.get(1), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+2)%12));
+        assertEquals(islandsAvailable.get(2), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+3)%12));
+        assertEquals(islandsAvailable.get(3), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+4)%12));
+        assertEquals(12, gameWith2Players.getTable().getIslands().size());
+        for(int i = 0; i < 12; i++){
+            assertEquals(oldIslandSituation.get(i), gameWith2Players.getTable().getIslands().get(i));
+        }
+    }
+
+    @RepeatedTest(value = 12, name = "getAvailableIslands_FourIslandAvailable_EighthAssistantUsed{currentRepetition}")
+    public void getAvailableIslands_FourIslandAvailable_EighthAssistantUsed(RepetitionInfo repetitionInfo){
+        int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
+        List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
+        gameWith2Players.getTable().getIslandWithMotherNature().setMotherNature(false);
+        gameWith2Players.getTable().getIslands().get(indexOfIslandWithMotherNature).setMotherNature(true);
+        gameWith2Players.getCurrentPlayer().setAssistantCardUsed(gameWith2Players.getCurrentPlayer().getAssistantDeck().get(7));
+        List<Island> islandsAvailable = gameWith2Players.getAvailableIslands();
+        assertEquals(4, islandsAvailable.size());
+        assertEquals(islandsAvailable.get(0), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+1)%12));
+        assertEquals(islandsAvailable.get(1), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+2)%12));
+        assertEquals(islandsAvailable.get(2), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+3)%12));
+        assertEquals(islandsAvailable.get(3), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+4)%12));
+        assertEquals(12, gameWith2Players.getTable().getIslands().size());
+        for(int i = 0; i < 12; i++){
+            assertEquals(oldIslandSituation.get(i), gameWith2Players.getTable().getIslands().get(i));
+        }
+    }
+
+    @RepeatedTest(value = 12, name = "getAvailableIslands_FiveIslandAvailable_NinthAssistantUsed{currentRepetition}")
+    public void getAvailableIslands_FiveIslandAvailable_NinthAssistantUsed(RepetitionInfo repetitionInfo){
+        int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
+        List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
+        gameWith2Players.getTable().getIslandWithMotherNature().setMotherNature(false);
+        gameWith2Players.getTable().getIslands().get(indexOfIslandWithMotherNature).setMotherNature(true);
+        gameWith2Players.getCurrentPlayer().setAssistantCardUsed(gameWith2Players.getCurrentPlayer().getAssistantDeck().get(8));
+        List<Island> islandsAvailable = gameWith2Players.getAvailableIslands();
+        assertEquals(5, islandsAvailable.size());
+        assertEquals(islandsAvailable.get(0), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+1)%12));
+        assertEquals(islandsAvailable.get(1), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+2)%12));
+        assertEquals(islandsAvailable.get(2), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+3)%12));
+        assertEquals(islandsAvailable.get(3), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+4)%12));
+        assertEquals(islandsAvailable.get(4), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+5)%12));
+        assertEquals(12, gameWith2Players.getTable().getIslands().size());
+        for(int i = 0; i < 12; i++){
+            assertEquals(oldIslandSituation.get(i), gameWith2Players.getTable().getIslands().get(i));
+        }
+    }
+
+    @RepeatedTest(value = 12, name = "getAvailableIslands_FiveIslandAvailable_TenthAssistantUsed{currentRepetition}")
+    public void getAvailableIslands_FiveIslandAvailable_TenthAssistantUsed(RepetitionInfo repetitionInfo){
+        int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
+        List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
+        gameWith2Players.getTable().getIslandWithMotherNature().setMotherNature(false);
+        gameWith2Players.getTable().getIslands().get(indexOfIslandWithMotherNature).setMotherNature(true);
+        gameWith2Players.getCurrentPlayer().setAssistantCardUsed(gameWith2Players.getCurrentPlayer().getAssistantDeck().get(9));
+        List<Island> islandsAvailable = gameWith2Players.getAvailableIslands();
+        assertEquals(5, islandsAvailable.size());
+        assertEquals(islandsAvailable.get(0), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+1)%12));
+        assertEquals(islandsAvailable.get(1), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+2)%12));
+        assertEquals(islandsAvailable.get(2), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+3)%12));
+        assertEquals(islandsAvailable.get(3), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+4)%12));
+        assertEquals(islandsAvailable.get(4), gameWith2Players.getTable().getIslands().get((indexOfIslandWithMotherNature+5)%12));
+        assertEquals(12, gameWith2Players.getTable().getIslands().size());
+        for(int i = 0; i < 12; i++){
+            assertEquals(oldIslandSituation.get(i), gameWith2Players.getTable().getIslands().get(i));
+        }
+    }
 }
