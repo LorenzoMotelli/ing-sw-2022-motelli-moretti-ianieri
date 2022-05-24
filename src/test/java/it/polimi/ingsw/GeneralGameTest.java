@@ -772,8 +772,8 @@ public class GeneralGameTest {
         assertNull(gameWith2Players.getTable().getYellowProfessor());
     }
 
-    @RepeatedTest(value = 12, name = "NoConquerBeforeNoLink {currentRepetition}")
-    public void moveMotherNatureNoConquerorBeforeNoLink(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_NoConquerorBefore_NoLink_WhiteConqueror {currentRepetition}")
+    public void moveMotherNature_NoConquerorBefore_NoLink_WhiteConqueror(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith2Players.getTable().getStudentBag().get(0));
@@ -815,8 +815,8 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "NoConquerorBeforeLinkAhead {currentRepetition}")
-    public void moveMotherNatureNoConquerorBeforeWithLinkAhead(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_NoConquerorBefore_WithLinkAhead_WhiteConqueror {currentRepetition}")
+    public void moveMotherNature_NoConquerorBefore_WithLinkAhead_WhiteConqueror(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith2Players.getTable().getStudentBag().get(0));
@@ -883,8 +883,8 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "NoConquerorBeforeLinkBehind {currentRepetition}")
-    public void moveMotherNatureNoConquerorBeforeWithLinkBehind(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_NoConquerorBefore_WithLinkBehind_WhiteConqueror {currentRepetition}")
+    public void moveMotherNature_NoConquerorBefore_WithLinkBehind_WhiteConqueror(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith4Players.getTable().getStudentBag().get(0));
@@ -947,8 +947,8 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "ConquerorBeforeNoLink {currentRepetition}")
-    public void moveMotherNatureWithConquerorBeforeNoLink(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_WithConquerorBefore_NoLink_WhiteConqueror {currentRepetition}")
+    public void moveMotherNature_WithConquerorBefore_NoLink_WhiteConqueror(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith2Players.getTable().getStudentBag().get(0));
@@ -998,8 +998,8 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "ConquerorBeforeLinkAhead {currentRepetition}")
-    public void moveMotherNatureWithConquerorWithLinkAhead(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_WithConquerorBefore_WithLinkAhead_WhiteConqueror {currentRepetition}")
+    public void moveMotherNature_WithConquerorBefore_WithLinkAhead_WhiteConqueror(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith2Players.getTable().getStudentBag().get(0));
@@ -1072,8 +1072,8 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "ConquerorBeforeLinkBehind {currentRepetition}")
-    public void moveMotherNatureWithConquerorWithLinkBehind(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_WithConquerorBefore_WithLinkBehind_WhiteConqueror {currentRepetition}")
+    public void moveMotherNature_WithConquerorBefore_WithLinkBehind_WhiteConqueror(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith2Players.getTable().getStudentBag().get(0));
@@ -1142,8 +1142,8 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "NoConquerorBeforeDoubleLink {currentRepetition}")
-    public void moveMotherNatureNoConquerorBeforeWithDoubleLink(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_NoConquerorBefore_WithDoubleLink_WhiteConqueror {currentRepetition}")
+    public void moveMotherNature_NoConquerorBefore_WithDoubleLink_WhiteConqueror(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith2Players.getTable().getStudentBag().get(0));
@@ -1218,8 +1218,8 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "ConquerorBeforeDoubleLink {currentRepetition}")
-    public void moveMotherNatureWithConquerorBeforeWithDoubleLink(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_WithConquerorBefore_WithDoubleLink_WhiteConqueror {currentRepetition}")
+    public void moveMotherNature_WithConquerorBefore_WithDoubleLink_WhiteConqueror(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith2Players.getTable().getStudentBag().get(0));
@@ -1298,8 +1298,8 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "NoConquerBeforeNoLink {currentRepetition}")
-    public void moveMotherNatureNoConquerorBeforeNoLinkTeamGame(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_NoConquerorBefore_NoLink_TeamGame {currentRepetition}")
+    public void moveMotherNature_NoConquerorBefore_NoLink_TeamGame(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith4Players.getTable().getStudentBag().get(0));
@@ -1344,8 +1344,8 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "NoConquerorBeforeLinkAhead {currentRepetition}")
-    public void moveMotherNatureNoConquerorBeforeWithLinkAheadTeamGame(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_NoConquerorBefore_WithLinkAhead_TeamGame {currentRepetition}")
+    public void moveMotherNature_NoConquerorBefore_WithLinkAhead_TeamGame(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith4Players.getTable().getStudentBag().get(0));
@@ -1416,8 +1416,8 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "NoConquerorBeforeLinkBehind {currentRepetition}")
-    public void moveMotherNatureNoConquerorBeforeWithLinkBehindTeamGame(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_NoConquerorBefore_WithLinkBehind_TeamGame {currentRepetition}")
+    public void moveMotherNature_NoConquerorBefore_WithLinkBehind_TeamGame(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith4Players.getTable().getStudentBag().get(0));
@@ -1484,8 +1484,8 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "ConquerorBeforeNoLink {currentRepetition}")
-    public void moveMotherNatureWithConquerorBeforeNoLinkTeamGame(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_WithConquerorBefore_NoLink_TeamGame {currentRepetition}")
+    public void moveMotherNature_WithConquerorBefore_NoLink_TeamGame(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith4Players.getTable().getStudentBag().get(0));
@@ -1538,8 +1538,8 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "ConquerorBeforeLinkAhead {currentRepetition}")
-    public void moveMotherNatureWithConquerorWithLinkAheadTeamGame(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_WithConquerorBefore_WithLinkAhead_TeamGame {currentRepetition}")
+    public void moveMotherNature_WithConquerorBefore_WithLinkAhead_TeamGame(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith4Players.getTable().getStudentBag().get(0));
@@ -1616,8 +1616,8 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "ConquerorBeforeLinkBehind {currentRepetition}")
-    public void moveMotherNatureWithConquerorWithLinkBehindTeamGame(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_WithConquerorBefore_WithLinkBehind_TeamGame {currentRepetition}")
+    public void moveMotherNature_WithConquerorBefore_WithLinkBehind_TeamGame(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith4Players.getTable().getStudentBag().get(0));
@@ -1690,8 +1690,8 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "NoConquerorBeforeDoubleLink {currentRepetition}")
-    public void moveMotherNatureNoConquerorBeforeWithDoubleLinkTeamGame(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_NoConquerorBefore_WithDoubleLink_TeamGame {currentRepetition}")
+    public void moveMotherNature_NoConquerorBefore_WithDoubleLink_TeamGame(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith4Players.getTable().getStudentBag().get(0));
@@ -1771,8 +1771,8 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "ConquerorBeforeDoubleLink {currentRepetition}")
-    public void moveMotherNatureWithConquerorBeforeWithDoubleLinkTeamGame(RepetitionInfo repetitionInfo){
+    @RepeatedTest(value = 12, name = "moveMotherNature_WithConquerorBefore_WithDoubleLink_TeamGame {currentRepetition}")
+    public void moveMotherNature_WithConquerorBefore_WithDoubleLink_TeamGame(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
         studentList1.add(gameWith4Players.getTable().getStudentBag().get(0));
@@ -1859,7 +1859,7 @@ public class GeneralGameTest {
 
     //TODO switch color conquer black && getAvailableIslands() for all island index and all assistantCards
 
-    @RepeatedTest(value = 12, name = "getAvailableIslands_OneIslandAvailable_FirstAssistantUsed{currentRepetition}")
+    @RepeatedTest(value = 12, name = "getAvailableIslands_OneIslandAvailable_FirstAssistantUsed {currentRepetition}")
     public void getAvailableIslands_OneIslandAvailable_FirstAssistantUsed(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
@@ -1875,7 +1875,7 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "getAvailableIslands_OneIslandAvailable_SecondAssistantUsed{currentRepetition}")
+    @RepeatedTest(value = 12, name = "getAvailableIslands_OneIslandAvailable_SecondAssistantUsed {currentRepetition}")
     public void getAvailableIslands_OneIslandAvailable_SecondAssistantUsed(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
@@ -1891,7 +1891,7 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "getAvailableIslands_TwoIslandAvailable_ThirdAssistantUsed{currentRepetition}")
+    @RepeatedTest(value = 12, name = "getAvailableIslands_TwoIslandAvailable_ThirdAssistantUsed {currentRepetition}")
     public void getAvailableIslands_TwoIslandAvailable_ThirdAssistantUsed(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
@@ -1908,7 +1908,7 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "getAvailableIslands_TwoIslandAvailable_FourthAssistantUsed{currentRepetition}")
+    @RepeatedTest(value = 12, name = "getAvailableIslands_TwoIslandAvailable_FourthAssistantUsed {currentRepetition}")
     public void getAvailableIslands_TwoIslandAvailable_FourthAssistantUsed(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
@@ -1925,7 +1925,7 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "getAvailableIslands_ThreeIslandAvailable_FifthAssistantUsed{currentRepetition}")
+    @RepeatedTest(value = 12, name = "getAvailableIslands_ThreeIslandAvailable_FifthAssistantUsed {currentRepetition}")
     public void getAvailableIslands_ThreeIslandAvailable_FifthAssistantUsed(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
@@ -1943,7 +1943,7 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "getAvailableIslands_ThreeIslandAvailable_SixthAssistantUsed{currentRepetition}")
+    @RepeatedTest(value = 12, name = "getAvailableIslands_ThreeIslandAvailable_SixthAssistantUsed {currentRepetition}")
     public void getAvailableIslands_ThreeIslandAvailable_SixthAssistantUsed(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
@@ -1961,7 +1961,7 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "getAvailableIslands_fourIslandAvailable_SeventhAssistantUsed{currentRepetition}")
+    @RepeatedTest(value = 12, name = "getAvailableIslands_fourIslandAvailable_SeventhAssistantUsed {currentRepetition}")
     public void getAvailableIslands_FourIslandAvailable_SeventhAssistantUsed(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
@@ -1980,7 +1980,7 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "getAvailableIslands_FourIslandAvailable_EighthAssistantUsed{currentRepetition}")
+    @RepeatedTest(value = 12, name = "getAvailableIslands_FourIslandAvailable_EighthAssistantUsed {currentRepetition}")
     public void getAvailableIslands_FourIslandAvailable_EighthAssistantUsed(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
@@ -1999,7 +1999,7 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "getAvailableIslands_FiveIslandAvailable_NinthAssistantUsed{currentRepetition}")
+    @RepeatedTest(value = 12, name = "getAvailableIslands_FiveIslandAvailable_NinthAssistantUsed {currentRepetition}")
     public void getAvailableIslands_FiveIslandAvailable_NinthAssistantUsed(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();
@@ -2019,7 +2019,7 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "getAvailableIslands_FiveIslandAvailable_TenthAssistantUsed{currentRepetition}")
+    @RepeatedTest(value = 12, name = "getAvailableIslands_FiveIslandAvailable_TenthAssistantUsed {currentRepetition}")
     public void getAvailableIslands_FiveIslandAvailable_TenthAssistantUsed(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Island> oldIslandSituation = gameWith2Players.getTable().getIslands();

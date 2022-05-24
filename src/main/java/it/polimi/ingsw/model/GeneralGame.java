@@ -292,7 +292,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
      */
     public boolean allCloudsEmpty(){
         for(Cloud cloud : getTable().getClouds()){
-            if(cloud.getCloudStudents().size() != 0){
+            if(!cloud.getCloudStudents().isEmpty() /*.size() != 0*/){
                 return false;
             }
         }
