@@ -39,6 +39,11 @@ public class TableTest {
         assertEquals(PawnColor.PINK, table.getProfessors().get(2).getColor());
         assertEquals(PawnColor.RED, table.getProfessors().get(3).getColor());
         assertEquals(PawnColor.YELLOW, table.getProfessors().get(4).getColor());
+        assertEquals(BLUE, table.getBlueProfessor().getColor());
+        assertEquals(GREEN, table.getGreenProfessor().getColor());
+        assertEquals(PINK, table.getPinkProfessor().getColor());
+        assertEquals(RED, table.getRedProfessor().getColor());
+        assertEquals(YELLOW, table.getYellowProfessor().getColor());
     }
 
     @Test
@@ -152,11 +157,12 @@ public class TableTest {
 
     @Test
     public void placeStudentInCloud(){
-        //empty clouds
+        //empty clouds for test
         table.getClouds().get(0).getCloudStudents().clear();
         table.getClouds().get(1).getCloudStudents().clear();
         assertEquals(0, table.getClouds().get(0).getCloudStudents().size());
         assertEquals(0, table.getClouds().get(1).getCloudStudents().size());
+
         int numberOfBagStudents = table.getStudentBag().size();
         table.placeStudentsInCloud(2);
         assertEquals(3, table.getClouds().get(0).getCloudStudents().size());

@@ -228,7 +228,7 @@ public class Controller implements Observer<Message> {
      */
     public void assistantCardSelected(SelectAssistantCardMessage message){
         //System.out.println("The assistant that is arrived has weight " +  message.getAssistantCard().getTurnHeaviness() + " and move MN " + message.getAssistantCard().getMovementMotherNature());
-        AssistantCard assistantCard = game.getCurrentPlayer().getAssistantDeck()[message.getIndexAssistantCard()];
+        AssistantCard assistantCard = game.getCurrentPlayer().getAssistantDeck().get(message.getIndexAssistantCard());
         //List<AssistantCard> assistantCardUseOnThisTurn = game.getAssistantCardsUsed();
         //List<AssistantCard> assistantOfThePlayer = new ArrayList<>();
         /*if(game.getGamePhase() == PLANNING){

@@ -62,6 +62,9 @@ public class School implements Serializable {
 
     public Student getStudent(int index) {
         // TODO: check index bounds
+        if(index < 0 || index > entranceStudent.size()){
+            return null;
+        }
         return entranceStudent.get(index);
     }
 

@@ -17,20 +17,12 @@ public class CloudTest {
     @BeforeEach
     public void setUp(){
         cloud = new Cloud();
-        Student blueStudent = new Student();
-        Student greenStudent = new Student();
-        Student pinkStudent = new Student();
-        Student redStudent = new Student();
-        Student yellowStudent = new Student();
+        Student blueStudent = new Student(BLUE);
+        Student greenStudent = new Student(GREEN);
+        //Student pinkStudent = new Student(PINK);
+        Student redStudent = new Student(RED);
+        //Student yellowStudent = new Student(YELLOW);
         List<Student> studentList = new ArrayList<>();
-        List<Student> students = new ArrayList<>();
-        for(int i = 0; i < 5; i++){
-            blueStudent.setColor(BLUE);
-            greenStudent.setColor(GREEN);
-            pinkStudent.setColor(PINK);
-            redStudent.setColor(RED);
-            yellowStudent.setColor(YELLOW);
-        }
         studentList.add(blueStudent);
         studentList.add(greenStudent);
         studentList.add(redStudent);

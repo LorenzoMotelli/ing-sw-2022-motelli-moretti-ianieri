@@ -30,7 +30,7 @@ public class Hall implements Serializable {
 
     /**
      * place a student in the first free spot
-     * @param studentToPlace
+     * @param studentToPlace the student that has to be placed in the hall
      */
     public void placeStudent(Student studentToPlace){
         for(int i = 0; i < 10; i++){
