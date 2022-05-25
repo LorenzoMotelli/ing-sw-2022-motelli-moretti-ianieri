@@ -1,12 +1,8 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.exceptions.AssistantAlreadyUsedException;
-import it.polimi.ingsw.controller.exceptions.CloudEmptyException;
-import it.polimi.ingsw.controller.exceptions.HallAlreadyFullException;
-import it.polimi.ingsw.controller.exceptions.IslandOutOfBound;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.AssistantCard;
-import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.Phases;
 import it.polimi.ingsw.model.enumeration.Variant;
 import it.polimi.ingsw.network.messages.Message;
@@ -17,14 +13,11 @@ import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.network.view.VirtualView;
 import it.polimi.ingsw.utils.Observer;
 
-import java.awt.image.VolatileImage;
 import java.util.ArrayList;
 import java.util.List;
 
 import static it.polimi.ingsw.model.enumeration.Phases.*;
 import static it.polimi.ingsw.model.enumeration.Phases.SELECT_CLOUD;
-import static it.polimi.ingsw.network.messages.enumeration.MessageAction.*;
-import static it.polimi.ingsw.network.messages.enumeration.MessageAction.END_TURN;
 
 public class Controller implements Observer<Message> {
 
@@ -277,7 +270,7 @@ public class Controller implements Observer<Message> {
 
     public void askPlaceStudent(){
         //if(2 == game.getPlayers().length){
-            List<Student> playerStudents = game.getCurrentPlayer().getSchoolDashboard().getEntranceStudent();
+            List<Student> playerStudents = game.getCurrentPlayer().getSchool().getEntranceStudent();
             sendToCurrentPlayer(new AskStudentMessage(playerStudents));
         //}
     }
@@ -301,7 +294,7 @@ public class Controller implements Observer<Message> {
 
         int islandsNumAvailable = game.getTable().getIslands().size();
 
-        Student student = game.getCurrentPlayer().getSchoolDashboard().getStudent(message.getStudent()); //message.getStudent();
+        Student student = game.getCurrentPlayer().getSchool().getStudent(message.getStudent()); //message.getStudent();
         game.getCurrentPlayer().setStudentSelected(student);
         boolean hallAvailable = game.checkHallAvailability(student);
 
