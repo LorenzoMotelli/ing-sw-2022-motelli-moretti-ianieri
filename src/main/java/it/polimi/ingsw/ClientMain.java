@@ -1,9 +1,8 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.network.view.userinterface.CliClientInterface;
-import it.polimi.ingsw.network.view.userinterface.GuiClientInterface;
+import it.polimi.ingsw.view.userinterface.CliClientInterface;
+import it.polimi.ingsw.view.userinterface.GuiClientInterface;
 
-import java.util.Locale;
 import java.util.Scanner;
 
 /**

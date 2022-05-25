@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.view.userinterface;
+package it.polimi.ingsw.view.userinterface;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.AssistantCard;

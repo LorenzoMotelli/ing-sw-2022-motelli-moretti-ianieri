@@ -839,6 +839,9 @@ public class GeneralGame extends Observable<Message> implements Serializable {
             table.getIslands().remove(islandBehind);
         }
         //checkEndGame();
+        if(table.getIslands().size() == 3){
+            checkWinners();
+        }
     }
 
     /**
@@ -996,6 +999,8 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         checkLastTurn();
     }
 
+    //TODO TESTS THESE METHODS
+
     public List<Player> checkWinners(){
         List<Player> winners = new ArrayList<>();
         for (Player player : players) {
@@ -1003,8 +1008,22 @@ public class GeneralGame extends Observable<Message> implements Serializable {
                 winners.add(player);
             }
         }
-        //TODO check when last turn (player not finish the towers)
-        //TODO check winners when 3 islands remains
+        if(!teamGame) {
+            if(winners.size() > 1) {
+                if(!checkTowerForWinning(winners)) {
+                    checkProfessorForWinning(winners);
+                }
+                return winners;
+            }
+        }
+        else{
+            if(winners.size() > 2) {
+                if(!checkTowerForWinning(winners)) {
+                    checkProfessorForWinning(winners);
+                }
+                return winners;
+            }
+        }
         return winners;
     }
 
@@ -1020,4 +1039,22 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         return false;
     }
 
+    public boolean checkTowerForWinning(List<Player> winners){
+        List<Player> copyWinners = new ArrayList<>(winners);
+        for(int i = 0; i < copyWinners.size(); i++){
+            if(copyWinners.get(i).getSchool().getPlayersTowers().size() < copyWinners.get(i+1).getSchool().getPlayersTowers().size()){
+               winners.remove(i);
+            }
+        }
+        return winners.size() == 1;
+    }
+
+    private void checkProfessorForWinning(List<Player> winners) {
+        List<Player> copyWinners = new ArrayList<>(winners);
+        for(int i = 0; i < copyWinners.size(); i++){
+            if(copyWinners.get(i).getSchool().getSchoolProfessors().size() < copyWinners.get(i+1).getSchool().getSchoolProfessors().size()){
+                winners.remove(i);
+            }
+        }
+    }
 }
