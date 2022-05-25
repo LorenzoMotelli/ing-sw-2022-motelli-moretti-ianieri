@@ -3,7 +3,7 @@ package it.polimi.ingsw.network.client;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 import it.polimi.ingsw.network.messages.specific.*;
-import it.polimi.ingsw.network.view.userinterface.UserInterface;
+import it.polimi.ingsw.view.userinterface.UserInterface;
 import it.polimi.ingsw.utils.Observer;
 
 import java.io.IOException;

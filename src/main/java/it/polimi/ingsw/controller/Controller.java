@@ -10,7 +10,7 @@ import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 import it.polimi.ingsw.network.messages.specific.*;
 import it.polimi.ingsw.network.server.Connection;
 import it.polimi.ingsw.network.server.Server;
-import it.polimi.ingsw.network.view.VirtualView;
+import it.polimi.ingsw.view.VirtualView;
 import it.polimi.ingsw.utils.Observer;
 
 import java.util.ArrayList;
