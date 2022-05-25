@@ -8,13 +8,11 @@ public enum MessageAction {
     ROOM_IS_FULL(MessageType.SYSTEM),
     WAITING_PLAYERS(MessageType.SYSTEM),
     DISCONNECT(MessageType.SYSTEM),
-
     // GAME MESSAGE
     START(MessageType.GAME),
     DISCONNECT_IN_GAME(MessageType.GAME),
     UPDATE(MessageType.GAME),
     SELECT_ASSISTANT_CARD(MessageType.GAME),
-
     ASK_STUDENT(MessageType.GAME),
     SELECT_STUDENT(MessageType.GAME),
     ASK_PLACE(MessageType.GAME),
