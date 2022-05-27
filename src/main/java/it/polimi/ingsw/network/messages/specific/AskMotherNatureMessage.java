@@ -9,13 +9,19 @@ import java.util.List;
 public class AskMotherNatureMessage extends Message {
 
     private final List<Island> islands;
+    private final int movementMN;
 
-    public AskMotherNatureMessage(List<Island> islands) {
+    public AskMotherNatureMessage(List<Island> islands, int movementMN) {
         super(MessageAction.ASK_MOVE_MOTHER_NATURE, null);
         this.islands = islands;
+        this.movementMN = movementMN;
     }
 
     public List<Island> getIslands() {
         return islands;
+    }
+
+    public int getMovementMN() {
+        return movementMN;
     }
 }

@@ -13,4 +13,8 @@ public class AskCloudMessage extends Message {
         super(MessageAction.ASK_CLOUD, null);
         this.clouds = clouds;
     }
+
+    public List<Cloud> getClouds() {
+        return clouds;
+    }
 }

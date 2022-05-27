@@ -26,7 +26,7 @@ public class Controller implements Observer<Message> {
 
     private List<VirtualView> clients;
 
-    private int numActions = 1;
+    private int numStudentsActions = 0;
 
     public Controller(Server server,int players) {
         this.server = server;
@@ -48,7 +48,7 @@ public class Controller implements Observer<Message> {
 
     @Override
     public void update(Object sender, Message message) {
-        // TODO Auto-generated method stub
+
         VirtualView virtualView = (VirtualView) sender;
 
         // if we are in the PLANNING PHASE anyone can send a SelectAssistantCardMessage
@@ -319,6 +319,10 @@ public class Controller implements Observer<Message> {
         }*/
         game.placeStudentInHall(game.getCurrentPlayer().getStudentSelected());
 
+
+        numStudentsActions++;
+        if(numStudentsActions <= game.getPlayers().length)
+
         nextAction(PLACE_STUDENT);
 
 
@@ -352,7 +356,7 @@ public class Controller implements Observer<Message> {
         List<Island> availableIsland = game.getAvailableIslands();
 
 
-        sendToCurrentPlayer(new AskMotherNatureMessage(availableIsland));
+        sendToCurrentPlayer(new AskMotherNatureMessage(availableIsland, movementMN));
 
     }
 
@@ -370,10 +374,15 @@ public class Controller implements Observer<Message> {
                 game.moveMotherNature(island);
             }
         }*/
+        for (Island island : game.getTable().getIslands()){
+            if(island.hasMotherNature())
+            {
+                game.moveMotherNature(game.getTable().getIslands().get(message.getIslandIndex()));
+            }
+        }
 
         // check if int is valid
         // do something
-
         nextAction(PLACE_MOTHER_NATURE);
     }
 
@@ -394,6 +403,7 @@ public class Controller implements Observer<Message> {
         int choice = message.getSelectedCloud();
 
         game.getTable().getClouds().get(choice);
+
 
         // aggiorna il model
 
