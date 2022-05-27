@@ -126,47 +126,6 @@ public class School implements Serializable {
         return null;
     }
 
-    public Hall getBlueHall(){
-        return schoolHall[0];
-    }
-
-    public Hall getGreenHall(){
-        return schoolHall[1];
-    }
-
-    public Hall getPinkHall(){
-        return schoolHall[2];
-    }
-
-    public Hall getRedHall(){
-        return schoolHall[3];
-    }
-
-    public Hall getYellowHall(){
-        return schoolHall[4];
-    }
-
-    public Hall getHallByColor(PawnColor color){
-        switch (color){
-            case BLUE -> {
-                return getBlueHall();
-            }
-            case GREEN -> {
-                return getGreenHall();
-            }
-            case PINK -> {
-                return getPinkHall();
-            }
-            case RED -> {
-                return getRedHall();
-            }
-            case YELLOW -> {
-                return getYellowHall();
-            }
-        }
-        return null;
-    }
-
     /*
     public Hall getBlueHall(){
         return schoolHall[0];

@@ -56,11 +56,6 @@ public class GeneralGame4Players extends GeneralGame{
         notify(new UpdateBoardMessage(this));
     }
 
-    /**
-     * check if on the island the tower(s) must be changed
-     * @param islandSelected the island selected by the player
-     * @param conquerorColor the color of the team that has conquered the island
-     */
     public void checkPlaceTowerTeam(Island islandSelected, TowerColor conquerorColor){
         if(0 == islandSelected.getTowers().size()){
             for(Player player : getPlayers()){

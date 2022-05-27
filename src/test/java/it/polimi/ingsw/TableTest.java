@@ -20,7 +20,7 @@ public class TableTest {
 
     @BeforeEach
     public void setUp(){
-        table = new Table(2);
+        table = new Table(2,  Variant.NORMAL, null);
     }
 
     @Test
@@ -171,7 +171,7 @@ public class TableTest {
 
     @Test
     public void placeStudentInCloud_BagCannotRefill_3Players(){
-        Table table3 = new Table(3);
+        Table table3 = new Table(3, Variant.NORMAL, null);
         table3.getClouds().get(0).getCloudStudents().clear();
         table3.getClouds().get(1).getCloudStudents().clear();
         table3.getClouds().get(2).getCloudStudents().clear();
@@ -192,7 +192,7 @@ public class TableTest {
 
     @Test
     public void placeStudentInCloud_BagCannotRefill_4Players(){
-        Table table4 = new Table(4);
+        Table table4 = new Table(4, Variant.NORMAL, null);
         table4.getClouds().get(0).getCloudStudents().clear();
         table4.getClouds().get(1).getCloudStudents().clear();
         table4.getClouds().get(2).getCloudStudents().clear();
