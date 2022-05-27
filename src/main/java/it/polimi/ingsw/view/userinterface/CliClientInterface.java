@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.view.userinterface;
+package it.polimi.ingsw.view.userinterface;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.AssistantCard;
@@ -9,10 +9,8 @@ import it.polimi.ingsw.network.messages.specific.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStreamReader;
-import java.net.UnknownHostException;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -223,7 +221,7 @@ public class CliClientInterface implements UserInterface {
         for(int i = 0; i < game.getPlayers().length; i++){
             System.out.print("Player " + game.getPlayers()[i].getPlayerName() + " has :\n");
             System.out.print("Entrance students: ");
-            for(Student student : game.getPlayers()[i].getSchoolDashboard().getEntranceStudent()){
+            for(Student student : game.getPlayers()[i].getSchool().getEntranceStudent()){
                 System.out.print(student.getColor() +  " ");
             }
             /*
@@ -233,10 +231,10 @@ public class CliClientInterface implements UserInterface {
             }*/
             System.out.println();
             for(int j = 0; j < 5; j++){
-                System.out.print("Hall " + game.getPlayers()[i].getSchoolDashboard().getSchoolHall()[j].getHallColor() + " with ");
+                System.out.print("Hall " + game.getPlayers()[i].getSchool().getSchoolHall()[j].getHallColor() + " with ");
                 for(int k = 0; k < 10; k++){
-                    if(null != game.getPlayers()[i].getSchoolDashboard().getSchoolHall()[j].getTableHall()[k]){
-                        System.out.print(game.getPlayers()[i].getSchoolDashboard().getSchoolHall()[j].getTableHall()[k].getColor());
+                    if(null != game.getPlayers()[i].getSchool().getSchoolHall()[j].getTableHall()[k]){
+                        System.out.print(game.getPlayers()[i].getSchool().getSchoolHall()[j].getTableHall()[k].getColor());
                     }
                     else{
                         break;

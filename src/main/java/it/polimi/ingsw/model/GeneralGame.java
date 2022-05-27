@@ -10,23 +10,19 @@ import it.polimi.ingsw.network.messages.specific.UpdateBoardMessage;
 import it.polimi.ingsw.utils.Observable;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
-import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 import static it.polimi.ingsw.model.enumeration.Phases.*;
 import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 
 public class GeneralGame extends Observable<Message> implements Serializable {
-
+    //TODO checkEndGame() && checkLastTurn()
     //list of the players in the game
     private Player[] players;
     private int playerAdded = 0;
     //use for check the actual player
     private int turn = 0;
-    private int maxTurn;
+    //private int maxTurn;
     //the phase in which the player plays
     private Phases gamePhase;
     //the list of assistant cards use in the current round
@@ -39,7 +35,6 @@ public class GeneralGame extends Observable<Message> implements Serializable {
     private Character[] allCharacters;
     //the table with clouds, islands, students...
     private Table table;
-    private boolean teamGame = false;
     //TODO generate GeneralGame4Players extends GeneralGame
     /**
      * creation of the initial board, the initial players and characters
@@ -59,41 +54,37 @@ public class GeneralGame extends Observable<Message> implements Serializable {
          */
         //creation of players
         players = new Player[numberOfPlayer];
-        maxTurn = numberOfPlayer;
-        if(maxTurn == 4){
-            teamGame = true;
-        }
+        //the table has to be created before the players because of the student bag
+        table = new Table(players.length);
     }
 
+    /**
+     * starts the game initializing the table with its component
+     * and giving to each player the right number of towers and entrance students
+     */
     public void startGeneralGame(){
         //the table has to be created before the players because of the student bag
-        table = new Table(players.length, variant, allCharacters);
+        //table = new Table(players.length, variant, allCharacters);
         for(int i = 0; i < players.length; i++){
             if(players.length == 3){
-                players[i].getSchoolDashboard().setEntranceStudent(randomStudentFromBag(9));
+                players[i].getSchool().setEntranceStudent(randomStudentFromBag(9));
                 if(0 == i){
-                    players[i].getSchoolDashboard().setPlayersTowers(6, WHITE);
+                    players[i].getSchool().setPlayersTowers(6, WHITE);
                 }
-                if(1 == i){
-                    players[i].getSchoolDashboard().setPlayersTowers(6, BLACK);
+                else if(1 == i){
+                    players[i].getSchool().setPlayersTowers(6, BLACK);
                 }
                 else{
-                    players[i].getSchoolDashboard().setPlayersTowers(6, GREY);
+                    players[i].getSchool().setPlayersTowers(6, GREY);
                 }
             }
             else{
-                players[i].getSchoolDashboard().setEntranceStudent(randomStudentFromBag(7));
+                players[i].getSchool().setEntranceStudent(randomStudentFromBag(7));
                 if(i % 2 == 0){
-                    players[i].getSchoolDashboard().setPlayersTowers(8, WHITE);
-                    if(teamGame){
-                        players[i].setPlayerTeam(WHITE);
-                    }
+                    players[i].getSchool().setPlayersTowers(8, WHITE);
                 }
                 else{
-                    players[i].getSchoolDashboard().setPlayersTowers(8, BLACK);
-                    if(teamGame){
-                        players[i].setPlayerTeam(BLACK);
-                    }
+                    players[i].getSchool().setPlayersTowers(8, BLACK);
                 }
             }
         }
@@ -136,9 +127,11 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         return gamePhase;
     }
 
+    /*
     public Variant getVariant() {
         return variant;
     }
+    */
 
     public Player[] getPlayers() {
         return players;
@@ -152,11 +145,17 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         return motherNatureMovement;
     }
 
+    public void setMotherNatureMovement(int motherNatureMovement) {
+        this.motherNatureMovement = motherNatureMovement;
+    }
+
     public Table getTable() {
         return table;
     }
 
-    /*public Character[] getAllCharacters() {
+    /*
+    //expert game method, no implemented
+    public Character[] getAllCharacters() {
         return allCharacters;
     }*/
 
@@ -188,9 +187,11 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         this.variant = variant;
     }
 
+    //expert game method, no implemented
+    /*
     public void setAllCharacters(Character[] allCharacters) {
         this.allCharacters = allCharacters;
-    }
+    }*/
 
     //---------------- GAME MANAGEMENT --------------\\
 
@@ -201,16 +202,6 @@ public class GeneralGame extends Observable<Message> implements Serializable {
      */
     public void newTurn(){
         turn = (turn+1) % players.length;
-        /*turn++;
-        if(turn > maxTurn-1){
-            //a new round will begin
-            setNewOrder();
-            turn = 0;
-            table.placeStudentsInCloud(players.length);
-            gamePhase = PLANNING;
-            //reset of the list of the assistant card used
-            assistantCardsUsed = new ArrayList<>();
-        }*/
         notify(new UpdateBoardMessage(this));
     }
 
@@ -244,17 +235,25 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         switch (currentPhase){
             case STARTING:
             case ENDING: {
-                gamePhase = PLANNING;
+                if(checkLastTurn()){
+                    //TODO add this method
+                    break;
+                    //notify(new WinnersMessage(checkWinners()));
+                }
+                else {
+                    gamePhase = PLANNING;
+                }
                 break;
             }
             case PLANNING:{
+                checkLastTurn();
                 gamePhase = PLACE_STUDENT;
                 break;
             }
             case PLACE_STUDENT:{
                 //in a game with even players you have to place 3 students
                 if(players.length % 2 == 0){
-                    if(getCurrentPlayer().getSchoolDashboard().getEntranceStudent().size() == 4) {
+                    if(getCurrentPlayer().getSchool().getEntranceStudent().size() == 4) {
                         //already 3 placed  (7 - 3 = 4)
                         gamePhase = PLACE_MOTHER_NATURE;
                     }
@@ -262,7 +261,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
                 //in a game with odd players you have to place 4 students
                 else {
                     //already 4 placed  (9 - 4 = 5)
-                    if (getCurrentPlayer().getSchoolDashboard().getEntranceStudent().size() == 5) {
+                    if (getCurrentPlayer().getSchool().getEntranceStudent().size() == 5) {
                         gamePhase = PLACE_MOTHER_NATURE;
                     }
                 }
@@ -275,6 +274,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
             case SELECT_CLOUD: {
                 //if initial player the round ends IF ALL THE CLOUDS HAVE NO MORE STUDENTS
                 if (allCloudsEmpty()/*this.getCurrentPlayer() == this.players[0]*/) {
+                    refillClouds();
                     gamePhase = ENDING;
                 }
                 else {
@@ -300,7 +300,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
     }
 
     //---------------- PLANNING PHASE MANAGEMENT --------------\\
-
+    /*
     /**
      * set the max movement of mother nature and the weight of the player
      * than add the card to the list of card that can no more be used in this turn
@@ -312,7 +312,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         getCurrentPlayer().selectAssistant(assistantCard);
         addAssistantCardUsed(assistantCard);
         notify(new UpdateBoardMessage(this));
-    }*/
+    }
 
     /**
      * when an assistant card is used the other player can not use that assistant in this turn
@@ -337,6 +337,8 @@ public class GeneralGame extends Observable<Message> implements Serializable {
             for (AssistantCard usedCard : getAssistantCardsUsed()) {
                 if (usedCard.getTurnHeaviness() == assistantCard.getTurnHeaviness()) {
                     isContained = true;
+                    break;
+
                 }
             }
 
@@ -345,36 +347,31 @@ public class GeneralGame extends Observable<Message> implements Serializable {
             }
         }
 
-        // if all the cards in the current deck have already been played
-        // return the remaining current deck
+        // if all the cards in the current deck have already been played return the remaining current deck
         if (availableCards.size() == 0) {
-            //Collections.addAll(availableCards, currentDeck);
             availableCards.addAll(currentDeck);
         }
-
         return availableCards;
     }
 
     //---------------- ACTION PHASE MANAGEMENT --------------\\
 
+    //---------------- PLACE STUDENTS MANAGEMENT --------------\\
+
     public boolean checkHallAvailability(Student student){
         for(int i = 0; i < 5; i++) {
-            if(student.getColor().equals(getCurrentPlayer().getSchoolDashboard().getSchoolHall()[i].getHallColor())){
-                if(null == getCurrentPlayer().getSchoolDashboard().getSchoolHall()[i].getTableHall()[9]){
-                    return true;
-                }
-                else{
-                    return false;
-                }
+            if(student.getColor().equals(getCurrentPlayer().getSchool().getSchoolHall()[i].getHallColor())){
+                return (null == getCurrentPlayer().getSchool().getSchoolHall()[i].getTableHall()[9]);
             }
         }
         return false;
     }
 
+    //TODO necessary?
     public Hall getColorHall(PawnColor color){
         for(int i = 0; i < 5; i++){
-            if(getCurrentPlayer().getSchoolDashboard().getSchoolHall()[i].getHallColor().equals(color)){
-                return getCurrentPlayer().getSchoolDashboard().getSchoolHall()[i];
+            if(getCurrentPlayer().getSchool().getSchoolHall()[i].getHallColor().equals(color)){
+                return getCurrentPlayer().getSchool().getSchoolHall()[i];
             }
         }
         return null;
@@ -389,9 +386,48 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         if(!checkHallAvailability(studentToBePlaced)){
             return;
         }
-        else {
-            getCurrentPlayer().placeStudentInHall(studentToBePlaced);
-            giveProfessor(studentToBePlaced.getColor());
+
+        getCurrentPlayer().placeStudentInHall(studentToBePlaced);
+        giveProfessor(studentToBePlaced.getColor());
+        notify(new UpdateBoardMessage(this));
+    }
+
+    /**
+     * assign to the current player the professor of the color of the student placed in the hall
+     * if the current player has more student of that color in the corresponding hall of that color
+     * @param colorStudentPlaced the color of the student placed so also the professor's color
+     */
+    public void giveProfessor(PawnColor colorStudentPlaced){
+        Player playerWithProfessor = checkProfessorBeforePlacement(colorStudentPlaced);
+        //the current player already has the professor, no check needed
+        if(null != playerWithProfessor && playerWithProfessor.equals(getCurrentPlayer())){
+            return;
+        }
+        if(null != playerWithProfessor){
+            int maxStudents = 0;
+            for(int i = 0; i < 10; i++){
+                if(null != playerWithProfessor.takeHallByColor(colorStudentPlaced).getTableHall()[i])
+                    maxStudents++;
+                else
+                    break;
+            }
+            int studentCurrentPlayer = 0;
+            for(int i = 0; i < 10; i++){
+                if(null != getCurrentPlayer().takeHallByColor(colorStudentPlaced).getTableHall()[i]){
+                    studentCurrentPlayer++;
+                }
+                else{
+                    break;
+                }
+            }
+            if(maxStudents < studentCurrentPlayer){
+                playerWithProfessor.getSchool().getSchoolProfessors().remove(playerWithProfessor.getSchool().getProfessorByColor(colorStudentPlaced));
+                getCurrentPlayer().getSchool().getSchoolProfessors().add(new Professor(colorStudentPlaced));
+            }
+        }
+        else{
+            table.getProfessors().remove(table.getProfessorByColor(colorStudentPlaced));
+            getCurrentPlayer().getSchool().getSchoolProfessors().add(new Professor(colorStudentPlaced));
         }
         notify(new UpdateBoardMessage(this));
     }
@@ -403,205 +439,13 @@ public class GeneralGame extends Observable<Message> implements Serializable {
      */
     public Player checkProfessorBeforePlacement(PawnColor colorStudentPlaced){
         for(Player player : players){
-            for(Professor professor : player.getSchoolDashboard().getSchoolProfessor()){
+            for(Professor professor : player.getSchool().getSchoolProfessors()){
                 if(professor.getColor().equals(colorStudentPlaced)){
                     return player;
                 }
             }
         }
         return null;
-    }
-
-    /**
-     * assign to the current player the professor of the color of the student placed in the hall
-     * if the current player has more student of that color in the corresponding hall of that color
-     * @param colorStudentPlaced the color of the student placed so also the professor's color
-     */
-    public /*Professor*/ void giveProfessor(PawnColor colorStudentPlaced){
-        Player playerWithProfessor = checkProfessorBeforePlacement(colorStudentPlaced);
-        //the current player already has the professor, no check needed
-        if(null != playerWithProfessor && playerWithProfessor.equals(getCurrentPlayer())){
-            return;
-        }
-        switch (colorStudentPlaced){
-            case BLUE:{
-                //exists a player with the blue professor
-                if(null != playerWithProfessor){
-                    int maxBlueStudents = 0;
-                    for(int i = 0; i < 10; i++){
-                        if(null != playerWithProfessor.getSchoolDashboard().getSchoolHall()[0].getTableHall()[i]){
-                            maxBlueStudents++;
-                        }
-                        //there are no more students in the hall
-                        else{
-                            break;
-                        }
-                    }
-                    int blueStudents = 0;
-                    for(int i = 0; i < 10; i++){
-                        if(null != getCurrentPlayer().getSchoolDashboard().getSchoolHall()[0].getTableHall()[i]){
-                            blueStudents++;
-                        }
-                        //there are no more students in the hall
-                        else{
-                            break;
-                        }
-                    }
-                    if(maxBlueStudents < blueStudents){
-                        playerWithProfessor.getSchoolDashboard().getSchoolProfessor().remove(playerWithProfessor.getSchoolDashboard().getBlueProfessor());
-                        getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().add(new Professor(BLUE));
-                    }
-                }
-                //the current player is the first one that take the blue professor
-                else{
-                    table.getProfessors().remove(table.getBlueProfessor());
-                    getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().add(new Professor(BLUE));
-                }
-                break;
-            }
-            case GREEN:{
-                //exists a player with the green professor
-                if(null != playerWithProfessor){
-                    int maxGreenStudents = 0;
-                    for(int i = 0; i < 10; i++){
-                        if(null != playerWithProfessor.getSchoolDashboard().getSchoolHall()[1].getTableHall()[i]){
-                            maxGreenStudents++;
-                        }
-                        //there are no more students in the hall
-                        else{
-                            break;
-                        }
-                    }
-                    int greenStudents = 0;
-                    for(int i = 0; i < 10; i++){
-                        if(null != getCurrentPlayer().getSchoolDashboard().getSchoolHall()[1].getTableHall()[i]){
-                            greenStudents++;
-                        }
-                        //there are no more students in the hall
-                        else{
-                            break;
-                        }
-                    }
-                    if(maxGreenStudents < greenStudents){
-                        playerWithProfessor.getSchoolDashboard().getSchoolProfessor().remove(playerWithProfessor.getSchoolDashboard().getGreenProfessor());
-                        getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().add(new Professor(GREEN));
-                    }
-                }
-                //the current player is the first one that take the green professor
-                else{
-                    table.getProfessors().remove(table.getGreenProfessor());
-                    getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().add(new Professor(GREEN));
-                }
-                break;
-            }
-            case PINK:{
-                //exists a player with the pink professor
-                if(null != playerWithProfessor){
-                    int maxPinkStudents = 0;
-                    for(int i = 0; i < 10; i++){
-                        if(null != playerWithProfessor.getSchoolDashboard().getSchoolHall()[2].getTableHall()[i]){
-                            maxPinkStudents++;
-                        }
-                        //there are no more students in the hall
-                        else{
-                            break;
-                        }
-                    }
-                    int pinkStudents = 0;
-                    for(int i = 0; i < 10; i++){
-                        if(null != getCurrentPlayer().getSchoolDashboard().getSchoolHall()[2].getTableHall()[i]){
-                            pinkStudents++;
-                        }
-                        //there are no more students in the hall
-                        else{
-                            break;
-                        }
-                    }
-                    if(maxPinkStudents < pinkStudents){
-                        playerWithProfessor.getSchoolDashboard().getSchoolProfessor().remove(playerWithProfessor.getSchoolDashboard().getPinkProfessor());
-                        getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().add(new Professor(PINK));
-                    }
-                }
-                //the current player is the first one that take the pink professor
-                else{
-                    table.getProfessors().remove(table.getPinkProfessor());
-                    getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().add(new Professor(PINK));
-                }
-                break;
-            }
-            case RED:{
-                //exists a player with the red professor
-                if(null != playerWithProfessor){
-                    int maxRedStudents = 0;
-                    for(int i = 0; i < 10; i++){
-                        if(null != playerWithProfessor.getSchoolDashboard().getSchoolHall()[3].getTableHall()[i]){
-                            maxRedStudents++;
-                        }
-                        //there are no more students in the hall
-                        else{
-                            break;
-                        }
-                    }
-                    int redStudents = 0;
-                    for(int i = 0; i < 10; i++){
-                        if(null != getCurrentPlayer().getSchoolDashboard().getSchoolHall()[3].getTableHall()[i]){
-                            redStudents++;
-                        }
-                        //there are no more students in the hall
-                        else{
-                            break;
-                        }
-                    }
-                    if(maxRedStudents < redStudents){
-                        playerWithProfessor.getSchoolDashboard().getSchoolProfessor().remove(playerWithProfessor.getSchoolDashboard().getRedProfessor());
-                        getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().add(new Professor(RED));
-                    }
-                }
-                //the current player is the first one that take the red professor
-                else{
-                    table.getProfessors().remove(table.getRedProfessor());
-                    getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().add(new Professor(RED));
-                }
-                break;
-            }
-            case YELLOW:{
-                //exists a player with the yellow professor
-                if(null != playerWithProfessor){
-                    int maxYellowStudents = 0;
-                    for(int i = 0; i < 10; i++){
-                        if(null != playerWithProfessor.getSchoolDashboard().getSchoolHall()[4].getTableHall()[i]){
-                            maxYellowStudents++;
-                        }
-                        //there are no more students in the hall
-                        else{
-                            break;
-                        }
-                    }
-                    int yellowStudents = 0;
-                    for(int i = 0; i < 10; i++){
-                        if(null != getCurrentPlayer().getSchoolDashboard().getSchoolHall()[4].getTableHall()[i]){
-                            yellowStudents++;
-                        }
-                        //there are no more students in the hall
-                        else{
-                            break;
-                        }
-                    }
-                    if(maxYellowStudents < yellowStudents){
-                        playerWithProfessor.getSchoolDashboard().getSchoolProfessor().remove(playerWithProfessor.getSchoolDashboard().getYellowProfessor());
-                        getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().add(new Professor(YELLOW));
-                    }
-                }
-                //the current player is the first one that take the yellow professor
-                else{
-                    table.getProfessors().remove(table.getYellowProfessor());
-                    getCurrentPlayer().getSchoolDashboard().getSchoolProfessor().add(new Professor(YELLOW));
-                }
-                break;
-            }
-        }
-        //return getCurrentPlayer();
-        notify(new UpdateBoardMessage(this));
     }
 
     /**
@@ -619,9 +463,28 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         getCurrentPlayer().getSchoolDashboard().getEntranceStudent().remove(studentToBePlaced);
         */
         getTable().getIslands().get(islandIndex).addStudent(getCurrentPlayer().getStudentSelected());
-        getCurrentPlayer().getSchoolDashboard().removeStudentFromEntrance(getCurrentPlayer().getStudentSelected());
+        getCurrentPlayer().getSchool().removeStudentFromEntrance(getCurrentPlayer().getStudentSelected());
         //getCurrentPlayer().getSchoolDashboard().getEntranceStudent().remove(getCurrentPlayer().getStudentSelected());
         notify(new UpdateBoardMessage(this));
+    }
+
+    //---------------- MOVEMENT MOTHER NATURE MANAGEMENT --------------\\
+
+    /**
+     * check the islands where mother nature can be placed based on the assistant card played
+     * @return the list of islands where mother nature can be placed
+     */
+    public List<Island> getAvailableIslands() {
+        int startingIndex = getTable().getIslands().indexOf(getTable().getIslandWithMotherNature()) + 1;
+        int finalIndex = startingIndex + getCurrentPlayer().getAssistantCardUsed().getMovementMotherNature();
+
+        List<Island> islands = new ArrayList<>();
+
+        for (int i = startingIndex; i < finalIndex; i++ ) {
+            islands.add(getTable().getIslands().get(i % getTable().getIslands().size()));
+        }
+
+        return islands;
     }
 
     /**
@@ -630,7 +493,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
      * @param islandSelected the island selected by the player from the list where mother nature can move on
      */
     public void moveMotherNature(Island islandSelected){
-        //search and set mother nature to false
+        //actual 'movement' of mother nature
         for(Island island : table.getIslands()){
             if(island.hasMotherNature()){
                 island.setMotherNature(false);
@@ -638,23 +501,12 @@ public class GeneralGame extends Observable<Message> implements Serializable {
             }
         }
         islandSelected.setMotherNature(true);
-        //check only the single players
-        if(!teamGame){
-            //check if there is a conqueror of the island
-            Player conqueror = checkInfluence(islandSelected);
-            if(null != conqueror){
-                checkPlaceTower(islandSelected, conqueror);
-                checkLinkIslands(islandSelected);
-            }
+        Player conqueror = checkInfluence(islandSelected);
+        if(null != conqueror){
+            checkPlaceTower(islandSelected, conqueror);
+            checkLinkIslands(islandSelected);
         }
-        //team game, different checking
-        else{
-            TowerColor conquerorColor = checkInfluenceTeam(islandSelected);
-            if(null != conquerorColor){
-                checkPlaceTowerTeam(islandSelected, conquerorColor);
-                checkLinkIslands(islandSelected);
-            }
-        }
+        checkWinners();
         notify(new UpdateBoardMessage(this));
     }
 
@@ -665,28 +517,28 @@ public class GeneralGame extends Observable<Message> implements Serializable {
      */
     public void checkPlaceTower(Island islandSelected, Player conqueror){
         //no tower is already placed on this island
-        if(0 == islandSelected.getPlayerTower().size()){
+        if(0 == islandSelected.getTowers().size()){
             //place a tower on the island
-            table.placeTower(islandSelected, conqueror.getSchoolDashboard().getPlayersTowers().get(0));
+            table.placeTower(islandSelected, conqueror.getSchool().getPlayersTowers().get(0));
             //remove the tower from the player
-            conqueror.getSchoolDashboard().getPlayersTowers().remove(0);
+            conqueror.getSchool().getPlayersTowers().remove(0);
         }
         //tower is already placed on this island
         else{
             //the color of the towers of the conqueror
-            TowerColor conquerorColor = conqueror.getSchoolDashboard().getPlayersTowers().get(0).getColor();
+            TowerColor conquerorColor = conqueror.getSchool().getPlayersTowers().get(0).getColor();
             //the color of the towers on the island
-            TowerColor islandColor = islandSelected.getPlayerTower().get(0).getColor();
+            TowerColor islandColor = islandSelected.getTowers().get(0).getColor();
             //the color of the towers on the island is different from the one of the player
             if(!(islandColor.equals(conquerorColor))){
                 //give back the tower to the old conqueror
                 for(Player player : players){
                     //the color of the towers of the player now checked
-                    TowerColor playerColor = player.getSchoolDashboard().getPlayersTowers().get(0).getColor();
+                    TowerColor playerColor = player.getSchool().getPlayersTowers().get(0).getColor();
                     //the player is the old conqueror
                     if(playerColor.equals(islandColor)){
                         //give back all the towers of the island
-                        player.getSchoolDashboard().getPlayersTowers().addAll(islandSelected.getPlayerTower());
+                        player.getSchool().getPlayersTowers().addAll(islandSelected.getTowers());
                         break;
                     }
                 }
@@ -694,51 +546,9 @@ public class GeneralGame extends Observable<Message> implements Serializable {
                 table.replaceTower(islandSelected, conquerorColor);
                 //TODO sublist?
                 //remove the towers from the new conqueror
-                for(Tower towerOnIsland : islandSelected.getPlayerTower()){
-                    conqueror.getSchoolDashboard().getPlayersTowers().remove(0);
+                for(Tower towerOnIsland : islandSelected.getTowers()){
+                    conqueror.getSchool().getPlayersTowers().remove(0);
                 }
-            }
-        }
-    }
-
-    /**
-     * check if on the island the tower(s) must be changed
-     * @param islandSelected the island selected by the player
-     * @param conquerorColor the color of the team that has conquered the island
-     */
-    public void checkPlaceTowerTeam(Island islandSelected, TowerColor conquerorColor){
-        if(0 == islandSelected.getPlayerTower().size()){
-            for(Player player : players){
-                if(player.getPlayerTeam().equals(conquerorColor)){
-                    player.getSchoolDashboard().getPlayersTowers().remove(0);
-                }
-            }
-            table.placeTower(islandSelected, new Tower(conquerorColor));
-        }
-        else{
-            TowerColor islandColor = islandSelected.getPlayerTower().get(0).getColor();
-            List<Player> conqueror = new ArrayList<>();
-            List<Player> conquered = new ArrayList<>();
-            //search conqueror and conquered
-            for(Player player : players){
-                if(player.getPlayerTeam().equals(conquerorColor)){
-                    conqueror.add(player);
-                }
-                if(player.getPlayerTeam().equals(islandColor)){
-                    conquered.add(player);
-                }
-            }
-            //the island is conquered by the other team
-            if(!conqueror.equals(conquered)){
-                //remove the tower(s) from each player of the team that conquer
-                for(Player p : conqueror){
-                    p.getSchoolDashboard().getPlayersTowers().subList(0, islandSelected.getPlayerTower().size()).clear();
-                }
-                //give back the tower(s) to each player of the team conquered
-                for(Player p : conquered){
-                    p.getSchoolDashboard().getPlayersTowers().addAll(islandSelected.getPlayerTower());
-                }
-                table.replaceTower(islandSelected, conquerorColor);
             }
         }
     }
@@ -759,15 +569,15 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         //island behind
         Island islandBehind = table.getIslands().get(prev);
         //number of tower on the island ahead and behind
-        int towersOnTheIslandAhead =  islandAhead.getPlayerTower().size();
-        int towersOnTheIslandBehind = islandBehind.getPlayerTower().size();
-        TowerColor islandSelectedColor = islandSelected.getPlayerTower().get(0).getColor();
+        int towersOnTheIslandAhead =  islandAhead.getTowers().size();
+        int towersOnTheIslandBehind = islandBehind.getTowers().size();
+        TowerColor islandSelectedColor = islandSelected.getTowers().get(0).getColor();
         //mark the island(s) that will be removed
         boolean removeAhead = false;
         boolean removeBehind = false;
         //check the island ahead
         if(0 != towersOnTheIslandAhead){
-            TowerColor islandAheadColor = islandAhead.getPlayerTower().get(0).getColor();
+            TowerColor islandAheadColor = islandAhead.getTowers().get(0).getColor();
             if(islandSelectedColor.equals(islandAheadColor)){
                 table.linkIslands(islandSelected, islandAhead);
                 removeAhead = true;
@@ -775,7 +585,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         }
         //check the island behind
         if(0 != towersOnTheIslandBehind){
-            TowerColor islandBehindColor = islandBehind.getPlayerTower().get(0).getColor();
+            TowerColor islandBehindColor = islandBehind.getTowers().get(0).getColor();
             if(islandSelectedColor.equals(islandBehindColor)){
                 table.linkIslands(islandSelected, islandBehind);
                 removeBehind = true;
@@ -786,6 +596,10 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         }
         if(removeBehind){
             table.getIslands().remove(islandBehind);
+        }
+        //checkEndGame();
+        if(table.getIslands().size() == 3){
+            checkWinners();
         }
     }
 
@@ -803,38 +617,24 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         int numYellowStudents = islandWithMotherNature.getYellowStudents().size();
         int maxInfluence = 0;
         Player conqueror = null;
+        Player oldConqueror = oldConqueror(islandWithMotherNature);
         for(Player player : players){
             int playerInfluence = 0;
-            for(Professor professor : player.getSchoolDashboard().getSchoolProfessor()){
-                switch(professor.getColor()){
-                    case BLUE:{
-                        playerInfluence = playerInfluence + numBlueStudents;
-                        break;
-                    }
-                    case GREEN:{
-                        playerInfluence = playerInfluence + numGreenStudents;
-                        break;
-                    }
-                    case PINK:{
-                        playerInfluence = playerInfluence + numPinkStudents;
-                        break;
-                    }
-                    case RED:{
-                        playerInfluence = playerInfluence + numRedStudents;
-                        break;
-                    }
-                    case YELLOW:{
-                        playerInfluence = playerInfluence + numYellowStudents;
-                        break;
-                    }
+            for(Professor professor : player.getSchool().getSchoolProfessors()){
+                switch (professor.getColor()) {
+                    case BLUE -> playerInfluence = playerInfluence + numBlueStudents;
+                    case GREEN -> playerInfluence = playerInfluence + numGreenStudents;
+                    case PINK -> playerInfluence = playerInfluence + numPinkStudents;
+                    case RED ->  playerInfluence = playerInfluence + numRedStudents;
+                    case YELLOW -> playerInfluence = playerInfluence + numYellowStudents;
                 }
             }
             //if the island has a tower/many tower on it
-            if(islandWithMotherNature.getPlayerTower().size() > 0){
-                TowerColor islandColor = islandWithMotherNature.getPlayerTower().get(0).getColor();
-                TowerColor playerColor = player.getSchoolDashboard().getPlayersTowers().get(0).getColor();
+            if(islandWithMotherNature.getTowers().size() > 0){
+                TowerColor islandColor = islandWithMotherNature.getTowers().get(0).getColor();
+                TowerColor playerColor = player.getSchool().getPlayersTowers().get(0).getColor();
                 if(islandColor.equals(playerColor)){
-                    playerInfluence = playerInfluence + islandWithMotherNature.getPlayerTower().size();
+                    playerInfluence = playerInfluence + islandWithMotherNature.getTowers().size();
                 }
             }
             player.setPlayerInfluence(playerInfluence);
@@ -842,6 +642,10 @@ public class GeneralGame extends Observable<Message> implements Serializable {
                 maxInfluence = playerInfluence;
                 conqueror = player;
             }
+        }
+        //no conqueror because the player conquers an island where it is already the leader
+        if(Objects.equals(oldConqueror, conqueror)){
+            return null;
         }
         if(null != conqueror){
             //check if there is another player with that influence
@@ -863,83 +667,22 @@ public class GeneralGame extends Observable<Message> implements Serializable {
     }
 
     /**
-     * calculate the influence of each team on the island
-     * @param islandSelected the island selected by the current player
-     * @return the color of the team which conquer the island
+     * check the towers on the island with the tower of each player to set the old player that conquered it
+     * @param islandWithMotherNature the island where mother nature ends
+     * @return the player that conquered the island in the previous turns
      */
-    public TowerColor checkInfluenceTeam(Island islandSelected){
-        //number of students on the island by color
-        int blueStudents = islandSelected.getBlueStudents().size();
-        int greenStudents = islandSelected.getGreenStudents().size();
-        int pinkStudents = islandSelected.getPinkStudents().size();
-        int redStudents = islandSelected.getRedStudents().size();
-        int yellowStudents = islandSelected.getYellowStudents().size();
-        int whiteInfluence = 0;
-        int blackInfluence = 0;
-        //set the influence of the team on the island
-        for(Player player : players){
-            for(Professor prof : player.getSchoolDashboard().getSchoolProfessor()){
-                switch(prof.getColor()){
-                    case BLUE:{
-                        if(player.getPlayerTeam().equals(WHITE)){
-                            whiteInfluence = whiteInfluence + blueStudents;
-                        }
-                        else{
-                            blackInfluence = blackInfluence + blueStudents;
-                        }
-                    }
-                    case GREEN:{
-                        if(player.getPlayerTeam().equals(WHITE)){
-                            whiteInfluence = whiteInfluence + greenStudents;
-                        }
-                        else{
-                            blackInfluence = blackInfluence + greenStudents;
-                        }
-                    }
-                    case PINK:{
-                        if(player.getPlayerTeam().equals(WHITE)){
-                            whiteInfluence = whiteInfluence + pinkStudents;
-                        }
-                        else{
-                            blackInfluence = blackInfluence + pinkStudents;
-                        }
-                    }
-                    case RED:{
-                        if(player.getPlayerTeam().equals(WHITE)){
-                            whiteInfluence = whiteInfluence + redStudents;
-                        }
-                        else{
-                            blackInfluence = blackInfluence + redStudents;
-                        }
-                    }
-                    case YELLOW:{
-                        if(player.getPlayerTeam().equals(WHITE)){
-                            whiteInfluence = whiteInfluence + yellowStudents;
-                        }
-                        else{
-                            blackInfluence = blackInfluence + yellowStudents;
-                        }
-                    }
-                }
-            }
-        }
-        if(islandSelected.getPlayerTower().size() > 0){
-            if(islandSelected.getPlayerTower().get(0).getColor().equals(WHITE)){
-                whiteInfluence = whiteInfluence + islandSelected.getPlayerTower().size();
-            }
-            else{
-                blackInfluence = blackInfluence + islandSelected.getPlayerTower().size();
-            }
-        }
-        if(whiteInfluence > blackInfluence){
-            return WHITE;
-        }
-        else if(blackInfluence > whiteInfluence){
-            return BLACK;
-        }
-        else{
+    private Player oldConqueror(Island islandWithMotherNature) {
+        if(islandWithMotherNature.getTowers().size() == 0){
             return null;
         }
+        TowerColor islandColor = islandWithMotherNature.getTowers().get(0).getColor();
+        for(int i = 0; i < players.length; i++){
+            TowerColor playerColor = players[i].getSchool().getPlayersTowers().get(0).getColor();
+            if(playerColor.equals(islandColor)){
+                return players[i];
+            }
+        }
+        return null;
     }
 
     /**
@@ -947,20 +690,95 @@ public class GeneralGame extends Observable<Message> implements Serializable {
      * @param cloudSelected the cloud selected by the current player
      */
     public void giveStudentsFromCloudToPlayer(Cloud cloudSelected){
-        getCurrentPlayer().getSchoolDashboard().getEntranceStudent().addAll(table.giveStudentsFromCloud(cloudSelected));
+        getCurrentPlayer().getSchool().getEntranceStudent().addAll(table.giveStudentsFromCloud(cloudSelected));
         notify(new UpdateBoardMessage(this));
     }
 
-    public List<Island> getAvailableIslands() {
-        int startingIndex = getTable().getIslands().indexOf(getTable().getIslandWithMotherNature()) + 1;
-        int finalIndex = startingIndex + getCurrentPlayer().getAssistantCardUsed().getMovementMotherNature();
+    /**
+     * when all the players end their turn the clouds has to be refilled
+     */
+    public void refillClouds(){
+        table.placeStudentsInCloud(players.length);
+        checkLastTurn();
+    }
 
-        List<Island> islands = new ArrayList<>();
-
-        for (int i = startingIndex; i < finalIndex; i++ ) {
-            islands.add(getTable().getIslands().get(i % getTable().getIslands().size()));
+    /**
+     * check the winners of the game
+     * @return the players that win the game
+     */
+    public  List<Player> checkWinners(){
+        List<Player> winners = new ArrayList<>();
+        //normal ending: player with no more towers
+        for(Player player : players){
+            if(player.getSchool().getPlayersTowers().size() == 0){
+                winners.add(player);
+            }
         }
+        //if winners is not empty means that one player has no more tower
+        if(!winners.isEmpty()){
+            return winners;
+        }
+        winners.addAll(List.of(players));
+        //winning by less tower
+        int minTower = findMinTowers(winners);
+        winners.removeIf(player -> (player.getSchool().getPlayersTowers().size() > minTower));
+        if (winners.size() == 1) {
+            return winners;
+        }
+        //winning by more professor
+        int whitesProfessors = numberProfessors(winners, WHITE);
+        int blackProfessors = numberProfessors(winners, BLACK);
+        int greyProfessors = numberProfessors(winners, GREY);
+        int maxProfessor = Math.max(whitesProfessors, Math.max(blackProfessors, greyProfessors));
+        winners.removeIf(player -> (player.getSchool().getSchoolProfessors().size() < maxProfessor));
+        return winners;
+    }
 
-        return islands;
+    /**
+     * find the minimum tower in the school of each player
+     * @param winners the list of possible winners
+     * @return the minimum number of towers in the schools
+     */
+    public int findMinTowers(List<Player> winners){
+        int min = 10;
+        for(Player player : winners){
+            if(min > player.getSchool().getPlayersTowers().size()){
+                min = player.getSchool().getPlayersTowers().size();
+            }
+        }
+        return min;
+    }
+
+    /**
+     * check the number of professor in each player's school
+     * @param winners the list of possible winners
+     * @param color the color of the player/team
+     * @return the number of professor in the player/team's school
+     */
+    public int numberProfessors(List<Player> winners, TowerColor color) {
+        int professors = 0;
+        for(Player player : winners){
+            if(player.getSchool().getPlayersTowers().get(0).getColor().equals(color)){
+                professors = professors + player.getSchool().getSchoolProfessors().size();
+            }
+        }
+        return professors;
+    }
+
+    /**
+     * check if the game catch the last turn's terms
+     * no more students in the bag or the last assistant is played
+     * @return true if this is the last turn, false otherwise
+     */
+    public boolean checkLastTurn(){
+        if(0 == table.getStudentBag().size()){
+            return true;
+        }
+        for(Player player : players) {
+            if (0 == player.getAssistantDeck().size()){
+                return true;
+            }
+        }
+        return false;
     }
 }

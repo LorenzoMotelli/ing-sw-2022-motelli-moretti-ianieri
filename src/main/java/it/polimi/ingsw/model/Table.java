@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.model.enumeration.Variant;
 
@@ -26,10 +27,8 @@ public class Table implements Serializable {
     /**
      * new constructor, initialize the main variables
      * @param numberOfPlayers the number of player in the game, used for the number of clouds and eventually coins
-     * @param variantOfTheGame if the game is expert than the game has more options(coins and characters)
-     * @param charactersOfTheGame the three characters randomly selected for the game
      */
-    public Table(int numberOfPlayers, Variant variantOfTheGame, Character[] charactersOfTheGame){
+    public Table(int numberOfPlayers){
         //creation of the 12 islands of the game
         islands = new ArrayList<>(12);
         for(int i = 0; i < 12; i++){
@@ -79,14 +78,6 @@ public class Table implements Serializable {
         professors.add(2,new Professor(PINK));
         professors.add(3,new Professor(RED));
         professors.add(4,new Professor(YELLOW));
-        //if it is an expert game there are characters and coins
-        /*if(variantOfTheGame.equals(Variant.EXPERT)){
-            setCoins(20-numberOfPlayers);
-            playableCharacters = new Character[3];
-            for(int i = 0; i < 3; i++){
-                playableCharacters[i] = charactersOfTheGame[i];
-            }
-        }*/
         initializeIslands();
         initializeClouds();
     }
@@ -256,18 +247,17 @@ public class Table implements Serializable {
      * @param islandOrigin the second island/archipelago to be linked, this will be removed
      */
     public /*island*/ void linkIslands(Island islandTarget, Island islandOrigin){
-        islandTarget.addTower(islandOrigin.getPlayerTower());
+        islandTarget.addTower(islandOrigin.getTowers());
         islandTarget.addStudents(islandOrigin.getStudents());
         //add other things in expert game
     }
-
     /**
      * this method is used only when the is no tower in the island
      * @param island island selected
      * @param tower tower of the player
      */
     public void placeTower(Island island, Tower tower){
-        island.getPlayerTower().add(tower);
+        island.getTowers().add(tower);
     }
 
     /**
@@ -276,7 +266,7 @@ public class Table implements Serializable {
      * @param towerColor the new color of the tower on the island
      */
     public void replaceTower(Island island, TowerColor towerColor){
-        for(Tower t: island.getPlayerTower()){
+        for(Tower t: island.getTowers()){
             t.setColor(towerColor);
         }
     }
@@ -310,6 +300,27 @@ public class Table implements Serializable {
         List <Student> studentToGive = new ArrayList<>(cloud.getCloudStudents());
         cloud.getCloudStudents().removeAll(studentToGive);
         return studentToGive;
+    }
+
+    public Professor getProfessorByColor(PawnColor color) {
+        switch (color){
+            case BLUE -> {
+                return getBlueProfessor();
+            }
+            case GREEN -> {
+                return getGreenProfessor();
+            }
+            case PINK -> {
+                return getPinkProfessor();
+            }
+            case RED -> {
+                return getRedProfessor();
+            }
+            case YELLOW -> {
+                return getYellowProfessor();
+            }
+        }
+        return null;
     }
 
     //------------------- MANAGEMENT OF THE CHARACTERS -----------------\\

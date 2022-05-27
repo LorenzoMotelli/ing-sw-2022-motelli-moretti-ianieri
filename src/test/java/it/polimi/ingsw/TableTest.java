@@ -20,8 +20,7 @@ public class TableTest {
 
     @BeforeEach
     public void setUp(){
-        table = new Table(2,  Variant.NORMAL, null);
-
+        table = new Table(2);
     }
 
     @Test
@@ -60,20 +59,20 @@ public class TableTest {
         Tower tower = new Tower();
         tower.setColor(BLACK);
         table.placeTower(table.getIslands().get(0), tower);
-        assertEquals(1, table.getIslands().get(0).getPlayerTower().size());
-        assertEquals(BLACK, table.getIslands().get(0).getPlayerTower().get(0).getColor());
+        assertEquals(1, table.getIslands().get(0).getTowers().size());
+        assertEquals(BLACK, table.getIslands().get(0).getTowers().get(0).getColor());
     }
 
     @Test
     public void changeTowerColor(){
         Tower whiteTower = new Tower();
         whiteTower.setColor(WHITE);
-        table.getIslands().get(0).getPlayerTower().add(whiteTower);
-        assertEquals(1,table.getIslands().get(0).getPlayerTower().size());
-        assertEquals(WHITE, table.getIslands().get(0).getPlayerTower().get(0).getColor());
+        table.getIslands().get(0).getTowers().add(whiteTower);
+        assertEquals(1,table.getIslands().get(0).getTowers().size());
+        assertEquals(WHITE, table.getIslands().get(0).getTowers().get(0).getColor());
         table.replaceTower(table.getIslands().get(0),BLACK);
-        assertEquals(1,table.getIslands().get(0).getPlayerTower().size());
-        assertEquals(BLACK, table.getIslands().get(0).getPlayerTower().get(0).getColor());
+        assertEquals(1,table.getIslands().get(0).getTowers().size());
+        assertEquals(BLACK, table.getIslands().get(0).getTowers().get(0).getColor());
     }
 
     @RepeatedTest(value = 12, name = "LinkAhead {currentRepetition}")
@@ -87,9 +86,9 @@ public class TableTest {
         //island ahead for island1
         int indexIsland2 = repetitionInfo.getCurrentRepetition() % 12;
         Island island1 = table.getIslands().get(indexIsland1);
-        island1.setPlayerTower(whiteTower);
+        island1.setTower(whiteTower);
         Island island2 = table.getIslands().get(indexIsland2);
-        island2.setPlayerTower(whiteTower);
+        island2.setTower(whiteTower);
         //set mother nature to the island1
         island1.setMotherNature(true);
         int blueStudents1 = island1.getBlueStudents().size();
@@ -97,13 +96,13 @@ public class TableTest {
         int pinkStudents1 = island1.getPinkStudents().size();
         int redStudents1 = island1.getRedStudents().size();
         int yellowStudents1 = island1.getYellowStudents().size();
-        int towers1 = island1.getPlayerTower().size();
+        int towers1 = island1.getTowers().size();
         int blueStudents2 = island2.getBlueStudents().size();
         int greenStudents2 = island2.getGreenStudents().size();
         int pinkStudents2 = island2.getPinkStudents().size();
         int redStudents2 = island2.getRedStudents().size();
         int yellowStudents2 = island2.getYellowStudents().size();
-        int towers2 = island2.getPlayerTower().size();
+        int towers2 = island2.getTowers().size();
         table.linkIslands(island1, island2);
         Island islandWithMotherNature = table.getIslandWithMotherNature();
         assertEquals(blueStudents1+blueStudents2, islandWithMotherNature.getBlueStudents().size());
@@ -111,7 +110,7 @@ public class TableTest {
         assertEquals(pinkStudents1+pinkStudents2, islandWithMotherNature.getPinkStudents().size());
         assertEquals(redStudents1+redStudents2, islandWithMotherNature.getRedStudents().size());
         assertEquals(yellowStudents1+yellowStudents2, islandWithMotherNature.getYellowStudents().size());
-        assertEquals(towers1+towers2, islandWithMotherNature.getPlayerTower().size());
+        assertEquals(towers1+towers2, islandWithMotherNature.getTowers().size());
         assertEquals(12, table.getIslands().size());
     }
 
@@ -126,9 +125,9 @@ public class TableTest {
         //island ahead for island1
         int indexIsland2 = (repetitionInfo.getCurrentRepetition()) % 12;
         Island island1 = table.getIslands().get(indexIsland1);
-        island1.setPlayerTower(whiteTower);
+        island1.setTower(whiteTower);
         Island island2 = table.getIslands().get(indexIsland2);
-        island2.setPlayerTower(whiteTower);
+        island2.setTower(whiteTower);
         //set mother nature to the island ahead, that is the island selected by the player
         island2.setMotherNature(true);
         int blueStudents1 = island1.getBlueStudents().size();
@@ -136,13 +135,13 @@ public class TableTest {
         int pinkStudents1 = island1.getPinkStudents().size();
         int redStudents1 = island1.getRedStudents().size();
         int yellowStudents1 = island1.getYellowStudents().size();
-        int towers1 = island1.getPlayerTower().size();
+        int towers1 = island1.getTowers().size();
         int blueStudents2 = island2.getBlueStudents().size();
         int greenStudents2 = island2.getGreenStudents().size();
         int pinkStudents2 = island2.getPinkStudents().size();
         int redStudents2 = island2.getRedStudents().size();
         int yellowStudents2 = island2.getYellowStudents().size();
-        int towers2 = island2.getPlayerTower().size();
+        int towers2 = island2.getTowers().size();
         table.linkIslands(island2, island1);
         Island islandWithMotherNature = table.getIslandWithMotherNature();
         assertEquals(blueStudents1+blueStudents2, islandWithMotherNature.getBlueStudents().size());
@@ -150,13 +149,13 @@ public class TableTest {
         assertEquals(pinkStudents1+pinkStudents2, islandWithMotherNature.getPinkStudents().size());
         assertEquals(redStudents1+redStudents2, islandWithMotherNature.getRedStudents().size());
         assertEquals(yellowStudents1+yellowStudents2, islandWithMotherNature.getYellowStudents().size());
-        assertEquals(towers1+towers2, islandWithMotherNature.getPlayerTower().size());
+        assertEquals(towers1+towers2, islandWithMotherNature.getTowers().size());
         //the number of island does not change in table, general game will change it
         assertEquals(12, table.getIslands().size());
     }
 
     @Test
-    public void placeStudentInCloud(){
+    public void placeStudentInCloud_BagCanRefill(){
         //empty clouds for test
         table.getClouds().get(0).getCloudStudents().clear();
         table.getClouds().get(1).getCloudStudents().clear();
@@ -168,6 +167,50 @@ public class TableTest {
         assertEquals(3, table.getClouds().get(0).getCloudStudents().size());
         assertEquals(3, table.getClouds().get(1).getCloudStudents().size());
         assertEquals(numberOfBagStudents - 6, table.getStudentBag().size());
+    }
+
+    @Test
+    public void placeStudentInCloud_BagCannotRefill_3Players(){
+        Table table3 = new Table(3);
+        table3.getClouds().get(0).getCloudStudents().clear();
+        table3.getClouds().get(1).getCloudStudents().clear();
+        table3.getClouds().get(2).getCloudStudents().clear();
+
+        //empty bag
+        table3.getStudentBag().clear();
+        List<Student> students = new ArrayList<>();
+        for(int i = 0; i < 11; i++){
+            students.add(new Student(RED));
+        }
+        table3.getStudentBag().addAll(students);
+        table3.placeStudentsInCloud(3);
+        assertEquals(4, table3.getClouds().get(0).getCloudStudents().size());
+        assertEquals(4, table3.getClouds().get(1).getCloudStudents().size());
+        assertEquals(3, table3.getClouds().get(2).getCloudStudents().size());
+        assertEquals(0, table3.getStudentBag().size());
+    }
+
+    @Test
+    public void placeStudentInCloud_BagCannotRefill_4Players(){
+        Table table4 = new Table(4);
+        table4.getClouds().get(0).getCloudStudents().clear();
+        table4.getClouds().get(1).getCloudStudents().clear();
+        table4.getClouds().get(2).getCloudStudents().clear();
+        table4.getClouds().get(3).getCloudStudents().clear();
+
+        //empty bag
+        table4.getStudentBag().clear();
+        List<Student> students = new ArrayList<>();
+        for(int i = 0; i < 10; i++){
+            students.add(new Student(RED));
+        }
+        table4.getStudentBag().addAll(students);
+        table4.placeStudentsInCloud(4);
+        assertEquals(3, table4.getClouds().get(0).getCloudStudents().size());
+        assertEquals(3, table4.getClouds().get(1).getCloudStudents().size());
+        assertEquals(3, table4.getClouds().get(2).getCloudStudents().size());
+        assertEquals(1, table4.getClouds().get(3).getCloudStudents().size());
+        assertEquals(0, table4.getStudentBag().size());
     }
 
     @Test

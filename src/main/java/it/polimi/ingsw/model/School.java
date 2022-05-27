@@ -7,12 +7,11 @@ import java.io.Serializable;
 import java.util.*;
 
 import static it.polimi.ingsw.model.enumeration.PawnColor.*;
-import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 
 public class School implements Serializable {
 
     private Hall[] schoolHall;
-    private List<Professor> schoolProfessor;
+    private List<Professor> schoolProfessors;
     private List<Student> entranceStudent;
     private List<Tower> playersTowers;
 
@@ -35,7 +34,7 @@ public class School implements Serializable {
         getSchoolHall()[3].setHallColor(RED);
         getSchoolHall()[4].setHallColor(YELLOW);
         //initialization of the 5 professors (everyone is null)
-        schoolProfessor = new ArrayList<>();
+        schoolProfessors = new ArrayList<>();
         //initialization of the students in the entrance
         entranceStudent = new ArrayList<>();
         //initialization of the towers
@@ -48,12 +47,12 @@ public class School implements Serializable {
         return schoolHall;
     }
 
-    public List<Professor> getSchoolProfessor() {
-        return schoolProfessor;
+    public List<Professor> getSchoolProfessors() {
+        return schoolProfessors;
     }
 
-    public void setSchoolProfessor(List<Professor> schoolProfessor) {
-        this.schoolProfessor = schoolProfessor;
+    public void setProfessor(List<Professor> schoolProfessor) {
+        this.schoolProfessors = schoolProfessor;
     }
 
     public List<Student> getEntranceStudent() {
@@ -83,7 +82,7 @@ public class School implements Serializable {
     }
 
     public Professor getBlueProfessor(){
-        for(Professor p: schoolProfessor){
+        for(Professor p: schoolProfessors){
             if(p.getColor().equals(BLUE)){
                 return p;
             }
@@ -92,7 +91,7 @@ public class School implements Serializable {
     }
 
     public Professor getGreenProfessor(){
-        for(Professor p: schoolProfessor){
+        for(Professor p: schoolProfessors){
             if(p.getColor().equals(GREEN)){
                 return p;
             }
@@ -101,7 +100,7 @@ public class School implements Serializable {
     }
 
     public Professor getPinkProfessor(){
-        for(Professor p: schoolProfessor){
+        for(Professor p: schoolProfessors){
             if(p.getColor().equals(PINK)){
                 return p;
             }
@@ -110,7 +109,7 @@ public class School implements Serializable {
     }
 
     public Professor getRedProfessor(){
-        for(Professor p: schoolProfessor){
+        for(Professor p: schoolProfessors){
             if(p.getColor().equals(RED)){
                 return p;
             }
@@ -119,13 +118,76 @@ public class School implements Serializable {
     }
 
     public Professor getYellowProfessor(){
-        for(Professor p: schoolProfessor){
+        for(Professor p: schoolProfessors){
             if(p.getColor().equals(YELLOW)){
                 return p;
             }
         }
         return null;
     }
+
+    public Hall getBlueHall(){
+        return schoolHall[0];
+    }
+
+    public Hall getGreenHall(){
+        return schoolHall[1];
+    }
+
+    public Hall getPinkHall(){
+        return schoolHall[2];
+    }
+
+    public Hall getRedHall(){
+        return schoolHall[3];
+    }
+
+    public Hall getYellowHall(){
+        return schoolHall[4];
+    }
+
+    public Hall getHallByColor(PawnColor color){
+        switch (color){
+            case BLUE -> {
+                return getBlueHall();
+            }
+            case GREEN -> {
+                return getGreenHall();
+            }
+            case PINK -> {
+                return getPinkHall();
+            }
+            case RED -> {
+                return getRedHall();
+            }
+            case YELLOW -> {
+                return getYellowHall();
+            }
+        }
+        return null;
+    }
+
+    /*
+    public Hall getBlueHall(){
+        return schoolHall[0];
+    }
+
+    public Hall getGreenHall(){
+        return schoolHall[1];
+    }
+
+    public Hall getPinkHall(){
+        return schoolHall[2];
+    }
+
+    public Hall getRedHall(){
+        return schoolHall[3];
+    }
+
+    public Hall getYellowHall(){
+        return schoolHall[4];
+    }
+     */
 
     //-------------- SCHOOL MANAGEMENT --------------\\
 
@@ -173,6 +235,32 @@ public class School implements Serializable {
      * @param prof the professor that the player gains
      */
     public void addProfessor(Professor prof){
-        schoolProfessor.add(prof);
+        schoolProfessors.add(prof);
+    }
+
+    /**
+     * check if the player has the corresponding professor of the specific color
+     * @param color the color of the student placed this turn
+     * @return the Professor if it's present in the school
+     */
+    public Professor getProfessorByColor(PawnColor color) {
+        switch (color){
+            case BLUE -> {
+                return getBlueProfessor();
+            }
+            case GREEN -> {
+                return getGreenProfessor();
+            }
+            case PINK -> {
+                return getPinkProfessor();
+            }
+            case RED -> {
+                return getRedProfessor();
+            }
+            case YELLOW -> {
+                return getYellowProfessor();
+            }
+        }
+        return null;
     }
 }

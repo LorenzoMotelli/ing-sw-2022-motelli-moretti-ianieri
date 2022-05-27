@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.view.userinterface;
+package it.polimi.ingsw.view.userinterface;
 
 
 import it.polimi.ingsw.network.messages.specific.*;
