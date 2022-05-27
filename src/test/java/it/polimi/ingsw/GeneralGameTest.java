@@ -21,13 +21,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GeneralGameTest {
     private GeneralGame gameWith2Players;
     private GeneralGame gameWith3Players;
-    private GeneralGame gameWith4Players;
+    //private GeneralGame gameWith4Players;
 
     @BeforeEach
     public void setUp(){
         gameWith2Players = new GeneralGame(2, NORMAL);
         gameWith3Players = new GeneralGame(3, NORMAL);
-        gameWith4Players = new GeneralGame(4, NORMAL);
+        //gameWith4Players = new GeneralGame(4, NORMAL);
 
         gameWith2Players.addPlayer("P1");
         gameWith2Players.addPlayer("P2");
@@ -36,38 +36,38 @@ public class GeneralGameTest {
         gameWith3Players.addPlayer("P2");
         gameWith3Players.addPlayer("P3");
 
-        gameWith4Players.addPlayer("P1");
+        /*gameWith4Players.addPlayer("P1");
         gameWith4Players.addPlayer("P2");
         gameWith4Players.addPlayer("P3");
-        gameWith4Players.addPlayer("P4");
+        gameWith4Players.addPlayer("P4");*/
 
         gameWith2Players.startGeneralGame();
         gameWith3Players.startGeneralGame();
-        gameWith4Players.startGeneralGame();
+        //gameWith4Players.startGeneralGame();
     }
 
     @Test
     public void getTable_ShouldReturnTable(){
         assertNotNull(gameWith2Players.getTable());
         assertNotNull(gameWith3Players.getTable());
-        assertNotNull(gameWith4Players.getTable());
+        //assertNotNull(gameWith4Players.getTable());
     }
 
     @Test
     public void getPlayers_ShouldReturnPlayers(){
         assertNotNull(gameWith2Players.getPlayers());
         assertNotNull(gameWith3Players.getPlayers());
-        assertNotNull(gameWith4Players.getPlayers());
+        //assertNotNull(gameWith4Players.getPlayers());
     }
 
     @Test
     public void initialization(){
         assertEquals(12, gameWith2Players.getTable().getIslands().size());
         assertEquals(12, gameWith3Players.getTable().getIslands().size());
-        assertEquals(12, gameWith4Players.getTable().getIslands().size());
+        //assertEquals(12, gameWith4Players.getTable().getIslands().size());
         assertEquals(2, gameWith2Players.getTable().getClouds().size());
         assertEquals(3, gameWith3Players.getTable().getClouds().size());
-        assertEquals(4, gameWith4Players.getTable().getClouds().size());
+        //assertEquals(4, gameWith4Players.getTable().getClouds().size());
         //check islands, game with 2 players
         Island islandWithNoStudents = new Island();
         int indexIslandWithMN = gameWith2Players.getTable().getIslands().indexOf(gameWith2Players.getTable().getIslandWithMotherNature());
@@ -109,13 +109,13 @@ public class GeneralGameTest {
             assertEquals(6,player.getSchool().getPlayersTowers().size());
         }
         //check clouds' students and entrance's students in game with 4 players
-        for(Cloud cloud : gameWith4Players.getTable().getClouds()){
+        /*for(Cloud cloud : gameWith4Players.getTable().getClouds()){
             assertEquals(3, cloud.getCloudStudents().size());
         }
         for(Player player : gameWith4Players.getPlayers()){
             assertEquals(7, player.getSchool().getEntranceStudent().size());
             assertEquals(8,player.getSchool().getPlayersTowers().size());
-        }
+        }*/
     }
 
     @Test
@@ -291,68 +291,68 @@ public class GeneralGameTest {
     public void nextPhasePlanningToPlaceStudent(){
         assertEquals(PLANNING, gameWith2Players.getGamePhase());
         assertEquals(PLANNING, gameWith3Players.getGamePhase());
-        assertEquals(PLANNING, gameWith4Players.getGamePhase());
+        //assertEquals(PLANNING, gameWith4Players.getGamePhase());
 
         gameWith2Players.nextPhase(PLANNING);
         gameWith3Players.nextPhase(PLANNING);
-        gameWith4Players.nextPhase(PLANNING);
+        //gameWith4Players.nextPhase(PLANNING);
 
         assertEquals(PLACE_STUDENT, gameWith2Players.getGamePhase());
         assertEquals(PLACE_STUDENT, gameWith3Players.getGamePhase());
-        assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
+        //assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
     }
 
     @Test
     public void nextPhasePlaceStudentToPlaceStudent(){
         gameWith2Players.nextPhase(PLANNING);
         gameWith3Players.nextPhase(PLANNING);
-        gameWith4Players.nextPhase(PLANNING);
+        //gameWith4Players.nextPhase(PLANNING);
 
         assertEquals(PLACE_STUDENT, gameWith2Players.getGamePhase());
         assertEquals(PLACE_STUDENT, gameWith3Players.getGamePhase());
-        assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
+        //assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
 
         gameWith2Players.nextPhase(PLACE_STUDENT);
         gameWith3Players.nextPhase(PLACE_STUDENT);
-        gameWith4Players.nextPhase(PLACE_STUDENT);
+        //gameWith4Players.nextPhase(PLACE_STUDENT);
 
         assertEquals(PLACE_STUDENT, gameWith2Players.getGamePhase());
         assertEquals(PLACE_STUDENT, gameWith3Players.getGamePhase());
-        assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
+        //assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
     }
 
     @Test
     public void nextPhasePlaceStudentToPlaceStudentOneStudentPlace(){
         gameWith2Players.nextPhase(PLANNING);
         gameWith3Players.nextPhase(PLANNING);
-        gameWith4Players.nextPhase(PLANNING);
+        //gameWith4Players.nextPhase(PLANNING);
 
         assertEquals(PLACE_STUDENT, gameWith2Players.getGamePhase());
         assertEquals(PLACE_STUDENT, gameWith3Players.getGamePhase());
-        assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
+        //assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
 
         gameWith2Players.placeStudentInHall(gameWith2Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
         gameWith3Players.placeStudentInHall(gameWith3Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
-        gameWith4Players.placeStudentInHall(gameWith4Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
+        //gameWith4Players.placeStudentInHall(gameWith4Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
 
         gameWith2Players.nextPhase(PLACE_STUDENT);
         gameWith3Players.nextPhase(PLACE_STUDENT);
-        gameWith4Players.nextPhase(PLACE_STUDENT);
+        //gameWith4Players.nextPhase(PLACE_STUDENT);
 
         assertEquals(PLACE_STUDENT, gameWith2Players.getGamePhase());
         assertEquals(PLACE_STUDENT, gameWith3Players.getGamePhase());
-        assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
+        //assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
     }
 
     @Test
     public void nextPhasePlaceStudentToPlaceStudentTwoStudentPlace(){
         gameWith2Players.nextPhase(PLANNING);
         gameWith3Players.nextPhase(PLANNING);
-        gameWith4Players.nextPhase(PLANNING);
+        //gameWith4Players.nextPhase(PLANNING);
 
         assertEquals(PLACE_STUDENT, gameWith2Players.getGamePhase());
         assertEquals(PLACE_STUDENT, gameWith3Players.getGamePhase());
-        assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
+        //assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
 
         gameWith2Players.placeStudentInHall(gameWith2Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
         gameWith2Players.placeStudentInHall(gameWith2Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
@@ -360,16 +360,16 @@ public class GeneralGameTest {
         gameWith3Players.placeStudentInHall(gameWith3Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
         gameWith3Players.placeStudentInHall(gameWith3Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
 
-        gameWith4Players.placeStudentInHall(gameWith4Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
-        gameWith4Players.placeStudentInHall(gameWith4Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
+        /*gameWith4Players.placeStudentInHall(gameWith4Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
+        gameWith4Players.placeStudentInHall(gameWith4Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));*/
 
         gameWith2Players.nextPhase(PLACE_STUDENT);
         gameWith3Players.nextPhase(PLACE_STUDENT);
-        gameWith4Players.nextPhase(PLACE_STUDENT);
+        //gameWith4Players.nextPhase(PLACE_STUDENT);
 
         assertEquals(PLACE_STUDENT, gameWith2Players.getGamePhase());
         assertEquals(PLACE_STUDENT, gameWith3Players.getGamePhase());
-        assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
+        //assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
     }
 
     @Test
@@ -391,11 +391,11 @@ public class GeneralGameTest {
     public void nextPhasePlaceStudentToPlaceMotherNature(){
         gameWith2Players.nextPhase(PLANNING);
         gameWith3Players.nextPhase(PLANNING);
-        gameWith4Players.nextPhase(PLANNING);
+        //gameWith4Players.nextPhase(PLANNING);
 
         assertEquals(PLACE_STUDENT, gameWith2Players.getGamePhase());
         assertEquals(PLACE_STUDENT, gameWith3Players.getGamePhase());
-        assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
+        //assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
 
         gameWith2Players.placeStudentInHall(gameWith2Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
         gameWith2Players.placeStudentInHall(gameWith2Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
@@ -406,17 +406,17 @@ public class GeneralGameTest {
         gameWith3Players.placeStudentInHall(gameWith3Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
         gameWith3Players.placeStudentInHall(gameWith3Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
 
+        /*gameWith4Players.placeStudentInHall(gameWith4Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
         gameWith4Players.placeStudentInHall(gameWith4Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
-        gameWith4Players.placeStudentInHall(gameWith4Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
-        gameWith4Players.placeStudentInHall(gameWith4Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));
+        gameWith4Players.placeStudentInHall(gameWith4Players.getCurrentPlayer().getSchool().getEntranceStudent().get(0));*/
 
         gameWith2Players.nextPhase(PLACE_STUDENT);
         gameWith3Players.nextPhase(PLACE_STUDENT);
-        gameWith4Players.nextPhase(PLACE_STUDENT);
+        //gameWith4Players.nextPhase(PLACE_STUDENT);
 
         assertEquals(PLACE_MOTHER_NATURE, gameWith2Players.getGamePhase());
         assertEquals(PLACE_MOTHER_NATURE, gameWith3Players.getGamePhase());
-        assertEquals(PLACE_MOTHER_NATURE, gameWith4Players.getGamePhase());
+        //assertEquals(PLACE_MOTHER_NATURE, gameWith4Players.getGamePhase());
     }
 
     @Test
@@ -424,15 +424,15 @@ public class GeneralGameTest {
         //go to place mother nature phase
         gameWith2Players.setGamePhase(PLACE_MOTHER_NATURE);
         gameWith3Players.setGamePhase(PLACE_MOTHER_NATURE);
-        gameWith4Players.setGamePhase(PLACE_MOTHER_NATURE);
+        //gameWith4Players.setGamePhase(PLACE_MOTHER_NATURE);
 
         gameWith2Players.nextPhase(PLACE_MOTHER_NATURE);
         gameWith3Players.nextPhase(PLACE_MOTHER_NATURE);
-        gameWith4Players.nextPhase(PLACE_MOTHER_NATURE);
+        //gameWith4Players.nextPhase(PLACE_MOTHER_NATURE);
 
         assertEquals(SELECT_CLOUD, gameWith2Players.getGamePhase());
         assertEquals(SELECT_CLOUD, gameWith3Players.getGamePhase());
-        assertEquals(SELECT_CLOUD, gameWith4Players.getGamePhase());
+        //assertEquals(SELECT_CLOUD, gameWith4Players.getGamePhase());
 
     }
 
@@ -440,22 +440,22 @@ public class GeneralGameTest {
     public void nextPhaseSelectCloudToPlaceStudent(){
         gameWith2Players.setGamePhase(SELECT_CLOUD);
         gameWith3Players.setGamePhase(SELECT_CLOUD);
-        gameWith4Players.setGamePhase(SELECT_CLOUD);
+        //gameWith4Players.setGamePhase(SELECT_CLOUD);
 
         gameWith2Players.nextPhase(SELECT_CLOUD);
         gameWith3Players.nextPhase(SELECT_CLOUD);
-        gameWith4Players.nextPhase(SELECT_CLOUD);
+        //gameWith4Players.nextPhase(SELECT_CLOUD);
 
         assertEquals(PLACE_STUDENT, gameWith2Players.getGamePhase());
         assertEquals(PLACE_STUDENT, gameWith3Players.getGamePhase());
-        assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
+        //assertEquals(PLACE_STUDENT, gameWith4Players.getGamePhase());
     }
 
     @Test
     public void nextPhaseSelectCloudToEnding(){
         gameWith2Players.setGamePhase(SELECT_CLOUD);
         gameWith3Players.setGamePhase(SELECT_CLOUD);
-        gameWith4Players.setGamePhase(SELECT_CLOUD);
+        //gameWith4Players.setGamePhase(SELECT_CLOUD);
 
         gameWith2Players.giveStudentsFromCloudToPlayer(gameWith2Players.getTable().getClouds().get(0));
         gameWith2Players.newTurn();
@@ -467,21 +467,21 @@ public class GeneralGameTest {
         gameWith3Players.newTurn();
         gameWith3Players.giveStudentsFromCloudToPlayer(gameWith3Players.getTable().getClouds().get(2));
 
-        gameWith4Players.giveStudentsFromCloudToPlayer(gameWith4Players.getTable().getClouds().get(0));
+        /*gameWith4Players.giveStudentsFromCloudToPlayer(gameWith4Players.getTable().getClouds().get(0));
         gameWith4Players.newTurn();
         gameWith4Players.giveStudentsFromCloudToPlayer(gameWith4Players.getTable().getClouds().get(1));
         gameWith4Players.newTurn();
         gameWith4Players.giveStudentsFromCloudToPlayer(gameWith4Players.getTable().getClouds().get(2));
         gameWith4Players.newTurn();
-        gameWith4Players.giveStudentsFromCloudToPlayer(gameWith4Players.getTable().getClouds().get(3));
+        gameWith4Players.giveStudentsFromCloudToPlayer(gameWith4Players.getTable().getClouds().get(3));*/
 
         gameWith2Players.nextPhase(SELECT_CLOUD);
         gameWith3Players.nextPhase(SELECT_CLOUD);
-        gameWith4Players.nextPhase(SELECT_CLOUD);
+        //gameWith4Players.nextPhase(SELECT_CLOUD);
 
         assertEquals(ENDING, gameWith2Players.getGamePhase());
         assertEquals(ENDING, gameWith3Players.getGamePhase());
-        assertEquals(ENDING, gameWith4Players.getGamePhase());
+        //assertEquals(ENDING, gameWith4Players.getGamePhase());
     }
 
     @Test
@@ -532,7 +532,7 @@ public class GeneralGameTest {
 
     }
 
-    @Test
+    /*@Test
     public void giveStudentsFromCloudToPlayerGameWith4Players(){
         for(int i = 0; i < 3; i++) {
             gameWith4Players.placeStudentInHall(gameWith4Players.getCurrentPlayer().getSchool().getStudent(0));
@@ -553,8 +553,8 @@ public class GeneralGameTest {
             }
         }
 
-        assertEquals(7, gameWith2Players.getCurrentPlayer().getSchool().getEntranceStudent().size());
-    }
+        assertEquals(7, gameWith4Players.getCurrentPlayer().getSchool().getEntranceStudent().size());
+    }*/
 
     @Test
     public void placeStudentInHallGameWith2Player(){
@@ -891,14 +891,14 @@ public class GeneralGameTest {
     public void moveMotherNature_NoConquerorBefore_WithLinkBehind_WhiteConqueror(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
-        studentList1.add(gameWith4Players.getTable().getStudentBag().get(0));
-        studentList1.add(gameWith4Players.getTable().getStudentBag().get(1));
+        studentList1.add(gameWith2Players.getTable().getStudentBag().get(0));
+        studentList1.add(gameWith2Players.getTable().getStudentBag().get(1));
         List<Student> studentList2 = new ArrayList<>();
-        studentList2.add(gameWith4Players.getTable().getStudentBag().get(2));
-        studentList2.add(gameWith4Players.getTable().getStudentBag().get(3));
+        studentList2.add(gameWith2Players.getTable().getStudentBag().get(2));
+        studentList2.add(gameWith2Players.getTable().getStudentBag().get(3));
         int iteration = 1;
         //all island now has 2 student on them, no one has mother nature
-        for(Island island : gameWith4Players.getTable().getIslands()){
+        for(Island island : gameWith2Players.getTable().getIslands()){
             if(0 == island.getStudents().size() ){
                 if(1 == iteration){
                     island.setStudents(studentList1);
@@ -909,26 +909,26 @@ public class GeneralGameTest {
                 }
             }
         }
-        for(Island island : gameWith4Players.getTable().getIslands()){
+        for(Island island : gameWith2Players.getTable().getIslands()){
             assertEquals(2, island.getStudents().size());
         }
         //give every professor to the player, so it will be the conqueror
-        gameWith4Players.getCurrentPlayer().getSchool().setProfessor(gameWith4Players.getTable().getProfessors());
+        gameWith2Players.getCurrentPlayer().getSchool().setProfessor(gameWith2Players.getTable().getProfessors());
         //place a tower of the player on the island selected
         List<Tower> whiteTower = new ArrayList<>();
-        whiteTower.add(gameWith4Players.getCurrentPlayer().getSchool().getPlayersTowers().get(0));
-        gameWith4Players.getCurrentPlayer().getSchool().getPlayersTowers().remove(0);
+        whiteTower.add(gameWith2Players.getCurrentPlayer().getSchool().getPlayersTowers().get(0));
+        gameWith2Players.getCurrentPlayer().getSchool().getPlayersTowers().remove(0);
         //set the island what will be linked, 12 island before moving and linking
-        assertEquals(12, gameWith4Players.getTable().getIslands().size());
+        assertEquals(12, gameWith2Players.getTable().getIslands().size());
         int indexIslandBehind = (indexOfIslandWithMotherNature+1) % 12;
         //the new index with 12 islands
         int newIndexIslandWithMotherNature = (indexOfIslandWithMotherNature+2) % 12;
-        gameWith4Players.getTable().getIslands().get(indexIslandBehind).setTower(whiteTower);
-        gameWith4Players.moveMotherNature(gameWith4Players.getTable().getIslands().get(newIndexIslandWithMotherNature));
+        gameWith2Players.getTable().getIslands().get(indexIslandBehind).setTower(whiteTower);
+        gameWith2Players.moveMotherNature(gameWith2Players.getTable().getIslands().get(newIndexIslandWithMotherNature));
         //11 island after the link
-        assertEquals(11, gameWith4Players.getTable().getIslands().size());
+        assertEquals(11, gameWith2Players.getTable().getIslands().size());
         int numIslandsWithMotherNature = 0;
-        for(Island island : gameWith4Players.getTable().getIslands()){
+        for(Island island : gameWith2Players.getTable().getIslands()){
             if(island.hasMotherNature()){
                 numIslandsWithMotherNature++;
             }
@@ -936,14 +936,14 @@ public class GeneralGameTest {
         assertEquals(1, numIslandsWithMotherNature);
         //new index with 11 islands
         newIndexIslandWithMotherNature = indexIslandBehind%11;
-        Island newIslandWithMotherNature = gameWith4Players.getTable().getIslandWithMotherNature();
-        assertEquals(newIndexIslandWithMotherNature, gameWith4Players.getTable().getIslands().indexOf(newIslandWithMotherNature));
+        Island newIslandWithMotherNature = gameWith2Players.getTable().getIslandWithMotherNature();
+        assertEquals(newIndexIslandWithMotherNature, gameWith2Players.getTable().getIslands().indexOf(newIslandWithMotherNature));
         assertEquals(2, newIslandWithMotherNature.getTowers().size());
         assertEquals(WHITE, newIslandWithMotherNature.getTowers().get(0).getColor());
         assertEquals(WHITE, newIslandWithMotherNature.getTowers().get(1).getColor());
         assertEquals(4, newIslandWithMotherNature.getStudents().size());
-        assertEquals(6,gameWith4Players.getCurrentPlayer().getSchool().getPlayersTowers().size());
-        for(Island island : gameWith4Players.getTable().getIslands()){
+        assertEquals(6,gameWith2Players.getCurrentPlayer().getSchool().getPlayersTowers().size());
+        for(Island island : gameWith2Players.getTable().getIslands()){
             if(!island.hasMotherNature()){
                 assertEquals(0, island.getTowers().size());
                 assertEquals(2, island.getStudents().size());
@@ -1302,7 +1302,7 @@ public class GeneralGameTest {
         }
     }
 
-    @RepeatedTest(value = 12, name = "moveMotherNature_NoConquerorBefore_NoLink_TeamGame {currentRepetition}")
+    /*@RepeatedTest(value = 12, name = "moveMotherNature_NoConquerorBefore_NoLink_TeamGame {currentRepetition}")
     public void moveMotherNature_NoConquerorBefore_NoLink_TeamGame(RepetitionInfo repetitionInfo){
         int indexOfIslandWithMotherNature  = repetitionInfo.getCurrentRepetition() - 1;
         List<Student> studentList1 = new ArrayList<>();
@@ -1859,7 +1859,7 @@ public class GeneralGameTest {
                 assertEquals(2, island.getStudents().size());
             }
         }
-    }
+    }*/
 
     //TODO switch color conquer black && conquer the island where you are already the conqueror
 
@@ -1906,13 +1906,13 @@ public class GeneralGameTest {
         assertNull(p3);
     }
 
-    @RepeatedTest(value = 12, name = "checkInfluenceTeamGame_NoOneConquerBecauseNoInfluence {currentRepetition}")
+    /*@RepeatedTest(value = 12, name = "checkInfluenceTeamGame_NoOneConquerBecauseNoInfluence {currentRepetition}")
     public void checkInfluenceTeamGame_NoOneConquerBecauseNoInfluence(RepetitionInfo repetitionInfo){
         int indexOfIslandToCheck  = repetitionInfo.getCurrentRepetition() - 1;
-        TowerColor colorConquerors = gameWith4Players.checkInfluenceTeam(gameWith4Players.getTable().getIslands().get(indexOfIslandToCheck));
+        //TowerColor colorConquerors = gameWith4Players.checkInfluenceTeam(gameWith4Players.getTable().getIslands().get(indexOfIslandToCheck));
         assertEquals(0, gameWith4Players.getTable().getIslands().get(indexOfIslandToCheck).getTowers().size());
-        assertNull(colorConquerors);
-    }
+        //assertNull(colorConquerors);
+    }*/
 
     @RepeatedTest(value = 12, name = "getAvailableIslands_OneIslandAvailable_FirstAssistantUsed {currentRepetition}")
     public void getAvailableIslands_OneIslandAvailable_FirstAssistantUsed(RepetitionInfo repetitionInfo){
@@ -2107,10 +2107,10 @@ public class GeneralGameTest {
         assertEquals(3, gameWith3Players.checkWinners().size());
     }
 
-    @Test
+    /*@Test
     public void checkWinners_NoWinners_FourPlayers(){
         assertEquals(4, gameWith4Players.checkWinners().size());
-    }
+    }*/
 
     @Test
     public void checkWinner_WhiteWinsByNoMoreTower_TwoPlayers(){
@@ -2203,7 +2203,7 @@ public class GeneralGameTest {
         assertEquals(List.of(gameWith3Players.getPlayers()[2]), gameWith3Players.checkWinners());
     }
 
-    @Test
+    /*@Test
     public void checkWinner_WhiteTeamWinsByNoTower(){
         gameWith4Players.getPlayers()[0].getSchool().getPlayersTowers().clear();
         gameWith4Players.getPlayers()[2].getSchool().getPlayersTowers().clear();
@@ -2253,5 +2253,5 @@ public class GeneralGameTest {
         assertEquals(2, gameWith4Players.checkWinners().size());
         assertEquals(gameWith4Players.getPlayers()[1], gameWith4Players.checkWinners().get(0));
         assertEquals(gameWith4Players.getPlayers()[3], gameWith4Players.checkWinners().get(1));
-    }
+    }*/
 }
