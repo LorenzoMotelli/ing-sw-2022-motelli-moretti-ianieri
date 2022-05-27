@@ -1,9 +1,6 @@
-package it.polimi.ingsw.network.view.userinterface;
+package it.polimi.ingsw.view.userinterface;
 
-import it.polimi.ingsw.model.GeneralGame;
-import it.polimi.ingsw.model.Island;
-import it.polimi.ingsw.model.School;
-import it.polimi.ingsw.model.Student;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.AssistantCard;
 import it.polimi.ingsw.network.client.ClientMessageHandler;
 import it.polimi.ingsw.network.messages.Message;
@@ -12,10 +9,8 @@ import it.polimi.ingsw.network.messages.specific.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStreamReader;
-import java.net.UnknownHostException;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -226,22 +221,30 @@ public class CliClientInterface implements UserInterface {
         for(int i = 0; i < game.getPlayers().length; i++){
             System.out.print("Player " + game.getPlayers()[i].getPlayerName() + " has :\n");
             System.out.print("Entrance students: ");
-            for(Student student : game.getPlayers()[i].getSchoolDashboard().getEntranceStudent()){
+            for(Student student : game.getPlayers()[i].getSchool().getEntranceStudent()){
                 System.out.print(student.getColor() +  " ");
             }
+            /*
+            System.out.println();
+            for(Professor professor : game.getPlayers()[i].getSchoolDashboard().getSchoolProfessor()){
+                System.out.print(professor.getColor() + " ");
+            }*/
+            System.out.println();
             for(int j = 0; j < 5; j++){
-
-                System.out.println();
-                System.out.print("Hall " + game.getPlayers()[i].getSchoolDashboard().getSchoolHall()[j].getHallColor() + " with ");
+                System.out.print("Hall " + game.getPlayers()[i].getSchool().getSchoolHall()[j].getHallColor() + " with ");
                 for(int k = 0; k < 10; k++){
-                    if(null != game.getPlayers()[i].getSchoolDashboard().getSchoolHall()[j].getTableHall()[k]){
-                        System.out.print(game.getPlayers()[i].getSchoolDashboard().getSchoolHall()[j].getTableHall()[k].getColor());
+                    if(null != game.getPlayers()[i].getSchool().getSchoolHall()[j].getTableHall()[k]){
+                        System.out.print(game.getPlayers()[i].getSchool().getSchoolHall()[j].getTableHall()[k].getColor());
                     }
                     else{
                         break;
                     }
                 }
                 System.out.println();
+                /*for(Tower tower : game.getPlayers()[i].getSchoolDashboard().getPlayersTowers()){
+                    System.out.print(tower.getColor() + " ");
+                }
+                System.out.println();*/
             }
             System.out.println();
         }
@@ -314,7 +317,7 @@ public class CliClientInterface implements UserInterface {
          */
         int islandsNumAvailable = message.getIslandsNumAvailable();
         boolean hallAvailability = message.isHallAvailable();
-        System.out.println("Select in Island or the hall, the index of the island for island, everything else for place in hall if available");
+        System.out.println("Select in Island or the hall: the index of the island for island; out of bound for place in hall if available");
 
         cmdIn = new Scanner(System.in);
         int choice = cmdIn.nextInt();
@@ -325,6 +328,7 @@ public class CliClientInterface implements UserInterface {
             if(hallAvailability){
                 messageHandler.sendMessage(new PlaceInHallMessage());
             }
+            //hall not available, the player has to select the island
             else{
                 selectPlace(message);
             }
@@ -333,7 +337,7 @@ public class CliClientInterface implements UserInterface {
 
     @Override
     public void selectMotherNatureIsland(AskMotherNatureMessage message) {
-        // il client deve inserire di quanto si vuole spostare madre natura
+        //client has to select how far mother nature has to go
 
         int choice = 0;
 
@@ -342,8 +346,7 @@ public class CliClientInterface implements UserInterface {
 
     @Override
     public void selectCloud(AskCloudMessage message) {
-
-        //
+        //client has to select the index of the cloud from which has to take students
 
         int choice = 0;
 

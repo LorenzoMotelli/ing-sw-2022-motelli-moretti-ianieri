@@ -8,9 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static it.polimi.ingsw.model.enumeration.TowerColor.*;
-
-public class Player implements Serializable {
+public class Player implements Serializable, Comparable<Player> {
     private String playerName;
     private School schoolDashboard;
     private List<AssistantCard> assistantDeck;
@@ -53,7 +51,7 @@ public class Player implements Serializable {
         this.playerWeight = playerWeight;
     }
 
-    public School getSchoolDashboard() {
+    public School getSchool() {
         return schoolDashboard;
     }
 
@@ -121,6 +119,20 @@ public class Player implements Serializable {
         schoolDashboard.placeStudentInHall(studentToPlace);
     }
 
+    /**
+     * based on the color given return the corresponding hall
+     * @param color color of the student placed in the hall on this turn
+     * @return the Hall with that color
+     */
+    public Hall takeHallByColor(PawnColor color){
+        for(int i = 0; i < 5; i++){
+            if(schoolDashboard.getSchoolHall()[i].getHallColor().equals(color)){
+                return schoolDashboard.getSchoolHall()[i];
+            }
+        }
+        return null;
+    }
+
     //----------------- ASSISTANT DECK MANAGEMENT ---------------\\
 
     /**
@@ -137,5 +149,11 @@ public class Player implements Serializable {
                 break;
             }
         }
+    }
+
+    @Override
+    public int compareTo(Player player2){
+        int numTowersPlayer2 = player2.getSchool().getPlayersTowers().size();
+        return this.getSchool().getPlayersTowers().size() - numTowersPlayer2;
     }
 }

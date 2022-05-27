@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
-import it.polimi.ingsw.network.view.CommandHandler;
+import it.polimi.ingsw.view.CommandHandler;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.network.messages.Message;
 

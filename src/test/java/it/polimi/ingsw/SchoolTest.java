@@ -44,7 +44,7 @@ public class SchoolTest {
 
     @Test
     public void getSchoolProfessor_ShouldReturnProfessors(){
-        assertNotNull(school.getSchoolProfessor());
+        assertNotNull(school.getSchoolProfessors());
     }
 
     @Test
@@ -85,8 +85,8 @@ public class SchoolTest {
     public void addProfessor_Professor(){
         Professor yellowProfessor = new Professor(YELLOW);
         school.addProfessor(yellowProfessor);
-        assertEquals(1, school.getSchoolProfessor().size());
-        assertEquals(YELLOW, school.getSchoolProfessor().get(0).getColor());
+        assertEquals(1, school.getSchoolProfessors().size());
+        assertEquals(YELLOW, school.getSchoolProfessors().get(0).getColor());
         assertNull(school.getBlueProfessor());
         assertNull(school.getGreenProfessor());
         assertNull(school.getPinkProfessor());

@@ -89,11 +89,11 @@ public class Island implements Serializable {
         return yellowStudents;
     }
 
-    public List<Tower> getPlayerTower() {
+    public List<Tower> getTowers() {
         return playerTower;
     }
 
-    public void setPlayerTower(List<Tower> playerTower) {
+    public void setTower(List<Tower> playerTower) {
         this.playerTower = playerTower;
     }
 
@@ -115,6 +115,5 @@ public class Island implements Serializable {
     public void addTower(List<Tower> towersToAdd){
         playerTower.addAll(towersToAdd);
     }
-
 }
 
