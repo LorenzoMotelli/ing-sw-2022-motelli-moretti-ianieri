@@ -29,12 +29,12 @@ public class PlayerTest {
         studentList.add(pinkStudent);
         studentList.add(redStudent);
         studentList.add(yellowStudent);
-        player1.getSchoolDashboard().setEntranceStudent(studentList);
+        player1.getSchool().setEntranceStudent(studentList);
     }
 
     @Test
     public void getSchoolDashboard_ShouldReturnSchool(){
-        assertNotNull(player1.getSchoolDashboard());
+        assertNotNull(player1.getSchool());
     }
 
     @Test
@@ -63,9 +63,9 @@ public class PlayerTest {
 
     @Test
     public void placeStudentInHall(){
-        player1.placeStudentInHall(player1.getSchoolDashboard().getEntranceStudent().get(0));
-        assertEquals(4, player1.getSchoolDashboard().getEntranceStudent().size());
-        assertEquals(BLUE, player1.getSchoolDashboard().getSchoolHall()[0].getTableHall()[0].getColor());
+        player1.placeStudentInHall(player1.getSchool().getEntranceStudent().get(0));
+        assertEquals(4, player1.getSchool().getEntranceStudent().size());
+        assertEquals(BLUE, player1.getSchool().getSchoolHall()[0].getTableHall()[0].getColor());
     }
 
     @Test

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.view.userinterface;
+package it.polimi.ingsw.view.userinterface;
 
 
 import it.polimi.ingsw.network.client.ClientMessageHandler;
@@ -7,15 +7,12 @@ import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 import it.polimi.ingsw.network.messages.specific.*;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.ImageIcon;
