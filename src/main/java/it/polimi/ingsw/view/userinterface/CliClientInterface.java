@@ -266,6 +266,7 @@ public class CliClientInterface implements UserInterface {
         }
         // ASK USER FOR AN INT
         //TODO: validate user input
+        System.out.println("\nDigit the int of the card: ");
         cmdIn = new Scanner(System.in);
         int choice = cmdIn.nextInt();
         //System.out.println("You select the assistant with MN movement " + chosenCard.getMovementMotherNature() + " and weight " + chosenCard.getTurnHeaviness());
@@ -283,7 +284,12 @@ public class CliClientInterface implements UserInterface {
         int choice = cmdIn.nextInt();
        // Student studentChosen = message.getStudent().get(choice);
 
-        messageHandler.sendMessage(new SelectStudentMessage(choice));
+        if(choice <= message.getStudent().size())
+        {
+            messageHandler.sendMessage(new SelectStudentMessage(choice));
+        }
+        else
+            selectStudent(message);
     }
 
     @Override
@@ -339,19 +345,35 @@ public class CliClientInterface implements UserInterface {
     public void selectMotherNatureIsland(AskMotherNatureMessage message) {
         //client has to select how far mother nature has to go
 
-        int choice = 0;
-
-        messageHandler.sendMessage(new PlaceMotherNatureMessage(choice));
+        System.out.println("You can Move MN maximum of "+ message.getMovementMN());
+        int choice = cmdIn.nextInt();
+        if(choice <= message.getMovementMN())
+        {
+            messageHandler.sendMessage(new PlaceMotherNatureMessage(choice));
+        }
+        else{
+            System.out.println();
+            selectMotherNatureIsland(message);
+        }
     }
 
     @Override
     public void selectCloud(AskCloudMessage message) {
         //client has to select the index of the cloud from which has to take students
 
-        int choice = 0;
 
-        messageHandler.sendMessage(new SelectCloudMessage(choice));
+        System.out.println("Select the cloud you want");
+        //TODO: All.le stampiamo?
 
+        int choice = cmdIn.nextInt();
+        if(choice <= message.getClouds().size())
+        {
+            messageHandler.sendMessage(new SelectCloudMessage(choice));
+        }
+        else{
+            System.out.println();
+            selectCloud(message);
+        }
     }
 
 
