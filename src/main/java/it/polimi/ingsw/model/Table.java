@@ -27,10 +27,8 @@ public class Table implements Serializable {
     /**
      * new constructor, initialize the main variables
      * @param numberOfPlayers the number of player in the game, used for the number of clouds and eventually coins
-     * @param variantOfTheGame if the game is expert than the game has more options(coins and characters)
-     * @param charactersOfTheGame the three characters randomly selected for the game
      */
-    public Table(int numberOfPlayers, Variant variantOfTheGame, Character[] charactersOfTheGame){
+    public Table(int numberOfPlayers){
         //creation of the 12 islands of the game
         islands = new ArrayList<>(12);
         for(int i = 0; i < 12; i++){
@@ -80,14 +78,6 @@ public class Table implements Serializable {
         professors.add(2,new Professor(PINK));
         professors.add(3,new Professor(RED));
         professors.add(4,new Professor(YELLOW));
-        //if it is an expert game there are characters and coins
-        /*if(variantOfTheGame.equals(Variant.EXPERT)){
-            setCoins(20-numberOfPlayers);
-            playableCharacters = new Character[3];
-            for(int i = 0; i < 3; i++){
-                playableCharacters[i] = charactersOfTheGame[i];
-            }
-        }*/
         initializeIslands();
         initializeClouds();
     }
