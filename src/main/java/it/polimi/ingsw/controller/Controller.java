@@ -30,7 +30,7 @@ public class Controller implements Observer<Message> {
 
     public Controller(Server server,int players) {
         this.server = server;
-        this.game = new GeneralGame(players, Variant.NORMAL);
+        this.game = new GeneralGame(players);
         this.clients = new ArrayList<>();
     }
 

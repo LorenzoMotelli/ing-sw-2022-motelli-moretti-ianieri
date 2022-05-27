@@ -1,11 +1,19 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.model.GeneralGame4Players;
+import it.polimi.ingsw.model.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static it.polimi.ingsw.model.enumeration.PawnColor.*;
+import static it.polimi.ingsw.model.enumeration.Phases.*;
+import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 import static it.polimi.ingsw.model.enumeration.Variant.NORMAL;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GeneralGame4PlayersTest {
 
