@@ -346,16 +346,13 @@ public class Controller implements Observer<Message> {
     }
 
     private void askMoveMotherNature() {
-        // prendere quanto vale il valore di madre natura della carta associata all'assistant card selezionata
+        // set how much mother nature can be moved on this turn
         int movementMN = game.getCurrentPlayer().getAssistantCardUsed().getMovementMotherNature();
 
         List<Island> availableIsland = game.getAvailableIslands();
 
-
         sendToCurrentPlayer(new AskMotherNatureMessage(availableIsland));
-
     }
-
 
     /**
      * place mother nature on the island selected
@@ -373,33 +370,25 @@ public class Controller implements Observer<Message> {
 
         // check if int is valid
         // do something
-
+        //game.moveMotherNature();
         nextAction(PLACE_MOTHER_NATURE);
     }
 
     public void askSelectCloud() {
-
         List<Cloud> clouds = game.getTable().getClouds();
 
-
         sendToCurrentPlayer(new AskCloudMessage(clouds));
-
     }
 
 
     private void selectCloud(SelectCloudMessage message) {
-
         // check cloud is valid
-
         int choice = message.getSelectedCloud();
 
         game.getTable().getClouds().get(choice);
-
-        // aggiorna il model
-
+        // update model
         game.newTurn();
         nextAction(SELECT_CLOUD);
-
     }
 
     /**
@@ -422,12 +411,9 @@ public class Controller implements Observer<Message> {
     }
 
     private void endRound() {
-
         // complete round
         // do something
-
         nextAction(ENDING);
-
     }
 
     /**
