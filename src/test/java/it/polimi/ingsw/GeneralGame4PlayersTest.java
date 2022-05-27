@@ -157,7 +157,6 @@ public class GeneralGame4PlayersTest {
         gameWith4Players.nextPhase(PLACE_MOTHER_NATURE);
 
         assertEquals(SELECT_CLOUD, gameWith4Players.getGamePhase());
-
     }
 
     @Test
