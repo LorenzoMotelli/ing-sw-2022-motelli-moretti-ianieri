@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.AssistantCard;
 import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.TowerColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
@@ -97,6 +98,7 @@ public class GeneralGameTest {
         }
         for(Player player : gameWith2Players.getPlayers()){
             assertEquals(7, player.getSchool().getEntranceStudent().size());
+            assertEquals(8,player.getSchool().getPlayersTowers().size());
         }
         //check clouds' students and entrance's students in game with 3 players
         for(Cloud cloud : gameWith3Players.getTable().getClouds()){
@@ -104,6 +106,7 @@ public class GeneralGameTest {
         }
         for(Player player : gameWith3Players.getPlayers()){
             assertEquals(9, player.getSchool().getEntranceStudent().size());
+            assertEquals(6,player.getSchool().getPlayersTowers().size());
         }
         //check clouds' students and entrance's students in game with 4 players
         for(Cloud cloud : gameWith4Players.getTable().getClouds()){
@@ -111,6 +114,7 @@ public class GeneralGameTest {
         }
         for(Player player : gameWith4Players.getPlayers()){
             assertEquals(7, player.getSchool().getEntranceStudent().size());
+            assertEquals(8,player.getSchool().getPlayersTowers().size());
         }
     }
 
@@ -1878,7 +1882,37 @@ public class GeneralGameTest {
         assertNull(p);
     }
 
+    @RepeatedTest(value = 12, name = "checkInfluence_PlayerAlreadyHasThatIsland {currentRepetition}")
+    public void checkInfluence_PlayerAlreadyHasThatIsland(RepetitionInfo repetitionInfo){
+        int indexOfIslandToCheck  = repetitionInfo.getCurrentRepetition() - 1;
+        List<Tower> blackTowers = new ArrayList<>();
+        blackTowers.add(new Tower(BLACK));
+        gameWith2Players.getTable().getIslands().get(indexOfIslandToCheck).setTower(blackTowers);
+        Player p = gameWith2Players.checkInfluence(gameWith2Players.getTable().getIslands().get(indexOfIslandToCheck));
+        assertEquals(1, gameWith2Players.getPlayers()[1].getPlayerInfluence());
+        assertEquals(1, gameWith2Players.getTable().getIslands().get(indexOfIslandToCheck).getTowers().size());
+        assertEquals(BLACK, gameWith2Players.getTable().getIslands().get(indexOfIslandToCheck).getTowers().get(0).getColor());
+        assertNull(p);
+    }
 
+    @RepeatedTest(value = 12, name = "checkInfluence_NoOneConquerBecauseNoInfluence {currentRepetition}")
+    public void checkInfluence_NoOneConquerBecauseNoInfluence(RepetitionInfo repetitionInfo){
+        int indexOfIslandToCheck  = repetitionInfo.getCurrentRepetition() - 1;
+        Player p2 = gameWith2Players.checkInfluence(gameWith2Players.getTable().getIslands().get(indexOfIslandToCheck));
+        Player p3 = gameWith2Players.checkInfluence(gameWith2Players.getTable().getIslands().get(indexOfIslandToCheck));
+        assertEquals(0, gameWith2Players.getTable().getIslands().get(indexOfIslandToCheck).getTowers().size());
+        assertEquals(0, gameWith3Players.getTable().getIslands().get(indexOfIslandToCheck).getTowers().size());
+        assertNull(p2);
+        assertNull(p3);
+    }
+
+    @RepeatedTest(value = 12, name = "checkInfluenceTeamGame_NoOneConquerBecauseNoInfluence {currentRepetition}")
+    public void checkInfluenceTeamGame_NoOneConquerBecauseNoInfluence(RepetitionInfo repetitionInfo){
+        int indexOfIslandToCheck  = repetitionInfo.getCurrentRepetition() - 1;
+        TowerColor colorConquerors = gameWith4Players.checkInfluenceTeam(gameWith4Players.getTable().getIslands().get(indexOfIslandToCheck));
+        assertEquals(0, gameWith4Players.getTable().getIslands().get(indexOfIslandToCheck).getTowers().size());
+        assertNull(colorConquerors);
+    }
 
     @RepeatedTest(value = 12, name = "getAvailableIslands_OneIslandAvailable_FirstAssistantUsed {currentRepetition}")
     public void getAvailableIslands_OneIslandAvailable_FirstAssistantUsed(RepetitionInfo repetitionInfo){
@@ -2058,5 +2092,166 @@ public class GeneralGameTest {
         for(int i = 0; i < 12; i++){
             assertEquals(oldIslandSituation.get(i), gameWith2Players.getTable().getIslands().get(i));
         }
+    }
+
+    @Test
+    public void checkWinners_NoWinners_TwoPlayers(){
+        gameWith2Players.setMotherNatureMovement(2);
+        int indexMN = gameWith2Players.getTable().getIslands().indexOf((gameWith2Players.getTable().getIslandWithMotherNature()));
+        gameWith2Players.moveMotherNature(gameWith2Players.getTable().getIslands().get((indexMN+2)%12));
+        assertEquals(2, gameWith2Players.checkWinners().size());
+    }
+
+    @Test
+    public void checkWinners_NoWinners_ThreePlayers(){
+        assertEquals(3, gameWith3Players.checkWinners().size());
+    }
+
+    @Test
+    public void checkWinners_NoWinners_FourPlayers(){
+        assertEquals(4, gameWith4Players.checkWinners().size());
+    }
+
+    @Test
+    public void checkWinner_WhiteWinsByNoMoreTower_TwoPlayers(){
+        gameWith2Players.getPlayers()[0].getSchool().getPlayersTowers().clear();
+        assertEquals(1, gameWith2Players.checkWinners().size());
+        assertEquals(List.of(gameWith2Players.getPlayers()[0]), gameWith2Players.checkWinners());
+    }
+
+    @Test
+    public void checkWinner_BlackWinsByNoMoreTower_TwoPlayers(){
+        gameWith2Players.getPlayers()[1].getSchool().getPlayersTowers().clear();
+        assertEquals(1, gameWith2Players.checkWinners().size());
+        assertEquals(List.of(gameWith2Players.getPlayers()[1]), gameWith2Players.checkWinners());
+    }
+
+    @Test
+    public void checkWinner_WhiteWinsByLessTower_TwoPlayer(){
+        gameWith2Players.getPlayers()[0].getSchool().getPlayersTowers().remove(0);
+        assertEquals(1, gameWith2Players.checkWinners().size());
+        assertEquals(List.of(gameWith2Players.getPlayers()[0]), gameWith2Players.checkWinners());
+    }
+
+    @Test
+    public void checkWinner_WhiteWinsByMoreProfessors_TwoPlayer(){
+        gameWith2Players.getPlayers()[0].getSchool().setProfessor(List.of(new Professor(BLUE)));
+        assertEquals(1, gameWith2Players.checkWinners().size());
+        assertEquals(List.of(gameWith2Players.getPlayers()[0]), gameWith2Players.checkWinners());
+    }
+
+    @Test
+    public void checkWinner_WhiteWinsByNoMoreTower_ThreePlayers(){
+        gameWith3Players.getPlayers()[0].getSchool().getPlayersTowers().clear();
+        assertEquals(1, gameWith3Players.checkWinners().size());
+        assertEquals(List.of(gameWith3Players.getPlayers()[0]), gameWith3Players.checkWinners());
+    }
+
+    @Test
+    public void checkWinner_BlackWinsByNoMoreTower_ThreePlayers(){
+        gameWith3Players.getPlayers()[1].getSchool().getPlayersTowers().clear();
+        assertEquals(1, gameWith3Players.checkWinners().size());
+        assertEquals(List.of(gameWith3Players.getPlayers()[1]), gameWith3Players.checkWinners());
+    }
+
+    @Test
+    public void checkWinner_GreyWinsByNoMoreTower_ThreePlayers(){
+        gameWith3Players.getPlayers()[2].getSchool().getPlayersTowers().clear();
+        assertEquals(1, gameWith3Players.checkWinners().size());
+        assertEquals(List.of(gameWith3Players.getPlayers()[2]), gameWith3Players.checkWinners());
+    }
+
+    @Test
+    public void checkWinner_WhiteWinsByLessTower_ThreePlayer(){
+        gameWith3Players.getPlayers()[0].getSchool().getPlayersTowers().remove(0);
+        assertEquals(1, gameWith3Players.checkWinners().size());
+        assertEquals(List.of(gameWith3Players.getPlayers()[0]), gameWith3Players.checkWinners());
+    }
+
+    @Test
+    public void checkWinner_BlackWinsByLessTower_ThreePlayer(){
+        gameWith3Players.getPlayers()[1].getSchool().getPlayersTowers().remove(0);
+        assertEquals(1, gameWith3Players.checkWinners().size());
+        assertEquals(List.of(gameWith3Players.getPlayers()[1]), gameWith3Players.checkWinners());
+    }
+
+    @Test
+    public void checkWinner_GreyWinsByLessTower_ThreePlayer(){
+        gameWith3Players.getPlayers()[2].getSchool().getPlayersTowers().remove(0);
+        assertEquals(1, gameWith3Players.checkWinners().size());
+        assertEquals(List.of(gameWith3Players.getPlayers()[2]), gameWith3Players.checkWinners());
+    }
+
+    @Test
+    public void checkWinner_WhiteWinsByMoreProfessors_ThreePlayer(){
+        gameWith3Players.getPlayers()[0].getSchool().setProfessor(List.of(new Professor(BLUE)));
+        assertEquals(1, gameWith3Players.checkWinners().size());
+        assertEquals(List.of(gameWith3Players.getPlayers()[0]), gameWith3Players.checkWinners());
+    }
+
+    @Test
+    public void checkWinner_BlackWinsByMoreProfessors_ThreePlayer(){
+        gameWith3Players.getPlayers()[1].getSchool().setProfessor(List.of(new Professor(BLUE)));
+        assertEquals(1, gameWith3Players.checkWinners().size());
+        assertEquals(List.of(gameWith3Players.getPlayers()[1]), gameWith3Players.checkWinners());
+    }
+
+    @Test
+    public void checkWinner_GreyWinsByMoreProfessors_ThreePlayer(){
+        gameWith3Players.getPlayers()[2].getSchool().setProfessor(List.of(new Professor(BLUE)));
+        assertEquals(1, gameWith3Players.checkWinners().size());
+        assertEquals(List.of(gameWith3Players.getPlayers()[2]), gameWith3Players.checkWinners());
+    }
+
+    @Test
+    public void checkWinner_WhiteTeamWinsByNoTower(){
+        gameWith4Players.getPlayers()[0].getSchool().getPlayersTowers().clear();
+        gameWith4Players.getPlayers()[2].getSchool().getPlayersTowers().clear();
+        assertEquals(2, gameWith4Players.checkWinners().size());
+        assertEquals(gameWith4Players.getPlayers()[0], gameWith4Players.checkWinners().get(0));
+        assertEquals(gameWith4Players.getPlayers()[2], gameWith4Players.checkWinners().get(1));
+    }
+
+    @Test
+    public void checkWinner_BlackTeamWinsByNoTower(){
+        gameWith4Players.getPlayers()[1].getSchool().getPlayersTowers().clear();
+        gameWith4Players.getPlayers()[3].getSchool().getPlayersTowers().clear();
+        assertEquals(2, gameWith4Players.checkWinners().size());
+        assertEquals(gameWith4Players.getPlayers()[1], gameWith4Players.checkWinners().get(0));
+        assertEquals(gameWith4Players.getPlayers()[3], gameWith4Players.checkWinners().get(1));
+    }
+
+    @Test
+    public void checkWinner_WhiteTeamWinsByLessTower(){
+        gameWith4Players.getPlayers()[0].getSchool().getPlayersTowers().remove(0);
+        gameWith4Players.getPlayers()[2].getSchool().getPlayersTowers().remove(0);
+        assertEquals(2, gameWith4Players.checkWinners().size());
+        assertEquals(gameWith4Players.getPlayers()[0], gameWith4Players.checkWinners().get(0));
+        assertEquals(gameWith4Players.getPlayers()[2], gameWith4Players.checkWinners().get(1));
+    }
+
+    @Test
+    public void checkWinner_BlackTeamWinsByLessTower(){
+        gameWith4Players.getPlayers()[1].getSchool().getPlayersTowers().remove(0);
+        gameWith4Players.getPlayers()[3].getSchool().getPlayersTowers().remove(0);
+        assertEquals(2, gameWith4Players.checkWinners().size());
+        assertEquals(gameWith4Players.getPlayers()[1], gameWith4Players.checkWinners().get(0));
+        assertEquals(gameWith4Players.getPlayers()[3], gameWith4Players.checkWinners().get(1));
+    }
+
+    @Test
+    public void checkWinner_WhiteTeamWinsByMoreProfessors(){
+        gameWith4Players.getPlayers()[0].getSchool().setProfessor(List.of(new Professor(BLUE)));
+        assertEquals(2, gameWith4Players.checkWinners().size());
+        assertEquals(gameWith4Players.getPlayers()[0], gameWith4Players.checkWinners().get(0));
+        assertEquals(gameWith4Players.getPlayers()[2], gameWith4Players.checkWinners().get(1));
+    }
+
+    @Test
+    public void checkWinner_BlackTeamWinsByMoreProfessors(){
+        gameWith4Players.getPlayers()[3].getSchool().setProfessor(List.of(new Professor(BLUE)));
+        assertEquals(2, gameWith4Players.checkWinners().size());
+        assertEquals(gameWith4Players.getPlayers()[1], gameWith4Players.checkWinners().get(0));
+        assertEquals(gameWith4Players.getPlayers()[3], gameWith4Players.checkWinners().get(1));
     }
 }

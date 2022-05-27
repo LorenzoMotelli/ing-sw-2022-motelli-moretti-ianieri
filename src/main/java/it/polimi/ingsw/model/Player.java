@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player implements Serializable {
+public class Player implements Serializable, Comparable<Player> {
     private String playerName;
     private School schoolDashboard;
     private List<AssistantCard> assistantDeck;
@@ -149,5 +149,11 @@ public class Player implements Serializable {
                 break;
             }
         }
+    }
+
+    @Override
+    public int compareTo(Player player2){
+        int numTowersPlayer2 = player2.getSchool().getPlayersTowers().size();
+        return this.getSchool().getPlayersTowers().size() - numTowersPlayer2;
     }
 }
