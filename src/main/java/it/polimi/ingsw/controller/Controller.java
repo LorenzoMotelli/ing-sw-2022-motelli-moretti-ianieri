@@ -258,7 +258,7 @@ public class Controller implements Observer<Message> {
         System.out.println("Player " + game.getCurrentPlayer().getPlayerName() + " has heaviness " + game.getCurrentPlayer().getPlayerWeight());
         if(game.getAssistantCardsUsed().size() >= game.getPlayers().length){
             game.setNewOrder();
-            nextAction(PLANNING/*,1*/);
+            nextAction(PLANNING);
             System.out.println("Starting action phase");
             askPlaceStudent();
         }
@@ -435,7 +435,7 @@ public class Controller implements Observer<Message> {
      * @param currentPhase the phase in which the action is performed
      //* @param num the number of iteration of the current phase
      */
-    public void nextAction(Phases currentPhase/*, int num*/){
+    public void nextAction(Phases currentPhase){
         /*
         switch (currentPhase){
             case STARTING:
