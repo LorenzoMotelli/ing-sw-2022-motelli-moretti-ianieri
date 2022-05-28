@@ -9,11 +9,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static it.polimi.ingsw.model.enumeration.PawnColor.BLUE;
+import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 import static it.polimi.ingsw.model.enumeration.Phases.*;
-import static it.polimi.ingsw.model.enumeration.Phases.ENDING;
-import static it.polimi.ingsw.model.enumeration.TowerColor.BLACK;
-import static it.polimi.ingsw.model.enumeration.TowerColor.WHITE;
+import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 import static it.polimi.ingsw.model.enumeration.Variant.NORMAL;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,10 +36,6 @@ public class GeneralGame4PlayersTest {
         assertNotNull(gameWith4Players.getTable());
     }
 
-    @Test
-    public void getPlayers_ShouldReturnPlayers(){
-        assertNotNull(gameWith4Players.getPlayers());
-    }
 
     @Test
     public void initialization(){
@@ -157,7 +151,6 @@ public class GeneralGame4PlayersTest {
         gameWith4Players.nextPhase(PLACE_MOTHER_NATURE);
 
         assertEquals(SELECT_CLOUD, gameWith4Players.getGamePhase());
-
     }
 
     @Test

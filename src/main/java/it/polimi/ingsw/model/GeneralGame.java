@@ -35,30 +35,15 @@ public class GeneralGame extends Observable<Message> implements Serializable {
     private Character[] allCharacters;
     //the table with clouds, islands, students...
     private Table table;
-    //private boolean teamGame = false;
-    //TODO generate GeneralGame4Players extends GeneralGame
     /**
      * creation of the initial board, the initial players and characters
      * @param numberOfPlayer the number of player selected by the first player
-     * @param variantSelected the variant that the first player has selected
      */
-    public GeneralGame(int numberOfPlayer, Variant variantSelected){
-        //Character[] charactersToPlay = new Character[3];
+    public GeneralGame(int numberOfPlayer){
         setGamePhase(Phases.STARTING);
         assistantCardsUsed = new ArrayList<>();
-        setVariant(variantSelected);
-        /*
-        if(getVariant().equals(Variant.EXPERT)){
-            //creation of the 12 character
-            //selection of the 3 character that will be in the game
-        }
-         */
         //creation of players
         players = new Player[numberOfPlayer];
-        //maxTurn = numberOfPlayer;
-        /*if(numberOfPlayer == 4){
-            teamGame = true;
-        }*/
         //the table has to be created before the players because of the student bag
         table = new Table(players.length, variant, allCharacters);
     }
@@ -87,15 +72,9 @@ public class GeneralGame extends Observable<Message> implements Serializable {
                 players[i].getSchool().setEntranceStudent(randomStudentFromBag(7));
                 if(i % 2 == 0){
                     players[i].getSchool().setPlayersTowers(8, WHITE);
-                    /*if(teamGame){
-                        players[i].setPlayerTeam(WHITE);
-                    }*/
                 }
                 else{
                     players[i].getSchool().setPlayersTowers(8, BLACK);
-                    /*if(teamGame){
-                        players[i].setPlayerTeam(BLACK);
-                    }*/
                 }
             }
         }
@@ -193,16 +172,6 @@ public class GeneralGame extends Observable<Message> implements Serializable {
     public void setTurn(int turn) {
         this.turn = turn;
     }
-
-    public void setVariant(Variant variant) {
-        this.variant = variant;
-    }
-
-    //expert game method, no implemented
-    /*
-    public void setAllCharacters(Character[] allCharacters) {
-        this.allCharacters = allCharacters;
-    }*/
 
     //---------------- GAME MANAGEMENT --------------\\
 
@@ -513,22 +482,12 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         }
         islandSelected.setMotherNature(true);
         //check only the single players
-        //if(!teamGame){
-            //check if there is a conqueror of the island
-            Player conqueror = checkInfluence(islandSelected);
-            if(null != conqueror){
-                checkPlaceTower(islandSelected, conqueror);
-                checkLinkIslands(islandSelected);
-            }
-        /*}
-        //team game, different checking
-        else{
-            TowerColor conquerorColor = checkInfluenceTeam(islandSelected);
-            if(null != conquerorColor){
-                checkPlaceTowerTeam(islandSelected, conquerorColor);
-                checkLinkIslands(islandSelected);
-            }
-        }*/
+        //check if there is a conqueror of the island
+        Player conqueror = checkInfluence(islandSelected);
+        if(null != conqueror){
+            checkPlaceTower(islandSelected, conqueror);
+            checkLinkIslands(islandSelected);
+        }
         checkWinners();
         notify(new UpdateBoardMessage(this));
     }
@@ -575,48 +534,6 @@ public class GeneralGame extends Observable<Message> implements Serializable {
             }
         }
     }
-
-    /**
-     * check if on the island the tower(s) must be changed
-     * @param islandSelected the island selected by the player
-     * @param conquerorColor the color of the team that has conquered the island
-     */
-    /*public void checkPlaceTowerTeam(Island islandSelected, TowerColor conquerorColor){
-        if(0 == islandSelected.getTowers().size()){
-            for(Player player : players){
-                if(player.getPlayerTeam().equals(conquerorColor)){
-                    player.getSchool().getPlayersTowers().remove(0);
-                }
-            }
-            table.placeTower(islandSelected, new Tower(conquerorColor));
-        }
-        else{
-            TowerColor islandColor = islandSelected.getTowers().get(0).getColor();
-            List<Player> conqueror = new ArrayList<>();
-            List<Player> conquered = new ArrayList<>();
-            //search conqueror and conquered
-            for(Player player : players){
-                if(player.getPlayerTeam().equals(conquerorColor)){
-                    conqueror.add(player);
-                }
-                if(player.getPlayerTeam().equals(islandColor)){
-                    conquered.add(player);
-                }
-            }
-            //the island is conquered by the other team
-            if(!conqueror.equals(conquered)){
-                //remove the tower(s) from each player of the team that conquer
-                for(Player p : conqueror){
-                    p.getSchool().getPlayersTowers().subList(0, islandSelected.getTowers().size()).clear();
-                }
-                //give back the tower(s) to each player of the team conquered
-                for(Player p : conquered){
-                    p.getSchool().getPlayersTowers().addAll(islandSelected.getTowers());
-                }
-                table.replaceTower(islandSelected, conquerorColor);
-            }
-        }
-    }*/
 
     /**
      * check if the island can be linked with the island ahead and the island behind
@@ -751,117 +668,6 @@ public class GeneralGame extends Observable<Message> implements Serializable {
     }
 
     /**
-     * calculate the influence of each team on the island
-     * @param islandSelected the island selected by the current player
-     * @return the color of the team which conquer the island
-     */
-    /*public TowerColor checkInfluenceTeam(Island islandSelected){
-        //number of students on the island by color
-        int blueStudents = islandSelected.getBlueStudents().size();
-        int greenStudents = islandSelected.getGreenStudents().size();
-        int pinkStudents = islandSelected.getPinkStudents().size();
-        int redStudents = islandSelected.getRedStudents().size();
-        int yellowStudents = islandSelected.getYellowStudents().size();
-        int whiteInfluence = 0;
-        int blackInfluence = 0;
-        TowerColor oldTeamConqueror = oldConquerorTeam(islandSelected);
-        //set the influence of the team on the island
-        for(Player player : players){
-            for(Professor prof : player.getSchool().getSchoolProfessors()){
-                switch(prof.getColor()){
-                    case BLUE:{
-                        if(player.getPlayerTeam().equals(WHITE)){
-                            whiteInfluence = whiteInfluence + blueStudents;
-                        }
-                        else{
-                            blackInfluence = blackInfluence + blueStudents;
-                        }
-                        break;
-                    }
-                    case GREEN:{
-                        if(player.getPlayerTeam().equals(WHITE)){
-                            whiteInfluence = whiteInfluence + greenStudents;
-                        }
-                        else{
-                            blackInfluence = blackInfluence + greenStudents;
-                        }
-                        break;
-                    }
-                    case PINK:{
-                        if(player.getPlayerTeam().equals(WHITE)){
-                            whiteInfluence = whiteInfluence + pinkStudents;
-                        }
-                        else{
-                            blackInfluence = blackInfluence + pinkStudents;
-                        }
-                        break;
-                    }
-                    case RED:{
-                        if(player.getPlayerTeam().equals(WHITE)){
-                            whiteInfluence = whiteInfluence + redStudents;
-                        }
-                        else{
-                            blackInfluence = blackInfluence + redStudents;
-                        }
-                        break;
-                    }
-                    case YELLOW:{
-                        if(player.getPlayerTeam().equals(WHITE)){
-                            whiteInfluence = whiteInfluence + yellowStudents;
-                        }
-                        else{
-                            blackInfluence = blackInfluence + yellowStudents;
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-        if(islandSelected.getTowers().size() > 0){
-            if(islandSelected.getTowers().get(0).getColor().equals(WHITE)){
-                whiteInfluence = whiteInfluence + islandSelected.getTowers().size();
-            }
-            else{
-                blackInfluence = blackInfluence + islandSelected.getTowers().size();
-            }
-        }
-        if (oldTeamConqueror == null) {
-            if (whiteInfluence > blackInfluence) {
-                return WHITE;
-            }
-            else if (blackInfluence > whiteInfluence) {
-                return BLACK;
-            }
-            else {
-                return null;
-            }
-        }
-        else{
-            if(whiteInfluence > blackInfluence && oldTeamConqueror.equals(BLACK)){
-                return WHITE;
-            }
-            else if (blackInfluence > whiteInfluence && oldTeamConqueror.equals(WHITE)) {
-                return BLACK;
-            }
-            else{
-                return null;
-            }
-        }
-    }*/
-
-    /**
-     * check the towers on the island to set the old team that conquered it
-     * @param islandSelected the island where mother nature ends
-     * @return the color of the team that conquered the island in the previous turns
-     */
-    /*private TowerColor oldConquerorTeam(Island islandSelected) {
-        if(!islandSelected.getTowers().isEmpty()){
-            return islandSelected.getTowers().get(0).getColor();
-        }
-        return null;
-    }*/
-
-    /**
      * place students from a cloud to the entrance of the school of the current player
      * @param cloudSelected the cloud selected by the current player
      */
@@ -894,47 +700,18 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         if(!winners.isEmpty()){
             return winners;
         }
-        /*if(teamGame){
-            winners.addAll(List.of(players));
-            int minTower = findMinTowers(winners);
-            winners.removeIf(player -> (player.getSchool().getPlayersTowers().size() > minTower));
-            //a team win because have fewer towers
-            if(winners.size() == 2){
-                return winners;
-            }
-            else{
-                int whitesProfessors = numberProfessors(winners, WHITE);
-                int blackProfessors = numberProfessors(winners, BLACK);
-                //white team win because they have more professors
-                if(whitesProfessors > blackProfessors){
-                    winners.removeIf(player -> player.getPlayerTeam().equals(BLACK));
-                    return winners;
-                }
-                //black team win because they have more professors
-                else if(blackProfessors > whitesProfessors){
-                    winners.removeIf(player -> player.getPlayerTeam().equals(WHITE));
-                    return winners;
-                }
-                //draw
-                else{
-                    return winners;
-                }
-            }
-        }*/
-        //else{
-            winners.addAll(List.of(players));
-            int minTower = findMinTowers(winners);
-            winners.removeIf(player -> (player.getSchool().getPlayersTowers().size() > minTower));
-            if (winners.size() == 1) {
-                return winners;
-            }
-            int whitesProfessors = numberProfessors(winners, WHITE);
-            int blackProfessors = numberProfessors(winners, BLACK);
-            int greyProfessors = numberProfessors(winners, GREY);
-            int maxProfessor = Math.max(whitesProfessors, Math.max(blackProfessors, greyProfessors));
-            winners.removeIf(player -> (player.getSchool().getSchoolProfessors().size() < maxProfessor));
+        winners.addAll(List.of(players));
+        int minTower = findMinTowers(winners);
+        winners.removeIf(player -> (player.getSchool().getPlayersTowers().size() > minTower));
+        if (winners.size() == 1) {
             return winners;
-        //}
+        }
+        int whitesProfessors = numberProfessors(winners, WHITE);
+        int blackProfessors = numberProfessors(winners, BLACK);
+        int greyProfessors = numberProfessors(winners, GREY);
+        int maxProfessor = Math.max(whitesProfessors, Math.max(blackProfessors, greyProfessors));
+        winners.removeIf(player -> (player.getSchool().getSchoolProfessors().size() < maxProfessor));
+        return winners;
     }
 
     /**

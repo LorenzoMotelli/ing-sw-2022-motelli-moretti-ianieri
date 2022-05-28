@@ -34,7 +34,6 @@ public class ClientConnectionHandler extends Observable<Message> implements Runn
             while (!Thread.currentThread().isInterrupted()) {
                 Message message = (Message) in.readObject();
                 notify(message);
-                in.reset(); //!!!!!!
             }
         } catch (IOException | ClassNotFoundException e) {
             try {
