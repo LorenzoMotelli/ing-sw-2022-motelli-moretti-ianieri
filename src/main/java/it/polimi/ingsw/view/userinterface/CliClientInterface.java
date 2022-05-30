@@ -202,9 +202,15 @@ public class CliClientInterface implements UserInterface {
             System.out.print("Island " + i +  " : ");
             for(int j = 0; j < game.getTable().getIslands().get(i).getStudents().size(); j++){
                 System.out.print(game.getTable().getIslands().get(i).getStudents().get(j).getColor() + " ");
-                if(game.getTable().getIslands().get(i).equals(game.getTable().getIslandWithMotherNature())){
-                    System.out.print(" MN ");
-                }
+            }
+            if(game.getTable().getIslands().get(i).getStudents().size() == 0){
+                System.out.print(" NO STUDENTS ");
+            }
+            if(game.getTable().getIslands().get(i).equals(game.getTable().getIslandWithMotherNature())){
+                System.out.print("MN ");
+            }
+            for(Tower tower : game.getTable().getIslands().get(i).getTowers()){
+                System.out.print(tower.getColor() + " ");
             }
             System.out.println();
         }
@@ -224,40 +230,125 @@ public class CliClientInterface implements UserInterface {
             for(Student student : game.getPlayers()[i].getSchool().getEntranceStudent()){
                 System.out.print(student.getColor() +  " ");
             }
-            /*
             System.out.println();
-            for(Professor professor : game.getPlayers()[i].getSchoolDashboard().getSchoolProfessor()){
+            for(Professor professor : game.getPlayers()[i].getSchool().getSchoolProfessors()){
                 System.out.print(professor.getColor() + " ");
-            }*/
+            }
             System.out.println();
             for(int j = 0; j < 5; j++){
                 System.out.print("Hall " + game.getPlayers()[i].getSchool().getSchoolHall()[j].getHallColor() + " with ");
                 for(int k = 0; k < 10; k++){
                     if(null != game.getPlayers()[i].getSchool().getSchoolHall()[j].getTableHall()[k]){
-                        System.out.print(game.getPlayers()[i].getSchool().getSchoolHall()[j].getTableHall()[k].getColor());
+                        System.out.print(game.getPlayers()[i].getSchool().getSchoolHall()[j].getTableHall()[k].getColor() + " ");
                     }
                     else{
                         break;
                     }
                 }
                 System.out.println();
-                /*for(Tower tower : game.getPlayers()[i].getSchoolDashboard().getPlayersTowers()){
-                    System.out.print(tower.getColor() + " ");
-                }
-                System.out.println();*/
             }
-            System.out.println();
+            for(Tower tower : game.getPlayers()[i].getSchool().getPlayersTowers()){
+                System.out.print(tower.getColor() + " ");
+            }
+            System.out.println("\n");
         }
-
         System.out.println("PLAYER ORDER:");
         for(int i = 0; i < game.getPlayers().length; i++){
             System.out.print(game.getPlayers()[i].getPlayerName() + " ");
+        }
+        System.out.println("\n");
+    }
+
+    @Override
+    public void playerOrder(NewOrderMessage message){
+        System.out.println("PLAYER ORDER FOR THIS PHASE:");
+        for(int i = 0; i < message.getPlayers().length; i++){
+            System.out.print(message.getPlayers()[i].getPlayerName() + " ");
         }
         System.out.println();
     }
 
     @Override
+    public void endGame(WinnersMessage message){
+        System.out.println("THE WINNERS ARE: ");
+        for(Player player : message.getPlayers()){
+            System.out.print(player + " ");
+        }
+        System.out.println();
+    }
+
+    @Override
+    public void schoolUpdate(SchoolUpdateMessage message){
+        System.out.println("NEW SCHOOL SITUATION:");
+        for(int i = 0; i < 5; i++){
+            System.out.print(message.getSchool().getSchoolHall()[i].getHallColor() + " : ");
+            for(int j = 0; j < 10; j++){
+                if(null != message.getSchool().getSchoolHall()[i].getTableHall()[j]){
+                    System.out.print(message.getSchool().getSchoolHall()[i].getTableHall()[j].getColor() + " ");
+                }
+                else{
+                    break;
+                }
+            }
+            switch(message.getSchool().getSchoolHall()[i].getHallColor()){
+                case BLUE -> {
+                    if(null != message.getSchool().getBlueProfessor()){
+                        System.out.print(" | " + message.getSchool().getBlueProfessor().getColor() + " ");
+                    }
+                }
+                case GREEN -> {
+                    if(null != message.getSchool().getGreenProfessor()){
+                        System.out.print(" | " +message.getSchool().getGreenProfessor().getColor() + " ");
+                    }
+                }
+                case PINK -> {
+                    if(null != message.getSchool().getPinkProfessor()){
+                        System.out.print(" | " +message.getSchool().getPinkProfessor().getColor() + " ");
+                    }
+                }
+                case RED -> {
+                    if(null != message.getSchool().getRedProfessor()){
+                        System.out.print(" | " +message.getSchool().getRedProfessor().getColor() + " ");
+                    }
+                }
+                case YELLOW -> {
+                    if(null != message.getSchool().getYellowProfessor()){
+                        System.out.print(" | " +message.getSchool().getYellowProfessor().getColor() + " ");
+                    }
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    @Override
+    public void islandsUpdate(ChangeOnIslandMessage message){
+        System.out.println("ISLAND SITUATION:");
+        for(int i = 0; i < message.getIslands().size(); i++){
+            System.out.print("Island " + i +  " : ");
+            if(message.getIslands().get(i).getStudents().size() == 0){
+                System.out.print("NO STUDENTS ");
+            }
+            for(int j = 0; j < message.getIslands().get(i).getStudents().size(); j++){
+                System.out.print(message.getIslands().get(i).getStudents().get(j).getColor() + " ");
+            }
+            if(message.getIslands().get(i).hasMotherNature()){
+                System.out.print("MN");
+            }
+            if(message.getIslands().get(i).getTowers().size() > 0) {
+                System.out.print(" | ");
+                for (Tower tower : message.getIslands().get(i).getTowers()) {
+                    System.out.print(tower.getColor() + " ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    @Override
     public void selectAssistantCard(AskAssistantCardsMessage message){
+        System.out.println("Please select one assistant by selecting its' index");
         List<AssistantCard> cards = message.getAssistantCards();
         for(int i = 0; i < cards.size(); i++){
             int moveMN = cards.get(i).getMovementMotherNature();
@@ -338,21 +429,50 @@ public class CliClientInterface implements UserInterface {
     @Override
     public void selectMotherNatureIsland(AskMotherNatureMessage message) {
         //client has to select how far mother nature has to go
-
-        int choice = 0;
-
-        messageHandler.sendMessage(new PlaceMotherNatureMessage(choice));
+        System.out.println("Please select one islands:");
+        for(int i = 0; i  < message.getIslands().size(); i++){
+            System.out.print(i +") Island " + (i+message.getStartingIndexMN()+1)% message.getNumIslands() + " : ");
+            for(Student student : message.getIslands().get(i).getStudents()){
+                System.out.print(student.getColor() + " ");
+            }
+            if(message.getIslands().get(i).getTowers().size() > 0) {
+                System.out.print(" | ");
+                for (Tower tower : message.getIslands().get(i).getTowers()) {
+                    System.out.print(tower.getColor() + " ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+        cmdIn = new Scanner(System.in);
+        int choice = cmdIn.nextInt();
+        if(0 <= choice && choice < message.getIslands().size()) {
+            messageHandler.sendMessage(new PlaceMotherNatureMessage(choice));
+        }
+        else{
+            selectMotherNatureIsland(message);
+        }
     }
 
     @Override
     public void selectCloud(AskCloudMessage message) {
         //client has to select the index of the cloud from which has to take students
-
-        int choice = 0;
-
-        messageHandler.sendMessage(new SelectCloudMessage(choice));
-
+        System.out.println("Please select one cloud");
+        for(int i = 0; i < message.getClouds().size(); i++){
+            System.out.print("Cloud " + i + " : ");
+            for(Student student : message.getClouds().get(i).getCloudStudents()){
+                System.out.print(student.getColor() + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+        cmdIn = new Scanner(System.in);
+        int choice = cmdIn.nextInt();
+        if(0 <= choice && choice < message.getClouds().size()) {
+            messageHandler.sendMessage(new SelectCloudMessage(choice));
+        }
+        else{
+            selectCloud(message);
+        }
     }
-
-
 }

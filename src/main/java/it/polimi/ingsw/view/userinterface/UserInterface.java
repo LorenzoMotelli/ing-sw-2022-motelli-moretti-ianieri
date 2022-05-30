@@ -32,4 +32,12 @@ public interface UserInterface {
     void selectMotherNatureIsland(AskMotherNatureMessage message);
 
     void selectCloud(AskCloudMessage message);
+
+    void playerOrder(NewOrderMessage message);
+
+    void schoolUpdate(SchoolUpdateMessage message);
+
+    void islandsUpdate(ChangeOnIslandMessage message);
+
+    void endGame(WinnersMessage message);
 }

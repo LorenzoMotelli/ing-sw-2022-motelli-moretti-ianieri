@@ -48,17 +48,20 @@ public class ClientMessageHandler implements Observer<Message> {
             case WAITING_PLAYERS -> userInterface.waitingForOtherPlayers();
             case DISCONNECT, DISCONNECT_IN_GAME -> userInterface.someoneDisconnected((DisconnectMessage) message);
             case START -> userInterface.startingMatch();
-            case UPDATE -> userInterface.boardUpdate((UpdateBoardMessage) message);
-
+            //GENERAL UPDATES
+            case UPDATE_BOARD -> userInterface.boardUpdate((UpdateBoardMessage) message);
+            case UPDATE_ORDER -> userInterface.playerOrder((NewOrderMessage) message);
+            case UPDATE_SCHOOL -> userInterface.schoolUpdate((SchoolUpdateMessage) message);
+            case UPDATE_TABLE -> userInterface.islandsUpdate((ChangeOnIslandMessage) message);
             // PLANNING
             case SELECT_ASSISTANT_CARD -> userInterface.selectAssistantCard((AskAssistantCardsMessage) message);
+            //ACTION
             case ASK_STUDENT -> userInterface.selectStudent((AskStudentMessage) message);
             case ASK_PLACE -> userInterface.selectPlace((AskWherePlaceMessage) message);
             case ASK_MOVE_MOTHER_NATURE -> userInterface.selectMotherNatureIsland((AskMotherNatureMessage) message);
             case ASK_CLOUD -> userInterface.selectCloud((AskCloudMessage) message);
-
-
-
+            //ENDING
+            case END_GAME -> userInterface.endGame((WinnersMessage) message);
             // TODO: L&G. gestire prossimi messaggi
             case END_TURN -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);
             case PLACE_IN_HALL -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);

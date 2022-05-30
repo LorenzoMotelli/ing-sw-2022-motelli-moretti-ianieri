@@ -268,4 +268,24 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     public void selectCloud(AskCloudMessage message) {
 
     }
+
+    @Override
+    public void playerOrder(NewOrderMessage message) {
+
+    }
+
+    @Override
+    public void schoolUpdate(SchoolUpdateMessage message) {
+
+    }
+
+    @Override
+    public void islandsUpdate(ChangeOnIslandMessage message) {
+
+    }
+
+    @Override
+    public void endGame(WinnersMessage message) {
+
+    }
 }

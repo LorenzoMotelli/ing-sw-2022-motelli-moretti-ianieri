@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.enumeration.Phases;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.model.enumeration.Variant;
 import it.polimi.ingsw.network.messages.Message;
-import it.polimi.ingsw.network.messages.specific.UpdateBoardMessage;
+import it.polimi.ingsw.network.messages.specific.*;
 import it.polimi.ingsw.utils.Observable;
 
 import java.io.Serializable;
@@ -15,7 +15,7 @@ import java.util.*;
 import static it.polimi.ingsw.model.enumeration.Phases.*;
 import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 
-public class GeneralGame extends Observable<Message> implements Serializable {
+public class GeneralGame extends Observable<Message> implements Serializable, Cloneable {
     //TODO checkEndGame() && checkLastTurn()
     //list of the players in the game
     private Player[] players;
@@ -79,7 +79,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
             }
         }
         nextPhase(STARTING);
-        notify(new UpdateBoardMessage(this));
+        notify(new UpdateBoardMessage((GeneralGame) this.clone()));
     }
 
     /**
@@ -182,7 +182,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
      */
     public void newTurn(){
         turn = (turn+1) % players.length;
-        notify(new UpdateBoardMessage(this));
+       // notify(new UpdateBoardMessage(this));
     }
 
     /**
@@ -204,7 +204,8 @@ public class GeneralGame extends Observable<Message> implements Serializable {
            }
        }
        turn = 0;
-       notify(new UpdateBoardMessage(this));
+      // notify(new UpdateBoardMessage(this));
+       notify(new NewOrderMessage(players));
     }
 
     /**
@@ -216,9 +217,8 @@ public class GeneralGame extends Observable<Message> implements Serializable {
             case STARTING:
             case ENDING: {
                 if(checkLastTurn()){
-                    //TODO add this method
+                    notify(new WinnersMessage(checkWinners()));
                     break;
-                    //notify(new WinnersMessage(checkWinners()));
                 }
                 else {
                     gamePhase = PLANNING;
@@ -256,6 +256,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
                 if (allCloudsEmpty()/*this.getCurrentPlayer() == this.players[0]*/) {
                     refillClouds();
                     gamePhase = ENDING;
+                    //notify(new UpdateBoardMessage(this));
                 }
                 else {
                     //otherwise the other players has to game their action phase
@@ -366,10 +367,11 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         if(!checkHallAvailability(studentToBePlaced)){
             return;
         }
-
         getCurrentPlayer().placeStudentInHall(studentToBePlaced);
+        //notify(new UpdateBoardMessage(this));
+        //notify(new StudentPlacedInHallMessage(getCurrentPlayer().getSchool().getSchoolHall()));
         giveProfessor(studentToBePlaced.getColor());
-        notify(new UpdateBoardMessage(this));
+        notify(new SchoolUpdateMessage(getCurrentPlayer().getSchool()));
     }
 
     /**
@@ -378,7 +380,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
      * @param colorStudentPlaced the color of the student placed so also the professor's color
      */
     public void giveProfessor(PawnColor colorStudentPlaced){
-        Player playerWithProfessor = checkProfessorBeforePlacement(colorStudentPlaced);
+        Player playerWithProfessor = checkPlayerWithProfessorBeforePlacement(colorStudentPlaced);
         //the current player already has the professor, no check needed
         if(null != playerWithProfessor && playerWithProfessor.equals(getCurrentPlayer())){
             return;
@@ -403,13 +405,15 @@ public class GeneralGame extends Observable<Message> implements Serializable {
             if(maxStudents < studentCurrentPlayer){
                 playerWithProfessor.getSchool().getSchoolProfessors().remove(playerWithProfessor.getSchool().getProfessorByColor(colorStudentPlaced));
                 getCurrentPlayer().getSchool().getSchoolProfessors().add(new Professor(colorStudentPlaced));
+                //notify(new ProfessorInHallMessage(getCurrentPlayer().getSchool().getSchoolProfessors()));
             }
         }
         else{
             table.getProfessors().remove(table.getProfessorByColor(colorStudentPlaced));
             getCurrentPlayer().getSchool().getSchoolProfessors().add(new Professor(colorStudentPlaced));
+            //notify(new ProfessorInHallMessage(getCurrentPlayer().getSchool().getSchoolProfessors()));
         }
-        notify(new UpdateBoardMessage(this));
+        //notify(new UpdateBoardMessage(this));
     }
 
     /**
@@ -417,7 +421,7 @@ public class GeneralGame extends Observable<Message> implements Serializable {
      * @param colorStudentPlaced the color of the professor to look for
      * @return the player with the professor or null (the professor is in the bag table)
      */
-    public Player checkProfessorBeforePlacement(PawnColor colorStudentPlaced){
+    public Player checkPlayerWithProfessorBeforePlacement(PawnColor colorStudentPlaced){
         for(Player player : players){
             for(Professor professor : player.getSchool().getSchoolProfessors()){
                 if(professor.getColor().equals(colorStudentPlaced)){
@@ -445,7 +449,8 @@ public class GeneralGame extends Observable<Message> implements Serializable {
         getTable().getIslands().get(islandIndex).addStudent(getCurrentPlayer().getStudentSelected());
         getCurrentPlayer().getSchool().removeStudentFromEntrance(getCurrentPlayer().getStudentSelected());
         //getCurrentPlayer().getSchoolDashboard().getEntranceStudent().remove(getCurrentPlayer().getStudentSelected());
-        notify(new UpdateBoardMessage(this));
+      //  notify(new UpdateBoardMessage(this));
+        notify(new ChangeOnIslandMessage(getTable().getIslands()));
     }
 
     //---------------- MOVEMENT MOTHER NATURE MANAGEMENT --------------\\
@@ -488,8 +493,14 @@ public class GeneralGame extends Observable<Message> implements Serializable {
             checkPlaceTower(islandSelected, conqueror);
             checkLinkIslands(islandSelected);
         }
-        checkWinners();
-        notify(new UpdateBoardMessage(this));
+        //TODO improve this
+        if(!checkWinners().isEmpty()){
+            notify(new WinnersMessage(checkWinners()));
+        }
+        else {
+            //notify(new UpdateBoardMessage(this));
+            notify(new ChangeOnIslandMessage(getTable().getIslands()));
+        }
     }
 
     /**
@@ -526,7 +537,6 @@ public class GeneralGame extends Observable<Message> implements Serializable {
                 }
                 //switch the color of the towers
                 table.replaceTower(islandSelected, conquerorColor);
-                //TODO sublist?
                 //remove the towers from the new conqueror
                 for(Tower towerOnIsland : islandSelected.getTowers()){
                     conqueror.getSchool().getPlayersTowers().remove(0);
@@ -760,5 +770,14 @@ public class GeneralGame extends Observable<Message> implements Serializable {
             }
         }
         return false;
+    }
+
+    public Object clone(){
+        try{
+            Object obj = super.clone();
+            return  obj;
+        } catch (CloneNotSupportedException e){
+            return null;
+        }
     }
 }

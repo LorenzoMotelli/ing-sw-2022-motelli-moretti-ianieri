@@ -8,7 +8,7 @@ public class UpdateBoardMessage extends Message {
 
     private final GeneralGame game;
     public UpdateBoardMessage(GeneralGame game){
-        super(MessageAction.UPDATE, "SERVER");
+        super(MessageAction.UPDATE_BOARD, "SERVER");
         this.game = game;
     }
 

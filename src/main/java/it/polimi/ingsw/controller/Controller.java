@@ -66,9 +66,6 @@ public class Controller implements Observer<Message> {
             case SELECT_ISLAND_MOTHER_NATURE -> placeMotherNatureOnIsland((PlaceMotherNatureMessage) message);
             case SELECT_CLOUD -> selectCloud((SelectCloudMessage) message);
         }
-
-
-
     }
 
 
@@ -217,7 +214,6 @@ public class Controller implements Observer<Message> {
     /**
      * use the assistant card selected by the player
      * @param message in the payload of the message there is the assistant card selected
-     * @throws AssistantAlreadyUsedException only one assistant can be played in one turn
      */
     public void assistantCardSelected(SelectAssistantCardMessage message){
         //System.out.println("The assistant that is arrived has weight " +  message.getAssistantCard().getTurnHeaviness() + " and move MN " + message.getAssistantCard().getMovementMotherNature());
@@ -347,11 +343,11 @@ public class Controller implements Observer<Message> {
 
     private void askMoveMotherNature() {
         // set how much mother nature can be moved on this turn
-        int movementMN = game.getCurrentPlayer().getAssistantCardUsed().getMovementMotherNature();
+        int startingIndexMN = game.getTable().getIslands().indexOf(game.getTable().getIslandWithMotherNature());
 
         List<Island> availableIsland = game.getAvailableIslands();
 
-        sendToCurrentPlayer(new AskMotherNatureMessage(availableIsland));
+        sendToCurrentPlayer(new AskMotherNatureMessage(availableIsland, startingIndexMN, game.getTable().getIslands().size()));
     }
 
     /**
@@ -370,6 +366,7 @@ public class Controller implements Observer<Message> {
 
         // check if int is valid
         // do something
+
         //game.moveMotherNature();
         nextAction(PLACE_MOTHER_NATURE);
     }
