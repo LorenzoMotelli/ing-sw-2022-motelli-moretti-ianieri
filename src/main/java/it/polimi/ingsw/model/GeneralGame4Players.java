@@ -2,7 +2,9 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.model.enumeration.Variant;
+import it.polimi.ingsw.network.messages.specific.ChangeOnIslandMessage;
 import it.polimi.ingsw.network.messages.specific.UpdateBoardMessage;
+import it.polimi.ingsw.network.messages.specific.WinnersMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +16,8 @@ public class GeneralGame4Players extends GeneralGame{
     /**
      * creation of the initial board, the initial players and characters
      * @param numberOfPlayer  the number of player selected by the first player
-     * @param variantSelected the variant that the first player has selected
      */
-    public GeneralGame4Players(int numberOfPlayer, Variant variantSelected) {
+    public GeneralGame4Players(int numberOfPlayer) {
         super(numberOfPlayer);
     }
 
@@ -52,8 +53,11 @@ public class GeneralGame4Players extends GeneralGame{
             checkPlaceTowerTeam(islandSelected, conquerorColor);
             checkLinkIslands(islandSelected);
         }
-        checkWinners();
-        notify(new UpdateBoardMessage(this));
+        if(getCurrentPlayer().getSchool().getPlayersTowers().size() == 0) {
+            notify(new WinnersMessage(checkWinners()));
+            return;
+        }
+        notify(new ChangeOnIslandMessage(getTable().getIslands()));
     }
 
     /**

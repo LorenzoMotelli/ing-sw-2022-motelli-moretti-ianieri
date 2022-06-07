@@ -253,7 +253,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
             }
             case SELECT_CLOUD: {
                 //if initial player the round ends IF ALL THE CLOUDS HAVE NO MORE STUDENTS
-                if (allCloudsEmpty()/*this.getCurrentPlayer() == this.players[0]*/) {
+                if (allCloudsEmpty()) {
                     refillClouds();
                     gamePhase = ENDING;
                     //notify(new UpdateBoardMessage(this));
@@ -333,6 +333,16 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
             availableCards.addAll(currentDeck);
         }
         return availableCards;
+    }
+
+    public List<Cloud> getAvailableClouds(){
+        List<Cloud> availableClouds = new ArrayList<>();
+        for(Cloud cloud : getTable().getClouds()){
+            if(cloud.getCloudStudents().size() > 0){
+                availableClouds.add(cloud);
+            }
+        }
+        return  availableClouds;
     }
 
     //---------------- ACTION PHASE MANAGEMENT --------------\\
@@ -494,13 +504,11 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
             checkLinkIslands(islandSelected);
         }
         //TODO improve this
-        if(!checkWinners().isEmpty()){
+        if(getCurrentPlayer().getSchool().getPlayersTowers().size() == 0){
             notify(new WinnersMessage(checkWinners()));
+            return;
         }
-        else {
-            //notify(new UpdateBoardMessage(this));
-            notify(new ChangeOnIslandMessage(getTable().getIslands()));
-        }
+        notify(new ChangeOnIslandMessage(getTable().getIslands()));
     }
 
     /**

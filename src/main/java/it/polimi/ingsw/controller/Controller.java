@@ -1,10 +1,8 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.controller.exceptions.AssistantAlreadyUsedException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.AssistantCard;
 import it.polimi.ingsw.model.enumeration.Phases;
-import it.polimi.ingsw.model.enumeration.Variant;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 import it.polimi.ingsw.network.messages.specific.*;
@@ -30,7 +28,12 @@ public class Controller implements Observer<Message> {
 
     public Controller(Server server,int players) {
         this.server = server;
-        this.game = new GeneralGame(players);
+        if(4 != players){
+            this.game = new GeneralGame(players);
+        }
+        else{
+            this.game = new GeneralGame4Players(players);
+        }
         this.clients = new ArrayList<>();
     }
 
@@ -265,10 +268,8 @@ public class Controller implements Observer<Message> {
     }
 
     public void askPlaceStudent(){
-        //if(2 == game.getPlayers().length){
-            List<Student> playerStudents = game.getCurrentPlayer().getSchool().getEntranceStudent();
-            sendToCurrentPlayer(new AskStudentMessage(playerStudents));
-        //}
+        List<Student> playerStudents = game.getCurrentPlayer().getSchool().getEntranceStudent();
+        sendToCurrentPlayer(new AskStudentMessage(playerStudents));
     }
 
     public void studentSelected(SelectStudentMessage message){
@@ -290,7 +291,7 @@ public class Controller implements Observer<Message> {
 
         int islandsNumAvailable = game.getTable().getIslands().size();
 
-        Student student = game.getCurrentPlayer().getSchool().getStudent(message.getStudent()); //message.getStudent();
+        Student student = game.getCurrentPlayer().getSchool().getStudent(message.getStudent());
         game.getCurrentPlayer().setStudentSelected(student);
         boolean hallAvailable = game.checkHallAvailability(student);
 
@@ -300,10 +301,8 @@ public class Controller implements Observer<Message> {
     /**
      * place the student selected in the hall
      * @param message the message that requires a placement in the hall
-     //* @param num the number of placement on this action phase
-     //* @throws HallAlreadyFullException the hall of the color of the student selected is full
      */
-    public void placeInHallSelected(PlaceInHallMessage message/*, int num*/){
+    public void placeInHallSelected(PlaceInHallMessage message){
         /*School playerSchool = game.getCurrentPlayer().getSchoolDashboard();
         PawnColor studentColor = game.getCurrentPlayer().getStudentSelected().getColor();
         Hall hallWherePlace = game.getColorHall(studentColor);
@@ -314,18 +313,15 @@ public class Controller implements Observer<Message> {
             }
         }*/
         game.placeStudentInHall(game.getCurrentPlayer().getStudentSelected());
-
+        message = null;
         nextAction(PLACE_STUDENT);
-
-
     }
 
     /**
      * place the student selected in the hall
      * @param message the message that requires a placement on an island
-     //* @param num the number of placement on this action phase
      */
-    public void placeOnIslandSelected(PlaceOnIslandMessage message/*, int num*/){
+    public void placeOnIslandSelected(PlaceOnIslandMessage message){
         /*for(Island island : game.getTable().getIslands()){
             if(island.equals(message.getIsland())){
                 game.placeStudentOnIsland(message.getStudent(), island);
@@ -336,7 +332,7 @@ public class Controller implements Observer<Message> {
         Student student = game.getCurrentPlayer().getStudentSelected();
         Island islandSelected = game.getTable().getIslands().get(message.getIslandIndex());*/
         game.placeStudentOnIsland(message.getIslandIndex());
-
+        message = null;
         nextAction(PLACE_STUDENT);
 
     }
@@ -353,7 +349,6 @@ public class Controller implements Observer<Message> {
     /**
      * place mother nature on the island selected
      * @param message the message that requires the placement of the mother nature
-     //* @throws IslandOutOfBound if the island is not reachable by mother nature
      */
     public void placeMotherNatureOnIsland(PlaceMotherNatureMessage message){
         /*for(Island island : game.getTable().getIslands()){
@@ -365,14 +360,19 @@ public class Controller implements Observer<Message> {
         }*/
 
         // check if int is valid
-        // do something
-
-        //game.moveMotherNature();
+        // do movement
+        //save the initial index of the island
+        int startingIslandIndex = game.getTable().getIslands().indexOf(game.getTable().getIslandWithMotherNature());
+        //save the final index of the island
+        int finalIslandIndex = (startingIslandIndex + message.getIslandIndex() + 1) % (game.getTable().getIslands().size());
+        //take the island
+        Island islandSelected = game.getTable().getIslands().get(finalIslandIndex);
+        game.moveMotherNature(islandSelected);
         nextAction(PLACE_MOTHER_NATURE);
     }
 
     public void askSelectCloud() {
-        List<Cloud> clouds = game.getTable().getClouds();
+        List<Cloud> clouds = game.getAvailableClouds();
 
         sendToCurrentPlayer(new AskCloudMessage(clouds));
     }
@@ -382,8 +382,9 @@ public class Controller implements Observer<Message> {
         // check cloud is valid
         int choice = message.getSelectedCloud();
 
-        game.getTable().getClouds().get(choice);
+        Cloud cloudSelected = game.getTable().getClouds().get(choice);
         // update model
+        game.giveStudentsFromCloudToPlayer(cloudSelected);
         game.newTurn();
         nextAction(SELECT_CLOUD);
     }
@@ -447,8 +448,9 @@ public class Controller implements Observer<Message> {
 
         if (game.getGamePhase() == PLANNING) {
             askPlayerAssistantCard();
-        } else if (game.getGamePhase() == PLACE_STUDENT)
+        } else if (game.getGamePhase() == PLACE_STUDENT) {
             askPlaceStudent();
+        }
         else if (game.getGamePhase() == PLACE_MOTHER_NATURE) {
             askMoveMotherNature();
         } else if (game.getGamePhase() == SELECT_CLOUD) {

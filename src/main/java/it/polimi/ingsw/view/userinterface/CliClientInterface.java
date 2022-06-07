@@ -260,6 +260,23 @@ public class CliClientInterface implements UserInterface {
     }
 
     @Override
+    public void selectAssistantCard(AskAssistantCardsMessage message){
+        System.out.println("Please select one assistant by selecting its' index");
+        List<AssistantCard> cards = message.getAssistantCards();
+        for(int i = 0; i < cards.size(); i++){
+            int moveMN = cards.get(i).getMovementMotherNature();
+            int weight = cards.get(i).getTurnHeaviness();
+            System.out.println( "Card " + i + " has movement MN " + moveMN + " and heaviness " + weight) ;
+        }
+        // ASK USER FOR AN INT
+        //TODO: validate user input
+        cmdIn = new Scanner(System.in);
+        int choice = cmdIn.nextInt();
+        //System.out.println("You select the assistant with MN movement " + chosenCard.getMovementMotherNature() + " and weight " + chosenCard.getTurnHeaviness());
+        messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
+    }
+
+    @Override
     public void playerOrder(NewOrderMessage message){
         System.out.println("PLAYER ORDER FOR THIS PHASE:");
         for(int i = 0; i < message.getPlayers().length; i++){
@@ -269,12 +286,66 @@ public class CliClientInterface implements UserInterface {
     }
 
     @Override
-    public void endGame(WinnersMessage message){
-        System.out.println("THE WINNERS ARE: ");
-        for(Player player : message.getPlayers()){
-            System.out.print(player + " ");
+    public void selectStudent(AskStudentMessage message){
+        System.out.println("Please select one student:\n");
+        for(Student student : message.getStudent()){
+            System.out.print(student.getColor() +  " ");
         }
         System.out.println();
+        cmdIn = new Scanner(System.in);
+        int choice = cmdIn.nextInt();
+        // Student studentChosen = message.getStudent().get(choice);
+
+        messageHandler.sendMessage(new SelectStudentMessage(choice));
+    }
+
+    @Override
+    public void selectPlace(AskWherePlaceMessage message){
+        /*
+        System.out.println("ISLAND SITUATION:\n");
+        for(int i = 0; i < message.getIslands().size(); i++){
+            System.out.print("Island " + i + " ");
+            for(int j = 0; j < message.getIslands().get(i).getStudents().size(); j++){
+                System.out.print(message.getIslands().get(i).getStudents().get(j).getColor() + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("HALL " + message.getHall().getHallColor() +  " SITUATION:\n");
+        for(int i = 0; i < message.getHall().getTableHall().length; i++){
+            if(null != message.getHall().getTableHall()[i]){
+                System.out.print(message.getHall().getTableHall()[i] +  " ");
+            }
+            else{
+                break;
+            }
+        }
+        System.out.println();
+        cmdIn = new Scanner(System.in);
+        String choice = cmdIn.nextLine().toUpperCase();
+        switch (choice.charAt(0)){
+            case 'I' -> messageHandler.sendMessage(new PlaceOnIslandMessage(message.getIslands().get(choice.charAt(1)-48)));
+            case 'H' -> messageHandler.sendMessage(new PlaceInHallMessage(message.getHall()));
+            default -> selectPlace(message);
+        }
+         */
+        int islandsNumAvailable = message.getIslandsNumAvailable();
+        boolean hallAvailability = message.isHallAvailable();
+        System.out.println("Select in Island or the hall: the index of the island for island; out of bound for place in hall if available");
+
+        cmdIn = new Scanner(System.in);
+        int choice = cmdIn.nextInt();
+        if(choice < islandsNumAvailable){
+            messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
+        }
+        else{
+            if(hallAvailability){
+                messageHandler.sendMessage(new PlaceInHallMessage());
+            }
+            //hall not available, the player has to select the island
+            else{
+                selectPlace(message);
+            }
+        }
     }
 
     @Override
@@ -347,86 +418,6 @@ public class CliClientInterface implements UserInterface {
     }
 
     @Override
-    public void selectAssistantCard(AskAssistantCardsMessage message){
-        System.out.println("Please select one assistant by selecting its' index");
-        List<AssistantCard> cards = message.getAssistantCards();
-        for(int i = 0; i < cards.size(); i++){
-            int moveMN = cards.get(i).getMovementMotherNature();
-            int weight = cards.get(i).getTurnHeaviness();
-            System.out.println( "Card " + i + " has movement MN " + moveMN + " and heaviness " + weight) ;
-        }
-        // ASK USER FOR AN INT
-        //TODO: validate user input
-        cmdIn = new Scanner(System.in);
-        int choice = cmdIn.nextInt();
-        //System.out.println("You select the assistant with MN movement " + chosenCard.getMovementMotherNature() + " and weight " + chosenCard.getTurnHeaviness());
-        messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
-    }
-
-    @Override
-    public void selectStudent(AskStudentMessage message){
-        System.out.println("Please select one student:\n");
-        for(Student student : message.getStudent()){
-            System.out.print(student.getColor() +  " ");
-        }
-        System.out.println();
-        cmdIn = new Scanner(System.in);
-        int choice = cmdIn.nextInt();
-       // Student studentChosen = message.getStudent().get(choice);
-
-        messageHandler.sendMessage(new SelectStudentMessage(choice));
-    }
-
-    @Override
-    public void selectPlace(AskWherePlaceMessage message){
-        /*
-        System.out.println("ISLAND SITUATION:\n");
-        for(int i = 0; i < message.getIslands().size(); i++){
-            System.out.print("Island " + i + " ");
-            for(int j = 0; j < message.getIslands().get(i).getStudents().size(); j++){
-                System.out.print(message.getIslands().get(i).getStudents().get(j).getColor() + " ");
-            }
-            System.out.println();
-        }
-        System.out.println("HALL " + message.getHall().getHallColor() +  " SITUATION:\n");
-        for(int i = 0; i < message.getHall().getTableHall().length; i++){
-            if(null != message.getHall().getTableHall()[i]){
-                System.out.print(message.getHall().getTableHall()[i] +  " ");
-            }
-            else{
-                break;
-            }
-        }
-        System.out.println();
-        cmdIn = new Scanner(System.in);
-        String choice = cmdIn.nextLine().toUpperCase();
-        switch (choice.charAt(0)){
-            case 'I' -> messageHandler.sendMessage(new PlaceOnIslandMessage(message.getIslands().get(choice.charAt(1)-48)));
-            case 'H' -> messageHandler.sendMessage(new PlaceInHallMessage(message.getHall()));
-            default -> selectPlace(message);
-        }
-         */
-        int islandsNumAvailable = message.getIslandsNumAvailable();
-        boolean hallAvailability = message.isHallAvailable();
-        System.out.println("Select in Island or the hall: the index of the island for island; out of bound for place in hall if available");
-
-        cmdIn = new Scanner(System.in);
-        int choice = cmdIn.nextInt();
-        if(choice < islandsNumAvailable){
-            messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
-        }
-        else{
-            if(hallAvailability){
-                messageHandler.sendMessage(new PlaceInHallMessage());
-            }
-            //hall not available, the player has to select the island
-            else{
-                selectPlace(message);
-            }
-        }
-    }
-
-    @Override
     public void selectMotherNatureIsland(AskMotherNatureMessage message) {
         //client has to select how far mother nature has to go
         System.out.println("Please select one islands:");
@@ -474,5 +465,14 @@ public class CliClientInterface implements UserInterface {
         else{
             selectCloud(message);
         }
+    }
+
+    @Override
+    public void endGame(WinnersMessage message){
+        System.out.println("THE WINNERS ARE: ");
+        for(Player player : message.getPlayers()){
+            System.out.print(player.getPlayerName() + " ");
+        }
+        System.out.println();
     }
 }
