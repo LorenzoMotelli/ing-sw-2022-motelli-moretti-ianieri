@@ -214,15 +214,17 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
      */
     public void nextPhase(Phases currentPhase){
         switch (currentPhase){
-            case STARTING:
-            case ENDING: {
-                if(checkLastTurn()){
+            case STARTING:{
+                /*if(checkLastTurn()){
                     notify(new WinnersMessage(checkWinners()));
                     break;
                 }
                 else {
+                    assistantCardsUsed.clear();
                     gamePhase = PLANNING;
                 }
+                break;*/
+                gamePhase = PLANNING;
                 break;
             }
             case PLANNING:{
@@ -264,6 +266,17 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
                 }
                 break;
             }
+            case ENDING:{
+                if(checkLastTurn()){
+                    notify(new WinnersMessage(checkWinners()));
+                    break;
+                }
+                else {
+                    assistantCardsUsed.clear();
+                    gamePhase = PLANNING;
+                }
+                break;
+            }
         }
     }
 
@@ -294,6 +307,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         addAssistantCardUsed(assistantCard);
         notify(new UpdateBoardMessage(this));
     }
+     */
 
     /**
      * when an assistant card is used the other player can not use that assistant in this turn

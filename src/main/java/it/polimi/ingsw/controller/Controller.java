@@ -332,7 +332,7 @@ public class Controller implements Observer<Message> {
         Student student = game.getCurrentPlayer().getStudentSelected();
         Island islandSelected = game.getTable().getIslands().get(message.getIslandIndex());*/
         game.placeStudentOnIsland(message.getIslandIndex());
-        message = null;
+        //message = null;
         nextAction(PLACE_STUDENT);
 
     }
@@ -382,6 +382,14 @@ public class Controller implements Observer<Message> {
         // check cloud is valid
         int choice = message.getSelectedCloud();
 
+        for(int i = 0; i < game.getTable().getClouds().size(); i++){
+            if(i <= message.getSelectedCloud() && game.getTable().getClouds().get(i).getCloudStudents().size() == 0){
+                choice++;
+            }
+            if(i > message.getSelectedCloud()){
+                break;
+            }
+        }
         Cloud cloudSelected = game.getTable().getClouds().get(choice);
         // update model
         game.giveStudentsFromCloudToPlayer(cloudSelected);

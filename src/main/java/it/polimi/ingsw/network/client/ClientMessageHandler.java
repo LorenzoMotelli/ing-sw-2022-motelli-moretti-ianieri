@@ -63,9 +63,9 @@ public class ClientMessageHandler implements Observer<Message> {
             //ENDING
             case END_GAME -> userInterface.endGame((WinnersMessage) message);
             // TODO: L&G. gestire prossimi messaggi
-            case END_TURN -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);
+            /*case END_TURN -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);
             case PLACE_IN_HALL -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);
-            case PLACE_ON_ISLAND -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);
+            case PLACE_ON_ISLAND -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);*/
             default -> throw new IllegalArgumentException("Unexpected value: " + messageAction);
         }
 

@@ -268,6 +268,7 @@ public class GeneralGameTest {
 
     @Test
     public void nextPhasePlanningToPlaceStudent(){
+        //gameWith2Players.nextPhase(STARTING);
         assertEquals(PLANNING, gameWith2Players.getGamePhase());
         assertEquals(PLANNING, gameWith3Players.getGamePhase());
 
@@ -417,6 +418,17 @@ public class GeneralGameTest {
 
         assertEquals(ENDING, gameWith2Players.getGamePhase());
         assertEquals(ENDING, gameWith3Players.getGamePhase());
+    }
+
+    @Test
+    public void nextPhaseEndingToPlanning(){
+        gameWith2Players.setGamePhase(ENDING);
+        gameWith2Players.getAssistantCardsUsed().add(gameWith2Players.getPlayers()[0].getAssistantDeck().get(0));
+        gameWith2Players.getAssistantCardsUsed().add(gameWith2Players.getPlayers()[1].getAssistantDeck().get(1));
+        assertEquals(2, gameWith2Players.getAssistantCardsUsed().size());
+        gameWith2Players.nextPhase(ENDING);
+        assertEquals(0, gameWith2Players.getAssistantCardsUsed().size());
+        assertEquals(PLANNING, gameWith2Players.getGamePhase());
     }
 
     @Test
