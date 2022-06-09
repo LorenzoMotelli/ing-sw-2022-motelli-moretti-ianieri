@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.view.userinterface.CliClientInterface;
+import it.polimi.ingsw.view.userinterface.GuiClientGame;
 import it.polimi.ingsw.view.userinterface.GuiClientInterface;
 
 import java.util.Scanner;
