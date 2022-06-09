@@ -114,9 +114,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         frame.setVisible(true);
     }
 
-    /*public void main(String[] args) {
+    public void main(String[] args) {
         new GuiClientInterface();
-    }*/
+    }
 
     @Override
     public void askUsername() {
