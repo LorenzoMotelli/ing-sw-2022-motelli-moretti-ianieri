@@ -232,6 +232,7 @@ public class GeneralGameTest {
         availableCards = gameWith3Players.getAvailableCards();
         assertEquals(9, availableCards.size());
         gameWith3Players.getCurrentPlayer().selectAssistant(availableCards.get(0));
+        assertNotEquals(gameWith3Players.getAssistantCardsUsed().get(0), availableCards.get(0));
         gameWith3Players.addAssistantCardUsed(availableCards.get(0));
         gameWith3Players.newTurn();
 
@@ -240,6 +241,8 @@ public class GeneralGameTest {
         for(int i = 0; i < 8; i++){
             assertEquals(i+3, availableCards.get(i).getTurnHeaviness());
         }
+        assertNotEquals(availableCards.get(0), gameWith3Players.getAssistantCardsUsed().get(0));
+        assertNotEquals(availableCards.get(1), gameWith3Players.getAssistantCardsUsed().get(1));
         gameWith3Players.getCurrentPlayer().selectAssistant(availableCards.get(0));
         gameWith3Players.addAssistantCardUsed(availableCards.get(0));
 

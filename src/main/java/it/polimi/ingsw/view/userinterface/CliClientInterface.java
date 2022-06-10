@@ -267,7 +267,7 @@ public class CliClientInterface implements UserInterface {
         for(int i = 0; i < cards.size(); i++){
             int moveMN = cards.get(i).getMovementMotherNature();
             int weight = cards.get(i).getTurnHeaviness();
-            System.out.println( "Card " + i + " has movement MN " + moveMN + " and heaviness " + weight) ;
+            System.out.println( "Card " + cards.get(i).getTurnHeaviness() + " has movement MN " + moveMN + " and heaviness " + weight) ;
         }
         // ASK USER FOR AN INT
         //TODO: validate user input

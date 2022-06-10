@@ -26,10 +26,8 @@ public class Table implements Serializable {
     /**
      * new constructor, initialize the main variables
      * @param numberOfPlayers the number of player in the game, used for the number of clouds and eventually coins
-     * @param variantOfTheGame if the game is expert than the game has more options(coins and characters)
-     * @param charactersOfTheGame the three characters randomly selected for the game
      */
-    public Table(int numberOfPlayers, Variant variantOfTheGame, Character[] charactersOfTheGame){
+    public Table(int numberOfPlayers){
         //creation of the 12 islands of the game
         islands = new ArrayList<>(12);
         for(int i = 0; i < 12; i++){
@@ -117,7 +115,7 @@ public class Table implements Serializable {
      */
     public void initializeClouds(){
         //with 2 or 4 clouds each cloud has 3 students
-        if(2 == clouds.size() || 4 == clouds.size()){
+        if(clouds.size() % 2 == 0){
             for(Cloud cloud : clouds){
                 cloud.setCloudStudents(randomStudentFromBag(3));
             }
@@ -150,10 +148,6 @@ public class Table implements Serializable {
     public List<Island> getIslands() {
         return islands;
     }
-
-    /*public void setIslands(List<Island> islands) {
-        this.islands = islands;
-    }*/
 
     public List<Cloud> getClouds() {
         return clouds;
@@ -255,7 +249,7 @@ public class Table implements Serializable {
      * @param islandTarget the first island/archipelago to be linked, this will have all the students and towers
      * @param islandOrigin the second island/archipelago to be linked, this will be removed
      */
-    public /*island*/ void linkIslands(Island islandTarget, Island islandOrigin){
+    public void linkIslands(Island islandTarget, Island islandOrigin){
         islandTarget.addTower(islandOrigin.getTowers());
         islandTarget.addStudents(islandOrigin.getStudents());
         //add other things in expert game
@@ -293,6 +287,11 @@ public class Table implements Serializable {
         return studentToGive;
     }
 
+    /**
+     * take the professor based on the color selected if the table's bag has it
+     * @param color the color selected
+     * @return the professor, if it's present, null otherwise
+     */
     public Professor getProfessorByColor(PawnColor color) {
         switch (color){
             case BLUE -> {

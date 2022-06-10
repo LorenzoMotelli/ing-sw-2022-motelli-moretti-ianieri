@@ -104,13 +104,24 @@ public class Island implements Serializable {
         this.motherNature = motherNature;
     }
 
-    //maybe the parameter is just Student and not a List of Students, add one student at time
+    /**
+     * add a list of student in this students list
+     * @param studentsToAdd the list of student to add in this
+     */
     public void addStudents(List<Student> studentsToAdd){
         students.addAll(studentsToAdd);
     }
 
+    /**
+     * add a student in this students list
+     * @param student single student to add in this
+     */
     public void addStudent(Student student){students.add(student);}
 
+    /**
+     * add a list of tower in this tower list
+     * @param towersToAdd the list of tower to add in this
+     */
     public void addTower(List<Tower> towersToAdd){
         playerTower.addAll(towersToAdd);
     }

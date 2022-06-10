@@ -22,7 +22,6 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
     private int playerAdded = 0;
     //use for check the actual player
     private int turn = 0;
-    //private int maxTurn;
     //the phase in which the player plays
     private Phases gamePhase;
     //the list of assistant cards use in the current round
@@ -30,11 +29,14 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
     //possible movement of mother nature
     private int motherNatureMovement = 0;
     //the variant selected
-    private Variant variant = Variant.NORMAL;
+    //private Variant variant = Variant.NORMAL;
     //all the possible characters in the game
-    private Character[] allCharacters;
+    //private Character[] allCharacters;
     //the table with clouds, islands, students...
     private Table table;
+
+    //---------------- INITIALIZATION --------------\\
+
     /**
      * creation of the initial board, the initial players and characters
      * @param numberOfPlayer the number of player selected by the first player
@@ -45,7 +47,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         //creation of players
         players = new Player[numberOfPlayer];
         //the table has to be created before the players because of the student bag
-        table = new Table(players.length, variant, allCharacters);
+        table = new Table(players.length);
     }
 
     /**
@@ -53,9 +55,8 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
      * and giving to each player the right number of towers and entrance students
      */
     public void startGeneralGame(){
-        //the table has to be created before the players because of the student bag
-        //table = new Table(players.length, variant, allCharacters);
         for(int i = 0; i < players.length; i++){
+            //game with 3 player, 9 entrance student and 6 tower each player
             if(players.length == 3){
                 players[i].getSchool().setEntranceStudent(randomStudentFromBag(9));
                 if(0 == i){
@@ -68,6 +69,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
                     players[i].getSchool().setPlayersTowers(6, GREY);
                 }
             }
+            //game with 2 player, 7 entrance student and 8 tower each player
             else{
                 players[i].getSchool().setEntranceStudent(randomStudentFromBag(7));
                 if(i % 2 == 0){
@@ -161,17 +163,17 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         return assistantCardsUsed;
     }
 
-    public void setAssistantCardsUsed(List<AssistantCard> assistantCardsUsed) {
+    /*public void setAssistantCardsUsed(List<AssistantCard> assistantCardsUsed) {
         this.assistantCardsUsed = assistantCardsUsed;
-    }
+    }*/
 
     public int getTurn() {
         return turn;
     }
 
-    public void setTurn(int turn) {
+    /*public void setTurn(int turn) {
         this.turn = turn;
-    }
+    }*/
 
     //---------------- GAME MANAGEMENT --------------\\
 
@@ -204,7 +206,6 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
            }
        }
        turn = 0;
-      // notify(new UpdateBoardMessage(this));
        notify(new NewOrderMessage(players));
     }
 
@@ -215,20 +216,10 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
     public void nextPhase(Phases currentPhase){
         switch (currentPhase){
             case STARTING:{
-                /*if(checkLastTurn()){
-                    notify(new WinnersMessage(checkWinners()));
-                    break;
-                }
-                else {
-                    assistantCardsUsed.clear();
-                    gamePhase = PLANNING;
-                }
-                break;*/
                 gamePhase = PLANNING;
                 break;
             }
             case PLANNING:{
-                //checkLastTurn();
                 gamePhase = PLACE_STUDENT;
                 break;
             }
@@ -258,7 +249,6 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
                 if (allCloudsEmpty()) {
                     refillClouds();
                     gamePhase = ENDING;
-                    //notify(new UpdateBoardMessage(this));
                 }
                 else {
                     //otherwise the other players has to game their action phase
@@ -294,20 +284,6 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
     }
 
     //---------------- PLANNING PHASE MANAGEMENT --------------\\
-    /*
-    /**
-     * set the max movement of mother nature and the weight of the player
-     * than add the card to the list of card that can no more be used in this turn
-     * @param assistantCard the assistant card selected by the player
-     */
-    /*public void useAssistantCard(AssistantCard assistantCard){
-        motherNatureMovement = assistantCard.getMovementMotherNature();
-        getCurrentPlayer().setPlayerWeight(assistantCard.getTurnHeaviness());
-        getCurrentPlayer().selectAssistant(assistantCard);
-        addAssistantCardUsed(assistantCard);
-        notify(new UpdateBoardMessage(this));
-    }
-     */
 
     /**
      * when an assistant card is used the other player can not use that assistant in this turn
@@ -319,10 +295,8 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
     }
     public List<AssistantCard> getAvailableCards() {
         List<AssistantCard> availableCards = new ArrayList<>();
-
         // get current deck of the current player (deck without already played cards)
         List<AssistantCard> currentDeck = getCurrentPlayer().getAssistantDeck();
-
         // one card is available only if not already played by someone else in this round
         for (AssistantCard assistantCard : currentDeck) {
             boolean isContained = false;
@@ -336,7 +310,6 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
                 availableCards.add(assistantCard);
             }
         }
-
         // if all the cards in the current deck have already been played return the remaining current deck
         if (availableCards.size() == 0) {
             availableCards.addAll(currentDeck);
@@ -367,7 +340,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         return false;
     }
 
-    //TODO necessary?
+    /*
     public Hall getColorHall(PawnColor color){
         for(int i = 0; i < 5; i++){
             if(getCurrentPlayer().getSchool().getSchoolHall()[i].getHallColor().equals(color)){
@@ -375,7 +348,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
             }
         }
         return null;
-    }
+    }*/
 
     /**
      * the current player selects to place a student in the hall
@@ -387,8 +360,6 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
             return;
         }
         getCurrentPlayer().placeStudentInHall(studentToBePlaced);
-        //notify(new UpdateBoardMessage(this));
-        //notify(new StudentPlacedInHallMessage(getCurrentPlayer().getSchool().getSchoolHall()));
         giveProfessor(studentToBePlaced.getColor());
         notify(new SchoolUpdateMessage(getCurrentPlayer().getSchool()));
     }
@@ -430,9 +401,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         else{
             table.getProfessors().remove(table.getProfessorByColor(colorStudentPlaced));
             getCurrentPlayer().getSchool().getSchoolProfessors().add(new Professor(colorStudentPlaced));
-            //notify(new ProfessorInHallMessage(getCurrentPlayer().getSchool().getSchoolProfessors()));
         }
-        //notify(new UpdateBoardMessage(this));
     }
 
     /**
@@ -457,18 +426,8 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
      //* @param islandSelected the island from the all possible island selected by the player
      */
     public void placeStudentOnIsland(int islandIndex){
-        /*
-        for(int i = 0; i < table.getIslands().size(); i++){
-            if(table.getIslands().get(i).equals(islandSelected)){
-                table.placeStudentOnIsland(studentToBePlaced, table.getIslands().get(i));
-            }
-        }
-        getCurrentPlayer().getSchoolDashboard().getEntranceStudent().remove(studentToBePlaced);
-        */
         getTable().getIslands().get(islandIndex).addStudent(getCurrentPlayer().getStudentSelected());
         getCurrentPlayer().getSchool().removeStudentFromEntrance(getCurrentPlayer().getStudentSelected());
-        //getCurrentPlayer().getSchoolDashboard().getEntranceStudent().remove(getCurrentPlayer().getStudentSelected());
-      //  notify(new UpdateBoardMessage(this));
         notify(new ChangeOnIslandMessage(getTable().getIslands()));
     }
 
@@ -606,7 +565,6 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         if(removeBehind){
             table.getIslands().remove(islandBehind);
         }
-        //checkEndGame
         if(table.getIslands().size() == 3){
             checkWinners();
         }

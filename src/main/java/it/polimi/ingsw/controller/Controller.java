@@ -219,38 +219,7 @@ public class Controller implements Observer<Message> {
      */
     public void assistantCardSelected(SelectAssistantCardMessage message){
         //System.out.println("The assistant that is arrived has weight " +  message.getAssistantCard().getTurnHeaviness() + " and move MN " + message.getAssistantCard().getMovementMotherNature());
-        AssistantCard assistantCard = game.getCurrentPlayer().getAssistantDeck().get(message.getIndexAssistantCard());
-        //List<AssistantCard> assistantCardUseOnThisTurn = game.getAssistantCardsUsed();
-        //List<AssistantCard> assistantOfThePlayer = new ArrayList<>();
-        /*if(game.getGamePhase() == PLANNING){
-            //the current player can play its assistant only if that assistant is not already used or if
-            //its remaining assistants are already used
-            boolean isContained = true;
-            for(int i = 0; i < 9; i++){
-                AssistantCard card = game.getCurrentPlayer().getAssistantDeck()[i];
-                if(card != null){
-                    //assistantOfThePlayer.add(game.getCurrentPlayer().getAssistantDeck()[i]);
-                    if(!game.getAssistantCardsUsed().contains(card)){
-                        isContained = false;
-                    }
-                }
-            }
-            //if(!game.getAssistantCardsUsed().containsAll(assistantOfThePlayer)){
-            if(isContained){
-                if(game.getAssistantCardsUsed().contains(assistantCard)){
-                    // ask again the choice
-                    sendToCurrentPlayer(new AskAssistantCardsMessage(game.getCurrentPlayer().getAssistantDeck()));
-                    return;
-                }
-            }
-            game.addAssistantCardUsed(assistantCard);
-        }
-        if (game.getAssistantCardsUsed().size() == game.getPlayers().length){
-            nextAction(PLANNING, 1);
-        } else {
-            game.newTurn();
-            sendToCurrentPlayer(new AskAssistantCardsMessage(game.getCurrentPlayer().getAssistantDeck()));
-        }*/
+        AssistantCard assistantCard = game.getCurrentPlayer().getAssistantDeck().get(message.getIndexAssistantCard()-1);
 
         //game.getAssistantCardsUsed().add(assistantCard);
         game.addAssistantCardUsed(assistantCard);
