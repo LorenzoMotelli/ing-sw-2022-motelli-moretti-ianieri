@@ -228,7 +228,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
                 break;
             }
             case PLANNING:{
-                checkLastTurn();
+                //checkLastTurn();
                 gamePhase = PLACE_STUDENT;
                 break;
             }
@@ -313,13 +313,10 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
      * when an assistant card is used the other player can not use that assistant in this turn
      * moreover set the max mother nature movement (number of island)
      //* @param assistantCard the assistant card selected by the current player
-     * @return the list of the assistant cards used in this turn
      */
-    /*public List<AssistantCard> addAssistantCardUsed(AssistantCard assistantCard){
+    public void addAssistantCardUsed(AssistantCard assistantCard){
         assistantCardsUsed.add(assistantCard);
-        //nextPhase(gamePhase);
-        return assistantCardsUsed;
-    }*/
+    }
     public List<AssistantCard> getAvailableCards() {
         List<AssistantCard> availableCards = new ArrayList<>();
 
@@ -329,14 +326,12 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         // one card is available only if not already played by someone else in this round
         for (AssistantCard assistantCard : currentDeck) {
             boolean isContained = false;
-            for (AssistantCard usedCard : getAssistantCardsUsed()) {
+            for (AssistantCard usedCard : assistantCardsUsed) {
                 if (usedCard.getTurnHeaviness() == assistantCard.getTurnHeaviness()) {
                     isContained = true;
                     break;
-
                 }
             }
-
             if (!isContained) {
                 availableCards.add(assistantCard);
             }
@@ -611,7 +606,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         if(removeBehind){
             table.getIslands().remove(islandBehind);
         }
-        //checkEndGame();
+        //checkEndGame
         if(table.getIslands().size() == 3){
             checkWinners();
         }
@@ -712,7 +707,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
      * when all the players end their turn the clouds has to be refilled
      */
     public void refillClouds(){
-        table.placeStudentsInCloud(players.length);
+        table.initializeClouds();
         checkLastTurn();
     }
 

@@ -222,6 +222,33 @@ public class GeneralGameTest {
     }
 
     @Test
+    public void getAvailableCards_FirstTurnThreePlayers(){
+        List<AssistantCard> availableCards = gameWith3Players.getAvailableCards();
+        assertEquals(10, availableCards.size());
+        gameWith3Players.getCurrentPlayer().selectAssistant(availableCards.get(0));
+        gameWith3Players.addAssistantCardUsed(availableCards.get(0));
+        gameWith3Players.newTurn();
+
+        availableCards = gameWith3Players.getAvailableCards();
+        assertEquals(9, availableCards.size());
+        gameWith3Players.getCurrentPlayer().selectAssistant(availableCards.get(0));
+        gameWith3Players.addAssistantCardUsed(availableCards.get(0));
+        gameWith3Players.newTurn();
+
+        availableCards = gameWith3Players.getAvailableCards();
+        assertEquals(8, availableCards.size());
+        for(int i = 0; i < 8; i++){
+            assertEquals(i+3, availableCards.get(i).getTurnHeaviness());
+        }
+        gameWith3Players.getCurrentPlayer().selectAssistant(availableCards.get(0));
+        gameWith3Players.addAssistantCardUsed(availableCards.get(0));
+
+        assertEquals(1, gameWith3Players.getAssistantCardsUsed().get(0).getTurnHeaviness());
+        assertEquals(2, gameWith3Players.getAssistantCardsUsed().get(1).getTurnHeaviness());
+        assertEquals(3, gameWith3Players.getAssistantCardsUsed().get(2).getTurnHeaviness());
+    }
+
+    @Test
     public void getAvailableCards_BothPlayerPlayTheSameCardAtTheEnd(){
         //set both players with only one assistant card
         for(int i = 1; i < 10; i++){

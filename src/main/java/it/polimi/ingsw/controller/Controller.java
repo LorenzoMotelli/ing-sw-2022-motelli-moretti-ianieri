@@ -61,7 +61,6 @@ public class Controller implements Observer<Message> {
         }
 
         switch (message.getMessageAction()) {
-
             case SELECT_ASSISTANT_CARD -> assistantCardSelected((SelectAssistantCardMessage) message);
             case SELECT_STUDENT -> studentSelected((SelectStudentMessage) message);
             case PLACE_IN_HALL -> placeInHallSelected((PlaceInHallMessage) message);
@@ -252,14 +251,16 @@ public class Controller implements Observer<Message> {
             game.newTurn();
             sendToCurrentPlayer(new AskAssistantCardsMessage(game.getCurrentPlayer().getAssistantDeck()));
         }*/
-        game.getAssistantCardsUsed().add(assistantCard);
+
+        //game.getAssistantCardsUsed().add(assistantCard);
+        game.addAssistantCardUsed(assistantCard);
         game.getCurrentPlayer().selectAssistant(assistantCard);
         System.out.println("Player " + game.getCurrentPlayer().getPlayerName() + " has heaviness " + game.getCurrentPlayer().getPlayerWeight());
         if(game.getAssistantCardsUsed().size() >= game.getPlayers().length){
             game.setNewOrder();
             nextAction(PLANNING);
             System.out.println("Starting action phase");
-            askPlaceStudent();
+            //askPlaceStudent();
         }
         else{
             game.newTurn();
@@ -313,7 +314,7 @@ public class Controller implements Observer<Message> {
             }
         }*/
         game.placeStudentInHall(game.getCurrentPlayer().getStudentSelected());
-        message = null;
+        //message = null;
         nextAction(PLACE_STUDENT);
     }
 

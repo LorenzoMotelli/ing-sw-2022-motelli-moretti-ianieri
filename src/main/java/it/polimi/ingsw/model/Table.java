@@ -14,14 +14,13 @@ import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 
 public class Table implements Serializable {
     private final int MAX_STUDENT = 26;
-
     private List<Island> islands;
     private List<Cloud> clouds;
     private List<Student> studentBag;
     private List<Professor> professors;
     //variables for the expert game
-    private int coins = 20;
-    private Character[] playableCharacters;
+    //private int coins = 20;
+    //private Character[] playableCharacters;
 
 
     /**
@@ -99,7 +98,7 @@ public class Table implements Serializable {
         Random random = new Random();
         int randIndex = random.nextInt(12);
         islands.get(randIndex).setMotherNature(true);
-        int indexSpecularIsland = 0;
+        int indexSpecularIsland;
         if(randIndex < 6){
             indexSpecularIsland = randIndex + 6;
         }
@@ -114,7 +113,7 @@ public class Table implements Serializable {
     }
 
     /**
-     * initialize each cloud with 3 students if there are 2 or 4 player, with 4 if there are 3 players
+     * place random students from the bag to the clouds based on the number of players
      */
     public void initializeClouds(){
         //with 2 or 4 clouds each cloud has 3 students
@@ -284,24 +283,6 @@ public class Table implements Serializable {
     //------------------- CLOUDS MANAGEMENT -----------------\\
 
     /**
-     * remove the students in the student bag and place it on the clouds
-     * @param numberOfPlayer determines the number of students in the clouds
-     */
-    public void placeStudentsInCloud(int numberOfPlayer){
-        for(Cloud cloud : clouds){
-            List<Student> studentList;
-            if(numberOfPlayer % 2 == 0){
-                studentList = studentBag.stream().limit(3).collect(Collectors.toList());
-            }
-            else{
-                studentList = studentBag.stream().limit(4).collect(Collectors.toList());
-            }
-            cloud.setCloudStudents(studentList);
-            studentBag.removeAll(studentList);
-        }
-    }
-
-    /**
      * give the students from the selected cloud
      * @param cloud the cloud that has been selected
      * @return the students placed on it
@@ -333,5 +314,23 @@ public class Table implements Serializable {
         return null;
     }
 
-    //------------------- MANAGEMENT OF THE CHARACTERS -----------------\\
+    //------------------- TESTS METHODS -----------------\\
+
+    /**
+     * place random students from the bag to the clouds
+     * @param numberOfPlayer determines the number of students in the clouds
+     */
+    public void placeStudentsInCloud(int numberOfPlayer){
+        for(Cloud cloud : clouds){
+            List<Student> studentList;
+            if(numberOfPlayer % 2 == 0){
+                studentList = studentBag.stream().limit(3).collect(Collectors.toList());
+            }
+            else{
+                studentList = studentBag.stream().limit(4).collect(Collectors.toList());
+            }
+            cloud.setCloudStudents(studentList);
+            studentBag.removeAll(studentList);
+        }
+    }
 }
