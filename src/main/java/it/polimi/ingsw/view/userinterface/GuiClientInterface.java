@@ -38,7 +38,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private static JPanel panelLogin;
     private static JFrame frameLogin;
     private static JFrame frameGame;
-    private static int size=3;
+    private static int size=4;
     //TODO togli due finito testing
 
     private JLabel labelSetBackground;
@@ -180,6 +180,108 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private ImageIcon blueHall9;
     private ImageIcon blueHall10;
 
+    private JLabel labelBluePlace1;
+    private JLabel labelBluePlace2;
+    private JLabel labelBluePlace3;
+    private JLabel labelBluePlace4;
+    private JLabel labelBluePlace5;
+    private JLabel labelBluePlace6;
+    private JLabel labelBluePlace7;
+    private JLabel labelBluePlace8;
+    private JLabel labelBluePlace9;
+
+    private ImageIcon bluePlace1;
+    private ImageIcon bluePlace2;
+    private ImageIcon bluePlace3;
+    private ImageIcon bluePlace4;
+    private ImageIcon bluePlace5;
+    private ImageIcon bluePlace6;
+    private ImageIcon bluePlace7;
+    private ImageIcon bluePlace8;
+    private ImageIcon bluePlace9;
+
+    private JLabel labelRedPlace1;
+    private JLabel labelRedPlace2;
+    private JLabel labelRedPlace3;
+    private JLabel labelRedPlace4;
+    private JLabel labelRedPlace5;
+    private JLabel labelRedPlace6;
+    private JLabel labelRedPlace7;
+    private JLabel labelRedPlace8;
+    private JLabel labelRedPlace9;
+
+    private ImageIcon redPlace1;
+    private ImageIcon redPlace2;
+    private ImageIcon redPlace3;
+    private ImageIcon redPlace4;
+    private ImageIcon redPlace5;
+    private ImageIcon redPlace6;
+    private ImageIcon redPlace7;
+    private ImageIcon redPlace8;
+    private ImageIcon redPlace9;
+
+    private JLabel labelPinkPlace1;
+    private JLabel labelPinkPlace2;
+    private JLabel labelPinkPlace3;
+    private JLabel labelPinkPlace4;
+    private JLabel labelPinkPlace5;
+    private JLabel labelPinkPlace6;
+    private JLabel labelPinkPlace7;
+    private JLabel labelPinkPlace8;
+    private JLabel labelPinkPlace9;
+
+    private ImageIcon pinkPlace1;
+    private ImageIcon pinkPlace2;
+    private ImageIcon pinkPlace3;
+    private ImageIcon pinkPlace4;
+    private ImageIcon pinkPlace5;
+    private ImageIcon pinkPlace6;
+    private ImageIcon pinkPlace7;
+    private ImageIcon pinkPlace8;
+    private ImageIcon pinkPlace9;
+
+    private JLabel labelGreenPlace1;
+    private JLabel labelGreenPlace2;
+    private JLabel labelGreenPlace3;
+    private JLabel labelGreenPlace4;
+    private JLabel labelGreenPlace5;
+    private JLabel labelGreenPlace6;
+    private JLabel labelGreenPlace7;
+    private JLabel labelGreenPlace8;
+    private JLabel labelGreenPlace9;
+
+    private ImageIcon greenPlace1;
+    private ImageIcon greenPlace2;
+    private ImageIcon greenPlace3;
+    private ImageIcon greenPlace4;
+    private ImageIcon greenPlace5;
+    private ImageIcon greenPlace6;
+    private ImageIcon greenPlace7;
+    private ImageIcon greenPlace8;
+    private ImageIcon greenPlace9;
+
+    private JLabel labelYellowPlace1;
+    private JLabel labelYellowPlace2;
+    private JLabel labelYellowPlace3;
+    private JLabel labelYellowPlace4;
+    private JLabel labelYellowPlace5;
+    private JLabel labelYellowPlace6;
+    private JLabel labelYellowPlace7;
+    private JLabel labelYellowPlace8;
+    private JLabel labelYellowPlace9;
+
+    private ImageIcon yellowPlace1;
+    private ImageIcon yellowPlace2;
+    private ImageIcon yellowPlace3;
+    private ImageIcon yellowPlace4;
+    private ImageIcon yellowPlace5;
+    private ImageIcon yellowPlace6;
+    private ImageIcon yellowPlace7;
+    private ImageIcon yellowPlace8;
+    private ImageIcon yellowPlace9;
+
+    private JLabel labelPlayerMessage;
+
     private static JButton buttonPlus1;
     private static JButton buttonPlus2;
     private static JButton buttonPlus3;
@@ -204,6 +306,11 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private static JButton buttonSelectStudent9;
 
     private static JButton buttonPutOnTable;
+
+    private static JButton buttonSelectCloud1;
+    private static JButton buttonSelectCloud2;
+    private static JButton buttonSelectCloud3;
+    private static JButton buttonSelectCloud4;
 
     private InputStreamReader inputStreamReader;
     Scanner cmdIn;
@@ -837,8 +944,354 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelBlueHall10.setIcon(blueHall10);
         frameGame.add(labelBlueHall10);
 
+        //images 1 slot students in the beginning hall
+        bluePlace1= new ImageIcon("src/images/blueHall.png");
+        labelBluePlace1=new JLabel();
+        labelBluePlace1.setBounds(1218, 678, 100, 100);
+        labelBluePlace1.setIcon(bluePlace1);
+        frameGame.add(labelBluePlace1);
 
+        pinkPlace1= new ImageIcon("src/images/pinkHall.png");
+        labelPinkPlace1=new JLabel();
+        labelPinkPlace1.setBounds(1218, 678, 100, 100);
+        labelPinkPlace1.setIcon(pinkPlace1);
+        frameGame.add(labelPinkPlace1);
 
+        greenPlace1= new ImageIcon("src/images/greenHall.png");
+        labelGreenPlace1=new JLabel();
+        labelGreenPlace1.setBounds(1218, 678, 100, 100);
+        labelGreenPlace1.setIcon(greenPlace1);
+        frameGame.add(labelGreenPlace1);
+
+        redPlace1= new ImageIcon("src/images/redHall.png");
+        labelRedPlace1=new JLabel();
+        labelRedPlace1.setBounds(1218, 678, 100, 100);
+        labelRedPlace1.setIcon(redPlace1);
+        frameGame.add(labelRedPlace1);
+
+        yellowPlace1= new ImageIcon("src/images/yellowHall.png");
+        labelYellowPlace1=new JLabel();
+        labelYellowPlace1.setBounds(1218, 678, 100, 100);
+        labelYellowPlace1.setIcon(yellowPlace1);
+        frameGame.add(labelYellowPlace1);
+
+        //images 2 slot students in the beginning hall
+        bluePlace2= new ImageIcon("src/images/blueHall.png");
+        labelBluePlace2=new JLabel();
+        labelBluePlace2.setBounds(1280, 678, 100, 100);
+        labelBluePlace2.setIcon(bluePlace2);
+        frameGame.add(labelBluePlace2);
+
+        pinkPlace2= new ImageIcon("src/images/pinkHall.png");
+        labelPinkPlace2=new JLabel();
+        labelPinkPlace2.setBounds(1280, 678, 100, 100);
+        labelPinkPlace2.setIcon(pinkPlace2);
+        frameGame.add(labelPinkPlace2);
+
+        greenPlace2= new ImageIcon("src/images/greenHall.png");
+        labelGreenPlace2=new JLabel();
+        labelGreenPlace2.setBounds(1280, 678, 100, 100);
+        labelGreenPlace2.setIcon(greenPlace2);
+        frameGame.add(labelGreenPlace2);
+
+        redPlace2= new ImageIcon("src/images/redHall.png");
+        labelRedPlace2=new JLabel();
+        labelRedPlace2.setBounds(1280, 678, 100, 100);
+        labelRedPlace2.setIcon(redPlace2);
+        frameGame.add(labelRedPlace2);
+
+        yellowPlace2= new ImageIcon("src/images/yellowHall.png");
+        labelYellowPlace2=new JLabel();
+        labelYellowPlace2.setBounds(1280, 678, 100, 100);
+        labelYellowPlace2.setIcon(yellowPlace2);
+        frameGame.add(labelYellowPlace2);
+
+        //images 3 slot students in the beginning hall
+        bluePlace3= new ImageIcon("src/images/blueHall.png");
+        labelBluePlace3=new JLabel();
+        labelBluePlace3.setBounds(1280, 728, 100, 100);
+        labelBluePlace3.setIcon(bluePlace3);
+        frameGame.add(labelBluePlace3);
+
+        pinkPlace3= new ImageIcon("src/images/pinkHall.png");
+        labelPinkPlace3=new JLabel();
+        labelPinkPlace3.setBounds(1280, 728, 100, 100);
+        labelPinkPlace3.setIcon(pinkPlace3);
+        frameGame.add(labelPinkPlace3);
+
+        greenPlace3= new ImageIcon("src/images/greenHall.png");
+        labelGreenPlace3=new JLabel();
+        labelGreenPlace3.setBounds(1280, 728, 100, 100);
+        labelGreenPlace3.setIcon(greenPlace3);
+        frameGame.add(labelGreenPlace3);
+
+        redPlace3= new ImageIcon("src/images/redHall.png");
+        labelRedPlace3=new JLabel();
+        labelRedPlace3.setBounds(1280, 728, 100, 100);
+        labelRedPlace3.setIcon(redPlace3);
+        frameGame.add(labelRedPlace3);
+
+        yellowPlace3= new ImageIcon("src/images/yellowHall.png");
+        labelYellowPlace3=new JLabel();
+        labelYellowPlace3.setBounds(1280, 728, 100, 100);
+        labelYellowPlace3.setIcon(yellowPlace3);
+        frameGame.add(labelYellowPlace3);
+
+        //images 4 slot students in the beginning hall
+        bluePlace4= new ImageIcon("src/images/blueHall.png");
+        labelBluePlace4=new JLabel();
+        labelBluePlace4.setBounds(1344, 678, 100, 100);
+        labelBluePlace4.setIcon(bluePlace4);
+        frameGame.add(labelBluePlace4);
+
+        pinkPlace4= new ImageIcon("src/images/pinkHall.png");
+        labelPinkPlace4=new JLabel();
+        labelPinkPlace4.setBounds(1344, 678, 100, 100);
+        labelPinkPlace4.setIcon(pinkPlace4);
+        frameGame.add(labelPinkPlace4);
+
+        greenPlace4= new ImageIcon("src/images/greenHall.png");
+        labelGreenPlace4=new JLabel();
+        labelGreenPlace4.setBounds(1344, 678, 100, 100);
+        labelGreenPlace4.setIcon(greenPlace4);
+        frameGame.add(labelGreenPlace4);
+
+        redPlace4= new ImageIcon("src/images/redHall.png");
+        labelRedPlace4=new JLabel();
+        labelRedPlace4.setBounds(1344, 678, 100, 100);
+        labelRedPlace4.setIcon(redPlace4);
+        frameGame.add(labelRedPlace4);
+
+        yellowPlace4= new ImageIcon("src/images/yellowHall.png");
+        labelYellowPlace4=new JLabel();
+        labelYellowPlace4.setBounds(1344, 678, 100, 100);
+        labelYellowPlace4.setIcon(yellowPlace4);
+        frameGame.add(labelYellowPlace4);
+
+        //images 5 slot students in the beginning hall
+        bluePlace5= new ImageIcon("src/images/blueHall.png");
+        labelBluePlace5=new JLabel();
+        labelBluePlace5.setBounds(1344, 728, 100, 100);
+        labelBluePlace5.setIcon(bluePlace5);
+        frameGame.add(labelBluePlace5);
+
+        pinkPlace5= new ImageIcon("src/images/pinkHall.png");
+        labelPinkPlace5=new JLabel();
+        labelPinkPlace5.setBounds(1344, 728, 100, 100);
+        labelPinkPlace5.setIcon(pinkPlace5);
+        frameGame.add(labelPinkPlace5);
+
+        greenPlace5= new ImageIcon("src/images/greenHall.png");
+        labelGreenPlace5=new JLabel();
+        labelGreenPlace5.setBounds(1344, 728, 100, 100);
+        labelGreenPlace5.setIcon(greenPlace5);
+        frameGame.add(labelGreenPlace5);
+
+        redPlace5= new ImageIcon("src/images/redHall.png");
+        labelRedPlace5=new JLabel();
+        labelRedPlace5.setBounds(1344, 728, 100, 100);
+        labelRedPlace5.setIcon(redPlace5);
+        frameGame.add(labelRedPlace5);
+
+        yellowPlace5= new ImageIcon("src/images/yellowHall.png");
+        labelYellowPlace5=new JLabel();
+        labelYellowPlace5.setBounds(1344, 728, 100, 100);
+        labelYellowPlace5.setIcon(yellowPlace5);
+        frameGame.add(labelYellowPlace5);
+
+        //images 6 slot students in the beginning hall
+        bluePlace6= new ImageIcon("src/images/blueHall.png");
+        labelBluePlace6=new JLabel();
+        labelBluePlace6.setBounds(1404, 678, 100, 100);
+        labelBluePlace6.setIcon(bluePlace6);
+        frameGame.add(labelBluePlace6);
+
+        pinkPlace6= new ImageIcon("src/images/pinkHall.png");
+        labelPinkPlace6=new JLabel();
+        labelPinkPlace6.setBounds(1404, 678, 100, 100);
+        labelPinkPlace6.setIcon(pinkPlace6);
+        frameGame.add(labelPinkPlace6);
+
+        greenPlace6= new ImageIcon("src/images/greenHall.png");
+        labelGreenPlace6=new JLabel();
+        labelGreenPlace6.setBounds(1404, 678, 100, 100);
+        labelGreenPlace6.setIcon(greenPlace6);
+        frameGame.add(labelGreenPlace6);
+
+        redPlace6= new ImageIcon("src/images/redHall.png");
+        labelRedPlace6=new JLabel();
+        labelRedPlace6.setBounds(1404, 678, 100, 100);
+        labelRedPlace6.setIcon(redPlace6);
+        frameGame.add(labelRedPlace6);
+
+        yellowPlace6= new ImageIcon("src/images/yellowHall.png");
+        labelYellowPlace6=new JLabel();
+        labelYellowPlace6.setBounds(1404, 678, 100, 100);
+        labelYellowPlace6.setIcon(yellowPlace6);
+        frameGame.add(labelYellowPlace6);
+
+        //images 7 slot students in the beginning hall
+        bluePlace7= new ImageIcon("src/images/blueHall.png");
+        labelBluePlace7=new JLabel();
+        labelBluePlace7.setBounds(1404, 728, 100, 100);
+        labelBluePlace7.setIcon(bluePlace7);
+        frameGame.add(labelBluePlace7);
+
+        pinkPlace7= new ImageIcon("src/images/pinkHall.png");
+        labelPinkPlace7=new JLabel();
+        labelPinkPlace7.setBounds(1404, 728, 100, 100);
+        labelPinkPlace7.setIcon(pinkPlace7);
+        frameGame.add(labelPinkPlace7);
+
+        greenPlace7= new ImageIcon("src/images/greenHall.png");
+        labelGreenPlace7=new JLabel();
+        labelGreenPlace7.setBounds(1404, 728, 100, 100);
+        labelGreenPlace7.setIcon(greenPlace7);
+        frameGame.add(labelGreenPlace7);
+
+        redPlace7= new ImageIcon("src/images/redHall.png");
+        labelRedPlace7=new JLabel();
+        labelRedPlace7.setBounds(1404, 728, 100, 100);
+        labelRedPlace7.setIcon(redPlace7);
+        frameGame.add(labelRedPlace7);
+
+        yellowPlace7= new ImageIcon("src/images/yellowHall.png");
+        labelYellowPlace7=new JLabel();
+        labelYellowPlace7.setBounds(1404, 728, 100, 100);
+        labelYellowPlace7.setIcon(yellowPlace7);
+        frameGame.add(labelYellowPlace7);
+
+        if(size==3)
+        {
+            //images 8 slot students in the beginning hall
+            bluePlace8= new ImageIcon("src/images/blueHall.png");
+            labelBluePlace8=new JLabel();
+            labelBluePlace8.setBounds(1466, 678, 100, 100);
+            labelBluePlace8.setIcon(bluePlace8);
+            frameGame.add(labelBluePlace8);
+
+            pinkPlace8= new ImageIcon("src/images/pinkHall.png");
+            labelPinkPlace8=new JLabel();
+            labelPinkPlace8.setBounds(1466, 678, 100, 100);
+            labelPinkPlace8.setIcon(pinkPlace8);
+            frameGame.add(labelPinkPlace8);
+
+            greenPlace8= new ImageIcon("src/images/greenHall.png");
+            labelGreenPlace8=new JLabel();
+            labelGreenPlace8.setBounds(1466, 678, 100, 100);
+            labelGreenPlace8.setIcon(greenPlace8);
+            frameGame.add(labelGreenPlace8);
+
+            redPlace8= new ImageIcon("src/images/redHall.png");
+            labelRedPlace8=new JLabel();
+            labelRedPlace8.setBounds(1466, 678, 100, 100);
+            labelRedPlace8.setIcon(redPlace8);
+            frameGame.add(labelRedPlace8);
+
+            yellowPlace8= new ImageIcon("src/images/yellowHall.png");
+            labelYellowPlace8=new JLabel();
+            labelYellowPlace8.setBounds(1466, 678, 100, 100);
+            labelYellowPlace8.setIcon(yellowPlace8);
+            frameGame.add(labelYellowPlace8);
+
+            //images 9 slot students in the beginning hall
+            bluePlace9= new ImageIcon("src/images/blueHall.png");
+            labelBluePlace9=new JLabel();
+            labelBluePlace9.setBounds(1466, 728, 100, 100);
+            labelBluePlace9.setIcon(bluePlace9);
+            frameGame.add(labelBluePlace9);
+
+            pinkPlace9= new ImageIcon("src/images/pinkHall.png");
+            labelPinkPlace9=new JLabel();
+            labelPinkPlace9.setBounds(1466, 728, 100, 100);
+            labelPinkPlace9.setIcon(pinkPlace9);
+            frameGame.add(labelPinkPlace9);
+
+            greenPlace9= new ImageIcon("src/images/greenHall.png");
+            labelGreenPlace9=new JLabel();
+            labelGreenPlace9.setBounds(1466, 728, 100, 100);
+            labelGreenPlace9.setIcon(greenPlace9);
+            frameGame.add(labelGreenPlace9);
+
+            redPlace9= new ImageIcon("src/images/redHall.png");
+            labelRedPlace9=new JLabel();
+            labelRedPlace9.setBounds(1466, 728, 100, 100);
+            labelRedPlace9.setIcon(redPlace9);
+            frameGame.add(labelRedPlace9);
+
+            yellowPlace9= new ImageIcon("src/images/yellowHall.png");
+            labelYellowPlace9=new JLabel();
+            labelYellowPlace9.setBounds(1466, 728, 100, 100);
+            labelYellowPlace9.setIcon(yellowPlace9);
+            frameGame.add(labelYellowPlace9);
+        }
+
+        //button for the selection of the clouds based on the different field of the game
+        if(size==2) {
+            buttonSelectCloud1 = new JButton("");
+            buttonSelectCloud1.setBounds(430, 350, 100, 100);
+            buttonSelectCloud1.addActionListener(this);
+            transparentButton(buttonSelectCloud1);
+            frameGame.add(buttonSelectCloud1);
+
+            buttonSelectCloud2 = new JButton("");
+            buttonSelectCloud2.setBounds(630, 350, 100, 100);
+            buttonSelectCloud2.addActionListener(this);
+            transparentButton(buttonSelectCloud2);
+            frameGame.add(buttonSelectCloud2);
+
+        }else if(size==3) {
+            buttonSelectCloud1 = new JButton("");
+            buttonSelectCloud1.setBounds(430, 270, 100, 100);
+            buttonSelectCloud1.addActionListener(this);
+            transparentButton(buttonSelectCloud1);
+            frameGame.add(buttonSelectCloud1);
+
+            buttonSelectCloud2 = new JButton("");
+            buttonSelectCloud2.setBounds(630, 270, 100, 100);
+            buttonSelectCloud2.addActionListener(this);
+            transparentButton(buttonSelectCloud2);
+            frameGame.add(buttonSelectCloud2);
+
+            buttonSelectCloud3 = new JButton("");
+            buttonSelectCloud3.setBounds(530, 430, 100, 100);
+            buttonSelectCloud3.addActionListener(this);
+            transparentButton(buttonSelectCloud3);
+            frameGame.add(buttonSelectCloud3);
+
+        }else if(size==4) {
+            buttonSelectCloud1 = new JButton("");
+            buttonSelectCloud1.setBounds(430, 270, 100, 100);
+            buttonSelectCloud1.addActionListener(this);
+            transparentButton(buttonSelectCloud1);
+            frameGame.add(buttonSelectCloud1);
+
+            buttonSelectCloud2 = new JButton("");
+            buttonSelectCloud2.setBounds(630, 270, 100, 100);
+            buttonSelectCloud2.addActionListener(this);
+            transparentButton(buttonSelectCloud2);
+            frameGame.add(buttonSelectCloud2);
+
+            buttonSelectCloud3 = new JButton("");
+            buttonSelectCloud3.setBounds(430, 430, 100, 100);
+            buttonSelectCloud3.addActionListener(this);
+            transparentButton(buttonSelectCloud3);
+            frameGame.add(buttonSelectCloud3);
+
+            buttonSelectCloud4 = new JButton("");
+            buttonSelectCloud4.setBounds(640, 430, 100, 100);
+            buttonSelectCloud4.addActionListener(this);
+            transparentButton(buttonSelectCloud4);
+            frameGame.add(buttonSelectCloud4);
+
+        }
+
+        //a way to communicate with the players
+        labelPlayerMessage = new JLabel("", SwingConstants.CENTER);
+        labelPlayerMessage.setBounds(485,205,200,50);
+        labelPlayerMessage.setForeground(Color.WHITE);
+        labelPlayerMessage.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+        frameGame.add(labelPlayerMessage);
 
 
         frameGame.add(labelSetBackground);
@@ -978,87 +1431,107 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         }
         else if(e.getSource()== buttonPlus1)
         {
-
+            labelPlayerMessage.setText("# 1 ISLAND SELECTED #");
         }
         else if(e.getSource()== buttonPlus2)
         {
-
+            labelPlayerMessage.setText("# 2 ISLAND SELECTED #");
         }
         else if(e.getSource()== buttonPlus3)
         {
-
+            labelPlayerMessage.setText("# 3 ISLAND SELECTED #");
         }
         else if(e.getSource()== buttonPlus4)
         {
-
+            labelPlayerMessage.setText("# 4 ISLAND SELECTED #");
         }
         else if(e.getSource()== buttonPlus5)
         {
-
+            labelPlayerMessage.setText("# 5 ISLAND SELECTED #");
         }
         else if(e.getSource()== buttonPlus6)
         {
-
+            labelPlayerMessage.setText("# 6 ISLAND SELECTED #");
         }
         else if(e.getSource()== buttonPlus7)
         {
-
+            labelPlayerMessage.setText("# 7 ISLAND SELECTED #");
         }
         else if(e.getSource()== buttonPlus8)
         {
-
+            labelPlayerMessage.setText("# 8 ISLAND SELECTED #");
         }
         else if(e.getSource()== buttonPlus9)
         {
-
+            labelPlayerMessage.setText("# 9 ISLAND SELECTED #");
         }
         else if(e.getSource()== buttonPlus10)
         {
-
+            labelPlayerMessage.setText("# 10 ISLAND SELECTED #");
         }
         else if(e.getSource()== buttonPlus11)
         {
-
+            labelPlayerMessage.setText("# 11 ISLAND SELECTED #");
         }
         else if(e.getSource()== buttonPlus12)
         {
-
+            labelPlayerMessage.setText("# 12 ISLAND SELECTED #");
         }
         else if(e.getSource()== buttonSelectStudent1)
         {
-
+            labelPlayerMessage.setText("# SLOT 1 SELECTED #");
         }
         else if(e.getSource()== buttonSelectStudent2)
         {
-
+            labelPlayerMessage.setText("# SLOT 2 SELECTED #");
         }
         else if(e.getSource()== buttonSelectStudent3)
         {
-
+            labelPlayerMessage.setText("# SLOT 3 SELECTED #");
         }
         else if(e.getSource()== buttonSelectStudent4)
         {
-
+            labelPlayerMessage.setText("# SLOT 4 SELECTED #");
         }
         else if(e.getSource()== buttonSelectStudent5)
         {
-
+            labelPlayerMessage.setText("# SLOT 5 SELECTED #");
         }
         else if(e.getSource()== buttonSelectStudent6)
         {
-
+            labelPlayerMessage.setText("# SLOT 6 SELECTED #");
         }
         else if(e.getSource()== buttonSelectStudent7)
         {
-
+            labelPlayerMessage.setText("# SLOT 7 SELECTED #");
         }
         else if(e.getSource()== buttonSelectStudent8)
         {
-
+            labelPlayerMessage.setText("# SLOT 8 SELECTED #");
         }
         else if(e.getSource()== buttonSelectStudent9)
         {
-
+            labelPlayerMessage.setText("# SLOT 9 SELECTED #");
+        }
+        else if(e.getSource()== buttonPutOnTable)
+        {
+            labelPlayerMessage.setText("# TABLE SELECTED #");
+        }
+        else if(e.getSource()== buttonSelectCloud1)
+        {
+            labelPlayerMessage.setText("# CLOUD 1 SELECTED #");
+        }
+        else if(e.getSource()== buttonSelectCloud2)
+        {
+            labelPlayerMessage.setText("# CLOUD 2 SELECTED #");
+        }
+        else if(e.getSource()== buttonSelectCloud3)
+        {
+            labelPlayerMessage.setText("# CLOUD 3 SELECTED #");
+        }
+        else if(e.getSource()== buttonSelectCloud4)
+        {
+            labelPlayerMessage.setText("# CLOUD 4 SELECTED #");
         }
 
 
