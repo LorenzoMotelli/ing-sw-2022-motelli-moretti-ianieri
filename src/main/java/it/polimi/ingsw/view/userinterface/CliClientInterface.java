@@ -231,6 +231,7 @@ public class CliClientInterface implements UserInterface {
                 System.out.print(student.getColor() +  " ");
             }
             System.out.println();
+            System.out.println("Professors: ");
             for(Professor professor : game.getPlayers()[i].getSchool().getSchoolProfessors()){
                 System.out.print(professor.getColor() + " ");
             }
@@ -266,7 +267,7 @@ public class CliClientInterface implements UserInterface {
         for(int i = 0; i < cards.size(); i++){
             int moveMN = cards.get(i).getMovementMotherNature();
             int weight = cards.get(i).getTurnHeaviness();
-            System.out.println( "Card " + i + " has movement MN " + moveMN + " and heaviness " + weight) ;
+            System.out.println( "Card " + cards.get(i).getTurnHeaviness() + " has movement MN " + moveMN + " and heaviness " + weight) ;
         }
         // ASK USER FOR AN INT
         //TODO: validate user input
@@ -295,46 +296,18 @@ public class CliClientInterface implements UserInterface {
         cmdIn = new Scanner(System.in);
         int choice = cmdIn.nextInt();
         // Student studentChosen = message.getStudent().get(choice);
-
         messageHandler.sendMessage(new SelectStudentMessage(choice));
     }
 
     @Override
     public void selectPlace(AskWherePlaceMessage message){
-        /*
-        System.out.println("ISLAND SITUATION:\n");
-        for(int i = 0; i < message.getIslands().size(); i++){
-            System.out.print("Island " + i + " ");
-            for(int j = 0; j < message.getIslands().get(i).getStudents().size(); j++){
-                System.out.print(message.getIslands().get(i).getStudents().get(j).getColor() + " ");
-            }
-            System.out.println();
-        }
-        System.out.println("HALL " + message.getHall().getHallColor() +  " SITUATION:\n");
-        for(int i = 0; i < message.getHall().getTableHall().length; i++){
-            if(null != message.getHall().getTableHall()[i]){
-                System.out.print(message.getHall().getTableHall()[i] +  " ");
-            }
-            else{
-                break;
-            }
-        }
-        System.out.println();
-        cmdIn = new Scanner(System.in);
-        String choice = cmdIn.nextLine().toUpperCase();
-        switch (choice.charAt(0)){
-            case 'I' -> messageHandler.sendMessage(new PlaceOnIslandMessage(message.getIslands().get(choice.charAt(1)-48)));
-            case 'H' -> messageHandler.sendMessage(new PlaceInHallMessage(message.getHall()));
-            default -> selectPlace(message);
-        }
-         */
         int islandsNumAvailable = message.getIslandsNumAvailable();
         boolean hallAvailability = message.isHallAvailable();
         System.out.println("Select in Island or the hall: the index of the island for island; out of bound for place in hall if available");
 
         cmdIn = new Scanner(System.in);
         int choice = cmdIn.nextInt();
-        if(choice < islandsNumAvailable){
+        if(0 <= choice && choice < islandsNumAvailable){
             messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
         else{
@@ -364,27 +337,27 @@ public class CliClientInterface implements UserInterface {
             switch(message.getSchool().getSchoolHall()[i].getHallColor()){
                 case BLUE -> {
                     if(null != message.getSchool().getBlueProfessor()){
-                        System.out.print(" | " + message.getSchool().getBlueProfessor().getColor() + " ");
+                        System.out.print(" | Prof  " + message.getSchool().getBlueProfessor().getColor() + " ");
                     }
                 }
                 case GREEN -> {
                     if(null != message.getSchool().getGreenProfessor()){
-                        System.out.print(" | " +message.getSchool().getGreenProfessor().getColor() + " ");
+                        System.out.print(" | Prof " +message.getSchool().getGreenProfessor().getColor() + " ");
                     }
                 }
                 case PINK -> {
                     if(null != message.getSchool().getPinkProfessor()){
-                        System.out.print(" | " +message.getSchool().getPinkProfessor().getColor() + " ");
+                        System.out.print(" | Prof " +message.getSchool().getPinkProfessor().getColor() + " ");
                     }
                 }
                 case RED -> {
                     if(null != message.getSchool().getRedProfessor()){
-                        System.out.print(" | " +message.getSchool().getRedProfessor().getColor() + " ");
+                        System.out.print(" | Prof " +message.getSchool().getRedProfessor().getColor() + " ");
                     }
                 }
                 case YELLOW -> {
                     if(null != message.getSchool().getYellowProfessor()){
-                        System.out.print(" | " +message.getSchool().getYellowProfessor().getColor() + " ");
+                        System.out.print(" | Prof " +message.getSchool().getYellowProfessor().getColor() + " ");
                     }
                 }
             }
@@ -405,7 +378,7 @@ public class CliClientInterface implements UserInterface {
                 System.out.print(message.getIslands().get(i).getStudents().get(j).getColor() + " ");
             }
             if(message.getIslands().get(i).hasMotherNature()){
-                System.out.print("MN");
+                System.out.print("[MN]");
             }
             if(message.getIslands().get(i).getTowers().size() > 0) {
                 System.out.print(" | ");
