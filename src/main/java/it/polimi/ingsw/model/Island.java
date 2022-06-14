@@ -122,7 +122,7 @@ public class Island implements Serializable {
      * add a list of tower in this tower list
      * @param towersToAdd the list of tower to add in this
      */
-    public void addTower(List<Tower> towersToAdd){
+    public void addTowers(List<Tower> towersToAdd){
         playerTower.addAll(towersToAdd);
     }
 }

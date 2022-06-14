@@ -250,7 +250,7 @@ public class Table implements Serializable {
      * @param islandOrigin the second island/archipelago to be linked, this will be removed
      */
     public void linkIslands(Island islandTarget, Island islandOrigin){
-        islandTarget.addTower(islandOrigin.getTowers());
+        islandTarget.addTowers(islandOrigin.getTowers());
         islandTarget.addStudents(islandOrigin.getStudents());
         //add other things in expert game
     }

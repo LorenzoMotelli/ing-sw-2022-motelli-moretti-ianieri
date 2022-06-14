@@ -15,16 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static it.polimi.ingsw.model.enumeration.Phases.*;
-import static it.polimi.ingsw.model.enumeration.Phases.SELECT_CLOUD;
 
 public class Controller implements Observer<Message> {
 
     private Server server;
     private GeneralGame game;
-
     private List<VirtualView> clients;
-
-    private int numActions = 1;
+    //private int numActions = 1;
 
     public Controller(Server server,int players) {
         this.server = server;
@@ -37,9 +34,7 @@ public class Controller implements Observer<Message> {
         this.clients = new ArrayList<>();
     }
 
-
     public synchronized void addClient(Connection c, String username) {
-
         Player player = game.addPlayer(username);
 
         VirtualView v = new VirtualView(c, player);
@@ -70,8 +65,6 @@ public class Controller implements Observer<Message> {
         }
     }
 
-
-
     public void startGame() {
         // TODO Auto-generated method stub
         System.out.println("The game can now starts");
@@ -86,37 +79,6 @@ public class Controller implements Observer<Message> {
         }
 
         game.startGeneralGame();
-        /*
-        System.out.println("Creation of all components of the model done");
-
-        System.out.println("The game has:");
-        System.out.println(game.getTable().getClouds().size() + " clouds");
-        System.out.println("The students on each cloud are: ");
-        for(Cloud cloud :game.getTable().getClouds()){
-            for(Student student : cloud.getCloudStudents()){
-                System.out.print(student.getColor() + " ");
-            }
-            System.out.println();
-        }
-        System.out.println(game.getTable().getIslands().size() + " islands");
-        System.out.println("The students on each island are: ");
-        for(int i = 0; i < 12; i++){
-            System.out.println("Checking island number: " + i);
-            for(Student student : game.getTable().getIslands().get(i).getStudents()){
-                System.out.print(student.getColor() + " ");
-            }
-            System.out.println();
-        }
-        for(Player p : game.getPlayers()){
-            System.out.println("Player " + p.getPlayerName() + " has:");
-            System.out.println(p.getAssistantDeck().length + " assistants");
-            System.out.println(p.getSchoolDashboard().getPlayersTowers().get(0).getColor() + " towers");
-            for (Student s : p.getSchoolDashboard().getEntranceStudent()){
-                System.out.print(s.getColor() + " ");
-            }
-            System.out.print("entrance students\n");
-        }*/
-
 
         askPlayerAssistantCard();
     }
@@ -139,69 +101,6 @@ public class Controller implements Observer<Message> {
     }
 
     /**
-     * handle the message if it is from the current player
-     * @param message the message received
-     */
-    /*
-    public void handleMessage(Message message) {
-
-        String playerMsg = message.getPlayerName();
-
-        if(!checkPlayerTurn(playerMsg)){
-            //the virtual view send a message that declares that is not the turn of the player that send the message
-            return;
-        }
-        //restart the number of actions that the current player can do
-        if(numActions == 3 || numActions == 4){
-            numActions = 1;
-        }
-
-        ConfirmationMessage cnfMsg;
-
-        try {
-            switch(message.getMessageAction()){
-                case SELECT_ASSISTANT_CARD:{
-                    assistantCardSelected((SelectAssistantCardMessage) message);
-                    cnfMsg = new ConfirmationMessage(SELECT_ASSISTANT_CARD, playerMsg);
-                    break;
-                }
-                case PLACE_IN_HALL:{
-                    placeInHallSelected((PlaceInHallMessage) message, numActions);
-                    cnfMsg = new ConfirmationMessage(PLACE_IN_HALL, playerMsg);
-                    numActions++;
-                    break;
-                }
-                case PLACE_ON_ISLAND:{
-                    placeOnIslandSelected((PlaceOnIslandMessage) message, numActions);
-                    numActions++;
-                    cnfMsg = new ConfirmationMessage(PLACE_ON_ISLAND, playerMsg);
-                    break;
-                }
-                case MOVE_MOTHER_NATURE:{
-                    placeMotherNatureOnIsland((PlaceMotherNaturedMessage) message);
-                    cnfMsg = new ConfirmationMessage(MOVE_MOTHER_NATURE, playerMsg);
-                    break;
-                }
-                case SELECT_CLOUD:{
-                    takeStudentFromCloudSelected((TakeStudentFromCloudMessage) message);
-                    cnfMsg = new ConfirmationMessage(SELECT_CLOUD, playerMsg);
-                    break;
-                }
-                case END_TURN:{
-                    endTurn((EndTurnMessage) message);
-                    cnfMsg = new ConfirmationMessage(END_TURN, playerMsg);
-                    break;
-                }
-            }
-        } catch (AssistantAlreadyUsedException | HallAlreadyFullException | IslandOutOfBound | CloudEmptyException e){
-            //server.handleMessage(ERROR_MESSAGE);
-        }
-        //server.handleMessage(cnfMsg);
-    }
-    */
-
-
-    /**
      * check if the message arrived is from the current player
      * @param username the player that sends the message
      * @return true if it is the current player
@@ -218,10 +117,14 @@ public class Controller implements Observer<Message> {
      * @param message in the payload of the message there is the assistant card selected
      */
     public void assistantCardSelected(SelectAssistantCardMessage message){
-        //System.out.println("The assistant that is arrived has weight " +  message.getAssistantCard().getTurnHeaviness() + " and move MN " + message.getAssistantCard().getMovementMotherNature());
-        AssistantCard assistantCard = game.getCurrentPlayer().getAssistantDeck().get(message.getIndexAssistantCard()-1);
+        AssistantCard assistantCard = new AssistantCard(0);
+        for(AssistantCard playerCard : game.getCurrentPlayer().getAssistantDeck()){
+            if(playerCard.getTurnHeaviness() == message.getIndexAssistantCard()){
+                assistantCard = playerCard;
+                break;
+            }
+        }
 
-        //game.getAssistantCardsUsed().add(assistantCard);
         game.addAssistantCardUsed(assistantCard);
         game.getCurrentPlayer().selectAssistant(assistantCard);
         System.out.println("Player " + game.getCurrentPlayer().getPlayerName() + " has heaviness " + game.getCurrentPlayer().getPlayerWeight());
@@ -229,7 +132,6 @@ public class Controller implements Observer<Message> {
             game.setNewOrder();
             nextAction(PLANNING);
             System.out.println("Starting action phase");
-            //askPlaceStudent();
         }
         else{
             game.newTurn();
@@ -243,22 +145,7 @@ public class Controller implements Observer<Message> {
     }
 
     public void studentSelected(SelectStudentMessage message){
-        //game.getCurrentPlayer().setStudentSelected(message.getStudent());
-        //List<Island> islandsList = game.getTable().getIslands();
-
-        // check if hall is full before asking where to place student
-
-
-
-        /*
-        for(int i = 0; i < 5; i++){
-            if(game.getCurrentPlayer().getSchoolDashboard().getSchoolHall()[i].getHallColor().equals(message.getStudent().getColor())){
-                hall = game.getCurrentPlayer().getSchoolDashboard().getSchoolHall()[i];
-                break;
-            }
-        }
-        */
-
+        System.out.println("Player " + game.getCurrentPlayer().getPlayerName() + " selected a student");
         int islandsNumAvailable = game.getTable().getIslands().size();
 
         Student student = game.getCurrentPlayer().getSchool().getStudent(message.getStudent());
@@ -273,17 +160,9 @@ public class Controller implements Observer<Message> {
      * @param message the message that requires a placement in the hall
      */
     public void placeInHallSelected(PlaceInHallMessage message){
-        /*School playerSchool = game.getCurrentPlayer().getSchoolDashboard();
-        PawnColor studentColor = game.getCurrentPlayer().getStudentSelected().getColor();
-        Hall hallWherePlace = game.getColorHall(studentColor);
-        for(int i = 0; i < 5; i++){
-            if(playerSchool.getSchoolHall()[i].getHallColor().equals(message.getHall().getHallColor())){
-                game.placeStudentInHall(game.getCurrentPlayer().getStudentSelected());
-                break;
-            }
-        }*/
+        System.out.println("Student place in hall");
         game.placeStudentInHall(game.getCurrentPlayer().getStudentSelected());
-        //message = null;
+
         nextAction(PLACE_STUDENT);
     }
 
@@ -292,19 +171,10 @@ public class Controller implements Observer<Message> {
      * @param message the message that requires a placement on an island
      */
     public void placeOnIslandSelected(PlaceOnIslandMessage message){
-        /*for(Island island : game.getTable().getIslands()){
-            if(island.equals(message.getIsland())){
-                game.placeStudentOnIsland(message.getStudent(), island);
-                break;
-            }
-        }
-        nextAction(PLACE_STUDENT, num);
-        Student student = game.getCurrentPlayer().getStudentSelected();
-        Island islandSelected = game.getTable().getIslands().get(message.getIslandIndex());*/
+        System.out.println("Student place on island " + message.getIslandIndex());
         game.placeStudentOnIsland(message.getIslandIndex());
-        //message = null;
-        nextAction(PLACE_STUDENT);
 
+        nextAction(PLACE_STUDENT);
     }
 
     private void askMoveMotherNature() {
@@ -321,16 +191,7 @@ public class Controller implements Observer<Message> {
      * @param message the message that requires the placement of the mother nature
      */
     public void placeMotherNatureOnIsland(PlaceMotherNatureMessage message){
-        /*for(Island island : game.getTable().getIslands()){
-            if(island.equals(message.getIslandIndex())){
-                int indexOfTheIsland = game.getTable().getIslands().indexOf(island);
-                if( indexOfTheIsland > game.getMotherNatureMovement()) throw new IslandOutOfBound();
-                game.moveMotherNature(island);
-            }
-        }*/
-
-        // check if int is valid
-        // do movement
+        System.out.println("Movement of mother nature on a new island");
         //save the initial index of the island
         int startingIslandIndex = game.getTable().getIslands().indexOf(game.getTable().getIslandWithMotherNature());
         //save the final index of the island
@@ -347,16 +208,17 @@ public class Controller implements Observer<Message> {
         sendToCurrentPlayer(new AskCloudMessage(clouds));
     }
 
-
     private void selectCloud(SelectCloudMessage message) {
-        // check cloud is valid
+        System.out.println("The player has selected the cloud");
+        System.out.println("Player " + game.getCurrentPlayer().getPlayerName() + " finished the turn");
+        // select the real index of the cloud
         int choice = message.getSelectedCloud();
 
         for(int i = 0; i < game.getTable().getClouds().size(); i++){
-            if(i <= message.getSelectedCloud() && game.getTable().getClouds().get(i).getCloudStudents().size() == 0){
+            if(game.getTable().getClouds().get(i).getCloudStudents().size() == 0){
                 choice++;
             }
-            if(i > message.getSelectedCloud()){
+            else{
                 break;
             }
         }
@@ -369,26 +231,25 @@ public class Controller implements Observer<Message> {
 
     /**
      * give to current player the students from the cloud selected
-     * @param message the message that requires to take
-     //* @throws CloudEmptyException if the cloud selected is empty then the player must select another one
+     //* @param message the message that requires to take
      */
-    public void takeStudentFromCloudSelected(TakeStudentFromCloudMessage message){
+    /*public void takeStudentFromCloudSelected(TakeStudentFromCloudMessage message){
         /*for(Cloud cloud : game.getTable().getClouds()){
             if(cloud.equals(message.getCloud())){
                 if(0 == cloud.getCloudStudents().size()) throw new CloudEmptyException();
                 game.getTable().giveStudentsFromCloud(cloud);
                 break;
             }
-        }*/
+        }
     }
 
     public void endTurn(EndTurnMessage message){
         game.newTurn();
-    }
+    }*/
 
     private void endRound() {
         // complete round
-        // do something
+        System.out.println("Round ended, all players have done");
         nextAction(ENDING);
     }
 
@@ -398,30 +259,6 @@ public class Controller implements Observer<Message> {
      //* @param num the number of iteration of the current phase
      */
     public void nextAction(Phases currentPhase){
-        /*
-        switch (currentPhase){
-            case STARTING:
-            case PLANNING:
-            case ENDING:
-            case PLACE_MOTHER_NATURE: {
-                game.nextPhase(currentPhase);
-                break;
-            }
-            case PLACE_STUDENT:{
-                //check after 3
-                if(3 == num){
-                    if(3 == game.getPlayers().length){
-                        game.nextPhase(currentPhase);
-                    }
-                }
-                else if(4 == num){
-                    game.nextPhase(currentPhase);
-                }
-                break;
-            }
-        }
-         */
-        //TODO check if it's the action that change the phase
         game.nextPhase(currentPhase);
 
         if (game.getGamePhase() == PLANNING) {
@@ -437,6 +274,4 @@ public class Controller implements Observer<Message> {
             endRound();
         }
     }
-
-
 }

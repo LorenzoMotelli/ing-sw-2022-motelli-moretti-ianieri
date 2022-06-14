@@ -6,8 +6,8 @@ import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 
 public class SchoolUpdateMessage extends Message {
     private final School school;
-    public SchoolUpdateMessage(School school) {
-        super(MessageAction.UPDATE_SCHOOL, "SERVER");
+    public SchoolUpdateMessage(School school, String name) {
+        super(MessageAction.UPDATE_SCHOOL, name);
         this.school = school;
     }
 
