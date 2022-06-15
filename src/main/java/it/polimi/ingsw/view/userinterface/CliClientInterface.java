@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.userinterface;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.AssistantCard;
+import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.network.client.ClientMessageHandler;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
@@ -207,8 +208,9 @@ public class CliClientInterface implements UserInterface {
                 System.out.print(" NO STUDENTS ");
             }
             if(game.getTable().getIslands().get(i).equals(game.getTable().getIslandWithMotherNature())){
-                System.out.print("MN ");
+                System.out.print("[MN]");
             }
+            System.out.print(" | ");
             for(Tower tower : game.getTable().getIslands().get(i).getTowers()){
                 System.out.print(tower.getColor() + " ");
             }
@@ -223,17 +225,13 @@ public class CliClientInterface implements UserInterface {
             }
             System.out.println();
         }
+        System.out.println("\n");
         System.out.println("SCHOOLS SITUATION:");
         for(int i = 0; i < game.getPlayers().length; i++){
             System.out.print("Player " + game.getPlayers()[i].getPlayerName() + " has :\n");
             System.out.print("Entrance students: ");
             for(Student student : game.getPlayers()[i].getSchool().getEntranceStudent()){
                 System.out.print(student.getColor() +  " ");
-            }
-            System.out.println();
-            System.out.println("Professors: ");
-            for(Professor professor : game.getPlayers()[i].getSchool().getSchoolProfessors()){
-                System.out.print(professor.getColor() + " ");
             }
             System.out.println();
             for(int j = 0; j < 5; j++){
@@ -246,8 +244,12 @@ public class CliClientInterface implements UserInterface {
                         break;
                     }
                 }
+                PawnColor currentColor = game.getPlayers()[i].getSchool().getSchoolHall()[j].getHallColor();
+                Professor currentProf = game.getPlayers()[i].getSchool().getProfessorByColor(currentColor);
+                System.out.print("| "+ (currentProf != null ? currentProf.getColor() : " ") + " ");
                 System.out.println();
             }
+            System.out.print("Towers: ");
             for(Tower tower : game.getPlayers()[i].getSchool().getPlayersTowers()){
                 System.out.print(tower.getColor() + " ");
             }
@@ -261,20 +263,29 @@ public class CliClientInterface implements UserInterface {
     }
 
     @Override
-    public void selectAssistantCard(AskAssistantCardsMessage message){
-        System.out.println("Please select one assistant by selecting its' index");
+    public void selectAssistantCard(AskAssistantCardsMessage message) {
+        System.out.println("Please select one assistant card");
         List<AssistantCard> cards = message.getAssistantCards();
-        for(int i = 0; i < cards.size(); i++){
+        for (int i = 0; i < cards.size(); i++) {
             int moveMN = cards.get(i).getMovementMotherNature();
             int weight = cards.get(i).getTurnHeaviness();
-            System.out.println( "Card " + cards.get(i).getTurnHeaviness() + " has movement MN " + moveMN + " and heaviness " + weight) ;
+            System.out.println("Card " + cards.get(i).getTurnHeaviness() + " has movement MN " + moveMN + " and heaviness " + weight);
         }
         // ASK USER FOR AN INT
         //TODO: validate user input
         cmdIn = new Scanner(System.in);
-        int choice = cmdIn.nextInt();
-        //System.out.println("You select the assistant with MN movement " + chosenCard.getMovementMotherNature() + " and weight " + chosenCard.getTurnHeaviness());
-        messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
+        int choice;
+        try{
+            choice = Integer.parseInt(cmdIn.nextLine());
+        } catch (NumberFormatException e){
+            choice = -1;
+        }
+        if (cards.get(0).getTurnHeaviness() <= choice &&  choice <= cards.get(cards.size() - 1).getTurnHeaviness()){
+            messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
+        }
+        else{
+            selectAssistantCard(message);
+        }
     }
 
     @Override
@@ -290,13 +301,22 @@ public class CliClientInterface implements UserInterface {
     public void selectStudent(AskStudentMessage message){
         System.out.println("Please select one student:\n");
         for(Student student : message.getStudent()){
-            System.out.print(student.getColor() +  " ");
+            System.out.print(message.getStudent().indexOf(student)+ ") " + student.getColor() +  " ");
         }
         System.out.println();
         cmdIn = new Scanner(System.in);
-        int choice = cmdIn.nextInt();
-        // Student studentChosen = message.getStudent().get(choice);
-        messageHandler.sendMessage(new SelectStudentMessage(choice));
+        int choice;
+        try{
+            choice = Integer.parseInt(cmdIn.nextLine());
+        } catch (NumberFormatException e){
+            choice = -1;
+        }
+        if(0 <= choice && choice < message.getStudent().size()) {
+            messageHandler.sendMessage(new SelectStudentMessage(choice));
+        }
+        else{
+            selectStudent(message);
+        }
     }
 
     @Override
@@ -306,7 +326,12 @@ public class CliClientInterface implements UserInterface {
         System.out.println("Select in Island or the hall: the index of the island for island; out of bound for place in hall if available");
 
         cmdIn = new Scanner(System.in);
-        int choice = cmdIn.nextInt();
+        int choice;
+        try{
+            choice = Integer.parseInt(cmdIn.nextLine());
+        } catch (NumberFormatException e){
+            choice = -1;
+        }
         if(0 <= choice && choice < islandsNumAvailable){
             messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
@@ -316,6 +341,7 @@ public class CliClientInterface implements UserInterface {
             }
             //hall not available, the player has to select the island
             else{
+                System.out.println("Your hall is full, please select an island");
                 selectPlace(message);
             }
         }
@@ -323,7 +349,7 @@ public class CliClientInterface implements UserInterface {
 
     @Override
     public void schoolUpdate(SchoolUpdateMessage message){
-        System.out.println("NEW SCHOOL SITUATION:");
+        System.out.println("NEW SCHOOL SITUATION for player" + message.getPlayerName() + " :");
         for(int i = 0; i < 5; i++){
             System.out.print(message.getSchool().getSchoolHall()[i].getHallColor() + " : ");
             for(int j = 0; j < 10; j++){
@@ -388,6 +414,7 @@ public class CliClientInterface implements UserInterface {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     @Override
@@ -409,7 +436,7 @@ public class CliClientInterface implements UserInterface {
         }
         System.out.println();
         cmdIn = new Scanner(System.in);
-        int choice = cmdIn.nextInt();
+        int choice = Integer.parseInt(cmdIn.nextLine());
         if(0 <= choice && choice < message.getIslands().size()) {
             messageHandler.sendMessage(new PlaceMotherNatureMessage(choice));
         }
@@ -431,7 +458,12 @@ public class CliClientInterface implements UserInterface {
         }
         System.out.println();
         cmdIn = new Scanner(System.in);
-        int choice = cmdIn.nextInt();
+        int choice;
+        try{
+            choice = Integer.parseInt(cmdIn.nextLine());
+        } catch (NumberFormatException e){
+            choice = -1;
+        }
         if(0 <= choice && choice < message.getClouds().size()) {
             messageHandler.sendMessage(new SelectCloudMessage(choice));
         }

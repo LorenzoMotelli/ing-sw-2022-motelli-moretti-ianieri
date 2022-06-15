@@ -40,12 +40,13 @@ public class GeneralGame4Players extends GeneralGame{
     @Override
     public void moveMotherNature(Island islandSelected){
         //actual 'movement' of mother nature
-        for(Island island : getTable().getIslands()){
+        /*for(Island island : getTable().getIslands()){
             if(island.hasMotherNature()){
                 island.setMotherNature(false);
                 break;
             }
-        }
+        }*/
+        getTable().getIslandWithMotherNature().setMotherNature(false);
         islandSelected.setMotherNature(true);
         //check only the single players
         TowerColor conquerorColor = checkInfluenceTeam(islandSelected);
@@ -124,35 +125,35 @@ public class GeneralGame4Players extends GeneralGame{
                     case BLUE -> {
                         if (player.getPlayerTeam().equals(WHITE)) {
                             whiteInfluence = whiteInfluence + blueStudents;
-                        } else {
+                        } else if(player.getPlayerTeam().equals(BLACK)) {
                             blackInfluence = blackInfluence + blueStudents;
                         }
                     }
                     case GREEN -> {
                         if (player.getPlayerTeam().equals(WHITE)) {
                             whiteInfluence = whiteInfluence + greenStudents;
-                        } else {
+                        } else if(player.getPlayerTeam().equals(BLACK)) {
                             blackInfluence = blackInfluence + greenStudents;
                         }
                     }
                     case PINK -> {
                         if (player.getPlayerTeam().equals(WHITE)) {
                             whiteInfluence = whiteInfluence + pinkStudents;
-                        } else {
+                        } else if(player.getPlayerTeam().equals(BLACK)) {
                             blackInfluence = blackInfluence + pinkStudents;
                         }
                     }
                     case RED -> {
                         if (player.getPlayerTeam().equals(WHITE)) {
                             whiteInfluence = whiteInfluence + redStudents;
-                        } else {
+                        } else if(player.getPlayerTeam().equals(BLACK)) {
                             blackInfluence = blackInfluence + redStudents;
                         }
                     }
                     case YELLOW -> {
                         if (player.getPlayerTeam().equals(WHITE)) {
                             whiteInfluence = whiteInfluence + yellowStudents;
-                        } else {
+                        } else if(player.getPlayerTeam().equals(BLACK)) {
                             blackInfluence = blackInfluence + yellowStudents;
                         }
                     }
@@ -168,10 +169,12 @@ public class GeneralGame4Players extends GeneralGame{
             }
         }
         if (oldTeamConqueror == null) {
-            if (whiteInfluence > blackInfluence) {
+            //white team will be the conqueror only if it is the current of a white player
+            if (whiteInfluence > blackInfluence && getCurrentPlayer().getPlayerTeam().equals(WHITE)) {
                 return WHITE;
             }
-            else if (blackInfluence > whiteInfluence) {
+            //black team will be the conqueror only if it is the current of a black player
+            else if (blackInfluence > whiteInfluence && getCurrentPlayer().getPlayerTeam().equals(BLACK)) {
                 return BLACK;
             }
             else {

@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.cards.AssistantCard;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.Phases;
 import it.polimi.ingsw.model.enumeration.TowerColor;
-import it.polimi.ingsw.model.enumeration.Variant;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.specific.*;
 import it.polimi.ingsw.utils.Observable;
@@ -276,7 +275,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
      */
     public boolean allCloudsEmpty(){
         for(Cloud cloud : getTable().getClouds()){
-            if(!cloud.getCloudStudents().isEmpty() /*.size() != 0*/){
+            if(!cloud.getCloudStudents().isEmpty()){
                 return false;
             }
         }
@@ -288,11 +287,16 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
     /**
      * when an assistant card is used the other player can not use that assistant in this turn
      * moreover set the max mother nature movement (number of island)
-     //* @param assistantCard the assistant card selected by the current player
+     * @param assistantCard the assistant card selected by the current player
      */
     public void addAssistantCardUsed(AssistantCard assistantCard){
         assistantCardsUsed.add(assistantCard);
     }
+
+    /**
+     * get the assistant cards available for the current player
+     * @return the list of cards available
+     */
     public List<AssistantCard> getAvailableCards() {
         List<AssistantCard> availableCards = new ArrayList<>();
         // get current deck of the current player (deck without already played cards)
@@ -317,6 +321,10 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         return availableCards;
     }
 
+    /**
+     * get che clouds with students on them
+     * @return a list of clouds
+     */
     public List<Cloud> getAvailableClouds(){
         List<Cloud> availableClouds = new ArrayList<>();
         for(Cloud cloud : getTable().getClouds()){
@@ -331,6 +339,11 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
 
     //---------------- PLACE STUDENTS MANAGEMENT --------------\\
 
+    /**
+     * check if a hall can contain other students
+     * @param student the student that the player wants to place
+     * @return true if the student can be placed
+     */
     public boolean checkHallAvailability(Student student){
         for(int i = 0; i < 5; i++) {
             if(student.getColor().equals(getCurrentPlayer().getSchool().getSchoolHall()[i].getHallColor())){
@@ -361,7 +374,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         }
         getCurrentPlayer().placeStudentInHall(studentToBePlaced);
         giveProfessor(studentToBePlaced.getColor());
-        notify(new SchoolUpdateMessage(getCurrentPlayer().getSchool()));
+        notify(new SchoolUpdateMessage(getCurrentPlayer().getSchool(), getCurrentPlayer().getPlayerName()));
     }
 
     /**
@@ -457,12 +470,13 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
      */
     public void moveMotherNature(Island islandSelected){
         //actual 'movement' of mother nature
-        for(Island island : table.getIslands()){
+        /*for(Island island : table.getIslands()){
             if(island.hasMotherNature()){
                 island.setMotherNature(false);
                 break;
             }
-        }
+        }*/
+        table.getIslandWithMotherNature().setMotherNature(false);
         islandSelected.setMotherNature(true);
         //check only the single players
         //check if there is a conqueror of the island
@@ -565,8 +579,8 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         if(removeBehind){
             table.getIslands().remove(islandBehind);
         }
-        if(table.getIslands().size() == 3){
-            checkWinners();
+        if(table.getIslands().size() <= 3){
+            notify(new WinnersMessage(checkWinners()));
         }
     }
 
@@ -609,6 +623,9 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
                 maxInfluence = playerInfluence;
                 conqueror = player;
             }
+        }
+        if(!Objects.equals(conqueror, getCurrentPlayer())){
+            return null;
         }
         //no conqueror because the player conquers an island where it is already the leader
         if(Objects.equals(oldConqueror, conqueror)){
@@ -666,7 +683,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
      */
     public void refillClouds(){
         table.initializeClouds();
-        checkLastTurn();
+        //checkLastTurn();
     }
 
     /**
