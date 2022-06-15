@@ -1,6 +1,8 @@
 package it.polimi.ingsw.view.userinterface;
 
 
+import it.polimi.ingsw.model.GeneralGame;
+import it.polimi.ingsw.model.Tower;
 import it.polimi.ingsw.network.client.ClientMessageHandler;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
@@ -368,6 +370,135 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private ImageIcon assistant9;
     private ImageIcon assistant10;
 
+    private JLabel labelWhiteTowerCounter1;
+    private JLabel labelWhiteTowerCounter2;
+    private JLabel labelWhiteTowerCounter3;
+    private JLabel labelWhiteTowerCounter4;
+    private JLabel labelWhiteTowerCounter5;
+    private JLabel labelWhiteTowerCounter6;
+    private JLabel labelWhiteTowerCounter7;
+    private JLabel labelWhiteTowerCounter8;
+    private JLabel labelWhiteTowerCounter9;
+    private JLabel labelWhiteTowerCounter10;
+    private JLabel labelWhiteTowerCounter11;
+    private JLabel labelWhiteTowerCounter12;
+
+    private JLabel labelBlackTowerCounter1;
+    private JLabel labelBlackTowerCounter2;
+    private JLabel labelBlackTowerCounter3;
+    private JLabel labelBlackTowerCounter4;
+    private JLabel labelBlackTowerCounter5;
+    private JLabel labelBlackTowerCounter6;
+    private JLabel labelBlackTowerCounter7;
+    private JLabel labelBlackTowerCounter8;
+    private JLabel labelBlackTowerCounter9;
+    private JLabel labelBlackTowerCounter10;
+    private JLabel labelBlackTowerCounter11;
+    private JLabel labelBlackTowerCounter12;
+
+    private JLabel labelGreyTowerCounter1;
+    private JLabel labelGreyTowerCounter2;
+    private JLabel labelGreyTowerCounter3;
+    private JLabel labelGreyTowerCounter4;
+    private JLabel labelGreyTowerCounter5;
+    private JLabel labelGreyTowerCounter6;
+    private JLabel labelGreyTowerCounter7;
+    private JLabel labelGreyTowerCounter8;
+    private JLabel labelGreyTowerCounter9;
+    private JLabel labelGreyTowerCounter10;
+    private JLabel labelGreyTowerCounter11;
+    private JLabel labelGreyTowerCounter12;
+
+    private JLabel labelRedCounter1;
+    private JLabel labelRedCounter2;
+    private JLabel labelRedCounter3;
+    private JLabel labelRedCounter4;
+    private JLabel labelRedCounter5;
+    private JLabel labelRedCounter6;
+    private JLabel labelRedCounter7;
+    private JLabel labelRedCounter8;
+    private JLabel labelRedCounter9;
+    private JLabel labelRedCounter10;
+    private JLabel labelRedCounter11;
+    private JLabel labelRedCounter12;
+
+    private JLabel labelYellowCounter1;
+    private JLabel labelYellowCounter2;
+    private JLabel labelYellowCounter3;
+    private JLabel labelYellowCounter4;
+    private JLabel labelYellowCounter5;
+    private JLabel labelYellowCounter6;
+    private JLabel labelYellowCounter7;
+    private JLabel labelYellowCounter8;
+    private JLabel labelYellowCounter9;
+    private JLabel labelYellowCounter10;
+    private JLabel labelYellowCounter11;
+    private JLabel labelYellowCounter12;
+
+    private JLabel labelBlueCounter1;
+    private JLabel labelBlueCounter2;
+    private JLabel labelBlueCounter3;
+    private JLabel labelBlueCounter4;
+    private JLabel labelBlueCounter5;
+    private JLabel labelBlueCounter6;
+    private JLabel labelBlueCounter7;
+    private JLabel labelBlueCounter8;
+    private JLabel labelBlueCounter9;
+    private JLabel labelBlueCounter10;
+    private JLabel labelBlueCounter11;
+    private JLabel labelBlueCounter12;
+
+    private JLabel labelGreenCounter1;
+    private JLabel labelGreenCounter2;
+    private JLabel labelGreenCounter3;
+    private JLabel labelGreenCounter4;
+    private JLabel labelGreenCounter5;
+    private JLabel labelGreenCounter6;
+    private JLabel labelGreenCounter7;
+    private JLabel labelGreenCounter8;
+    private JLabel labelGreenCounter9;
+    private JLabel labelGreenCounter10;
+    private JLabel labelGreenCounter11;
+    private JLabel labelGreenCounter12;
+
+    private JLabel labelPinkCounter1;
+    private JLabel labelPinkCounter2;
+    private JLabel labelPinkCounter3;
+    private JLabel labelPinkCounter4;
+    private JLabel labelPinkCounter5;
+    private JLabel labelPinkCounter6;
+    private JLabel labelPinkCounter7;
+    private JLabel labelPinkCounter8;
+    private JLabel labelPinkCounter9;
+    private JLabel labelPinkCounter10;
+    private JLabel labelPinkCounter11;
+    private JLabel labelPinkCounter12;
+
+    private JLabel labelRedCloudCounter1;
+    private JLabel labelRedCloudCounter2;
+    private JLabel labelRedCloudCounter3;
+    private JLabel labelRedCloudCounter4;
+
+    private JLabel labelBlueCloudCounter1;
+    private JLabel labelBlueCloudCounter2;
+    private JLabel labelBlueCloudCounter3;
+    private JLabel labelBlueCloudCounter4;
+
+    private JLabel labelYellowCloudCounter1;
+    private JLabel labelYellowCloudCounter2;
+    private JLabel labelYellowCloudCounter3;
+    private JLabel labelYellowCloudCounter4;
+
+    private JLabel labelPinkCloudCounter1;
+    private JLabel labelPinkCloudCounter2;
+    private JLabel labelPinkCloudCounter3;
+    private JLabel labelPinkCloudCounter4;
+
+    private JLabel labelGreenCloudCounter1;
+    private JLabel labelGreenCloudCounter2;
+    private JLabel labelGreenCloudCounter3;
+    private JLabel labelGreenCloudCounter4;
+
     private static JButton buttonAssistant1;
     private static JButton buttonAssistant2;
     private static JButton buttonAssistant3;
@@ -418,6 +549,46 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private int serverPort =12345 ;
     private String username;
     private ClientMessageHandler messageHandler;
+
+    int whiteTowerCounter1=0;
+    int whiteTowerCounter2=0;
+    int whiteTowerCounter3=0;
+    int whiteTowerCounter4=0;
+    int whiteTowerCounter5=0;
+    int whiteTowerCounter6=0;
+    int whiteTowerCounter7=0;
+    int whiteTowerCounter8=0;
+    int whiteTowerCounter9=0;
+    int whiteTowerCounter10=0;
+    int whiteTowerCounter11=0;
+    int whiteTowerCounter12=0;
+
+    int blackTowerCounter1=0;
+    int blackTowerCounter2=0;
+    int blackTowerCounter3=0;
+    int blackTowerCounter4=0;
+    int blackTowerCounter5=0;
+    int blackTowerCounter6=0;
+    int blackTowerCounter7=0;
+    int blackTowerCounter8=0;
+    int blackTowerCounter9=0;
+    int blackTowerCounter10=0;
+    int blackTowerCounter11=0;
+    int blackTowerCounter12=0;
+
+    int greyTowerCounter1=0;
+    int greyTowerCounter2=0;
+    int greyTowerCounter3=0;
+    int greyTowerCounter4=0;
+    int greyTowerCounter5=0;
+    int greyTowerCounter6=0;
+    int greyTowerCounter7=0;
+    int greyTowerCounter8=0;
+    int greyTowerCounter9=0;
+    int greyTowerCounter10=0;
+    int greyTowerCounter11=0;
+    int greyTowerCounter12=0;
+
 
     public static JButton transparentButton(JButton a)
     {
@@ -711,6 +882,864 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
 
         frameGame.add(labelBackgroundCards);
+
+        //counter
+        labelWhiteTowerCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+        labelWhiteTowerCounter1.setBounds(322,85,25,25);
+        labelWhiteTowerCounter1.setForeground(Color.WHITE);
+        labelWhiteTowerCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelWhiteTowerCounter1);
+
+        labelWhiteTowerCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+        labelWhiteTowerCounter2.setBounds(544,85,25,25);
+        labelWhiteTowerCounter2.setForeground(Color.WHITE);
+        labelWhiteTowerCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelWhiteTowerCounter2);
+
+        labelWhiteTowerCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+        labelWhiteTowerCounter3.setBounds(780,85,25,25);
+        labelWhiteTowerCounter3.setForeground(Color.WHITE);
+        labelWhiteTowerCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelWhiteTowerCounter3);
+
+        labelWhiteTowerCounter4 = new JLabel(" 0", SwingConstants.CENTER);
+        labelWhiteTowerCounter4.setBounds(987,156,25,25);
+        labelWhiteTowerCounter4.setForeground(Color.WHITE);
+        labelWhiteTowerCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelWhiteTowerCounter4);
+
+        labelWhiteTowerCounter5 = new JLabel(" 0", SwingConstants.CENTER);
+        labelWhiteTowerCounter5.setBounds(987,373,25,25);
+        labelWhiteTowerCounter5.setForeground(Color.WHITE);
+        labelWhiteTowerCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelWhiteTowerCounter5);
+
+        labelWhiteTowerCounter6 = new JLabel(" 0", SwingConstants.CENTER);
+        labelWhiteTowerCounter6.setBounds(986,575,25,25);
+        labelWhiteTowerCounter6.setForeground(Color.WHITE);
+        labelWhiteTowerCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelWhiteTowerCounter6);
+
+        labelWhiteTowerCounter7 = new JLabel(" 0", SwingConstants.CENTER);
+        labelWhiteTowerCounter7.setBounds(780,668,25,25);
+        labelWhiteTowerCounter7.setForeground(Color.WHITE);
+        labelWhiteTowerCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelWhiteTowerCounter7);
+
+        labelWhiteTowerCounter8 = new JLabel(" 0", SwingConstants.CENTER);
+        labelWhiteTowerCounter8.setBounds(544,668,25,25);
+        labelWhiteTowerCounter8.setForeground(Color.WHITE);
+        labelWhiteTowerCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelWhiteTowerCounter8);
+
+        labelWhiteTowerCounter9 = new JLabel(" 0", SwingConstants.CENTER);
+        labelWhiteTowerCounter9.setBounds(289,672,25,25);
+        labelWhiteTowerCounter9.setForeground(Color.WHITE);
+        labelWhiteTowerCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelWhiteTowerCounter9);
+
+        labelWhiteTowerCounter10 = new JLabel(" 0", SwingConstants.CENTER);
+        labelWhiteTowerCounter10.setBounds(83,575,25,25);
+        labelWhiteTowerCounter10.setForeground(Color.WHITE);
+        labelWhiteTowerCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelWhiteTowerCounter10);
+
+        labelWhiteTowerCounter11 = new JLabel(" 0", SwingConstants.CENTER);
+        labelWhiteTowerCounter11.setBounds(83,373,25,25);
+        labelWhiteTowerCounter11.setForeground(Color.WHITE);
+        labelWhiteTowerCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelWhiteTowerCounter11);
+
+        labelWhiteTowerCounter12 = new JLabel(" 0", SwingConstants.CENTER);
+        labelWhiteTowerCounter12.setBounds(83,155,25,25);
+        labelWhiteTowerCounter12.setForeground(Color.WHITE);
+        labelWhiteTowerCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelWhiteTowerCounter12);
+
+        labelBlackTowerCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlackTowerCounter1.setBounds(294,85,25,25);
+        labelBlackTowerCounter1.setForeground(Color.WHITE);
+        labelBlackTowerCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlackTowerCounter1);
+
+        labelBlackTowerCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlackTowerCounter2.setBounds(516,85,25,25);
+        labelBlackTowerCounter2.setForeground(Color.WHITE);
+        labelBlackTowerCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlackTowerCounter2);
+
+        labelBlackTowerCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlackTowerCounter3.setBounds(752,85,25,25);
+        labelBlackTowerCounter3.setForeground(Color.WHITE);
+        labelBlackTowerCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlackTowerCounter3);
+
+        labelBlackTowerCounter4 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlackTowerCounter4.setBounds(959,156,25,25);
+        labelBlackTowerCounter4.setForeground(Color.WHITE);
+        labelBlackTowerCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlackTowerCounter4);
+
+        labelBlackTowerCounter5 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlackTowerCounter5.setBounds(959,373,25,25);
+        labelBlackTowerCounter5.setForeground(Color.WHITE);
+        labelBlackTowerCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlackTowerCounter5);
+
+        labelBlackTowerCounter6 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlackTowerCounter6.setBounds(959,575,25,25);
+        labelBlackTowerCounter6.setForeground(Color.WHITE);
+        labelBlackTowerCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlackTowerCounter6);
+
+        labelBlackTowerCounter7 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlackTowerCounter7.setBounds(752,668,25,25);
+        labelBlackTowerCounter7.setForeground(Color.WHITE);
+        labelBlackTowerCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlackTowerCounter7);
+
+        labelBlackTowerCounter8 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlackTowerCounter8.setBounds(516,668,25,25);
+        labelBlackTowerCounter8.setForeground(Color.WHITE);
+        labelBlackTowerCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlackTowerCounter8);
+
+        labelBlackTowerCounter9 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlackTowerCounter9.setBounds(261,672,25,25);
+        labelBlackTowerCounter9.setForeground(Color.WHITE);
+        labelBlackTowerCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlackTowerCounter9);
+
+        labelBlackTowerCounter10 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlackTowerCounter10.setBounds(55,575,25,25);
+        labelBlackTowerCounter10.setForeground(Color.WHITE);
+        labelBlackTowerCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlackTowerCounter10);
+
+        labelBlackTowerCounter11 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlackTowerCounter11.setBounds(55,373,25,25);
+        labelBlackTowerCounter11.setForeground(Color.WHITE);
+        labelBlackTowerCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlackTowerCounter11);
+
+        labelBlackTowerCounter12 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlackTowerCounter12.setBounds(55,155,25,25);
+        labelBlackTowerCounter12.setForeground(Color.WHITE);
+        labelBlackTowerCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlackTowerCounter12);
+
+        if(size==3)
+        {
+            labelGreyTowerCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreyTowerCounter1.setBounds(266,85,25,25);
+            labelGreyTowerCounter1.setForeground(Color.WHITE);
+            labelGreyTowerCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            frameGame.add(labelGreyTowerCounter1);
+
+            labelGreyTowerCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreyTowerCounter2.setBounds(488,85,25,25);
+            labelGreyTowerCounter2.setForeground(Color.WHITE);
+            labelGreyTowerCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            frameGame.add(labelGreyTowerCounter2);
+
+            labelGreyTowerCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreyTowerCounter3.setBounds(724,85,25,25);
+            labelGreyTowerCounter3.setForeground(Color.WHITE);
+            labelGreyTowerCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            frameGame.add(labelGreyTowerCounter3);
+
+            labelGreyTowerCounter4 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreyTowerCounter4.setBounds(931,156,25,25);
+            labelGreyTowerCounter4.setForeground(Color.WHITE);
+            labelGreyTowerCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            frameGame.add(labelGreyTowerCounter4);
+
+            labelGreyTowerCounter5 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreyTowerCounter5.setBounds(931,373,25,25);
+            labelGreyTowerCounter5.setForeground(Color.WHITE);
+            labelGreyTowerCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            frameGame.add(labelGreyTowerCounter5);
+
+            labelGreyTowerCounter6 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreyTowerCounter6.setBounds(931,575,25,25);
+            labelGreyTowerCounter6.setForeground(Color.WHITE);
+            labelGreyTowerCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            frameGame.add(labelGreyTowerCounter6);
+
+            labelGreyTowerCounter7 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreyTowerCounter7.setBounds(724,668,25,25);
+            labelGreyTowerCounter7.setForeground(Color.WHITE);
+            labelGreyTowerCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            frameGame.add(labelGreyTowerCounter7);
+
+            labelGreyTowerCounter8 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreyTowerCounter8.setBounds(488,668,25,25);
+            labelGreyTowerCounter8.setForeground(Color.WHITE);
+            labelGreyTowerCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            frameGame.add(labelGreyTowerCounter8);
+
+            labelGreyTowerCounter9 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreyTowerCounter9.setBounds(233,672,25,25);
+            labelGreyTowerCounter9.setForeground(Color.WHITE);
+            labelGreyTowerCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            frameGame.add(labelGreyTowerCounter9);
+
+            labelGreyTowerCounter10 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreyTowerCounter10.setBounds(27,575,25,25);
+            labelGreyTowerCounter10.setForeground(Color.WHITE);
+            labelGreyTowerCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            frameGame.add(labelGreyTowerCounter10);
+
+            labelGreyTowerCounter11 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreyTowerCounter11.setBounds(27,373,25,25);
+            labelGreyTowerCounter11.setForeground(Color.WHITE);
+            labelGreyTowerCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            frameGame.add(labelGreyTowerCounter11);
+
+            labelGreyTowerCounter12 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreyTowerCounter12.setBounds(27,155,25,25);
+            labelGreyTowerCounter12.setForeground(Color.WHITE);
+            labelGreyTowerCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            frameGame.add(labelGreyTowerCounter12);
+        }
+
+        labelRedCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+        labelRedCounter1.setBounds(391,23,25,25);
+        labelRedCounter1.setForeground(Color.WHITE);
+        labelRedCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelRedCounter1);
+
+        labelRedCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+        labelRedCounter2.setBounds(613,23,25,25);
+        labelRedCounter2.setForeground(Color.WHITE);
+        labelRedCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelRedCounter2);
+
+        labelRedCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+        labelRedCounter3.setBounds(850,23,25,25);
+        labelRedCounter3.setForeground(Color.WHITE);
+        labelRedCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelRedCounter3);
+
+        labelRedCounter4 = new JLabel(" 0", SwingConstants.CENTER);
+        labelRedCounter4.setBounds(1056,92,25,25);
+        labelRedCounter4.setForeground(Color.WHITE);
+        labelRedCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelRedCounter4);
+
+        labelRedCounter5 = new JLabel(" 0", SwingConstants.CENTER);
+        labelRedCounter5.setBounds(1056,310,25,25);
+        labelRedCounter5.setForeground(Color.WHITE);
+        labelRedCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelRedCounter5);
+
+        labelRedCounter6 = new JLabel(" 0", SwingConstants.CENTER);
+        labelRedCounter6.setBounds(1056,511,25,25);
+        labelRedCounter6.setForeground(Color.WHITE);
+        labelRedCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelRedCounter6);
+
+        labelRedCounter7 = new JLabel(" 0", SwingConstants.CENTER);
+        labelRedCounter7.setBounds(850,604,25,25);
+        labelRedCounter7.setForeground(Color.WHITE);
+        labelRedCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelRedCounter7);
+
+        labelRedCounter8 = new JLabel(" 0", SwingConstants.CENTER);
+        labelRedCounter8.setBounds(613,604,25,25);
+        labelRedCounter8.setForeground(Color.WHITE);
+        labelRedCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelRedCounter8);
+
+        labelRedCounter9 = new JLabel(" 0", SwingConstants.CENTER);
+        labelRedCounter9.setBounds(358,608,25,25);
+        labelRedCounter9.setForeground(Color.WHITE);
+        labelRedCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelRedCounter9);
+
+        labelRedCounter10 = new JLabel(" 0", SwingConstants.CENTER);
+        labelRedCounter10.setBounds(153,510,25,25);
+        labelRedCounter10.setForeground(Color.WHITE);
+        labelRedCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelRedCounter10);
+
+        labelRedCounter11 = new JLabel(" 0", SwingConstants.CENTER);
+        labelRedCounter11.setBounds(153,310,25,25);
+        labelRedCounter11.setForeground(Color.WHITE);
+        labelRedCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelRedCounter11);
+
+        labelRedCounter12 = new JLabel(" 0", SwingConstants.CENTER);
+        labelRedCounter12.setBounds(153,90,25,25);
+        labelRedCounter12.setForeground(Color.WHITE);
+        labelRedCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelRedCounter12);
+
+        labelGreenCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+        labelGreenCounter1.setBounds(391,59,25,25);
+        labelGreenCounter1.setForeground(Color.WHITE);
+        labelGreenCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelGreenCounter1);
+
+        labelGreenCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+        labelGreenCounter2.setBounds(613,59,25,25);
+        labelGreenCounter2.setForeground(Color.WHITE);
+        labelGreenCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelGreenCounter2);
+
+        labelGreenCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+        labelGreenCounter3.setBounds(850,59,25,25);
+        labelGreenCounter3.setForeground(Color.WHITE);
+        labelGreenCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelGreenCounter3);
+
+        labelGreenCounter4 = new JLabel(" 0", SwingConstants.CENTER);
+        labelGreenCounter4.setBounds(1056,128,25,25);
+        labelGreenCounter4.setForeground(Color.WHITE);
+        labelGreenCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelGreenCounter4);
+
+        labelGreenCounter5 = new JLabel(" 0", SwingConstants.CENTER);
+        labelGreenCounter5.setBounds(1056,346,25,25);
+        labelGreenCounter5.setForeground(Color.WHITE);
+        labelGreenCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelGreenCounter5);
+
+        labelGreenCounter6 = new JLabel(" 0", SwingConstants.CENTER);
+        labelGreenCounter6.setBounds(1056,547,25,25);
+        labelGreenCounter6.setForeground(Color.WHITE);
+        labelGreenCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelGreenCounter6);
+
+        labelGreenCounter7 = new JLabel(" 0", SwingConstants.CENTER);
+        labelGreenCounter7.setBounds(850,640,25,25);
+        labelGreenCounter7.setForeground(Color.WHITE);
+        labelGreenCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelGreenCounter7);
+
+        labelGreenCounter8 = new JLabel(" 0", SwingConstants.CENTER);
+        labelGreenCounter8.setBounds(613,640,25,25);
+        labelGreenCounter8.setForeground(Color.WHITE);
+        labelGreenCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelGreenCounter8);
+
+        labelGreenCounter9 = new JLabel(" 0", SwingConstants.CENTER);
+        labelGreenCounter9.setBounds(358,644,25,25);
+        labelGreenCounter9.setForeground(Color.WHITE);
+        labelGreenCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelGreenCounter9);
+
+        labelGreenCounter10 = new JLabel(" 0", SwingConstants.CENTER);
+        labelGreenCounter10.setBounds(153,546,25,25);
+        labelGreenCounter10.setForeground(Color.WHITE);
+        labelGreenCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelGreenCounter10);
+
+        labelGreenCounter11 = new JLabel(" 0", SwingConstants.CENTER);
+        labelGreenCounter11.setBounds(153,346,25,25);
+        labelGreenCounter11.setForeground(Color.WHITE);
+        labelGreenCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelGreenCounter11);
+
+        labelGreenCounter12 = new JLabel(" 0", SwingConstants.CENTER);
+        labelGreenCounter12.setBounds(153,126,25,25);
+        labelGreenCounter12.setForeground(Color.WHITE);
+        labelGreenCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelGreenCounter12);
+
+        labelBlueCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlueCounter1.setBounds(391,96,25,25);
+        labelBlueCounter1.setForeground(Color.WHITE);
+        labelBlueCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlueCounter1);
+
+        labelBlueCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlueCounter2.setBounds(613,96,25,25);
+        labelBlueCounter2.setForeground(Color.WHITE);
+        labelBlueCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlueCounter2);
+
+        labelBlueCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlueCounter3.setBounds(850,96,25,25);
+        labelBlueCounter3.setForeground(Color.WHITE);
+        labelBlueCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlueCounter3);
+
+        labelBlueCounter4 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlueCounter4.setBounds(1056,165,25,25);
+        labelBlueCounter4.setForeground(Color.WHITE);
+        labelBlueCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlueCounter4);
+
+        labelBlueCounter5 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlueCounter5.setBounds(1056,383,25,25);
+        labelBlueCounter5.setForeground(Color.WHITE);
+        labelBlueCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlueCounter5);
+
+        labelBlueCounter6 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlueCounter6.setBounds(1056,584,25,25);
+        labelBlueCounter6.setForeground(Color.WHITE);
+        labelBlueCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlueCounter6);
+
+        labelBlueCounter7 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlueCounter7.setBounds(850,677,25,25);
+        labelBlueCounter7.setForeground(Color.WHITE);
+        labelBlueCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlueCounter7);
+
+        labelBlueCounter8 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlueCounter8.setBounds(613,677,25,25);
+        labelBlueCounter8.setForeground(Color.WHITE);
+        labelBlueCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlueCounter8);
+
+        labelBlueCounter9 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlueCounter9.setBounds(358,681,25,25);
+        labelBlueCounter9.setForeground(Color.WHITE);
+        labelBlueCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlueCounter9);
+
+        labelBlueCounter10 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlueCounter10.setBounds(153,583,25,25);
+        labelBlueCounter10.setForeground(Color.WHITE);
+        labelBlueCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlueCounter10);
+
+        labelBlueCounter11 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlueCounter11.setBounds(153,383,25,25);
+        labelBlueCounter11.setForeground(Color.WHITE);
+        labelBlueCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlueCounter11);
+
+        labelBlueCounter12 = new JLabel(" 0", SwingConstants.CENTER);
+        labelBlueCounter12.setBounds(153,163,25,25);
+        labelBlueCounter12.setForeground(Color.WHITE);
+        labelBlueCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelBlueCounter12);
+
+        labelYellowCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+        labelYellowCounter1.setBounds(391,134,25,25);
+        labelYellowCounter1.setForeground(Color.WHITE);
+        labelYellowCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelYellowCounter1);
+
+        labelYellowCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+        labelYellowCounter2.setBounds(613,134,25,25);
+        labelYellowCounter2.setForeground(Color.WHITE);
+        labelYellowCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelYellowCounter2);
+
+        labelYellowCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+        labelYellowCounter3.setBounds(850,134,25,25);
+        labelYellowCounter3.setForeground(Color.WHITE);
+        labelYellowCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelYellowCounter3);
+
+        labelYellowCounter4 = new JLabel(" 0", SwingConstants.CENTER);
+        labelYellowCounter4.setBounds(1056,203,25,25);
+        labelYellowCounter4.setForeground(Color.WHITE);
+        labelYellowCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelYellowCounter4);
+
+        labelYellowCounter5 = new JLabel(" 0", SwingConstants.CENTER);
+        labelYellowCounter5.setBounds(1056,424,25,25);
+        labelYellowCounter5.setForeground(Color.WHITE);
+        labelYellowCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelYellowCounter5);
+
+        labelYellowCounter6 = new JLabel(" 0", SwingConstants.CENTER);
+        labelYellowCounter6.setBounds(1056,622,25,25);
+        labelYellowCounter6.setForeground(Color.WHITE);
+        labelYellowCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelYellowCounter6);
+
+        labelYellowCounter7 = new JLabel(" 0", SwingConstants.CENTER);
+        labelYellowCounter7.setBounds(850,715,25,25);
+        labelYellowCounter7.setForeground(Color.WHITE);
+        labelYellowCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelYellowCounter7);
+
+        labelYellowCounter8 = new JLabel(" 0", SwingConstants.CENTER);
+        labelYellowCounter8.setBounds(613,715,25,25);
+        labelYellowCounter8.setForeground(Color.WHITE);
+        labelYellowCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelYellowCounter8);
+
+        labelYellowCounter9 = new JLabel(" 0", SwingConstants.CENTER);
+        labelYellowCounter9.setBounds(358,719,25,25);
+        labelYellowCounter9.setForeground(Color.WHITE);
+        labelYellowCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelYellowCounter9);
+
+        labelYellowCounter10 = new JLabel(" 0", SwingConstants.CENTER);
+        labelYellowCounter10.setBounds(153,621,25,25);
+        labelYellowCounter10.setForeground(Color.WHITE);
+        labelYellowCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelYellowCounter10);
+
+        labelYellowCounter11 = new JLabel(" 0", SwingConstants.CENTER);
+        labelYellowCounter11.setBounds(153,421,25,25);
+        labelYellowCounter11.setForeground(Color.WHITE);
+        labelYellowCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelYellowCounter11);
+
+        labelYellowCounter12 = new JLabel(" 0", SwingConstants.CENTER);
+        labelYellowCounter12.setBounds(153,201,25,25);
+        labelYellowCounter12.setForeground(Color.WHITE);
+        labelYellowCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelYellowCounter12);
+
+        labelPinkCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+        labelPinkCounter1.setBounds(391,172,25,25);
+        labelPinkCounter1.setForeground(Color.WHITE);
+        labelPinkCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelPinkCounter1);
+
+        labelPinkCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+        labelPinkCounter2.setBounds(613,172,25,25);
+        labelPinkCounter2.setForeground(Color.WHITE);
+        labelPinkCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelPinkCounter2);
+
+        labelPinkCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+        labelPinkCounter3.setBounds(850,172,25,25);
+        labelPinkCounter3.setForeground(Color.WHITE);
+        labelPinkCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelPinkCounter3);
+
+        labelPinkCounter4 = new JLabel(" 0", SwingConstants.CENTER);
+        labelPinkCounter4.setBounds(1056,241,25,25);
+        labelPinkCounter4.setForeground(Color.WHITE);
+        labelPinkCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelPinkCounter4);
+
+        labelPinkCounter5 = new JLabel(" 0", SwingConstants.CENTER);
+        labelPinkCounter5.setBounds(1056,462,25,25);
+        labelPinkCounter5.setForeground(Color.WHITE);
+        labelPinkCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelPinkCounter5);
+
+        labelPinkCounter6 = new JLabel(" 0", SwingConstants.CENTER);
+        labelPinkCounter6.setBounds(1056,660,25,25);
+        labelPinkCounter6.setForeground(Color.WHITE);
+        labelPinkCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelPinkCounter6);
+
+        labelPinkCounter7 = new JLabel(" 0", SwingConstants.CENTER);
+        labelPinkCounter7.setBounds(850,753,25,25);
+        labelPinkCounter7.setForeground(Color.WHITE);
+        labelPinkCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelPinkCounter7);
+
+        labelPinkCounter8 = new JLabel(" 0", SwingConstants.CENTER);
+        labelPinkCounter8.setBounds(613,753,25,25);
+        labelPinkCounter8.setForeground(Color.WHITE);
+        labelPinkCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelPinkCounter8);
+
+        labelPinkCounter9 = new JLabel(" 0", SwingConstants.CENTER);
+        labelPinkCounter9.setBounds(358,757,25,25);
+        labelPinkCounter9.setForeground(Color.WHITE);
+        labelPinkCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelPinkCounter9);
+
+        labelPinkCounter10 = new JLabel(" 0", SwingConstants.CENTER);
+        labelPinkCounter10.setBounds(153,659,25,25);
+        labelPinkCounter10.setForeground(Color.WHITE);
+        labelPinkCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelPinkCounter10);
+
+        labelPinkCounter11 = new JLabel(" 0", SwingConstants.CENTER);
+        labelPinkCounter11.setBounds(153,459,25,25);
+        labelPinkCounter11.setForeground(Color.WHITE);
+        labelPinkCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelPinkCounter11);
+
+        labelPinkCounter12 = new JLabel(" 0", SwingConstants.CENTER);
+        labelPinkCounter12.setBounds(153,239,25,25);
+        labelPinkCounter12.setForeground(Color.WHITE);
+        labelPinkCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        frameGame.add(labelPinkCounter12);
+
+        if(size==2)
+        {
+            labelRedCloudCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelRedCloudCounter1.setBounds(415,388,25,25);
+            labelRedCloudCounter1.setForeground(Color.BLACK);
+            labelRedCloudCounter1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelRedCloudCounter1);
+
+            labelGreenCloudCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreenCloudCounter1.setBounds(443,388,25,25);
+            labelGreenCloudCounter1.setForeground(Color.BLACK);
+            labelGreenCloudCounter1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelGreenCloudCounter1);
+
+            labelBlueCloudCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelBlueCloudCounter1.setBounds(471,388,25,25);
+            labelBlueCloudCounter1.setForeground(Color.BLACK);
+            labelBlueCloudCounter1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelBlueCloudCounter1);
+
+            labelYellowCloudCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelYellowCloudCounter1.setBounds(499,388,25,25);
+            labelYellowCloudCounter1.setForeground(Color.BLACK);
+            labelYellowCloudCounter1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelYellowCloudCounter1);
+
+            labelPinkCloudCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelPinkCloudCounter1.setBounds(526,388,25,25);
+            labelPinkCloudCounter1.setForeground(Color.BLACK);
+            labelPinkCloudCounter1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelPinkCloudCounter1);
+
+            labelRedCloudCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelRedCloudCounter2.setBounds(614,388,25,25);
+            labelRedCloudCounter2.setForeground(Color.BLACK);
+            labelRedCloudCounter2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelRedCloudCounter2);
+
+            labelGreenCloudCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreenCloudCounter2.setBounds(642,388,25,25);
+            labelGreenCloudCounter2.setForeground(Color.BLACK);
+            labelGreenCloudCounter2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelGreenCloudCounter2);
+
+            labelBlueCloudCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelBlueCloudCounter2.setBounds(670,388,25,25);
+            labelBlueCloudCounter2.setForeground(Color.BLACK);
+            labelBlueCloudCounter2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelBlueCloudCounter2);
+
+            labelYellowCloudCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelYellowCloudCounter2.setBounds(698,388,25,25);
+            labelYellowCloudCounter2.setForeground(Color.BLACK);
+            labelYellowCloudCounter2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelYellowCloudCounter2);
+
+            labelPinkCloudCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelPinkCloudCounter2.setBounds(726,388,25,25);
+            labelPinkCloudCounter2.setForeground(Color.BLACK);
+            labelPinkCloudCounter2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelPinkCloudCounter2);
+        }
+        if(size==3)
+        {
+            labelRedCloudCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelRedCloudCounter1.setBounds(415,310,25,25);
+            labelRedCloudCounter1.setForeground(Color.BLACK);
+            labelRedCloudCounter1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelRedCloudCounter1);
+
+            labelGreenCloudCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreenCloudCounter1.setBounds(443,310,25,25);
+            labelGreenCloudCounter1.setForeground(Color.BLACK);
+            labelGreenCloudCounter1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelGreenCloudCounter1);
+
+            labelBlueCloudCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelBlueCloudCounter1.setBounds(471,310,25,25);
+            labelBlueCloudCounter1.setForeground(Color.BLACK);
+            labelBlueCloudCounter1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelBlueCloudCounter1);
+
+            labelYellowCloudCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelYellowCloudCounter1.setBounds(499,310,25,25);
+            labelYellowCloudCounter1.setForeground(Color.BLACK);
+            labelYellowCloudCounter1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelYellowCloudCounter1);
+
+            labelPinkCloudCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelPinkCloudCounter1.setBounds(527,310,25,25);
+            labelPinkCloudCounter1.setForeground(Color.BLACK);
+            labelPinkCloudCounter1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelPinkCloudCounter1);
+
+            labelRedCloudCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelRedCloudCounter2.setBounds(613,310,25,25);
+            labelRedCloudCounter2.setForeground(Color.BLACK);
+            labelRedCloudCounter2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelRedCloudCounter2);
+
+            labelGreenCloudCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreenCloudCounter2.setBounds(641,310,25,25);
+            labelGreenCloudCounter2.setForeground(Color.BLACK);
+            labelGreenCloudCounter2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelGreenCloudCounter2);
+
+            labelBlueCloudCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelBlueCloudCounter2.setBounds(669,310,25,25);
+            labelBlueCloudCounter2.setForeground(Color.BLACK);
+            labelBlueCloudCounter2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelBlueCloudCounter2);
+
+            labelYellowCloudCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelYellowCloudCounter2.setBounds(697,310,25,25);
+            labelYellowCloudCounter2.setForeground(Color.BLACK);
+            labelYellowCloudCounter2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelYellowCloudCounter2);
+
+            labelPinkCloudCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelPinkCloudCounter2.setBounds(725,310,25,25);
+            labelPinkCloudCounter2.setForeground(Color.BLACK);
+            labelPinkCloudCounter2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelPinkCloudCounter2);
+
+            labelRedCloudCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+            labelRedCloudCounter3.setBounds(513,474,25,25);
+            labelRedCloudCounter3.setForeground(Color.BLACK);
+            labelRedCloudCounter3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelRedCloudCounter3);
+
+            labelGreenCloudCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreenCloudCounter3.setBounds(541,474,25,25);
+            labelGreenCloudCounter3.setForeground(Color.BLACK);
+            labelGreenCloudCounter3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelGreenCloudCounter3);
+
+            labelBlueCloudCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+            labelBlueCloudCounter3.setBounds(569,474,25,25);
+            labelBlueCloudCounter3.setForeground(Color.BLACK);
+            labelBlueCloudCounter3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelBlueCloudCounter3);
+
+            labelYellowCloudCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+            labelYellowCloudCounter3.setBounds(597,474,25,25);
+            labelYellowCloudCounter3.setForeground(Color.BLACK);
+            labelYellowCloudCounter3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelYellowCloudCounter3);
+
+            labelPinkCloudCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+            labelPinkCloudCounter3.setBounds(625,474,25,25);
+            labelPinkCloudCounter3.setForeground(Color.BLACK);
+            labelPinkCloudCounter3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelPinkCloudCounter3);
+        }
+        if(size==4)
+        {
+            labelRedCloudCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelRedCloudCounter1.setBounds(415,313,25,25);
+            labelRedCloudCounter1.setForeground(Color.BLACK);
+            labelRedCloudCounter1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelRedCloudCounter1);
+
+            labelGreenCloudCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreenCloudCounter1.setBounds(443,313,25,25);
+            labelGreenCloudCounter1.setForeground(Color.BLACK);
+            labelGreenCloudCounter1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelGreenCloudCounter1);
+
+            labelBlueCloudCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelBlueCloudCounter1.setBounds(471,313,25,25);
+            labelBlueCloudCounter1.setForeground(Color.BLACK);
+            labelBlueCloudCounter1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelBlueCloudCounter1);
+
+            labelYellowCloudCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelYellowCloudCounter1.setBounds(499,313,25,25);
+            labelYellowCloudCounter1.setForeground(Color.BLACK);
+            labelYellowCloudCounter1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelYellowCloudCounter1);
+
+            labelPinkCloudCounter1 = new JLabel(" 0", SwingConstants.CENTER);
+            labelPinkCloudCounter1.setBounds(527,313,25,25);
+            labelPinkCloudCounter1.setForeground(Color.BLACK);
+            labelPinkCloudCounter1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelPinkCloudCounter1);
+
+            labelRedCloudCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelRedCloudCounter2.setBounds(613,313,25,25);
+            labelRedCloudCounter2.setForeground(Color.BLACK);
+            labelRedCloudCounter2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelRedCloudCounter2);
+
+            labelGreenCloudCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreenCloudCounter2.setBounds(641,313,25,25);
+            labelGreenCloudCounter2.setForeground(Color.BLACK);
+            labelGreenCloudCounter2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelGreenCloudCounter2);
+
+            labelBlueCloudCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelBlueCloudCounter2.setBounds(669,313,25,25);
+            labelBlueCloudCounter2.setForeground(Color.BLACK);
+            labelBlueCloudCounter2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelBlueCloudCounter2);
+
+            labelYellowCloudCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelYellowCloudCounter2.setBounds(697,313,25,25);
+            labelYellowCloudCounter2.setForeground(Color.BLACK);
+            labelYellowCloudCounter2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelYellowCloudCounter2);
+
+            labelPinkCloudCounter2 = new JLabel(" 0", SwingConstants.CENTER);
+            labelPinkCloudCounter2.setBounds(725,313,25,25);
+            labelPinkCloudCounter2.setForeground(Color.BLACK);
+            labelPinkCloudCounter2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelPinkCloudCounter2);
+
+            labelRedCloudCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+            labelRedCloudCounter3.setBounds(415,472,25,25);
+            labelRedCloudCounter3.setForeground(Color.BLACK);
+            labelRedCloudCounter3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelRedCloudCounter3);
+
+            labelGreenCloudCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreenCloudCounter3.setBounds(443,472,25,25);
+            labelGreenCloudCounter3.setForeground(Color.BLACK);
+            labelGreenCloudCounter3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelGreenCloudCounter3);
+
+            labelBlueCloudCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+            labelBlueCloudCounter3.setBounds(471,472,25,25);
+            labelBlueCloudCounter3.setForeground(Color.BLACK);
+            labelBlueCloudCounter3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelBlueCloudCounter3);
+
+            labelYellowCloudCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+            labelYellowCloudCounter3.setBounds(499,472,25,25);
+            labelYellowCloudCounter3.setForeground(Color.BLACK);
+            labelYellowCloudCounter3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelYellowCloudCounter3);
+
+            labelPinkCloudCounter3 = new JLabel(" 0", SwingConstants.CENTER);
+            labelPinkCloudCounter3.setBounds(527,472,25,25);
+            labelPinkCloudCounter3.setForeground(Color.BLACK);
+            labelPinkCloudCounter3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelPinkCloudCounter3);
+
+            labelRedCloudCounter4 = new JLabel(" 0", SwingConstants.CENTER);
+            labelRedCloudCounter4.setBounds(630,472,25,25);
+            labelRedCloudCounter4.setForeground(Color.BLACK);
+            labelRedCloudCounter4.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelRedCloudCounter4);
+
+            labelGreenCloudCounter4 = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreenCloudCounter4.setBounds(658,472,25,25);
+            labelGreenCloudCounter4.setForeground(Color.BLACK);
+            labelGreenCloudCounter4.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelGreenCloudCounter4);
+
+            labelBlueCloudCounter4 = new JLabel(" 0", SwingConstants.CENTER);
+            labelBlueCloudCounter4.setBounds(686,472,25,25);
+            labelBlueCloudCounter4.setForeground(Color.BLACK);
+            labelBlueCloudCounter4.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelBlueCloudCounter4);
+
+            labelYellowCloudCounter4 = new JLabel(" 0", SwingConstants.CENTER);
+            labelYellowCloudCounter4.setBounds(714,472,25,25);
+            labelYellowCloudCounter4.setForeground(Color.BLACK);
+            labelYellowCloudCounter4.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelYellowCloudCounter4);
+
+            labelPinkCloudCounter4 = new JLabel(" 0", SwingConstants.CENTER);
+            labelPinkCloudCounter4.setBounds(742,472,25,25);
+            labelPinkCloudCounter4.setForeground(Color.BLACK);
+            labelPinkCloudCounter4.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            frameGame.add(labelPinkCloudCounter4);
+        }
+
 
         //1 island
         motherNature1= new ImageIcon("src/images/motherNature.png");
@@ -1736,6 +2765,41 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         frameGame.add(buttonHideCards);
         buttonHideCards.setVisible(false);
 
+        //set the beginning phase
+        buttonPlus1.setVisible(false);
+        buttonPlus2.setVisible(false);
+        buttonPlus3.setVisible(false);
+        buttonPlus4.setVisible(false);
+        buttonPlus5.setVisible(false);
+        buttonPlus6.setVisible(false);
+        buttonPlus7.setVisible(false);
+        buttonPlus8.setVisible(false);
+        buttonPlus9.setVisible(false);
+        buttonPlus10.setVisible(false);
+        buttonPlus11.setVisible(false);
+        buttonPlus12.setVisible(false);
+
+        buttonSelectStudent1.setVisible(false);
+        buttonSelectStudent2.setVisible(false);
+        buttonSelectStudent3.setVisible(false);
+        buttonSelectStudent4.setVisible(false);
+        buttonSelectStudent5.setVisible(false);
+        buttonSelectStudent6.setVisible(false);
+        buttonSelectStudent7.setVisible(false);
+        if(size==3){
+            buttonSelectStudent8.setVisible(false);
+            buttonSelectStudent9.setVisible(false);
+            buttonSelectCloud3.setVisible(false);
+        }
+
+        buttonPutOnTable.setVisible(false);
+
+        buttonSelectCloud1.setVisible(false);
+        buttonSelectCloud2.setVisible(false);
+        if(size==4){
+            buttonSelectCloud4.setVisible(false);
+        }
+
 
         hideCards();
         frameGame.add(labelSetBackground);
@@ -1877,6 +2941,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         else if(e.getSource()== buttonPlus1)
         {
             labelPlayerMessage.setText("# 1 ISLAND SELECTED #");
+            whiteTowerCounter1=whiteTowerCounter1+1;
+            labelWhiteTowerCounter1.setText(whiteTowerCounter1+"");
+
         }
         else if(e.getSource()== buttonPlus2)
         {
@@ -1925,6 +2992,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         else if(e.getSource()== buttonSelectStudent1)
         {
             labelPlayerMessage.setText("# SLOT 1 SELECTED #");
+
+            int choice = 1;
+            messageHandler.sendMessage(new SelectStudentMessage(choice));
         }
         else if(e.getSource()== buttonSelectStudent2)
         {
@@ -2049,6 +3119,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonAssistant1.setVisible(false);
             chosenCard1=1;
             hideOnlyButtonCards();
+
+            int choice=1;
+            messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
         }
         else if(e.getSource()== buttonAssistant2)
         {
@@ -2142,11 +3215,26 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     @Override
     public void selectAssistantCard(AskAssistantCardsMessage message) {
-
+        labelPlayerMessage.setText("# SELECT ONE CARD #");
     }
 
     @Override
-    public void selectStudent(AskStudentMessage message){}
+    public void selectStudent(AskStudentMessage message){
+        buttonViewCards.setVisible(false);
+        buttonSelectStudent1.setVisible(true);
+        buttonSelectStudent2.setVisible(true);
+        buttonSelectStudent3.setVisible(true);
+        buttonSelectStudent4.setVisible(true);
+        buttonSelectStudent5.setVisible(true);
+        buttonSelectStudent6.setVisible(true);
+        buttonSelectStudent7.setVisible(true);
+        if(size==3){
+            buttonSelectStudent8.setVisible(true);
+            buttonSelectStudent9.setVisible(true);
+        }
+
+        labelPlayerMessage.setText("# SELECT A STUDENT #");
+    }
 
     @Override
     public void selectPlace(AskWherePlaceMessage message){}
