@@ -15,13 +15,11 @@ import java.util.List;
 import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 import static it.polimi.ingsw.model.enumeration.Phases.*;
 import static it.polimi.ingsw.model.enumeration.TowerColor.*;
-import static it.polimi.ingsw.model.enumeration.Variant.NORMAL;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GeneralGameTest {
     private GeneralGame gameWith2Players;
     private GeneralGame gameWith3Players;
-    private GeneralGame gameWith4Players;
 
     @BeforeEach
     public void setUp(){
@@ -1482,7 +1480,6 @@ public class GeneralGameTest {
 
     @Test
     public void checkWinners_NoWinners_TwoPlayers(){
-        gameWith2Players.setMotherNatureMovement(2);
         int indexMN = gameWith2Players.getTable().getIslands().indexOf((gameWith2Players.getTable().getIslandWithMotherNature()));
         gameWith2Players.moveMotherNature(gameWith2Players.getTable().getIslands().get((indexMN+2)%12));
         assertEquals(2, gameWith2Players.checkWinners().size());

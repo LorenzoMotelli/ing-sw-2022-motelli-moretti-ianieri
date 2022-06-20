@@ -10,10 +10,10 @@ import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 
 public class School implements Serializable {
 
-    private Hall[] schoolHall;
+    private final Hall[] schoolHall;
     private List<Professor> schoolProfessors;
     private List<Student> entranceStudent;
-    private List<Tower> playersTowers;
+    private final List<Tower> playersTowers;
 
 
     /**
@@ -60,7 +60,6 @@ public class School implements Serializable {
     }
 
     public Student getStudent(int index) {
-        // TODO: check index bounds
         if(index < 0 || index > entranceStudent.size()){
             return null;
         }
@@ -126,28 +125,6 @@ public class School implements Serializable {
         return null;
     }
 
-    /*
-    public Hall getBlueHall(){
-        return schoolHall[0];
-    }
-
-    public Hall getGreenHall(){
-        return schoolHall[1];
-    }
-
-    public Hall getPinkHall(){
-        return schoolHall[2];
-    }
-
-    public Hall getRedHall(){
-        return schoolHall[3];
-    }
-
-    public Hall getYellowHall(){
-        return schoolHall[4];
-    }
-     */
-
     //-------------- SCHOOL MANAGEMENT --------------\\
 
     /**
@@ -156,26 +133,21 @@ public class School implements Serializable {
      * @param studentToPlace the student that the players select to place in the hall
      */
     public void placeStudentInHall(Student studentToPlace){
-        switch(studentToPlace.getColor()){
-            case BLUE:{
+        switch (studentToPlace.getColor()) {
+            case BLUE -> {
                 schoolHall[0].placeStudent(studentToPlace);
-                break;
             }
-            case GREEN:{
+            case GREEN -> {
                 schoolHall[1].placeStudent(studentToPlace);
-                break;
             }
-            case PINK:{
+            case PINK -> {
                 schoolHall[2].placeStudent(studentToPlace);
-                break;
             }
-            case RED:{
+            case RED -> {
                 schoolHall[3].placeStudent(studentToPlace);
-                break;
             }
-            case YELLOW:{
+            case YELLOW -> {
                 schoolHall[4].placeStudent(studentToPlace);
-                break;
             }
         }
         removeStudentFromEntrance(studentToPlace);

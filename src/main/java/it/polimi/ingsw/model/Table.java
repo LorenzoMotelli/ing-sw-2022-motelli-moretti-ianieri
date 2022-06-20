@@ -2,7 +2,6 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.TowerColor;
-import it.polimi.ingsw.model.enumeration.Variant;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,14 +12,10 @@ import java.util.stream.Collectors;
 import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 
 public class Table implements Serializable {
-    private final int MAX_STUDENT = 26;
-    private List<Island> islands;
-    private List<Cloud> clouds;
-    private List<Student> studentBag;
-    private List<Professor> professors;
-    //variables for the expert game
-    //private int coins = 20;
-    //private Character[] playableCharacters;
+    private final List<Island> islands;
+    private final List<Cloud> clouds;
+    private final List<Student> studentBag;
+    private final List<Professor> professors;
 
 
     /**
@@ -28,6 +23,7 @@ public class Table implements Serializable {
      * @param numberOfPlayers the number of player in the game, used for the number of clouds and eventually coins
      */
     public Table(int numberOfPlayers){
+        final int MAX_STUDENT = 26;
         //creation of the 12 islands of the game
         islands = new ArrayList<>(12);
         for(int i = 0; i < 12; i++){
@@ -42,32 +38,27 @@ public class Table implements Serializable {
         studentBag = new ArrayList<>();
         //26 blue students
         for(int i = 0; i < MAX_STUDENT; i++){
-            Student blueStudent = new Student();
-            blueStudent.setColor(BLUE);
+            Student blueStudent = new Student(BLUE);
             studentBag.add(blueStudent);
         }
         //26 green students
         for(int i = 0; i < MAX_STUDENT; i++){
-            Student greenStudent = new Student();
-            greenStudent.setColor(GREEN);
+            Student greenStudent = new Student(GREEN);
             studentBag.add(greenStudent);
         }
         //26 pink students
         for(int i = 0; i < MAX_STUDENT; i++){
-            Student pinkStudent = new Student();
-            pinkStudent.setColor(PINK);
+            Student pinkStudent = new Student(PINK);
             studentBag.add(pinkStudent);
         }
         //26 red students
         for(int i = 0; i < MAX_STUDENT; i++){
-            Student redStudent = new Student();
-            redStudent.setColor(RED);
+            Student redStudent = new Student(RED);
             studentBag.add(redStudent);
         }
         //26 yellow students
         for(int i = 0; i < MAX_STUDENT; i++){
-            Student yellowStudent = new Student();
-            yellowStudent.setColor(YELLOW);
+            Student yellowStudent = new Student(YELLOW);
             studentBag.add(yellowStudent);
         }
         //creation of the 5 professors
@@ -77,14 +68,7 @@ public class Table implements Serializable {
         professors.add(2,new Professor(PINK));
         professors.add(3,new Professor(RED));
         professors.add(4,new Professor(YELLOW));
-        //if it is an expert game there are characters and coins
-        /*if(variantOfTheGame.equals(Variant.EXPERT)){
-            setCoins(20-numberOfPlayers);
-            playableCharacters = new Character[3];
-            for(int i = 0; i < 3; i++){
-                playableCharacters[i] = charactersOfTheGame[i];
-            }
-        }*/
+
         initializeIslands();
         initializeClouds();
     }
@@ -214,23 +198,6 @@ public class Table implements Serializable {
         }
         return null;
     }
-
-    //expert game not implemented
-    /*public int getCoins() {
-        return coins;
-    }*/
-
-    //expert game not implemented
-    /*public void setCoins(int coins) {
-        this.coins = coins;
-    }*/
-
-    //expert game not implemented
-    /*public Character[] getPlayableCharacters() {
-        return playableCharacters;
-    }*/
-
-    //public void useCharacterAbility(Character characterSelected){}
 
     //------------------- ISLANDS MANAGEMENT -----------------\\
 

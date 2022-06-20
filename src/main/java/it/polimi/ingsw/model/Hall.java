@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Hall implements Serializable {
 
     private PawnColor hallColor;
-    private Student[] tableHall;
+    private final Student[] tableHall;
 
     public Hall(){
         tableHall = new Student[10];
@@ -18,6 +18,18 @@ public class Hall implements Serializable {
 
     public PawnColor getHallColor() {
         return hallColor;
+    }
+
+    public String getHallColorString(){
+        switch (hallColor){
+            case BLUE -> {return "BLUE";}
+            case GREEN -> {return "GREEN";}
+            case PINK -> {return "PINK";}
+            case RED -> {return "RED";}
+            case YELLOW -> {return "YELLOW";}
+            case RESET -> {return "NO COLOR";}
+        }
+        return hallColor.getEscape();
     }
 
     public void setHallColor(PawnColor hallColor) {

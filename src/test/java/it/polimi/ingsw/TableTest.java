@@ -2,7 +2,6 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.enumeration.PawnColor;
-import it.polimi.ingsw.model.enumeration.Variant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
@@ -47,8 +46,7 @@ public class TableTest {
 
     @Test
     public void placeStudentInIsland(){
-        Student blueStudent = new Student();
-        blueStudent.setColor(BLUE);
+        Student blueStudent = new Student(BLUE);
         int blueStudentBeforeAdding = table.getIslands().get(0).getBlueStudents().size();
         table.placeStudentOnIsland(blueStudent, table.getIslands().get(0));
         assertEquals(blueStudentBeforeAdding+1, table.getIslands().get(0).getBlueStudents().size());
@@ -56,8 +54,7 @@ public class TableTest {
 
     @Test
     public void placeTowerInIsland(){
-        Tower tower = new Tower();
-        tower.setColor(BLACK);
+        Tower tower = new Tower(BLACK);
         table.placeTower(table.getIslands().get(0), tower);
         assertEquals(1, table.getIslands().get(0).getTowers().size());
         assertEquals(BLACK, table.getIslands().get(0).getTowers().get(0).getColor());
@@ -65,8 +62,7 @@ public class TableTest {
 
     @Test
     public void changeTowerColor(){
-        Tower whiteTower = new Tower();
-        whiteTower.setColor(WHITE);
+        Tower whiteTower = new Tower(WHITE);
         table.getIslands().get(0).getTowers().add(whiteTower);
         assertEquals(1,table.getIslands().get(0).getTowers().size());
         assertEquals(WHITE, table.getIslands().get(0).getTowers().get(0).getColor());

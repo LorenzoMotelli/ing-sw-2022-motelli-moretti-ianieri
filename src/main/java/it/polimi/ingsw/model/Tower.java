@@ -7,8 +7,6 @@ import java.io.Serializable;
 public class Tower implements Serializable {
     private TowerColor color;
 
-    public Tower(){}
-
     public Tower(TowerColor towerColor){
         setColor(towerColor);
     }

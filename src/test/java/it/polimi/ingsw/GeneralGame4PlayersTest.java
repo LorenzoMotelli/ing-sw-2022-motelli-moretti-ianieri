@@ -41,7 +41,7 @@ public class GeneralGame4PlayersTest {
         assertEquals(12, gameWith4Players.getTable().getIslands().size());
         assertEquals(4, gameWith4Players.getTable().getClouds().size());
         //check islands, game with 2 players
-        Island islandWithNoStudents = new Island();
+        Island islandWithNoStudents;
         int indexIslandWithMN = gameWith4Players.getTable().getIslands().indexOf(gameWith4Players.getTable().getIslandWithMotherNature());
         islandWithNoStudents = gameWith4Players.getTable().getIslands().get((indexIslandWithMN+6)%12);
 

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
+import static it.polimi.ingsw.model.enumeration.PawnColor.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class IslandTest {
@@ -24,32 +25,27 @@ public class IslandTest {
         for(int i = 0; i < 5; i++){
             switch (i) {
                 case 0: {
-                    Student blueStudent = new Student();
-                    blueStudent.setColor(PawnColor.BLUE);
+                    Student blueStudent = new Student(BLUE);
                     studentList.add(blueStudent);
                     break;
                 }
                 case 1: {
-                    Student greenStudent = new Student();
-                    greenStudent.setColor(PawnColor.GREEN);
+                    Student greenStudent = new Student(GREEN);
                     studentList.add(greenStudent);
                     break;
                 }
                 case 2: {
-                    Student pinkStudent = new Student();
-                    pinkStudent.setColor(PawnColor.PINK);
+                    Student pinkStudent = new Student(PINK);
                     studentList.add(pinkStudent);
                     break;
                 }
                 case 3: {
-                    Student redStudent = new Student();
-                    redStudent.setColor(PawnColor.RED);
+                    Student redStudent = new Student(RED);
                     studentList.add(redStudent);
                     break;
                 }
                 case 4: {
-                    Student yellowStudent = new Student();
-                    yellowStudent.setColor(PawnColor.YELLOW);
+                    Student yellowStudent = new Student(YELLOW);
                     studentList.add(yellowStudent);
                     break;
                 }
@@ -70,7 +66,7 @@ public class IslandTest {
         for(int i = 0; i < 5; i++){
             switch (i) {
                 case 0: {
-                    assertEquals(island.getStudents().get(i).getColor(), PawnColor.BLUE);
+                    assertEquals(island.getStudents().get(i).getColor(), BLUE);
                     break;
                 }
                 case 1: {
@@ -97,7 +93,7 @@ public class IslandTest {
     public void getBlueStudents_ShouldReturnListStudent(){
         List<Student> blueStudentsList = island.getBlueStudents();
         for(Student s: blueStudentsList){
-            assertEquals(s.getColor(), PawnColor.BLUE);
+            assertEquals(s.getColor(), BLUE);
         }
     }
 

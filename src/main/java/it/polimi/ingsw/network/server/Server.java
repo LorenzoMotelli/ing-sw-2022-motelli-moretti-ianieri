@@ -75,6 +75,7 @@ public class Server
             }
         }
     }
+
     private void insertPORT()
     {
         System.out.println("Enter the server PORT: ");
@@ -250,7 +251,6 @@ public class Server
             }
         }
     }
-
 }
 
 

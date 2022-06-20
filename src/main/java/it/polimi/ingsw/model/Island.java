@@ -11,13 +11,11 @@ public class Island implements Serializable {
     private List<Student> students;
     private List<Tower> playerTower;
     private boolean motherNature;
-    //private int prohibitionCard;
 
     public Island(){
         students = new ArrayList<>();
         playerTower = new ArrayList<>();
         motherNature = false;
-        //prohibitionCard = 0;
     }
 
     public List<Student> getStudents() {

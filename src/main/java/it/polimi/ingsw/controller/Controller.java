@@ -229,24 +229,6 @@ public class Controller implements Observer<Message> {
         nextAction(SELECT_CLOUD);
     }
 
-    /**
-     * give to current player the students from the cloud selected
-     //* @param message the message that requires to take
-     */
-    /*public void takeStudentFromCloudSelected(TakeStudentFromCloudMessage message){
-        /*for(Cloud cloud : game.getTable().getClouds()){
-            if(cloud.equals(message.getCloud())){
-                if(0 == cloud.getCloudStudents().size()) throw new CloudEmptyException();
-                game.getTable().giveStudentsFromCloud(cloud);
-                break;
-            }
-        }
-    }
-
-    public void endTurn(EndTurnMessage message){
-        game.newTurn();
-    }*/
-
     private void endRound() {
         // complete round
         System.out.println("Round ended, all players have done");

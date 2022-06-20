@@ -63,14 +63,14 @@ public class CliClientInterface implements UserInterface {
     // asking the address and the port
     private void connectToServer() {
 
-        boolean addresselected= false;
-        boolean portselected=false;
+        boolean addressSelected= false;
+        boolean portSelected=false;
         String choice;
         do {
-            if(!addresselected) {
+            if(!addressSelected) {
                 System.out.println("Insert the server IP: ");
             }
-            if(addresselected && !portselected) {
+            if(addressSelected && !portSelected) {
                 System.out.println("Insert the server PORT: ");
             }
 
@@ -81,22 +81,22 @@ public class CliClientInterface implements UserInterface {
                 continue;
             }
 
-            if(!addresselected) {
-                addresselected = true;
+            if(!addressSelected) {
+                addressSelected = true;
                 if (!choice.equals("")) {
                     serverIp = choice;
                 }
                 continue;
             }
 
-            if(!portselected){
-                portselected = true;
+            if(!portSelected){
+                portSelected = true;
                 if (!choice.equals("")) {
                     try {
                         serverPort = Integer.parseInt(choice);
                     }
                     catch (NumberFormatException e) {
-                        portselected = false;
+                        portSelected = false;
                     }
                 }
             }
@@ -107,7 +107,7 @@ public class CliClientInterface implements UserInterface {
                 connectToServer();
             }
 
-        } while (!(addresselected && portselected));
+        } while (!(addressSelected && portSelected));
 
         askUsername();
     }
@@ -140,7 +140,9 @@ public class CliClientInterface implements UserInterface {
         }
     }
 
-    // asking first client to create a room
+    /**
+     * asking first client to create a room
+     */
     @Override
     public synchronized void askRoomCreation() {
         System.out.print("Insert the number of players: ");
@@ -154,10 +156,12 @@ public class CliClientInterface implements UserInterface {
 
         // send lobbySize message to Server through the ClientMessageHandler
         messageHandler.sendMessage(new RoomSizeMessage(size, this.username));
-
     }
 
-    // response to the message for the roomSize
+    /**
+     * response to the message for the roomSize
+     * @param message the message with the room size selected
+     */
     @Override
     public synchronized void roomSizeResponse(@NotNull RoomSizeMessage message) {
         if (message.getRoomSize() == -1) {
@@ -202,7 +206,9 @@ public class CliClientInterface implements UserInterface {
         for(int i = 0; i < game.getTable().getIslands().size(); i++){
             System.out.print("Island " + i +  " : ");
             for(int j = 0; j < game.getTable().getIslands().get(i).getStudents().size(); j++){
-                System.out.print(game.getTable().getIslands().get(i).getStudents().get(j).getColor() + " ");
+                PawnColor color = game.getTable().getIslands().get(i).getStudents().get(j).getColor();
+                String colorString = game.getTable().getIslands().get(i).getStudents().get(j).getColorString();
+                System.out.print(color + colorString + " " + PawnColor.RESET);
             }
             if(game.getTable().getIslands().get(i).getStudents().size() == 0){
                 System.out.print(" NO STUDENTS ");
@@ -220,7 +226,9 @@ public class CliClientInterface implements UserInterface {
         for(int i = 0; i < game.getTable().getClouds().size(); i++){
             System.out.print("Cloud " + i + " has ");{
                 for(int j = 0; j < game.getTable().getClouds().get(i).getCloudStudents().size(); j++){
-                    System.out.print(game.getTable().getClouds().get(i).getCloudStudents().get(j).getColor() + " ");
+                    PawnColor color = game.getTable().getClouds().get(i).getCloudStudents().get(j).getColor();
+                    String colorString = game.getTable().getClouds().get(i).getCloudStudents().get(j).getColorString();
+                    System.out.print(color + colorString + " " + PawnColor.RESET);
                 }
             }
             System.out.println();
@@ -231,14 +239,20 @@ public class CliClientInterface implements UserInterface {
             System.out.print("Player " + game.getPlayers()[i].getPlayerName() + " has :\n");
             System.out.print("Entrance students: ");
             for(Student student : game.getPlayers()[i].getSchool().getEntranceStudent()){
-                System.out.print(student.getColor() +  " ");
+                PawnColor studentColor = student.getColor();
+                String studentColorString = student.getColorString();
+                System.out.print(studentColor + studentColorString + PawnColor.RESET + " ");
             }
             System.out.println();
             for(int j = 0; j < 5; j++){
-                System.out.print("Hall " + game.getPlayers()[i].getSchool().getSchoolHall()[j].getHallColor() + " with ");
+                PawnColor color = game.getPlayers()[i].getSchool().getSchoolHall()[j].getHallColor();
+                String colorString = game.getPlayers()[i].getSchool().getSchoolHall()[j].getHallColorString();
+                System.out.print("Hall " + color + colorString + PawnColor.RESET + " with ");
                 for(int k = 0; k < 10; k++){
                     if(null != game.getPlayers()[i].getSchool().getSchoolHall()[j].getTableHall()[k]){
-                        System.out.print(game.getPlayers()[i].getSchool().getSchoolHall()[j].getTableHall()[k].getColor() + " ");
+                        PawnColor studentColor = game.getPlayers()[i].getSchool().getSchoolHall()[j].getTableHall()[k].getColor();
+                        String studentColorString = game.getPlayers()[i].getSchool().getSchoolHall()[j].getTableHall()[k].getColorString();
+                        System.out.print(studentColor + studentColorString + " " + PawnColor.RESET);
                     }
                     else{
                         break;
@@ -246,7 +260,7 @@ public class CliClientInterface implements UserInterface {
                 }
                 PawnColor currentColor = game.getPlayers()[i].getSchool().getSchoolHall()[j].getHallColor();
                 Professor currentProf = game.getPlayers()[i].getSchool().getProfessorByColor(currentColor);
-                System.out.print("| "+ (currentProf != null ? currentProf.getColor() : " ") + " ");
+                System.out.print("| "+ (currentProf != null ? currentProf.getColor() + currentProf.getColorString() + PawnColor.RESET : " NO PROF " ) + " ");
                 System.out.println();
             }
             System.out.print("Towers: ");
@@ -301,7 +315,10 @@ public class CliClientInterface implements UserInterface {
     public void selectStudent(AskStudentMessage message){
         System.out.println("Please select one student:\n");
         for(Student student : message.getStudent()){
-            System.out.print(message.getStudent().indexOf(student)+ ") " + student.getColor() +  " ");
+            PawnColor studentColor = student.getColor();
+            String studentColorSting = student.getColorString();
+            int studentIndex = message.getStudent().indexOf(student);
+            System.out.print(studentIndex+ ") " + studentColor + studentColorSting + PawnColor.RESET +  " ");
         }
         System.out.println();
         cmdIn = new Scanner(System.in);
@@ -351,10 +368,15 @@ public class CliClientInterface implements UserInterface {
     public void schoolUpdate(SchoolUpdateMessage message){
         System.out.println("NEW SCHOOL SITUATION for player" + message.getPlayerName() + " :");
         for(int i = 0; i < 5; i++){
-            System.out.print(message.getSchool().getSchoolHall()[i].getHallColor() + " : ");
+            PawnColor hallColor = message.getSchool().getSchoolHall()[i].getHallColor();
+            String hallColorString = message.getSchool().getSchoolHall()[i].getHallColorString();
+            System.out.print(hallColor + hallColorString + PawnColor.RESET + " : ");
             for(int j = 0; j < 10; j++){
                 if(null != message.getSchool().getSchoolHall()[i].getTableHall()[j]){
-                    System.out.print(message.getSchool().getSchoolHall()[i].getTableHall()[j].getColor() + " ");
+                    PawnColor studentColor = message.getSchool().getSchoolHall()[i].getTableHall()[j].getColor();
+                    String studentColorString = message.getSchool().getSchoolHall()[i].getTableHall()[j].getColorString();
+                    System.out.print(studentColor + studentColorString + " " + PawnColor.RESET);
+                    //System.out.print(message.getSchool().getSchoolHall()[i].getTableHall()[j].getColor() + " ");
                 }
                 else{
                     break;
@@ -363,27 +385,27 @@ public class CliClientInterface implements UserInterface {
             switch(message.getSchool().getSchoolHall()[i].getHallColor()){
                 case BLUE -> {
                     if(null != message.getSchool().getBlueProfessor()){
-                        System.out.print(" | Prof  " + message.getSchool().getBlueProfessor().getColor() + " ");
+                        System.out.print(" | " + PawnColor.BLUE + " BLUE PROF" + PawnColor.RESET);
                     }
                 }
                 case GREEN -> {
                     if(null != message.getSchool().getGreenProfessor()){
-                        System.out.print(" | Prof " +message.getSchool().getGreenProfessor().getColor() + " ");
+                        System.out.print(" | " + PawnColor.GREEN + " GREEN PROF" + PawnColor.RESET);
                     }
                 }
                 case PINK -> {
                     if(null != message.getSchool().getPinkProfessor()){
-                        System.out.print(" | Prof " +message.getSchool().getPinkProfessor().getColor() + " ");
+                        System.out.print(" | " + PawnColor.PINK + " PINK PROF" + PawnColor.RESET);
                     }
                 }
                 case RED -> {
                     if(null != message.getSchool().getRedProfessor()){
-                        System.out.print(" | Prof " +message.getSchool().getRedProfessor().getColor() + " ");
+                        System.out.print(" | " + PawnColor.RED + " RED PROF" + PawnColor.RESET);
                     }
                 }
                 case YELLOW -> {
                     if(null != message.getSchool().getYellowProfessor()){
-                        System.out.print(" | Prof " +message.getSchool().getYellowProfessor().getColor() + " ");
+                        System.out.print(" | " + PawnColor.YELLOW + " YELLOW PROF" + PawnColor.RESET);
                     }
                 }
             }
@@ -401,7 +423,9 @@ public class CliClientInterface implements UserInterface {
                 System.out.print("NO STUDENTS ");
             }
             for(int j = 0; j < message.getIslands().get(i).getStudents().size(); j++){
-                System.out.print(message.getIslands().get(i).getStudents().get(j).getColor() + " ");
+                PawnColor studentColor = message.getIslands().get(i).getStudents().get(j).getColor();
+                String studentColorString = message.getIslands().get(i).getStudents().get(j).getColorString();
+                System.out.print(studentColor + studentColorString + " " + PawnColor.RESET);
             }
             if(message.getIslands().get(i).hasMotherNature()){
                 System.out.print("[MN]");
@@ -452,7 +476,9 @@ public class CliClientInterface implements UserInterface {
         for(int i = 0; i < message.getClouds().size(); i++){
             System.out.print("Cloud " + i + " : ");
             for(Student student : message.getClouds().get(i).getCloudStudents()){
-                System.out.print(student.getColor() + " ");
+                PawnColor studentColor = student.getColor();
+                String studentColorSting = student.getColorString();
+                System.out.print(studentColor + studentColorSting + " " + PawnColor.RESET);
             }
             System.out.println();
         }

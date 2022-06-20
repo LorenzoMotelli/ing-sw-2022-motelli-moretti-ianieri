@@ -8,13 +8,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player implements Serializable, Comparable<Player> {
-    private String playerName;
-    private School schoolDashboard;
-    private List<AssistantCard> assistantDeck;
+public class Player implements Serializable{
+    private final String playerName;
+    private final School schoolDashboard;
+    private final List<AssistantCard> assistantDeck;
     private AssistantCard assistantCardUsed;
     private Student studentSelected;
-    private int playerCoins = 1;
     private int playerWeight = 0;
     private int playerInfluence = 0;
     private TowerColor playerTeam = null;
@@ -27,13 +26,12 @@ public class Player implements Serializable, Comparable<Player> {
         playerName = name;
         assistantDeck = new ArrayList<>();
         for(int i = 0; i< 10; i++){
-            assistantDeck.add(new AssistantCard(i/*, mage*/));
+            assistantDeck.add(new AssistantCard(i));
         }
         schoolDashboard = new School();
     }
 
     //---------------- GETTERS AND SETTERS --------------\\
-
 
     public String getPlayerName() {
         return playerName;
@@ -87,28 +85,6 @@ public class Player implements Serializable, Comparable<Player> {
         this.studentSelected = studentSelected;
     }
 
-    //this will be used in an expert game, it is not already implemented
-    /*public int getPlayerCoins() {
-        return playerCoins;
-    }*/
-
-   //this will be used in an expert game, it is not already implemented
-    /*public void setPlayerCoins(int playerCoins) {
-        this.playerCoins = playerCoins;
-    }*/
-
-
-
-    /*
-    this will be used in an expert game, it is not already implemented
-    /**
-     * take the coins equals to the cost of the character that the player has selected
-     * @param costCoin the cost of the character selected
-     */
-    /*public void takeCoin(int costCoin){
-        setPlayerCoins(getPlayerCoins()- costCoin);
-    }*/
-
     //----------------- SCHOOL MANAGEMENT --------------------\\
 
     /**
@@ -149,11 +125,5 @@ public class Player implements Serializable, Comparable<Player> {
                 break;
             }
         }
-    }
-
-    @Override
-    public int compareTo(Player player2){
-        int numTowersPlayer2 = player2.getSchool().getPlayersTowers().size();
-        return this.getSchool().getPlayersTowers().size() - numTowersPlayer2;
     }
 }

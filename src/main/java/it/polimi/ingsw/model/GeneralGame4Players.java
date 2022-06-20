@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumeration.TowerColor;
-import it.polimi.ingsw.model.enumeration.Variant;
 import it.polimi.ingsw.network.messages.specific.ChangeOnIslandMessage;
 import it.polimi.ingsw.network.messages.specific.UpdateBoardMessage;
 import it.polimi.ingsw.network.messages.specific.WinnersMessage;
@@ -40,12 +39,6 @@ public class GeneralGame4Players extends GeneralGame{
     @Override
     public void moveMotherNature(Island islandSelected){
         //actual 'movement' of mother nature
-        /*for(Island island : getTable().getIslands()){
-            if(island.hasMotherNature()){
-                island.setMotherNature(false);
-                break;
-            }
-        }*/
         getTable().getIslandWithMotherNature().setMotherNature(false);
         islandSelected.setMotherNature(true);
         //check only the single players
@@ -199,7 +192,7 @@ public class GeneralGame4Players extends GeneralGame{
      * @param islandSelected the island where mother nature ends
      * @return the color of the team that conquered the island in the previous turns
      */
-    private TowerColor oldConquerorTeam(Island islandSelected) {
+    private TowerColor oldConquerorTeam(Island islandSelected){
         if(!islandSelected.getTowers().isEmpty()){
             return islandSelected.getTowers().get(0).getColor();
         }

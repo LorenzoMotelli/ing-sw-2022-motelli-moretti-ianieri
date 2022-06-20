@@ -15,7 +15,6 @@ import static it.polimi.ingsw.model.enumeration.Phases.*;
 import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 
 public class GeneralGame extends Observable<Message> implements Serializable, Cloneable {
-    //TODO checkEndGame() && checkLastTurn()
     //list of the players in the game
     private Player[] players;
     private int playerAdded = 0;
@@ -24,15 +23,9 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
     //the phase in which the player plays
     private Phases gamePhase;
     //the list of assistant cards use in the current round
-    private List<AssistantCard> assistantCardsUsed;
-    //possible movement of mother nature
-    private int motherNatureMovement = 0;
-    //the variant selected
-    //private Variant variant = Variant.NORMAL;
-    //all the possible characters in the game
-    //private Character[] allCharacters;
+    private final List<AssistantCard> assistantCardsUsed;
     //the table with clouds, islands, students...
-    private Table table;
+    private final Table table;
 
     //---------------- INITIALIZATION --------------\\
 
@@ -118,12 +111,6 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         return gamePhase;
     }
 
-    /*
-    public Variant getVariant() {
-        return variant;
-    }
-    */
-
     public Player[] getPlayers() {
         return players;
     }
@@ -132,23 +119,9 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         return players[turn];
     }
 
-    public int getMotherNatureMovement() {
-        return motherNatureMovement;
-    }
-
-    public void setMotherNatureMovement(int motherNatureMovement) {
-        this.motherNatureMovement = motherNatureMovement;
-    }
-
     public Table getTable() {
         return table;
     }
-
-    /*
-    //expert game method, no implemented
-    public Character[] getAllCharacters() {
-        return allCharacters;
-    }*/
 
     public void setPlayers(Player[] players) {
         this.players = players;
@@ -162,17 +135,9 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         return assistantCardsUsed;
     }
 
-    /*public void setAssistantCardsUsed(List<AssistantCard> assistantCardsUsed) {
-        this.assistantCardsUsed = assistantCardsUsed;
-    }*/
-
     public int getTurn() {
         return turn;
     }
-
-    /*public void setTurn(int turn) {
-        this.turn = turn;
-    }*/
 
     //---------------- GAME MANAGEMENT --------------\\
 
@@ -183,7 +148,6 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
      */
     public void newTurn(){
         turn = (turn+1) % players.length;
-       // notify(new UpdateBoardMessage(this));
     }
 
     /**
@@ -213,19 +177,17 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
      * @param currentPhase the current phase of the turn
      */
     public void nextPhase(Phases currentPhase){
-        switch (currentPhase){
-            case STARTING:{
+        switch (currentPhase) {
+            case STARTING -> {
                 gamePhase = PLANNING;
-                break;
             }
-            case PLANNING:{
+            case PLANNING -> {
                 gamePhase = PLACE_STUDENT;
-                break;
             }
-            case PLACE_STUDENT:{
+            case PLACE_STUDENT -> {
                 //in a game with even players you have to place 3 students
-                if(players.length % 2 == 0){
-                    if(getCurrentPlayer().getSchool().getEntranceStudent().size() == 4) {
+                if (players.length % 2 == 0) {
+                    if (getCurrentPlayer().getSchool().getEntranceStudent().size() == 4) {
                         //already 3 placed  (7 - 3 = 4)
                         gamePhase = PLACE_MOTHER_NATURE;
                     }
@@ -237,34 +199,27 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
                         gamePhase = PLACE_MOTHER_NATURE;
                     }
                 }
-                break;
             }
-            case PLACE_MOTHER_NATURE:{
+            case PLACE_MOTHER_NATURE -> {
                 gamePhase = SELECT_CLOUD;
-                break;
             }
-            case SELECT_CLOUD: {
+            case SELECT_CLOUD -> {
                 //if initial player the round ends IF ALL THE CLOUDS HAVE NO MORE STUDENTS
                 if (allCloudsEmpty()) {
                     refillClouds();
                     gamePhase = ENDING;
-                }
-                else {
+                } else {
                     //otherwise the other players has to game their action phase
                     gamePhase = PLACE_STUDENT;
                 }
-                break;
             }
-            case ENDING:{
-                if(checkLastTurn()){
+            case ENDING -> {
+                if (checkLastTurn()) {
                     notify(new WinnersMessage(checkWinners()));
-                    break;
-                }
-                else {
+                } else {
                     assistantCardsUsed.clear();
                     gamePhase = PLANNING;
                 }
-                break;
             }
         }
     }
@@ -353,16 +308,6 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         return false;
     }
 
-    /*
-    public Hall getColorHall(PawnColor color){
-        for(int i = 0; i < 5; i++){
-            if(getCurrentPlayer().getSchool().getSchoolHall()[i].getHallColor().equals(color)){
-                return getCurrentPlayer().getSchool().getSchoolHall()[i];
-            }
-        }
-        return null;
-    }*/
-
     /**
      * the current player selects to place a student in the hall
      * then check if the player has to be the owner of the corresponding professor
@@ -435,8 +380,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
 
     /**
      * search the island in the list of island in the table and place the student
-     //* @param studentToBePlaced the student from the entrance of the school selected by the player
-     //* @param islandSelected the island from the all possible island selected by the player
+     * @param islandIndex the index of the island selected
      */
     public void placeStudentOnIsland(int islandIndex){
         getTable().getIslands().get(islandIndex).addStudent(getCurrentPlayer().getStudentSelected());
@@ -459,7 +403,6 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         for (int i = startingIndex; i < finalIndex; i++ ) {
             islands.add(getTable().getIslands().get(i % getTable().getIslands().size()));
         }
-
         return islands;
     }
 
@@ -470,12 +413,6 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
      */
     public void moveMotherNature(Island islandSelected){
         //actual 'movement' of mother nature
-        /*for(Island island : table.getIslands()){
-            if(island.hasMotherNature()){
-                island.setMotherNature(false);
-                break;
-            }
-        }*/
         table.getIslandWithMotherNature().setMotherNature(false);
         islandSelected.setMotherNature(true);
         //check only the single players
@@ -485,7 +422,6 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
             checkPlaceTower(islandSelected, conqueror);
             checkLinkIslands(islandSelected);
         }
-        //TODO improve this
         if(getCurrentPlayer().getSchool().getPlayersTowers().size() == 0){
             notify(new WinnersMessage(checkWinners()));
             return;
@@ -528,8 +464,8 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
                 //switch the color of the towers
                 table.replaceTower(islandSelected, conquerorColor);
                 //remove the towers from the new conqueror
-                for(Tower towerOnIsland : islandSelected.getTowers()){
-                    conqueror.getSchool().getPlayersTowers().remove(0);
+                if (islandSelected.getTowers().size() > 0) {
+                    conqueror.getSchool().getPlayersTowers().subList(0, islandSelected.getTowers().size()).clear();
                 }
             }
         }
@@ -683,14 +619,13 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
      */
     public void refillClouds(){
         table.initializeClouds();
-        //checkLastTurn();
     }
 
     /**
      * check the winners of the game
      * @return the players that win the game
      */
-    public  List<Player> checkWinners(){
+    public List<Player> checkWinners(){
         List<Player> winners = new ArrayList<>();
         //normal ending: player with no more towers
         for(Player player : players){
@@ -766,8 +701,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
 
     public Object clone(){
         try{
-            Object obj = super.clone();
-            return  obj;
+            return super.clone();
         } catch (CloneNotSupportedException e){
             return null;
         }
