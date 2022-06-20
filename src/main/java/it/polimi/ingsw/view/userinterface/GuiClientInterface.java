@@ -2,6 +2,8 @@ package it.polimi.ingsw.view.userinterface;
 
 
 import it.polimi.ingsw.model.GeneralGame;
+import it.polimi.ingsw.model.Island;
+import it.polimi.ingsw.model.Student;
 import it.polimi.ingsw.model.Tower;
 import it.polimi.ingsw.network.client.ClientMessageHandler;
 import it.polimi.ingsw.network.messages.Message;
@@ -10,6 +12,7 @@ import it.polimi.ingsw.network.messages.specific.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import java.awt.event.ActionEvent;
@@ -40,7 +43,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private static JPanel panelLogin;
     private static JFrame frameLogin;
     private static JFrame frameGame;
-    private static int size=4;
+    private static int size;
     //TODO togli due finito testing
 
     private static int chosenCard1=0;
@@ -57,31 +60,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private JLabel labelSetBackground;
     private ImageIcon setBackground;
 
-    private JLabel labelMotherNature1;
-    private JLabel labelMotherNature2;
-    private JLabel labelMotherNature3;
-    private JLabel labelMotherNature4;
-    private JLabel labelMotherNature5;
-    private JLabel labelMotherNature6;
-    private JLabel labelMotherNature7;
-    private JLabel labelMotherNature8;
-    private JLabel labelMotherNature9;
-    private JLabel labelMotherNature10;
-    private JLabel labelMotherNature11;
-    private JLabel labelMotherNature12;
+    private JLabel[] labelMotherNatureList = new JLabel[12];
 
-    private ImageIcon motherNature1;
-    private ImageIcon motherNature2;
-    private ImageIcon motherNature3;
-    private ImageIcon motherNature4;
-    private ImageIcon motherNature5;
-    private ImageIcon motherNature6;
-    private ImageIcon motherNature7;
-    private ImageIcon motherNature8;
-    private ImageIcon motherNature9;
-    private ImageIcon motherNature10;
-    private ImageIcon motherNature11;
-    private ImageIcon motherNature12;
+    private ImageIcon motherNatureImage = new ImageIcon("src/images/motherNature.png");;
 
     private JLabel labelGreenHall1;
     private JLabel labelGreenHall2;
@@ -94,16 +75,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private JLabel labelGreenHall9;
     private JLabel labelGreenHall10;
 
-    private ImageIcon greenHall1;
-    private ImageIcon greenHall2;
-    private ImageIcon greenHall3;
-    private ImageIcon greenHall4;
-    private ImageIcon greenHall5;
-    private ImageIcon greenHall6;
-    private ImageIcon greenHall7;
-    private ImageIcon greenHall8;
-    private ImageIcon greenHall9;
-    private ImageIcon greenHall10;
+    private JLabel[] labelGreenHallList = new JLabel[10];
+
+    private ImageIcon greenHall = new ImageIcon("src/images/greenHall.png");
 
     private JLabel labelRedHall1;
     private JLabel labelRedHall2;
@@ -322,14 +296,14 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private JLabel labelBlackTower7;
     private JLabel labelBlackTower8;
 
-    private ImageIcon blackTower1;
-    private ImageIcon blackTower2;
-    private ImageIcon blackTower3;
-    private ImageIcon blackTower4;
-    private ImageIcon blackTower5;
-    private ImageIcon blackTower6;
-    private ImageIcon blackTower7;
-    private ImageIcon blackTower8;
+    private ImageIcon blackTower1 = new ImageIcon("src/images/blackTowerRaw.png");
+    private ImageIcon blackTower2 = new ImageIcon("src/images/blackTowerRaw.png");
+    private ImageIcon blackTower3 = new ImageIcon("src/images/blackTowerRaw.png");
+    private ImageIcon blackTower4 = new ImageIcon("src/images/blackTowerRaw.png");
+    private ImageIcon blackTower5 = new ImageIcon("src/images/blackTowerRaw.png");
+    private ImageIcon blackTower6 = new ImageIcon("src/images/blackTowerRaw.png");
+    private ImageIcon blackTower7 = new ImageIcon("src/images/blackTowerRaw.png");
+    private ImageIcon blackTower8 = new ImageIcon("src/images/blackTowerRaw.png");
 
     private JLabel labelGreyTower1;
     private JLabel labelGreyTower2;
@@ -359,16 +333,16 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private JLabel labelAssistant9;
     private JLabel labelAssistant10;
 
-    private ImageIcon assistant1;
-    private ImageIcon assistant2;
-    private ImageIcon assistant3;
-    private ImageIcon assistant4;
-    private ImageIcon assistant5;
-    private ImageIcon assistant6;
-    private ImageIcon assistant7;
-    private ImageIcon assistant8;
-    private ImageIcon assistant9;
-    private ImageIcon assistant10;
+    private ImageIcon assistant1 = new ImageIcon("src/images/assistant1.jpg");
+    private ImageIcon assistant2 = new ImageIcon("src/images/assistant2.jpg");
+    private ImageIcon assistant3 = new ImageIcon("src/images/assistant3.jpg");
+    private ImageIcon assistant4 = new ImageIcon("src/images/assistant4.jpg");
+    private ImageIcon assistant5 = new ImageIcon("src/images/assistant5.jpg");
+    private ImageIcon assistant6 = new ImageIcon("src/images/assistant6.jpg");
+    private ImageIcon assistant7 = new ImageIcon("src/images/assistant7.jpg");
+    private ImageIcon assistant8 = new ImageIcon("src/images/assistant8.jpg");
+    private ImageIcon assistant9 = new ImageIcon("src/images/assistant9.jpg");
+    private ImageIcon assistant10 = new ImageIcon("src/images/assistant10.jpg");
 
     private JLabel labelWhiteTowerCounter1;
     private JLabel labelWhiteTowerCounter2;
@@ -728,7 +702,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         messageOutput.setBounds(10,110,300,25);
         panelLogin.add(messageOutput);
 
-        frameLogin.setVisible(false);
+        frameLogin.setVisible(true);
         //TODO TOGLI FALSE FINITO TESTING
 
         frameGame=new JFrame();
@@ -742,81 +716,67 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         frameGame.setTitle("ERYANTIS");
         frameGame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-
-        if(size==2){
-            setBackground = new ImageIcon("src/images/background2Player.jpg");
-        }else if(size==3){
-            setBackground = new ImageIcon("src/images/background3Player.jpg");
-        }else if(size==4){
-            setBackground = new ImageIcon("src/images/background4Player.jpg");
-        }
-
-        labelSetBackground=new JLabel();
-        labelSetBackground.setBounds(0,0,1600,800);
-        labelSetBackground.setIcon(setBackground);
-
-
         //menu for cards
         backgroundCards= new ImageIcon("src/images/backgroundCards.jpg");
         labelBackgroundCards=new JLabel();
         labelBackgroundCards.setBounds(150, 140, 850, 531);
         labelBackgroundCards.setIcon(backgroundCards);
 
-        assistant1= new ImageIcon("src/images/assistant1.jpg");
+        //assistant1= new ImageIcon("src/images/assistant1.jpg");
         labelAssistant1=new JLabel();
         labelAssistant1.setBounds(165, 160, 160, 235);
         labelAssistant1.setIcon(assistant1);
         frameGame.add(labelAssistant1);
 
-        assistant2= new ImageIcon("src/images/assistant2.jpg");
+        //assistant2= new ImageIcon("src/images/assistant2.jpg");
         labelAssistant2=new JLabel();
         labelAssistant2.setBounds(330, 160, 160, 235);
         labelAssistant2.setIcon(assistant2);
         frameGame.add(labelAssistant2);
 
-        assistant3= new ImageIcon("src/images/assistant3.jpg");
+        //assistant3= new ImageIcon("src/images/assistant3.jpg");
         labelAssistant3=new JLabel();
         labelAssistant3.setBounds(495, 160, 160, 235);
         labelAssistant3.setIcon(assistant3);
         frameGame.add(labelAssistant3);
 
-        assistant4= new ImageIcon("src/images/assistant4.jpg");
+        //assistant4= new ImageIcon("src/images/assistant4.jpg");
         labelAssistant4=new JLabel();
         labelAssistant4.setBounds(660, 160, 160, 235);
         labelAssistant4.setIcon(assistant4);
         frameGame.add(labelAssistant4);
 
-        assistant5= new ImageIcon("src/images/assistant5.jpg");
+        //assistant5= new ImageIcon("src/images/assistant5.jpg");
         labelAssistant5=new JLabel();
         labelAssistant5.setBounds(825, 160, 160, 235);
         labelAssistant5.setIcon(assistant5);
         frameGame.add(labelAssistant5);
 
-        assistant10= new ImageIcon("src/images/assistant10.jpg");
+        //assistant10= new ImageIcon("src/images/assistant10.jpg");
         labelAssistant10=new JLabel();
         labelAssistant10.setBounds(825, 415, 160, 235);
         labelAssistant10.setIcon(assistant10);
         frameGame.add(labelAssistant10);
 
-        assistant9= new ImageIcon("src/images/assistant9.jpg");
+        //assistant9= new ImageIcon("src/images/assistant9.jpg");
         labelAssistant9=new JLabel();
         labelAssistant9.setBounds(660, 415, 160, 235);
         labelAssistant9.setIcon(assistant9);
         frameGame.add(labelAssistant9);
 
-        assistant8= new ImageIcon("src/images/assistant8.jpg");
+        //assistant8= new ImageIcon("src/images/assistant8.jpg");
         labelAssistant8=new JLabel();
         labelAssistant8.setBounds(495, 415, 160, 235);
         labelAssistant8.setIcon(assistant8);
         frameGame.add(labelAssistant8);
 
-        assistant7= new ImageIcon("src/images/assistant7.jpg");
+        //assistant7= new ImageIcon("src/images/assistant7.jpg");
         labelAssistant7=new JLabel();
         labelAssistant7.setBounds(330, 415, 160, 235);
         labelAssistant7.setIcon(assistant7);
         frameGame.add(labelAssistant7);
 
-        assistant6= new ImageIcon("src/images/assistant6.jpg");
+        //assistant6= new ImageIcon("src/images/assistant6.jpg");
         labelAssistant6=new JLabel();
         labelAssistant6.setBounds(165, 415, 160, 235);
         labelAssistant6.setIcon(assistant6);
@@ -1743,152 +1703,124 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         }
 
 
-        //1 island
-        motherNature1= new ImageIcon("src/images/motherNature.png");
-        labelMotherNature1=new JLabel();
-        labelMotherNature1.setBounds(305, 100, 100, 100);
-        labelMotherNature1.setIcon(motherNature1);
 
+        //1 island
+        ImageIcon motherNatureImage = new ImageIcon("src/images/motherNature.png");
+        //motherNature1= new ImageIcon("src/images/motherNature.png");
+        for(int i = 0; i < 12; i++){
+            labelMotherNatureList[i] = new JLabel();
+            labelMotherNatureList[i].setIcon(motherNatureImage);
+        }
+
+        labelMotherNatureList[0].setBounds(305, 100, 100, 100);
         buttonPlus1 = new JButton("");
         buttonPlus1.setBounds(285, 30, 150, 150);
         buttonPlus1.addActionListener(this);
         transparentButton(buttonPlus1);
         frameGame.add(buttonPlus1);
+
         //2 island
-        motherNature2= new ImageIcon("src/images/motherNature.png");
-        labelMotherNature2=new JLabel();
-        labelMotherNature2.setBounds(525, 100, 100, 100);
-        labelMotherNature2.setIcon(motherNature2);
+        labelMotherNatureList[1].setBounds(525, 100, 100, 100);
 
         buttonPlus2 = new JButton("");
         buttonPlus2.setBounds(510, 30, 150, 150);
         buttonPlus2.addActionListener(this);
         transparentButton(buttonPlus2);
         frameGame.add(buttonPlus2);
+
         //3 island
-        motherNature3= new ImageIcon("src/images/motherNature.png");
-        labelMotherNature3=new JLabel();
-        labelMotherNature3.setBounds(760, 100, 100, 100);
-        labelMotherNature3.setIcon(motherNature3);
+        labelMotherNatureList[2].setBounds(760, 100, 100, 100);
 
         buttonPlus3 = new JButton("");
         buttonPlus3.setBounds(750, 30, 150, 150);
         buttonPlus3.addActionListener(this);
         transparentButton(buttonPlus3);
         frameGame.add(buttonPlus3);
+
         //4 island
-        motherNature4= new ImageIcon("src/images/motherNature.png");
-        labelMotherNature4=new JLabel();
-        labelMotherNature4.setBounds(970, 170, 100, 100);
-        labelMotherNature4.setIcon(motherNature4);
+        labelMotherNatureList[3].setBounds(970, 170, 100, 100);
 
         buttonPlus4 = new JButton("");
         buttonPlus4.setBounds(950, 100, 150, 150);
         buttonPlus4.addActionListener(this);
         transparentButton(buttonPlus4);
         frameGame.add(buttonPlus4);
+
         //5 island
-        motherNature5= new ImageIcon("src/images/motherNature.png");
-        labelMotherNature5=new JLabel();
-        labelMotherNature5.setBounds(970, 380, 100, 100);
-        labelMotherNature5.setIcon(motherNature5);
+        labelMotherNatureList[4].setBounds(970, 380, 100, 100);
 
         buttonPlus5 = new JButton("");
         buttonPlus5.setBounds(950, 320, 150, 150);
         buttonPlus5.addActionListener(this);
         transparentButton(buttonPlus5);
         frameGame.add(buttonPlus5);
+
         //6 island
-        motherNature6= new ImageIcon("src/images/motherNature.png");
-        labelMotherNature6=new JLabel();
-        labelMotherNature6.setBounds(970, 580, 100, 100);
-        labelMotherNature6.setIcon(motherNature6);
+        labelMotherNatureList[5].setBounds(970, 580, 100, 100);
 
         buttonPlus6 = new JButton("");
         buttonPlus6.setBounds(950, 510, 150, 150);
         buttonPlus6.addActionListener(this);
         transparentButton(buttonPlus6);
         frameGame.add(buttonPlus6);
+
         //7 island
-        motherNature7= new ImageIcon("src/images/motherNature.png");
-        labelMotherNature7=new JLabel();
-        labelMotherNature7.setBounds(765, 680, 100, 100);
-        labelMotherNature7.setIcon(motherNature7);
+        labelMotherNatureList[6].setBounds(765, 680, 100, 100);
 
         buttonPlus7 = new JButton("");
         buttonPlus7.setBounds(750, 615, 150, 150);
         buttonPlus7.addActionListener(this);
         transparentButton(buttonPlus7);
         frameGame.add(buttonPlus7);
+
         //8 island
-        motherNature8= new ImageIcon("src/images/motherNature.png");
-        labelMotherNature8=new JLabel();
-        labelMotherNature8.setBounds(525, 680, 100, 100);
-        labelMotherNature8.setIcon(motherNature8);
+        labelMotherNatureList[7].setBounds(525, 680, 100, 100);
 
         buttonPlus8 = new JButton("");
         buttonPlus8.setBounds(510, 615, 150, 150);
         buttonPlus8.addActionListener(this);
         transparentButton(buttonPlus8);
         frameGame.add(buttonPlus8);
+
         //9 island
-        motherNature9= new ImageIcon("src/images/motherNature.png");
-        labelMotherNature9=new JLabel();
-        labelMotherNature9.setBounds(270, 680, 100, 100);
-        labelMotherNature9.setIcon(motherNature9);
+        labelMotherNatureList[8].setBounds(270, 680, 100, 100);
 
         buttonPlus9 = new JButton("");
         buttonPlus9.setBounds(255, 615, 150, 150);
         buttonPlus9.addActionListener(this);
         transparentButton(buttonPlus9);
         frameGame.add(buttonPlus9);
+
         //10 island
-        motherNature10= new ImageIcon("src/images/motherNature.png");
-        labelMotherNature10=new JLabel();
-        labelMotherNature10.setBounds(65, 580, 100, 100);
-        labelMotherNature10.setIcon(motherNature10);
+        labelMotherNatureList[9].setBounds(65, 580, 100, 100);
 
         buttonPlus10 = new JButton("");
         buttonPlus10.setBounds(50, 520, 150, 150);
         buttonPlus10.addActionListener(this);
         transparentButton(buttonPlus10);
         frameGame.add(buttonPlus10);
+
         //11 island
-        motherNature11= new ImageIcon("src/images/motherNature.png");
-        labelMotherNature11=new JLabel();
-        labelMotherNature11.setBounds(65, 380, 100, 100);
-        labelMotherNature11.setIcon(motherNature11);
+        labelMotherNatureList[10].setBounds(65, 380, 100, 100);
 
         buttonPlus11 = new JButton("");
         buttonPlus11.setBounds(50, 320, 150, 150);
         buttonPlus11.addActionListener(this);
         transparentButton(buttonPlus11);
         frameGame.add(buttonPlus11);
+
         //12 island
-        motherNature12= new ImageIcon("src/images/motherNature.png");
-        labelMotherNature12=new JLabel();
-        labelMotherNature12.setBounds(65, 170, 100, 100);
-        labelMotherNature12.setIcon(motherNature12);
+        labelMotherNatureList[11].setBounds(65, 170, 100, 100);
 
         buttonPlus12 = new JButton("");
         buttonPlus12.setBounds(50, 100, 150, 150);
         buttonPlus12.addActionListener(this);
+
         transparentButton(buttonPlus12);
         frameGame.add(buttonPlus12);
+        //labelMotherNatureList.add(labelMotherNature12);
 
         //one motherNature for each island
-        frameGame.add(labelMotherNature1);
-        frameGame.add(labelMotherNature2);
-        frameGame.add(labelMotherNature3);
-        frameGame.add(labelMotherNature4);
-        frameGame.add(labelMotherNature5);
-        frameGame.add(labelMotherNature6);
-        frameGame.add(labelMotherNature7);
-        frameGame.add(labelMotherNature8);
-        frameGame.add(labelMotherNature9);
-        frameGame.add(labelMotherNature10);
-        frameGame.add(labelMotherNature11);
-        frameGame.add(labelMotherNature12);
 
         //1 select student
         buttonSelectStudent1 = new JButton("");
@@ -1965,64 +1897,63 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         frameGame.add(buttonPutOnTable);
 
         //add player to green table
-        greenHall1= new ImageIcon("src/images/greenHall.png");
+
         labelGreenHall1=new JLabel();
         labelGreenHall1.setBounds(1219, 225, 100, 100);
-        labelGreenHall1.setIcon(greenHall1);
+        labelGreenHall1.setIcon(greenHall);
         frameGame.add(labelGreenHall1);
 
-        greenHall2= new ImageIcon("src/images/greenHall.png");
+
         labelGreenHall2=new JLabel();
         labelGreenHall2.setBounds(1219, 266, 100, 100);
-        labelGreenHall2.setIcon(greenHall2);
+        labelGreenHall2.setIcon(greenHall);
         frameGame.add(labelGreenHall2);
 
-        greenHall3= new ImageIcon("src/images/greenHall.png");
+
         labelGreenHall3=new JLabel();
         labelGreenHall3.setBounds(1219, 307, 100, 100);
-        labelGreenHall3.setIcon(greenHall3);
+        labelGreenHall3.setIcon(greenHall);
         frameGame.add(labelGreenHall3);
 
-        greenHall4= new ImageIcon("src/images/greenHall.png");
+
         labelGreenHall4=new JLabel();
         labelGreenHall4.setBounds(1219, 348, 100, 100);
-        labelGreenHall4.setIcon(greenHall4);
+        labelGreenHall4.setIcon(greenHall);
         frameGame.add(labelGreenHall4);
 
-        greenHall5= new ImageIcon("src/images/greenHall.png");
+
         labelGreenHall5=new JLabel();
         labelGreenHall5.setBounds(1219, 389, 100, 100);
-        labelGreenHall5.setIcon(greenHall5);
+        labelGreenHall5.setIcon(greenHall);
         frameGame.add(labelGreenHall5);
 
-        greenHall6= new ImageIcon("src/images/greenHall.png");
         labelGreenHall6=new JLabel();
         labelGreenHall6.setBounds(1219, 430, 100, 100);
-        labelGreenHall6.setIcon(greenHall6);
+        labelGreenHall6.setIcon(greenHall);
         frameGame.add(labelGreenHall6);
 
-        greenHall7= new ImageIcon("src/images/greenHall.png");
+
         labelGreenHall7=new JLabel();
         labelGreenHall7.setBounds(1219, 471, 100, 100);
-        labelGreenHall7.setIcon(greenHall7);
+        labelGreenHall7.setIcon(greenHall);
         frameGame.add(labelGreenHall7);
 
-        greenHall8= new ImageIcon("src/images/greenHall.png");
+
         labelGreenHall8=new JLabel();
         labelGreenHall8.setBounds(1219, 512, 100, 100);
-        labelGreenHall8.setIcon(greenHall8);
+        labelGreenHall8.setIcon(greenHall);
         frameGame.add(labelGreenHall8);
 
-        greenHall9= new ImageIcon("src/images/greenHall.png");
+
         labelGreenHall9=new JLabel();
         labelGreenHall9.setBounds(1219, 553, 100, 100);
-        labelGreenHall9.setIcon(greenHall9);
+        labelGreenHall9.setIcon(greenHall);
         frameGame.add(labelGreenHall9);
 
-        greenHall10= new ImageIcon("src/images/greenHall.png");
+
         labelGreenHall10=new JLabel();
         labelGreenHall10.setBounds(1219, 594, 100, 100);
-        labelGreenHall10.setIcon(greenHall10);
+        labelGreenHall10.setIcon(greenHall);
         frameGame.add(labelGreenHall10);
 
         //add player to red table
@@ -2655,37 +2586,37 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelWhiteTower6.setIcon(whiteTower6);
         frameGame.add(labelWhiteTower6);
 
-        blackTower1= new ImageIcon("src/images/blackTowerRaw.png");
+        //blackTower1= new ImageIcon("src/images/blackTowerRaw.png");
         labelBlackTower1=new JLabel();
         labelBlackTower1.setBounds(1244, 0, 60, 60);
         labelBlackTower1.setIcon(blackTower1);
         frameGame.add(labelBlackTower1);
 
-        blackTower2= new ImageIcon("src/images/blackTowerRaw.png");
+        //blackTower2= new ImageIcon("src/images/blackTowerRaw.png");
         labelBlackTower2=new JLabel();
         labelBlackTower2.setBounds(1244, 65, 60, 60);
         labelBlackTower2.setIcon(blackTower2);
         frameGame.add(labelBlackTower2);
 
-        blackTower3= new ImageIcon("src/images/blackTowerRaw.png");
+        //blackTower3= new ImageIcon("src/images/blackTowerRaw.png");
         labelBlackTower3=new JLabel();
         labelBlackTower3.setBounds(1306, 0, 60, 60);
         labelBlackTower3.setIcon(blackTower3);
         frameGame.add(labelBlackTower3);
 
-        blackTower4= new ImageIcon("src/images/blackTowerRaw.png");
+        //blackTower4= new ImageIcon("src/images/blackTowerRaw.png");
         labelBlackTower4=new JLabel();
         labelBlackTower4.setBounds(1306, 65, 60, 60);
         labelBlackTower4.setIcon(blackTower4);
         frameGame.add(labelBlackTower4);
 
-        blackTower5= new ImageIcon("src/images/blackTowerRaw.png");
+        //blackTower5= new ImageIcon("src/images/blackTowerRaw.png");
         labelBlackTower5=new JLabel();
         labelBlackTower5.setBounds(1368, 0, 60, 60);
         labelBlackTower5.setIcon(blackTower5);
         frameGame.add(labelBlackTower5);
 
-        blackTower6= new ImageIcon("src/images/blackTowerRaw.png");
+        //blackTower6= new ImageIcon("src/images/blackTowerRaw.png");
         labelBlackTower6=new JLabel();
         labelBlackTower6.setBounds(1368, 65, 60, 60);
         labelBlackTower6.setIcon(blackTower6);
@@ -2705,13 +2636,13 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelWhiteTower8.setIcon(whiteTower8);
             frameGame.add(labelWhiteTower8);
 
-            blackTower7= new ImageIcon("src/images/blackTowerRaw.png");
+            //blackTower7= new ImageIcon("src/images/blackTowerRaw.png");
             labelBlackTower7=new JLabel();
             labelBlackTower7.setBounds(1430, 0, 60, 60);
             labelBlackTower7.setIcon(blackTower7);
             frameGame.add(labelBlackTower7);
 
-            blackTower8= new ImageIcon("src/images/blackTowerRaw.png");
+            //blackTower8= new ImageIcon("src/images/blackTowerRaw.png");
             labelBlackTower8=new JLabel();
             labelBlackTower8.setBounds(1430, 65, 60, 60);
             labelBlackTower8.setIcon(blackTower8);
@@ -2768,7 +2699,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         buttonHideCards.setVisible(false);
 
         //set the beginning phase
-        buttonPlus1.setVisible(false);
+        /*buttonPlus1.setVisible(false);
         buttonPlus2.setVisible(false);
         buttonPlus3.setVisible(false);
         buttonPlus4.setVisible(false);
@@ -2800,15 +2731,16 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         buttonSelectCloud2.setVisible(false);
         if(size==4){
             buttonSelectCloud4.setVisible(false);
-        }
+        }*/
 
 
         hideCards();
-        frameGame.add(labelSetBackground);
-        frameGame.setVisible(true);
+        //frameGame.add(labelSetBackground);
+        //frameGame.add(labelSetBackground);
+        frameGame.setVisible(false);
         //TODO TOGLI TRUE FINITO TESTING
-    }
 
+    }
 
     public void main(String[] args) {
         new GuiClientInterface();
@@ -2843,10 +2775,10 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             messageOutput.setText("Username accepted");
             messageHandler.sendMessage(new Message(MessageAction.CLIENT_READY, this.username));
             buttonConfirmName.setVisible(false);
-
         }
 
     }
+
     @Override
     public void waitingForOtherPlayers() {
         messageOutput.setText("Waiting for other players to join...");
@@ -2866,7 +2798,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     @Override
     public void askRoomCreation() {
-
         buttonNextLobby.setVisible(false);
         buttonConfirmName.setVisible(false);
         usernameField.setVisible(false);
@@ -2875,7 +2806,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelInsertIP.setText("Insert the number of players: ");
         panelLogin.add(lobbyField);
         panelLogin.add(buttonGetReady);
-
     }
 
     @Override
@@ -2936,9 +2866,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         else if(e.getSource()== buttonGetReady)
         {
             //ask roomCreation
-            size = Integer.parseInt(lobbyField.getText());
-            messageHandler.sendMessage(new RoomSizeMessage(size, this.username));
-            buttonGetReady.setVisible(false);
+
         }
         else if(e.getSource()== buttonPlus1)
         {
@@ -3209,11 +3137,48 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     }
 
-
     @Override
     public void boardUpdate(UpdateBoardMessage updateBoardMessage) {
+        labelSetBackground=new JLabel();
+        GeneralGame game = updateBoardMessage.getGame();
+        size = game.getPlayers().length;
+        if(size==2){
+            setBackground = new ImageIcon("src/images/background2Player.jpg");
+        }else if(size==3){
+            setBackground = new ImageIcon("src/images/background3Player.jpg");
+        }else if(size==4){
+            setBackground = new ImageIcon("src/images/background4Player.jpg");
+        }
+        labelSetBackground.setBounds(0,0,1600,800);
+        labelSetBackground.setIcon(setBackground);
+        //one motherNature for each island
+        for(int i = 0; i < 12; i++){
+            if(game.getTable().getIslands().get(i).equals(game.getTable().getIslandWithMotherNature())){
+                frameGame.add(labelMotherNatureList[i]);
+                break;
+            }
+        }
+        frameGame.add(labelSetBackground);
+
+        for(Island island : game.getTable().getIslands()){
+            //updateIslandStudentCounter(island);
+        }
 
     }
+
+    /*public void updateIslandStudentCounter(Island island){
+        if(!island.getBlueStudents().isEmpty()) {
+            island.getLabelBlueStudent().setText(island.getBlueStudents().size() + "");
+        }
+        if(!island.getGreenStudents().isEmpty()) {
+            island.getLabelGreenStudent().setText(island.getGreenStudents().size() + "");
+        }
+        if(!island.getPinkStudents().isEmpty()) {
+            island.getLabelPinkStudent().setText(island.getPinkStudents().size() + "");
+        }
+        island.getLabelRedStudent().setText(island.getRedStudents().size()+"");
+        island.getLabelYellowStudent().setText(island.getYellowStudents().size()+"");
+    }*/
 
     @Override
     public void selectAssistantCard(AskAssistantCardsMessage message) {
