@@ -4,8 +4,6 @@ package it.polimi.ingsw.view.userinterface;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.TowerColor;
-import it.polimi.ingsw.model.enumeration.PawnColor;
-import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.network.client.ClientMessageHandler;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
@@ -113,71 +111,15 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     private JLabel[] labelGreyTowerCounter = new JLabel[12];
 
+    private final JLabel[] labelRedCounter = new JLabel[12];
 
-    private JLabel labelRedCounter1;
-    private JLabel labelRedCounter2;
-    private JLabel labelRedCounter3;
-    private JLabel labelRedCounter4;
-    private JLabel labelRedCounter5;
-    private JLabel labelRedCounter6;
-    private JLabel labelRedCounter7;
-    private JLabel labelRedCounter8;
-    private JLabel labelRedCounter9;
-    private JLabel labelRedCounter10;
-    private JLabel labelRedCounter11;
-    private JLabel labelRedCounter12;
+    private final JLabel[] labelYellowCounters = new JLabel[12];
 
-    private JLabel labelYellowCounter1;
-    private JLabel labelYellowCounter2;
-    private JLabel labelYellowCounter3;
-    private JLabel labelYellowCounter4;
-    private JLabel labelYellowCounter5;
-    private JLabel labelYellowCounter6;
-    private JLabel labelYellowCounter7;
-    private JLabel labelYellowCounter8;
-    private JLabel labelYellowCounter9;
-    private JLabel labelYellowCounter10;
-    private JLabel labelYellowCounter11;
-    private JLabel labelYellowCounter12;
+    private final JLabel[] labelBlueCounters = new JLabel[12];
 
-    private JLabel labelBlueCounter1;
-    private JLabel labelBlueCounter2;
-    private JLabel labelBlueCounter3;
-    private JLabel labelBlueCounter4;
-    private JLabel labelBlueCounter5;
-    private JLabel labelBlueCounter6;
-    private JLabel labelBlueCounter7;
-    private JLabel labelBlueCounter8;
-    private JLabel labelBlueCounter9;
-    private JLabel labelBlueCounter10;
-    private JLabel labelBlueCounter11;
-    private JLabel labelBlueCounter12;
+    private final JLabel[] labelGreenCounters = new JLabel[12];
 
-    private JLabel labelGreenCounter1;
-    private JLabel labelGreenCounter2;
-    private JLabel labelGreenCounter3;
-    private JLabel labelGreenCounter4;
-    private JLabel labelGreenCounter5;
-    private JLabel labelGreenCounter6;
-    private JLabel labelGreenCounter7;
-    private JLabel labelGreenCounter8;
-    private JLabel labelGreenCounter9;
-    private JLabel labelGreenCounter10;
-    private JLabel labelGreenCounter11;
-    private JLabel labelGreenCounter12;
-
-    private JLabel labelPinkCounter1;
-    private JLabel labelPinkCounter2;
-    private JLabel labelPinkCounter3;
-    private JLabel labelPinkCounter4;
-    private JLabel labelPinkCounter5;
-    private JLabel labelPinkCounter6;
-    private JLabel labelPinkCounter7;
-    private JLabel labelPinkCounter8;
-    private JLabel labelPinkCounter9;
-    private JLabel labelPinkCounter10;
-    private JLabel labelPinkCounter11;
-    private JLabel labelPinkCounter12;
+    private final JLabel[] labelPinkCounters = new JLabel[12];
 
     private JLabel labelRedCloudCounter1;
     private JLabel labelRedCloudCounter2;
@@ -326,7 +268,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     }
 
     public GuiClientInterface() {
-
         messageHandler = new ClientMessageHandler(this);
         inputStreamReader = new InputStreamReader(System.in);
 
@@ -593,305 +534,92 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelGreyTowerCounter[11].setBounds(27,155,25,25);
         }
 
-        labelRedCounter1 = new JLabel(" 0", SwingConstants.CENTER);
-        labelRedCounter1.setBounds(391,23,25,25);
-        labelRedCounter1.setForeground(Color.WHITE);
-        labelRedCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        for(int i = 0; i < 12; i++){
+            labelRedCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelRedCounter[i].setForeground(Color.WHITE);
+            labelRedCounter[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
 
-        labelRedCounter2 = new JLabel(" 0", SwingConstants.CENTER);
-        labelRedCounter2.setBounds(613,23,25,25);
-        labelRedCounter2.setForeground(Color.WHITE);
-        labelRedCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelYellowCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelYellowCounters[i].setForeground(Color.WHITE);
+            labelYellowCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
 
-        labelRedCounter3 = new JLabel(" 0", SwingConstants.CENTER);
-        labelRedCounter3.setBounds(850,23,25,25);
-        labelRedCounter3.setForeground(Color.WHITE);
-        labelRedCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelBlueCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelBlueCounters[i].setForeground(Color.WHITE);
+            labelBlueCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
 
-        labelRedCounter4 = new JLabel(" 0", SwingConstants.CENTER);
-        labelRedCounter4.setBounds(1056,92,25,25);
-        labelRedCounter4.setForeground(Color.WHITE);
-        labelRedCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelGreenCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreenCounters[i].setForeground(Color.WHITE);
+            labelGreenCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
 
-        labelRedCounter5 = new JLabel(" 0", SwingConstants.CENTER);
-        labelRedCounter5.setBounds(1056,310,25,25);
-        labelRedCounter5.setForeground(Color.WHITE);
-        labelRedCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelRedCounter6 = new JLabel(" 0", SwingConstants.CENTER);
-        labelRedCounter6.setBounds(1056,511,25,25);
-        labelRedCounter6.setForeground(Color.WHITE);
-        labelRedCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelRedCounter7 = new JLabel(" 0", SwingConstants.CENTER);
-        labelRedCounter7.setBounds(850,604,25,25);
-        labelRedCounter7.setForeground(Color.WHITE);
-        labelRedCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelRedCounter8 = new JLabel(" 0", SwingConstants.CENTER);
-        labelRedCounter8.setBounds(613,604,25,25);
-        labelRedCounter8.setForeground(Color.WHITE);
-        labelRedCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelRedCounter9 = new JLabel(" 0", SwingConstants.CENTER);
-        labelRedCounter9.setBounds(358,608,25,25);
-        labelRedCounter9.setForeground(Color.WHITE);
-        labelRedCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelRedCounter10 = new JLabel(" 0", SwingConstants.CENTER);
-        labelRedCounter10.setBounds(153,510,25,25);
-        labelRedCounter10.setForeground(Color.WHITE);
-        labelRedCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelRedCounter11 = new JLabel(" 0", SwingConstants.CENTER);
-        labelRedCounter11.setBounds(153,310,25,25);
-        labelRedCounter11.setForeground(Color.WHITE);
-        labelRedCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelRedCounter12 = new JLabel(" 0", SwingConstants.CENTER);
-        labelRedCounter12.setBounds(153,90,25,25);
-        labelRedCounter12.setForeground(Color.WHITE);
-        labelRedCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelGreenCounter1 = new JLabel(" 0", SwingConstants.CENTER);
-        labelGreenCounter1.setBounds(391,59,25,25);
-        labelGreenCounter1.setForeground(Color.WHITE);
-        labelGreenCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelGreenCounter2 = new JLabel(" 0", SwingConstants.CENTER);
-        labelGreenCounter2.setBounds(613,59,25,25);
-        labelGreenCounter2.setForeground(Color.WHITE);
-        labelGreenCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelGreenCounter3 = new JLabel(" 0", SwingConstants.CENTER);
-        labelGreenCounter3.setBounds(850,59,25,25);
-        labelGreenCounter3.setForeground(Color.WHITE);
-        labelGreenCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelGreenCounter4 = new JLabel(" 0", SwingConstants.CENTER);
-        labelGreenCounter4.setBounds(1056,128,25,25);
-        labelGreenCounter4.setForeground(Color.WHITE);
-        labelGreenCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelGreenCounter5 = new JLabel(" 0", SwingConstants.CENTER);
-        labelGreenCounter5.setBounds(1056,346,25,25);
-        labelGreenCounter5.setForeground(Color.WHITE);
-        labelGreenCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelGreenCounter6 = new JLabel(" 0", SwingConstants.CENTER);
-        labelGreenCounter6.setBounds(1056,547,25,25);
-        labelGreenCounter6.setForeground(Color.WHITE);
-        labelGreenCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelGreenCounter7 = new JLabel(" 0", SwingConstants.CENTER);
-        labelGreenCounter7.setBounds(850,640,25,25);
-        labelGreenCounter7.setForeground(Color.WHITE);
-        labelGreenCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelGreenCounter8 = new JLabel(" 0", SwingConstants.CENTER);
-        labelGreenCounter8.setBounds(613,640,25,25);
-        labelGreenCounter8.setForeground(Color.WHITE);
-        labelGreenCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelGreenCounter9 = new JLabel(" 0", SwingConstants.CENTER);
-        labelGreenCounter9.setBounds(358,644,25,25);
-        labelGreenCounter9.setForeground(Color.WHITE);
-        labelGreenCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelGreenCounter10 = new JLabel(" 0", SwingConstants.CENTER);
-        labelGreenCounter10.setBounds(153,546,25,25);
-        labelGreenCounter10.setForeground(Color.WHITE);
-        labelGreenCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelGreenCounter11 = new JLabel(" 0", SwingConstants.CENTER);
-        labelGreenCounter11.setBounds(153,346,25,25);
-        labelGreenCounter11.setForeground(Color.WHITE);
-        labelGreenCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelGreenCounter12 = new JLabel(" 0", SwingConstants.CENTER);
-        labelGreenCounter12.setBounds(153,126,25,25);
-        labelGreenCounter12.setForeground(Color.WHITE);
-        labelGreenCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelBlueCounter1 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlueCounter1.setBounds(391,96,25,25);
-        labelBlueCounter1.setForeground(Color.WHITE);
-        labelBlueCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelBlueCounter2 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlueCounter2.setBounds(613,96,25,25);
-        labelBlueCounter2.setForeground(Color.WHITE);
-        labelBlueCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelBlueCounter3 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlueCounter3.setBounds(850,96,25,25);
-        labelBlueCounter3.setForeground(Color.WHITE);
-        labelBlueCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelBlueCounter4 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlueCounter4.setBounds(1056,165,25,25);
-        labelBlueCounter4.setForeground(Color.WHITE);
-        labelBlueCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelBlueCounter5 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlueCounter5.setBounds(1056,383,25,25);
-        labelBlueCounter5.setForeground(Color.WHITE);
-        labelBlueCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelBlueCounter6 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlueCounter6.setBounds(1056,584,25,25);
-        labelBlueCounter6.setForeground(Color.WHITE);
-        labelBlueCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelBlueCounter7 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlueCounter7.setBounds(850,677,25,25);
-        labelBlueCounter7.setForeground(Color.WHITE);
-        labelBlueCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelBlueCounter8 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlueCounter8.setBounds(613,677,25,25);
-        labelBlueCounter8.setForeground(Color.WHITE);
-        labelBlueCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelBlueCounter9 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlueCounter9.setBounds(358,681,25,25);
-        labelBlueCounter9.setForeground(Color.WHITE);
-        labelBlueCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelBlueCounter10 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlueCounter10.setBounds(153,583,25,25);
-        labelBlueCounter10.setForeground(Color.WHITE);
-        labelBlueCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelBlueCounter11 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlueCounter11.setBounds(153,383,25,25);
-        labelBlueCounter11.setForeground(Color.WHITE);
-        labelBlueCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelBlueCounter12 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlueCounter12.setBounds(153,163,25,25);
-        labelBlueCounter12.setForeground(Color.WHITE);
-        labelBlueCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelYellowCounter1 = new JLabel(" 0", SwingConstants.CENTER);
-        labelYellowCounter1.setBounds(391,134,25,25);
-        labelYellowCounter1.setForeground(Color.WHITE);
-        labelYellowCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelYellowCounter2 = new JLabel(" 0", SwingConstants.CENTER);
-        labelYellowCounter2.setBounds(613,134,25,25);
-        labelYellowCounter2.setForeground(Color.WHITE);
-        labelYellowCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelYellowCounter3 = new JLabel(" 0", SwingConstants.CENTER);
-        labelYellowCounter3.setBounds(850,134,25,25);
-        labelYellowCounter3.setForeground(Color.WHITE);
-        labelYellowCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelYellowCounter4 = new JLabel(" 0", SwingConstants.CENTER);
-        labelYellowCounter4.setBounds(1056,203,25,25);
-        labelYellowCounter4.setForeground(Color.WHITE);
-        labelYellowCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelYellowCounter5 = new JLabel(" 0", SwingConstants.CENTER);
-        labelYellowCounter5.setBounds(1056,424,25,25);
-        labelYellowCounter5.setForeground(Color.WHITE);
-        labelYellowCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelYellowCounter6 = new JLabel(" 0", SwingConstants.CENTER);
-        labelYellowCounter6.setBounds(1056,622,25,25);
-        labelYellowCounter6.setForeground(Color.WHITE);
-        labelYellowCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelYellowCounter7 = new JLabel(" 0", SwingConstants.CENTER);
-        labelYellowCounter7.setBounds(850,715,25,25);
-        labelYellowCounter7.setForeground(Color.WHITE);
-        labelYellowCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelYellowCounter8 = new JLabel(" 0", SwingConstants.CENTER);
-        labelYellowCounter8.setBounds(613,715,25,25);
-        labelYellowCounter8.setForeground(Color.WHITE);
-        labelYellowCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelYellowCounter9 = new JLabel(" 0", SwingConstants.CENTER);
-        labelYellowCounter9.setBounds(358,719,25,25);
-        labelYellowCounter9.setForeground(Color.WHITE);
-        labelYellowCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelYellowCounter10 = new JLabel(" 0", SwingConstants.CENTER);
-        labelYellowCounter10.setBounds(153,621,25,25);
-        labelYellowCounter10.setForeground(Color.WHITE);
-        labelYellowCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelYellowCounter11 = new JLabel(" 0", SwingConstants.CENTER);
-        labelYellowCounter11.setBounds(153,421,25,25);
-        labelYellowCounter11.setForeground(Color.WHITE);
-        labelYellowCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelYellowCounter12 = new JLabel(" 0", SwingConstants.CENTER);
-        labelYellowCounter12.setBounds(153,201,25,25);
-        labelYellowCounter12.setForeground(Color.WHITE);
-        labelYellowCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelPinkCounter1 = new JLabel(" 0", SwingConstants.CENTER);
-        labelPinkCounter1.setBounds(391,172,25,25);
-        labelPinkCounter1.setForeground(Color.WHITE);
-        labelPinkCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelPinkCounter2 = new JLabel(" 0", SwingConstants.CENTER);
-        labelPinkCounter2.setBounds(613,172,25,25);
-        labelPinkCounter2.setForeground(Color.WHITE);
-        labelPinkCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelPinkCounter3 = new JLabel(" 0", SwingConstants.CENTER);
-        labelPinkCounter3.setBounds(850,172,25,25);
-        labelPinkCounter3.setForeground(Color.WHITE);
-        labelPinkCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelPinkCounter4 = new JLabel(" 0", SwingConstants.CENTER);
-        labelPinkCounter4.setBounds(1056,241,25,25);
-        labelPinkCounter4.setForeground(Color.WHITE);
-        labelPinkCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelPinkCounter5 = new JLabel(" 0", SwingConstants.CENTER);
-        labelPinkCounter5.setBounds(1056,462,25,25);
-        labelPinkCounter5.setForeground(Color.WHITE);
-        labelPinkCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelPinkCounter6 = new JLabel(" 0", SwingConstants.CENTER);
-        labelPinkCounter6.setBounds(1056,660,25,25);
-        labelPinkCounter6.setForeground(Color.WHITE);
-        labelPinkCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelPinkCounter7 = new JLabel(" 0", SwingConstants.CENTER);
-        labelPinkCounter7.setBounds(850,753,25,25);
-        labelPinkCounter7.setForeground(Color.WHITE);
-        labelPinkCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelPinkCounter8 = new JLabel(" 0", SwingConstants.CENTER);
-        labelPinkCounter8.setBounds(613,753,25,25);
-        labelPinkCounter8.setForeground(Color.WHITE);
-        labelPinkCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelPinkCounter9 = new JLabel(" 0", SwingConstants.CENTER);
-        labelPinkCounter9.setBounds(358,757,25,25);
-        labelPinkCounter9.setForeground(Color.WHITE);
-        labelPinkCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelPinkCounter10 = new JLabel(" 0", SwingConstants.CENTER);
-        labelPinkCounter10.setBounds(153,659,25,25);
-        labelPinkCounter10.setForeground(Color.WHITE);
-        labelPinkCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelPinkCounter11 = new JLabel(" 0", SwingConstants.CENTER);
-        labelPinkCounter11.setBounds(153,459,25,25);
-        labelPinkCounter11.setForeground(Color.WHITE);
-        labelPinkCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-        labelPinkCounter12 = new JLabel(" 0", SwingConstants.CENTER);
-        labelPinkCounter12.setBounds(153,239,25,25);
-        labelPinkCounter12.setForeground(Color.WHITE);
-        labelPinkCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelPinkCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelPinkCounters[i].setForeground(Color.WHITE);
+            labelPinkCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        }
+        //set red counters bounds
+        labelRedCounter[0].setBounds(391,23,25,25);
+        labelRedCounter[1].setBounds(613,23,25,25);
+        labelRedCounter[2].setBounds(850,23,25,25);
+        labelRedCounter[3].setBounds(1056,92,25,25);
+        labelRedCounter[4].setBounds(1056,310,25,25);
+        labelRedCounter[5].setBounds(1056,511,25,25);
+        labelRedCounter[6].setBounds(850,604,25,25);
+        labelRedCounter[7].setBounds(613,604,25,25);
+        labelRedCounter[8].setBounds(358,608,25,25);
+        labelRedCounter[9].setBounds(153,510,25,25);
+        labelRedCounter[10].setBounds(153,310,25,25);
+        labelRedCounter[11].setBounds(153,90,25,25);
+        //set green counters bounds
+        labelGreenCounters[0].setBounds(391,59,25,25);
+        labelGreenCounters[1].setBounds(613,59,25,25);
+        labelGreenCounters[2].setBounds(850,59,25,25);
+        labelGreenCounters[3].setBounds(1056,128,25,25);
+        labelGreenCounters[4].setBounds(1056,346,25,25);
+        labelGreenCounters[5].setBounds(1056,547,25,25);
+        labelGreenCounters[6].setBounds(850,640,25,25);
+        labelGreenCounters[7].setBounds(613,640,25,25);
+        labelGreenCounters[8].setBounds(358,644,25,25);
+        labelGreenCounters[9].setBounds(153,546,25,25);
+        labelGreenCounters[10].setBounds(153,346,25,25);
+        labelGreenCounters[11].setBounds(153,126,25,25);
+        //set blue counters bounds
+        labelBlueCounters[0].setBounds(391,96,25,25);
+        labelBlueCounters[1].setBounds(613,96,25,25);
+        labelBlueCounters[2].setBounds(850,96,25,25);
+        labelBlueCounters[3].setBounds(1056,165,25,25);
+        labelBlueCounters[4].setBounds(1056,383,25,25);
+        labelBlueCounters[5].setBounds(1056,584,25,25);
+        labelBlueCounters[6].setBounds(850,677,25,25);
+        labelBlueCounters[7].setBounds(613,677,25,25);
+        labelBlueCounters[8].setBounds(358,681,25,25);
+        labelBlueCounters[9].setBounds(153,583,25,25);
+        labelBlueCounters[10].setBounds(153,383,25,25);
+        labelBlueCounters[11].setBounds(153,163,25,25);
+        //set yellow counters bounds
+        labelYellowCounters[0].setBounds(391,134,25,25);
+        labelYellowCounters[1].setBounds(613,134,25,25);
+        labelYellowCounters[2].setBounds(850,134,25,25);
+        labelYellowCounters[3].setBounds(1056,203,25,25);
+        labelYellowCounters[4].setBounds(1056,424,25,25);
+        labelYellowCounters[5].setBounds(1056,622,25,25);
+        labelYellowCounters[6].setBounds(850,715,25,25);
+        labelYellowCounters[7].setBounds(613,715,25,25);
+        labelYellowCounters[8].setBounds(358,719,25,25);
+        labelYellowCounters[9].setBounds(153,621,25,25);
+        labelYellowCounters[10].setBounds(153,421,25,25);
+        labelYellowCounters[11].setBounds(153,201,25,25);
+        //set pink counters bounds
+        labelPinkCounters[0].setBounds(391,172,25,25);
+        labelPinkCounters[1].setBounds(613,172,25,25);
+        labelPinkCounters[2].setBounds(850,172,25,25);
+        labelPinkCounters[3].setBounds(1056,241,25,25);
+        labelPinkCounters[4].setBounds(1056,462,25,25);
+        labelPinkCounters[5].setBounds(1056,660,25,25);
+        labelPinkCounters[6].setBounds(850,753,25,25);
+        labelPinkCounters[7].setBounds(613,753,25,25);
+        labelPinkCounters[8].setBounds(358,757,25,25);
+        labelPinkCounters[9].setBounds(153,659,25,25);
+        labelPinkCounters[10].setBounds(153,459,25,25);
+        labelPinkCounters[11].setBounds(153,239,25,25);
 
         if(size==2)
         {
@@ -1616,13 +1344,12 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     }
 
-    public void main(String[] args) {
+    /*public void main(String[] args) {
         new GuiClientInterface();
-    }
+    }*/
 
     @Override
     public void askUsername() {
-
         buttonNext.setVisible(false);
         buttonServer.setVisible(false);
         serverIPField.setVisible(false);
@@ -1684,17 +1411,13 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     @Override
     public void roomSizeResponse(@NotNull RoomSizeMessage message) {
-        if (message.getRoomSize() == -1)
-        {
+        if (message.getRoomSize() == -1) {
             messageOutput.setText("Room size is not valid");
 
-        }
-        else
-        {
+        } else {
             messageOutput.setText("Room size accepted\nRoom created");
             messageHandler.sendMessage(new Message(MessageAction.CLIENT_READY, this.username));
         }
-
     }
 
     @Override
@@ -1705,9 +1428,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     //connectToServer
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if (e.getSource()==buttonServer) {
-
             String ip = serverIPField.getText();
             int port = Integer.parseInt(serverPortField.getText());
             this.serverIp = ip;
@@ -1722,23 +1443,19 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             }
 
         }
-        else if (e.getSource()==buttonNext)
-        {
+        else if (e.getSource()==buttonNext) {
            askUsername();
         }
-        else if (e.getSource()== buttonConfirmName)
-        {
+        else if (e.getSource()== buttonConfirmName) {
             //askUsername
             username=usernameField.getText();
             messageHandler.sendMessage(new Message(MessageAction.CHOSE_USERNAME, username));
 
         }
-        else if(e.getSource()==buttonNextLobby)
-        {
+        else if(e.getSource()==buttonNextLobby) {
             askRoomCreation();
         }
-        else if(e.getSource()== buttonGetReady)
-        {
+        else if(e.getSource()== buttonGetReady) {
             //ask roomCreation
             size = Integer.parseInt(lobbyField.getText());
             messageHandler.sendMessage(new RoomSizeMessage(size, this.username));
@@ -2079,96 +1796,20 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         frameGame.add(labelGreenCloudCounter2);
         frameGame.add(labelPinkCloudCounter2);
 
-        frameGame.add(labelWhiteTowerCounter[0]);
-        frameGame.add(labelWhiteTowerCounter[1]);
-        frameGame.add(labelWhiteTowerCounter[2]);
-        frameGame.add(labelWhiteTowerCounter[3]);
-        frameGame.add(labelWhiteTowerCounter[4]);
-        frameGame.add(labelWhiteTowerCounter[5]);
-        frameGame.add(labelWhiteTowerCounter[6]);
-        frameGame.add(labelWhiteTowerCounter[7]);
-        frameGame.add(labelWhiteTowerCounter[8]);
-        frameGame.add(labelWhiteTowerCounter[9]);
-        frameGame.add(labelWhiteTowerCounter[10]);
-        frameGame.add(labelWhiteTowerCounter[11]);
+        //frame of the towers
+        for(int i = 0; i < 12; i++){
+            frameGame.add(labelWhiteTowerCounter[i]);
+            frameGame.add(labelBlackTowerCounter[i]);
+        }
 
-        frameGame.add(labelBlackTowerCounter[0]);
-        frameGame.add(labelBlackTowerCounter[1]);
-        frameGame.add(labelBlackTowerCounter[2]);
-        frameGame.add(labelBlackTowerCounter[3]);
-        frameGame.add(labelBlackTowerCounter[4]);
-        frameGame.add(labelBlackTowerCounter[5]);
-        frameGame.add(labelBlackTowerCounter[6]);
-        frameGame.add(labelBlackTowerCounter[7]);
-        frameGame.add(labelBlackTowerCounter[8]);
-        frameGame.add(labelBlackTowerCounter[9]);
-        frameGame.add(labelBlackTowerCounter[10]);
-        frameGame.add(labelBlackTowerCounter[11]);
-
-        frameGame.add(labelRedCounter1);
-        frameGame.add(labelRedCounter2);
-        frameGame.add(labelRedCounter3);
-        frameGame.add(labelRedCounter4);
-        frameGame.add(labelRedCounter5);
-        frameGame.add(labelRedCounter6);
-        frameGame.add(labelRedCounter7);
-        frameGame.add(labelRedCounter8);
-        frameGame.add(labelRedCounter9);
-        frameGame.add(labelRedCounter10);
-        frameGame.add(labelRedCounter11);
-        frameGame.add(labelRedCounter12);
-
-        frameGame.add(labelGreenCounter1);
-        frameGame.add(labelGreenCounter2);
-        frameGame.add(labelGreenCounter3);
-        frameGame.add(labelGreenCounter4);
-        frameGame.add(labelGreenCounter5);
-        frameGame.add(labelGreenCounter6);
-        frameGame.add(labelGreenCounter7);
-        frameGame.add(labelGreenCounter8);
-        frameGame.add(labelGreenCounter9);
-        frameGame.add(labelGreenCounter10);
-        frameGame.add(labelGreenCounter11);
-        frameGame.add(labelGreenCounter12);
-
-        frameGame.add(labelBlueCounter1);
-        frameGame.add(labelBlueCounter2);
-        frameGame.add(labelBlueCounter3);
-        frameGame.add(labelBlueCounter4);
-        frameGame.add(labelBlueCounter5);
-        frameGame.add(labelBlueCounter6);
-        frameGame.add(labelBlueCounter7);
-        frameGame.add(labelBlueCounter8);
-        frameGame.add(labelBlueCounter9);
-        frameGame.add(labelBlueCounter10);
-        frameGame.add(labelBlueCounter11);
-        frameGame.add(labelBlueCounter12);
-
-        frameGame.add(labelYellowCounter1);
-        frameGame.add(labelYellowCounter2);
-        frameGame.add(labelYellowCounter3);
-        frameGame.add(labelYellowCounter4);
-        frameGame.add(labelYellowCounter5);
-        frameGame.add(labelYellowCounter6);
-        frameGame.add(labelYellowCounter7);
-        frameGame.add(labelYellowCounter8);
-        frameGame.add(labelYellowCounter9);
-        frameGame.add(labelYellowCounter10);
-        frameGame.add(labelYellowCounter11);
-        frameGame.add(labelYellowCounter12);
-
-        frameGame.add(labelPinkCounter1);
-        frameGame.add(labelPinkCounter2);
-        frameGame.add(labelPinkCounter3);
-        frameGame.add(labelPinkCounter4);
-        frameGame.add(labelPinkCounter5);
-        frameGame.add(labelPinkCounter6);
-        frameGame.add(labelPinkCounter7);
-        frameGame.add(labelPinkCounter8);
-        frameGame.add(labelPinkCounter9);
-        frameGame.add(labelPinkCounter10);
-        frameGame.add(labelPinkCounter11);
-        frameGame.add(labelPinkCounter12);
+        //frame of the students on islands
+        for(int i = 0; i < 12; i++){
+            frameGame.add(labelRedCounter[i]);
+            frameGame.add(labelYellowCounters[i]);
+            frameGame.add(labelBlueCounters[i]);
+            frameGame.add(labelGreenCounters[i]);
+            frameGame.add(labelPinkCounters[i]);
+        }
 
 
         frameGame.add(buttonPlus1);
@@ -2296,6 +1937,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 TowerColor color = game.getTable().getIslands().get(i).getTowers().get(0).getColor();
                 switch (color){
                     case WHITE -> labelWhiteTowerCounter[i].setText(towerOnIsland+"");
+                    case BLACK -> labelBlackTowerCounter[i].setText(towerOnIsland+"");
+                    case GREY -> labelGreyTowerCounter[i].setText(towerOnIsland+"");
                 }
             }
 
