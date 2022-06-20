@@ -1,10 +1,11 @@
 package it.polimi.ingsw.view.userinterface;
 
 
-import it.polimi.ingsw.model.GeneralGame;
-import it.polimi.ingsw.model.Island;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Tower;
+import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.TowerColor;
+import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.network.client.ClientMessageHandler;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
@@ -68,7 +69,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private ImageIcon greenHallIcon = new ImageIcon("src/images/greenHall.png");
     private JLabel[] labelGreenHallList = new JLabel[10];
 
-    private ImageIcon pinkHall = new ImageIcon("src/images/pinkHall.png");
+    private ImageIcon pinkHallIcon = new ImageIcon("src/images/pinkHall.png");
     private JLabel[] labelPinkHallList = new JLabel[10];
 
     private ImageIcon redHallIcon = new ImageIcon("src/images/redHall.png");
@@ -77,106 +78,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private ImageIcon yellowHall = new ImageIcon("src/images/yellowHall.png");
     private JLabel[] labelYellowHallList = new JLabel[10];
 
-
-    private JLabel labelBluePlace1;
-    private JLabel labelBluePlace2;
-    private JLabel labelBluePlace3;
-    private JLabel labelBluePlace4;
-    private JLabel labelBluePlace5;
-    private JLabel labelBluePlace6;
-    private JLabel labelBluePlace7;
-    private JLabel labelBluePlace8;
-    private JLabel labelBluePlace9;
-
-    private ImageIcon bluePlace1;
-    private ImageIcon bluePlace2;
-    private ImageIcon bluePlace3;
-    private ImageIcon bluePlace4;
-    private ImageIcon bluePlace5;
-    private ImageIcon bluePlace6;
-    private ImageIcon bluePlace7;
-    private ImageIcon bluePlace8;
-    private ImageIcon bluePlace9;
-
-    private JLabel labelRedPlace1;
-    private JLabel labelRedPlace2;
-    private JLabel labelRedPlace3;
-    private JLabel labelRedPlace4;
-    private JLabel labelRedPlace5;
-    private JLabel labelRedPlace6;
-    private JLabel labelRedPlace7;
-    private JLabel labelRedPlace8;
-    private JLabel labelRedPlace9;
-
-    private ImageIcon redPlace1;
-    private ImageIcon redPlace2;
-    private ImageIcon redPlace3;
-    private ImageIcon redPlace4;
-    private ImageIcon redPlace5;
-    private ImageIcon redPlace6;
-    private ImageIcon redPlace7;
-    private ImageIcon redPlace8;
-    private ImageIcon redPlace9;
-
-    private JLabel labelPinkPlace1;
-    private JLabel labelPinkPlace2;
-    private JLabel labelPinkPlace3;
-    private JLabel labelPinkPlace4;
-    private JLabel labelPinkPlace5;
-    private JLabel labelPinkPlace6;
-    private JLabel labelPinkPlace7;
-    private JLabel labelPinkPlace8;
-    private JLabel labelPinkPlace9;
-
-    private ImageIcon pinkPlace1;
-    private ImageIcon pinkPlace2;
-    private ImageIcon pinkPlace3;
-    private ImageIcon pinkPlace4;
-    private ImageIcon pinkPlace5;
-    private ImageIcon pinkPlace6;
-    private ImageIcon pinkPlace7;
-    private ImageIcon pinkPlace8;
-    private ImageIcon pinkPlace9;
-
-    private JLabel labelGreenPlace1;
-    private JLabel labelGreenPlace2;
-    private JLabel labelGreenPlace3;
-    private JLabel labelGreenPlace4;
-    private JLabel labelGreenPlace5;
-    private JLabel labelGreenPlace6;
-    private JLabel labelGreenPlace7;
-    private JLabel labelGreenPlace8;
-    private JLabel labelGreenPlace9;
-
-    private ImageIcon greenPlace1;
-    private ImageIcon greenPlace2;
-    private ImageIcon greenPlace3;
-    private ImageIcon greenPlace4;
-    private ImageIcon greenPlace5;
-    private ImageIcon greenPlace6;
-    private ImageIcon greenPlace7;
-    private ImageIcon greenPlace8;
-    private ImageIcon greenPlace9;
-
-    private JLabel labelYellowPlace1;
-    private JLabel labelYellowPlace2;
-    private JLabel labelYellowPlace3;
-    private JLabel labelYellowPlace4;
-    private JLabel labelYellowPlace5;
-    private JLabel labelYellowPlace6;
-    private JLabel labelYellowPlace7;
-    private JLabel labelYellowPlace8;
-    private JLabel labelYellowPlace9;
-
-    private ImageIcon yellowPlace1;
-    private ImageIcon yellowPlace2;
-    private ImageIcon yellowPlace3;
-    private ImageIcon yellowPlace4;
-    private ImageIcon yellowPlace5;
-    private ImageIcon yellowPlace6;
-    private ImageIcon yellowPlace7;
-    private ImageIcon yellowPlace8;
-    private ImageIcon yellowPlace9;
+    private JLabel[] labelEntranceStudents = new JLabel[9];
 
     private JLabel labelPlayerMessage;
 
@@ -189,20 +91,10 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private ImageIcon greyTowerIcon = new ImageIcon("src/images/greyTowerRaw.png");
     private JLabel[] labelGreyTowerList = new JLabel[6];
 
-
     private JLabel labelBackgroundCards;
     private ImageIcon backgroundCards;
 
-    private JLabel labelAssistant1;
-    private JLabel labelAssistant2;
-    private JLabel labelAssistant3;
-    private JLabel labelAssistant4;
-    private JLabel labelAssistant5;
-    private JLabel labelAssistant6;
-    private JLabel labelAssistant7;
-    private JLabel labelAssistant8;
-    private JLabel labelAssistant9;
-    private JLabel labelAssistant10;
+    private JLabel[] labelAssistantDeck = new JLabel[10];
 
     private ImageIcon assistant1 = new ImageIcon("src/images/assistant1.jpg");
     private ImageIcon assistant2 = new ImageIcon("src/images/assistant2.jpg");
@@ -215,44 +107,12 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private ImageIcon assistant9 = new ImageIcon("src/images/assistant9.jpg");
     private ImageIcon assistant10 = new ImageIcon("src/images/assistant10.jpg");
 
-    private JLabel labelWhiteTowerCounter1;
-    private JLabel labelWhiteTowerCounter2;
-    private JLabel labelWhiteTowerCounter3;
-    private JLabel labelWhiteTowerCounter4;
-    private JLabel labelWhiteTowerCounter5;
-    private JLabel labelWhiteTowerCounter6;
-    private JLabel labelWhiteTowerCounter7;
-    private JLabel labelWhiteTowerCounter8;
-    private JLabel labelWhiteTowerCounter9;
-    private JLabel labelWhiteTowerCounter10;
-    private JLabel labelWhiteTowerCounter11;
-    private JLabel labelWhiteTowerCounter12;
+    private JLabel[] labelWhiteTowerCounter = new JLabel[12];
 
-    private JLabel labelBlackTowerCounter1;
-    private JLabel labelBlackTowerCounter2;
-    private JLabel labelBlackTowerCounter3;
-    private JLabel labelBlackTowerCounter4;
-    private JLabel labelBlackTowerCounter5;
-    private JLabel labelBlackTowerCounter6;
-    private JLabel labelBlackTowerCounter7;
-    private JLabel labelBlackTowerCounter8;
-    private JLabel labelBlackTowerCounter9;
-    private JLabel labelBlackTowerCounter10;
-    private JLabel labelBlackTowerCounter11;
-    private JLabel labelBlackTowerCounter12;
+    private JLabel[] labelBlackTowerCounter = new JLabel[12];
 
-    private JLabel labelGreyTowerCounter1;
-    private JLabel labelGreyTowerCounter2;
-    private JLabel labelGreyTowerCounter3;
-    private JLabel labelGreyTowerCounter4;
-    private JLabel labelGreyTowerCounter5;
-    private JLabel labelGreyTowerCounter6;
-    private JLabel labelGreyTowerCounter7;
-    private JLabel labelGreyTowerCounter8;
-    private JLabel labelGreyTowerCounter9;
-    private JLabel labelGreyTowerCounter10;
-    private JLabel labelGreyTowerCounter11;
-    private JLabel labelGreyTowerCounter12;
+    private JLabel[] labelGreyTowerCounter = new JLabel[12];
+
 
     private JLabel labelRedCounter1;
     private JLabel labelRedCounter2;
@@ -395,48 +255,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private String username;
     private ClientMessageHandler messageHandler;
 
-    int whiteTowerCounter1=0;
-    int whiteTowerCounter2=0;
-    int whiteTowerCounter3=0;
-    int whiteTowerCounter4=0;
-    int whiteTowerCounter5=0;
-    int whiteTowerCounter6=0;
-    int whiteTowerCounter7=0;
-    int whiteTowerCounter8=0;
-    int whiteTowerCounter9=0;
-    int whiteTowerCounter10=0;
-    int whiteTowerCounter11=0;
-    int whiteTowerCounter12=0;
 
-    int blackTowerCounter1=0;
-    int blackTowerCounter2=0;
-    int blackTowerCounter3=0;
-    int blackTowerCounter4=0;
-    int blackTowerCounter5=0;
-    int blackTowerCounter6=0;
-    int blackTowerCounter7=0;
-    int blackTowerCounter8=0;
-    int blackTowerCounter9=0;
-    int blackTowerCounter10=0;
-    int blackTowerCounter11=0;
-    int blackTowerCounter12=0;
-
-    int greyTowerCounter1=0;
-    int greyTowerCounter2=0;
-    int greyTowerCounter3=0;
-    int greyTowerCounter4=0;
-    int greyTowerCounter5=0;
-    int greyTowerCounter6=0;
-    int greyTowerCounter7=0;
-    int greyTowerCounter8=0;
-    int greyTowerCounter9=0;
-    int greyTowerCounter10=0;
-    int greyTowerCounter11=0;
-    int greyTowerCounter12=0;
-
-
-    public static JButton transparentButton(JButton a)
-    {
+    public static JButton transparentButton(JButton a) {
         a.setOpaque(false);
         a.setContentAreaFilled(false);
         a.setBorderPainted(false);
@@ -444,19 +264,18 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         return a;
     }
 
-    public void showCards()
-    {
+    public void showCards() {
         labelBackgroundCards.setVisible(true);
-        labelAssistant1.setVisible(true);
-        labelAssistant2.setVisible(true);
-        labelAssistant3.setVisible(true);
-        labelAssistant4.setVisible(true);
-        labelAssistant5.setVisible(true);
-        labelAssistant6.setVisible(true);
-        labelAssistant7.setVisible(true);
-        labelAssistant8.setVisible(true);
-        labelAssistant9.setVisible(true);
-        labelAssistant10.setVisible(true);
+        labelAssistantDeck[0].setVisible(true);
+        labelAssistantDeck[1].setVisible(true);
+        labelAssistantDeck[2].setVisible(true);
+        labelAssistantDeck[3].setVisible(true);
+        labelAssistantDeck[4].setVisible(true);
+        labelAssistantDeck[5].setVisible(true);
+        labelAssistantDeck[6].setVisible(true);
+        labelAssistantDeck[7].setVisible(true);
+        labelAssistantDeck[8].setVisible(true);
+        labelAssistantDeck[9].setVisible(true);
         buttonAssistant1.setVisible(true);
         buttonAssistant2.setVisible(true);
         buttonAssistant3.setVisible(true);
@@ -469,19 +288,18 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         buttonAssistant10.setVisible(true);
     }
 
-    public void hideCards()
-    {
+    public void hideCards() {
         labelBackgroundCards.setVisible(false);
-        labelAssistant1.setVisible(false);
-        labelAssistant2.setVisible(false);
-        labelAssistant3.setVisible(false);
-        labelAssistant4.setVisible(false);
-        labelAssistant5.setVisible(false);
-        labelAssistant6.setVisible(false);
-        labelAssistant7.setVisible(false);
-        labelAssistant8.setVisible(false);
-        labelAssistant9.setVisible(false);
-        labelAssistant10.setVisible(false);
+        labelAssistantDeck[0].setVisible(false);
+        labelAssistantDeck[1].setVisible(false);
+        labelAssistantDeck[2].setVisible(false);
+        labelAssistantDeck[3].setVisible(false);
+        labelAssistantDeck[4].setVisible(false);
+        labelAssistantDeck[5].setVisible(false);
+        labelAssistantDeck[6].setVisible(false);
+        labelAssistantDeck[7].setVisible(false);
+        labelAssistantDeck[8].setVisible(false);
+        labelAssistantDeck[9].setVisible(false);
         buttonAssistant1.setVisible(false);
         buttonAssistant2.setVisible(false);
         buttonAssistant3.setVisible(false);
@@ -494,8 +312,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         buttonAssistant10.setVisible(false);
     }
 
-    public void hideOnlyButtonCards()
-    {
+    public void hideOnlyButtonCards() {
         buttonAssistant1.setVisible(false);
         buttonAssistant2.setVisible(false);
         buttonAssistant3.setVisible(false);
@@ -594,54 +411,47 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelBackgroundCards.setIcon(backgroundCards);
 
         //assistant1= new ImageIcon("src/images/assistant1.jpg");
-        labelAssistant1=new JLabel();
-        labelAssistant1.setBounds(165, 160, 160, 235);
-        labelAssistant1.setIcon(assistant1);
+        for(int i = 0; i < 10; i++){
+            labelAssistantDeck[i] = new JLabel();
+        }
+        labelAssistantDeck[0].setBounds(165, 160, 160, 235);
+        labelAssistantDeck[0].setIcon(assistant1);
 
         //assistant2= new ImageIcon("src/images/assistant2.jpg");
-        labelAssistant2=new JLabel();
-        labelAssistant2.setBounds(330, 160, 160, 235);
-        labelAssistant2.setIcon(assistant2);
+        labelAssistantDeck[1].setBounds(330, 160, 160, 235);
+        labelAssistantDeck[1].setIcon(assistant2);
 
         //assistant3= new ImageIcon("src/images/assistant3.jpg");
-        labelAssistant3=new JLabel();
-        labelAssistant3.setBounds(495, 160, 160, 235);
-        labelAssistant3.setIcon(assistant3);
+        labelAssistantDeck[2].setBounds(495, 160, 160, 235);
+        labelAssistantDeck[2].setIcon(assistant3);
 
         //assistant4= new ImageIcon("src/images/assistant4.jpg");
-        labelAssistant4=new JLabel();
-        labelAssistant4.setBounds(660, 160, 160, 235);
-        labelAssistant4.setIcon(assistant4);
+        labelAssistantDeck[3].setBounds(660, 160, 160, 235);
+        labelAssistantDeck[3].setIcon(assistant4);
 
         //assistant5= new ImageIcon("src/images/assistant5.jpg");
-        labelAssistant5=new JLabel();
-        labelAssistant5.setBounds(825, 160, 160, 235);
-        labelAssistant5.setIcon(assistant5);
+        labelAssistantDeck[4].setBounds(825, 160, 160, 235);
+        labelAssistantDeck[4].setIcon(assistant5);
 
         //assistant10= new ImageIcon("src/images/assistant10.jpg");
-        labelAssistant10=new JLabel();
-        labelAssistant10.setBounds(825, 415, 160, 235);
-        labelAssistant10.setIcon(assistant10);
+        labelAssistantDeck[9].setBounds(825, 415, 160, 235);
+        labelAssistantDeck[9].setIcon(assistant10);
 
         //assistant9= new ImageIcon("src/images/assistant9.jpg");
-        labelAssistant9=new JLabel();
-        labelAssistant9.setBounds(660, 415, 160, 235);
-        labelAssistant9.setIcon(assistant9);
+        labelAssistantDeck[8].setBounds(660, 415, 160, 235);
+        labelAssistantDeck[8].setIcon(assistant9);
 
         //assistant8= new ImageIcon("src/images/assistant8.jpg");
-        labelAssistant8=new JLabel();
-        labelAssistant8.setBounds(495, 415, 160, 235);
-        labelAssistant8.setIcon(assistant8);
+        labelAssistantDeck[7].setBounds(495, 415, 160, 235);
+        labelAssistantDeck[7].setIcon(assistant8);
 
         //assistant7= new ImageIcon("src/images/assistant7.jpg");
-        labelAssistant7=new JLabel();
-        labelAssistant7.setBounds(330, 415, 160, 235);
-        labelAssistant7.setIcon(assistant7);
+        labelAssistantDeck[6].setBounds(330, 415, 160, 235);
+        labelAssistantDeck[6].setIcon(assistant7);
 
         //assistant6= new ImageIcon("src/images/assistant6.jpg");
-        labelAssistant6=new JLabel();
-        labelAssistant6.setBounds(165, 415, 160, 235);
-        labelAssistant6.setIcon(assistant6);
+        labelAssistantDeck[5].setBounds(165, 415, 160, 235);
+        labelAssistantDeck[5].setIcon(assistant6);
 
         buttonAssistant1 = new JButton("");
         buttonAssistant1.setBounds(165, 160, 160, 235);
@@ -694,188 +504,93 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         transparentButton(buttonAssistant10);
 
         //counter
-        labelWhiteTowerCounter1 = new JLabel(" 0", SwingConstants.CENTER);
-        labelWhiteTowerCounter1.setBounds(322,85,25,25);
-        labelWhiteTowerCounter1.setForeground(Color.WHITE);
-        labelWhiteTowerCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        for(int i = 0; i < 12; i++){
+            labelWhiteTowerCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelWhiteTowerCounter[i].setForeground(Color.WHITE);
+            labelWhiteTowerCounter[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        }
+        labelWhiteTowerCounter[0].setBounds(322,85,25,25);
 
+        labelWhiteTowerCounter[1].setBounds(544,85,25,25);
 
-        labelWhiteTowerCounter2 = new JLabel(" 0", SwingConstants.CENTER);
-        labelWhiteTowerCounter2.setBounds(544,85,25,25);
-        labelWhiteTowerCounter2.setForeground(Color.WHITE);
-        labelWhiteTowerCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelWhiteTowerCounter[2].setBounds(780,85,25,25);
 
-        labelWhiteTowerCounter3 = new JLabel(" 0", SwingConstants.CENTER);
-        labelWhiteTowerCounter3.setBounds(780,85,25,25);
-        labelWhiteTowerCounter3.setForeground(Color.WHITE);
-        labelWhiteTowerCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelWhiteTowerCounter[3].setBounds(987,156,25,25);
 
-        labelWhiteTowerCounter4 = new JLabel(" 0", SwingConstants.CENTER);
-        labelWhiteTowerCounter4.setBounds(987,156,25,25);
-        labelWhiteTowerCounter4.setForeground(Color.WHITE);
-        labelWhiteTowerCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelWhiteTowerCounter[4].setBounds(987,373,25,25);
 
-        labelWhiteTowerCounter5 = new JLabel(" 0", SwingConstants.CENTER);
-        labelWhiteTowerCounter5.setBounds(987,373,25,25);
-        labelWhiteTowerCounter5.setForeground(Color.WHITE);
-        labelWhiteTowerCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelWhiteTowerCounter[5].setBounds(986,575,25,25);
 
-        labelWhiteTowerCounter6 = new JLabel(" 0", SwingConstants.CENTER);
-        labelWhiteTowerCounter6.setBounds(986,575,25,25);
-        labelWhiteTowerCounter6.setForeground(Color.WHITE);
-        labelWhiteTowerCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelWhiteTowerCounter[6].setBounds(780,668,25,25);
 
-        labelWhiteTowerCounter7 = new JLabel(" 0", SwingConstants.CENTER);
-        labelWhiteTowerCounter7.setBounds(780,668,25,25);
-        labelWhiteTowerCounter7.setForeground(Color.WHITE);
-        labelWhiteTowerCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelWhiteTowerCounter[7].setBounds(544,668,25,25);
 
-        labelWhiteTowerCounter8 = new JLabel(" 0", SwingConstants.CENTER);
-        labelWhiteTowerCounter8.setBounds(544,668,25,25);
-        labelWhiteTowerCounter8.setForeground(Color.WHITE);
-        labelWhiteTowerCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelWhiteTowerCounter[8].setBounds(289,672,25,25);
 
-        labelWhiteTowerCounter9 = new JLabel(" 0", SwingConstants.CENTER);
-        labelWhiteTowerCounter9.setBounds(289,672,25,25);
-        labelWhiteTowerCounter9.setForeground(Color.WHITE);
-        labelWhiteTowerCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelWhiteTowerCounter[9].setBounds(83,575,25,25);
 
-        labelWhiteTowerCounter10 = new JLabel(" 0", SwingConstants.CENTER);
-        labelWhiteTowerCounter10.setBounds(83,575,25,25);
-        labelWhiteTowerCounter10.setForeground(Color.WHITE);
-        labelWhiteTowerCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelWhiteTowerCounter[10].setBounds(83,373,25,25);
 
-        labelWhiteTowerCounter11 = new JLabel(" 0", SwingConstants.CENTER);
-        labelWhiteTowerCounter11.setBounds(83,373,25,25);
-        labelWhiteTowerCounter11.setForeground(Color.WHITE);
-        labelWhiteTowerCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelWhiteTowerCounter[11].setBounds(83,155,25,25);
 
-        labelWhiteTowerCounter12 = new JLabel(" 0", SwingConstants.CENTER);
-        labelWhiteTowerCounter12.setBounds(83,155,25,25);
-        labelWhiteTowerCounter12.setForeground(Color.WHITE);
-        labelWhiteTowerCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        for(int i = 0; i < 12; i++){
+            labelBlackTowerCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelBlackTowerCounter[i].setForeground(Color.WHITE);
+            labelBlackTowerCounter[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        }
+        labelBlackTowerCounter[0].setBounds(294,85,25,25);
 
-        labelBlackTowerCounter1 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlackTowerCounter1.setBounds(294,85,25,25);
-        labelBlackTowerCounter1.setForeground(Color.WHITE);
-        labelBlackTowerCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelBlackTowerCounter[1].setBounds(516,85,25,25);
 
-        labelBlackTowerCounter2 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlackTowerCounter2.setBounds(516,85,25,25);
-        labelBlackTowerCounter2.setForeground(Color.WHITE);
-        labelBlackTowerCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelBlackTowerCounter[2].setBounds(752,85,25,25);
 
-        labelBlackTowerCounter3 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlackTowerCounter3.setBounds(752,85,25,25);
-        labelBlackTowerCounter3.setForeground(Color.WHITE);
-        labelBlackTowerCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelBlackTowerCounter[3].setBounds(959,156,25,25);
 
-        labelBlackTowerCounter4 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlackTowerCounter4.setBounds(959,156,25,25);
-        labelBlackTowerCounter4.setForeground(Color.WHITE);
-        labelBlackTowerCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelBlackTowerCounter[4].setBounds(959,373,25,25);
 
-        labelBlackTowerCounter5 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlackTowerCounter5.setBounds(959,373,25,25);
-        labelBlackTowerCounter5.setForeground(Color.WHITE);
-        labelBlackTowerCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelBlackTowerCounter[5].setBounds(959,575,25,25);
 
-        labelBlackTowerCounter6 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlackTowerCounter6.setBounds(959,575,25,25);
-        labelBlackTowerCounter6.setForeground(Color.WHITE);
-        labelBlackTowerCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelBlackTowerCounter[6].setBounds(752,668,25,25);
 
-        labelBlackTowerCounter7 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlackTowerCounter7.setBounds(752,668,25,25);
-        labelBlackTowerCounter7.setForeground(Color.WHITE);
-        labelBlackTowerCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelBlackTowerCounter[7].setBounds(516,668,25,25);
 
-        labelBlackTowerCounter8 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlackTowerCounter8.setBounds(516,668,25,25);
-        labelBlackTowerCounter8.setForeground(Color.WHITE);
-        labelBlackTowerCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelBlackTowerCounter[8].setBounds(261,672,25,25);
 
-        labelBlackTowerCounter9 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlackTowerCounter9.setBounds(261,672,25,25);
-        labelBlackTowerCounter9.setForeground(Color.WHITE);
-        labelBlackTowerCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelBlackTowerCounter[9].setBounds(55,575,25,25);
 
-        labelBlackTowerCounter10 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlackTowerCounter10.setBounds(55,575,25,25);
-        labelBlackTowerCounter10.setForeground(Color.WHITE);
-        labelBlackTowerCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelBlackTowerCounter[10].setBounds(55,373,25,25);
 
-        labelBlackTowerCounter11 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlackTowerCounter11.setBounds(55,373,25,25);
-        labelBlackTowerCounter11.setForeground(Color.WHITE);
-        labelBlackTowerCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        labelBlackTowerCounter[11].setBounds(55,155,25,25);
 
-        labelBlackTowerCounter12 = new JLabel(" 0", SwingConstants.CENTER);
-        labelBlackTowerCounter12.setBounds(55,155,25,25);
-        labelBlackTowerCounter12.setForeground(Color.WHITE);
-        labelBlackTowerCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        if(size==3) {
+            for(int i = 0; i < 12; i++){
+                labelGreyTowerCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
+                labelGreyTowerCounter[i].setForeground(Color.WHITE);
+                labelGreyTowerCounter[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            }
+            labelGreyTowerCounter[0].setBounds(266,85,25,25);
 
-        if(size==3)
-        {
-            labelGreyTowerCounter1 = new JLabel(" 0", SwingConstants.CENTER);
-            labelGreyTowerCounter1.setBounds(266,85,25,25);
-            labelGreyTowerCounter1.setForeground(Color.WHITE);
-            labelGreyTowerCounter1.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelGreyTowerCounter[1].setBounds(488,85,25,25);
 
-            labelGreyTowerCounter2 = new JLabel(" 0", SwingConstants.CENTER);
-            labelGreyTowerCounter2.setBounds(488,85,25,25);
-            labelGreyTowerCounter2.setForeground(Color.WHITE);
-            labelGreyTowerCounter2.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelGreyTowerCounter[2].setBounds(724,85,25,25);
 
-            labelGreyTowerCounter3 = new JLabel(" 0", SwingConstants.CENTER);
-            labelGreyTowerCounter3.setBounds(724,85,25,25);
-            labelGreyTowerCounter3.setForeground(Color.WHITE);
-            labelGreyTowerCounter3.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelGreyTowerCounter[3].setBounds(931,156,25,25);
 
-            labelGreyTowerCounter4 = new JLabel(" 0", SwingConstants.CENTER);
-            labelGreyTowerCounter4.setBounds(931,156,25,25);
-            labelGreyTowerCounter4.setForeground(Color.WHITE);
-            labelGreyTowerCounter4.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelGreyTowerCounter[4].setBounds(931,373,25,25);
 
-            labelGreyTowerCounter5 = new JLabel(" 0", SwingConstants.CENTER);
-            labelGreyTowerCounter5.setBounds(931,373,25,25);
-            labelGreyTowerCounter5.setForeground(Color.WHITE);
-            labelGreyTowerCounter5.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelGreyTowerCounter[5].setBounds(931,575,25,25);
 
-            labelGreyTowerCounter6 = new JLabel(" 0", SwingConstants.CENTER);
-            labelGreyTowerCounter6.setBounds(931,575,25,25);
-            labelGreyTowerCounter6.setForeground(Color.WHITE);
-            labelGreyTowerCounter6.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelGreyTowerCounter[6].setBounds(724,668,25,25);
 
-            labelGreyTowerCounter7 = new JLabel(" 0", SwingConstants.CENTER);
-            labelGreyTowerCounter7.setBounds(724,668,25,25);
-            labelGreyTowerCounter7.setForeground(Color.WHITE);
-            labelGreyTowerCounter7.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelGreyTowerCounter[7].setBounds(488,668,25,25);
 
-            labelGreyTowerCounter8 = new JLabel(" 0", SwingConstants.CENTER);
-            labelGreyTowerCounter8.setBounds(488,668,25,25);
-            labelGreyTowerCounter8.setForeground(Color.WHITE);
-            labelGreyTowerCounter8.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelGreyTowerCounter[8].setBounds(233,672,25,25);
 
-            labelGreyTowerCounter9 = new JLabel(" 0", SwingConstants.CENTER);
-            labelGreyTowerCounter9.setBounds(233,672,25,25);
-            labelGreyTowerCounter9.setForeground(Color.WHITE);
-            labelGreyTowerCounter9.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelGreyTowerCounter[9].setBounds(27,575,25,25);
 
-            labelGreyTowerCounter10 = new JLabel(" 0", SwingConstants.CENTER);
-            labelGreyTowerCounter10.setBounds(27,575,25,25);
-            labelGreyTowerCounter10.setForeground(Color.WHITE);
-            labelGreyTowerCounter10.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelGreyTowerCounter[10].setBounds(27,373,25,25);
 
-            labelGreyTowerCounter11 = new JLabel(" 0", SwingConstants.CENTER);
-            labelGreyTowerCounter11.setBounds(27,373,25,25);
-            labelGreyTowerCounter11.setForeground(Color.WHITE);
-            labelGreyTowerCounter11.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-            labelGreyTowerCounter12 = new JLabel(" 0", SwingConstants.CENTER);
-            labelGreyTowerCounter12.setBounds(27,155,25,25);
-            labelGreyTowerCounter12.setForeground(Color.WHITE);
-            labelGreyTowerCounter12.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelGreyTowerCounter[11].setBounds(27,155,25,25);
         }
 
         labelRedCounter1 = new JLabel(" 0", SwingConstants.CENTER);
@@ -1659,7 +1374,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         //add player to pink table
         for(int i=0;i<10; i++){
             labelPinkHallList[i] = new JLabel();
-            labelPinkHallList[i].setIcon(pinkHall);
+            labelPinkHallList[i].setIcon(pinkHallIcon);
         }
 
         labelPinkHallList[0].setBounds(1404, 225, 100, 100);
@@ -1708,286 +1423,27 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelBlueHallList[9].setBounds(1465, 594, 100, 100);
 
         //images 1 slot students in the beginning hall
-        bluePlace1= new ImageIcon("src/images/blueHall.png");
-        labelBluePlace1=new JLabel();
-        labelBluePlace1.setBounds(1218, 678, 100, 100);
-        labelBluePlace1.setIcon(bluePlace1);
-        frameGame.add(labelBluePlace1);
-
-        pinkPlace1= new ImageIcon("src/images/pinkHall.png");
-        labelPinkPlace1=new JLabel();
-        labelPinkPlace1.setBounds(1218, 678, 100, 100);
-        labelPinkPlace1.setIcon(pinkPlace1);
-        frameGame.add(labelPinkPlace1);
-
-        greenPlace1= new ImageIcon("src/images/greenHall.png");
-        labelGreenPlace1=new JLabel();
-        labelGreenPlace1.setBounds(1218, 678, 100, 100);
-        labelGreenPlace1.setIcon(greenPlace1);
-        frameGame.add(labelGreenPlace1);
-
-        redPlace1= new ImageIcon("src/images/redHall.png");
-        labelRedPlace1=new JLabel();
-        labelRedPlace1.setBounds(1218, 678, 100, 100);
-        labelRedPlace1.setIcon(redPlace1);
-        frameGame.add(labelRedPlace1);
-
-        yellowPlace1= new ImageIcon("src/images/yellowHall.png");
-        labelYellowPlace1=new JLabel();
-        labelYellowPlace1.setBounds(1218, 678, 100, 100);
-        labelYellowPlace1.setIcon(yellowPlace1);
-        frameGame.add(labelYellowPlace1);
-
-        //images 2 slot students in the beginning hall
-        bluePlace2= new ImageIcon("src/images/blueHall.png");
-        labelBluePlace2=new JLabel();
-        labelBluePlace2.setBounds(1280, 678, 100, 100);
-        labelBluePlace2.setIcon(bluePlace2);
-        frameGame.add(labelBluePlace2);
-
-        pinkPlace2= new ImageIcon("src/images/pinkHall.png");
-        labelPinkPlace2=new JLabel();
-        labelPinkPlace2.setBounds(1280, 678, 100, 100);
-        labelPinkPlace2.setIcon(pinkPlace2);
-        frameGame.add(labelPinkPlace2);
-
-        greenPlace2= new ImageIcon("src/images/greenHall.png");
-        labelGreenPlace2=new JLabel();
-        labelGreenPlace2.setBounds(1280, 678, 100, 100);
-        labelGreenPlace2.setIcon(greenPlace2);
-        frameGame.add(labelGreenPlace2);
-
-        redPlace2= new ImageIcon("src/images/redHall.png");
-        labelRedPlace2=new JLabel();
-        labelRedPlace2.setBounds(1280, 678, 100, 100);
-        labelRedPlace2.setIcon(redPlace2);
-        frameGame.add(labelRedPlace2);
-
-        yellowPlace2= new ImageIcon("src/images/yellowHall.png");
-        labelYellowPlace2=new JLabel();
-        labelYellowPlace2.setBounds(1280, 678, 100, 100);
-        labelYellowPlace2.setIcon(yellowPlace2);
-        frameGame.add(labelYellowPlace2);
-
-        //images 3 slot students in the beginning hall
-        bluePlace3= new ImageIcon("src/images/blueHall.png");
-        labelBluePlace3=new JLabel();
-        labelBluePlace3.setBounds(1280, 728, 100, 100);
-        labelBluePlace3.setIcon(bluePlace3);
-        frameGame.add(labelBluePlace3);
-
-        pinkPlace3= new ImageIcon("src/images/pinkHall.png");
-        labelPinkPlace3=new JLabel();
-        labelPinkPlace3.setBounds(1280, 728, 100, 100);
-        labelPinkPlace3.setIcon(pinkPlace3);
-        frameGame.add(labelPinkPlace3);
-
-        greenPlace3= new ImageIcon("src/images/greenHall.png");
-        labelGreenPlace3=new JLabel();
-        labelGreenPlace3.setBounds(1280, 728, 100, 100);
-        labelGreenPlace3.setIcon(greenPlace3);
-        frameGame.add(labelGreenPlace3);
-
-        redPlace3= new ImageIcon("src/images/redHall.png");
-        labelRedPlace3=new JLabel();
-        labelRedPlace3.setBounds(1280, 728, 100, 100);
-        labelRedPlace3.setIcon(redPlace3);
-        frameGame.add(labelRedPlace3);
-
-        yellowPlace3= new ImageIcon("src/images/yellowHall.png");
-        labelYellowPlace3=new JLabel();
-        labelYellowPlace3.setBounds(1280, 728, 100, 100);
-        labelYellowPlace3.setIcon(yellowPlace3);
-        frameGame.add(labelYellowPlace3);
-
-        //images 4 slot students in the beginning hall
-        bluePlace4= new ImageIcon("src/images/blueHall.png");
-        labelBluePlace4=new JLabel();
-        labelBluePlace4.setBounds(1344, 678, 100, 100);
-        labelBluePlace4.setIcon(bluePlace4);
-        frameGame.add(labelBluePlace4);
-
-        pinkPlace4= new ImageIcon("src/images/pinkHall.png");
-        labelPinkPlace4=new JLabel();
-        labelPinkPlace4.setBounds(1344, 678, 100, 100);
-        labelPinkPlace4.setIcon(pinkPlace4);
-        frameGame.add(labelPinkPlace4);
-
-        greenPlace4= new ImageIcon("src/images/greenHall.png");
-        labelGreenPlace4=new JLabel();
-        labelGreenPlace4.setBounds(1344, 678, 100, 100);
-        labelGreenPlace4.setIcon(greenPlace4);
-        frameGame.add(labelGreenPlace4);
-
-        redPlace4= new ImageIcon("src/images/redHall.png");
-        labelRedPlace4=new JLabel();
-        labelRedPlace4.setBounds(1344, 678, 100, 100);
-        labelRedPlace4.setIcon(redPlace4);
-        frameGame.add(labelRedPlace4);
-
-        yellowPlace4= new ImageIcon("src/images/yellowHall.png");
-        labelYellowPlace4=new JLabel();
-        labelYellowPlace4.setBounds(1344, 678, 100, 100);
-        labelYellowPlace4.setIcon(yellowPlace4);
-        frameGame.add(labelYellowPlace4);
-
-        //images 5 slot students in the beginning hall
-        bluePlace5= new ImageIcon("src/images/blueHall.png");
-        labelBluePlace5=new JLabel();
-        labelBluePlace5.setBounds(1344, 728, 100, 100);
-        labelBluePlace5.setIcon(bluePlace5);
-        frameGame.add(labelBluePlace5);
-
-        pinkPlace5= new ImageIcon("src/images/pinkHall.png");
-        labelPinkPlace5=new JLabel();
-        labelPinkPlace5.setBounds(1344, 728, 100, 100);
-        labelPinkPlace5.setIcon(pinkPlace5);
-        frameGame.add(labelPinkPlace5);
-
-        greenPlace5= new ImageIcon("src/images/greenHall.png");
-        labelGreenPlace5=new JLabel();
-        labelGreenPlace5.setBounds(1344, 728, 100, 100);
-        labelGreenPlace5.setIcon(greenPlace5);
-        frameGame.add(labelGreenPlace5);
-
-        redPlace5= new ImageIcon("src/images/redHall.png");
-        labelRedPlace5=new JLabel();
-        labelRedPlace5.setBounds(1344, 728, 100, 100);
-        labelRedPlace5.setIcon(redPlace5);
-        frameGame.add(labelRedPlace5);
-
-        yellowPlace5= new ImageIcon("src/images/yellowHall.png");
-        labelYellowPlace5=new JLabel();
-        labelYellowPlace5.setBounds(1344, 728, 100, 100);
-        labelYellowPlace5.setIcon(yellowPlace5);
-        frameGame.add(labelYellowPlace5);
-
-        //images 6 slot students in the beginning hall
-        bluePlace6= new ImageIcon("src/images/blueHall.png");
-        labelBluePlace6=new JLabel();
-        labelBluePlace6.setBounds(1404, 678, 100, 100);
-        labelBluePlace6.setIcon(bluePlace6);
-        frameGame.add(labelBluePlace6);
-
-        pinkPlace6= new ImageIcon("src/images/pinkHall.png");
-        labelPinkPlace6=new JLabel();
-        labelPinkPlace6.setBounds(1404, 678, 100, 100);
-        labelPinkPlace6.setIcon(pinkPlace6);
-        frameGame.add(labelPinkPlace6);
-
-        greenPlace6= new ImageIcon("src/images/greenHall.png");
-        labelGreenPlace6=new JLabel();
-        labelGreenPlace6.setBounds(1404, 678, 100, 100);
-        labelGreenPlace6.setIcon(greenPlace6);
-        frameGame.add(labelGreenPlace6);
-
-        redPlace6= new ImageIcon("src/images/redHall.png");
-        labelRedPlace6=new JLabel();
-        labelRedPlace6.setBounds(1404, 678, 100, 100);
-        labelRedPlace6.setIcon(redPlace6);
-        frameGame.add(labelRedPlace6);
-
-        yellowPlace6= new ImageIcon("src/images/yellowHall.png");
-        labelYellowPlace6=new JLabel();
-        labelYellowPlace6.setBounds(1404, 678, 100, 100);
-        labelYellowPlace6.setIcon(yellowPlace6);
-        frameGame.add(labelYellowPlace6);
-
-        //images 7 slot students in the beginning hall
-        bluePlace7= new ImageIcon("src/images/blueHall.png");
-        labelBluePlace7=new JLabel();
-        labelBluePlace7.setBounds(1404, 728, 100, 100);
-        labelBluePlace7.setIcon(bluePlace7);
-        frameGame.add(labelBluePlace7);
-
-        pinkPlace7= new ImageIcon("src/images/pinkHall.png");
-        labelPinkPlace7=new JLabel();
-        labelPinkPlace7.setBounds(1404, 728, 100, 100);
-        labelPinkPlace7.setIcon(pinkPlace7);
-        frameGame.add(labelPinkPlace7);
-
-        greenPlace7= new ImageIcon("src/images/greenHall.png");
-        labelGreenPlace7=new JLabel();
-        labelGreenPlace7.setBounds(1404, 728, 100, 100);
-        labelGreenPlace7.setIcon(greenPlace7);
-        frameGame.add(labelGreenPlace7);
-
-        redPlace7= new ImageIcon("src/images/redHall.png");
-        labelRedPlace7=new JLabel();
-        labelRedPlace7.setBounds(1404, 728, 100, 100);
-        labelRedPlace7.setIcon(redPlace7);
-        frameGame.add(labelRedPlace7);
-
-        yellowPlace7= new ImageIcon("src/images/yellowHall.png");
-        labelYellowPlace7=new JLabel();
-        labelYellowPlace7.setBounds(1404, 728, 100, 100);
-        labelYellowPlace7.setIcon(yellowPlace7);
-        frameGame.add(labelYellowPlace7);
-
-        if(size==3)
-        {
-            //images 8 slot students in the beginning hall
-            bluePlace8= new ImageIcon("src/images/blueHall.png");
-            labelBluePlace8=new JLabel();
-            labelBluePlace8.setBounds(1466, 678, 100, 100);
-            labelBluePlace8.setIcon(bluePlace8);
-            frameGame.add(labelBluePlace8);
-
-            pinkPlace8= new ImageIcon("src/images/pinkHall.png");
-            labelPinkPlace8=new JLabel();
-            labelPinkPlace8.setBounds(1466, 678, 100, 100);
-            labelPinkPlace8.setIcon(pinkPlace8);
-            frameGame.add(labelPinkPlace8);
-
-            greenPlace8= new ImageIcon("src/images/greenHall.png");
-            labelGreenPlace8=new JLabel();
-            labelGreenPlace8.setBounds(1466, 678, 100, 100);
-            labelGreenPlace8.setIcon(greenPlace8);
-            frameGame.add(labelGreenPlace8);
-
-            redPlace8= new ImageIcon("src/images/redHall.png");
-            labelRedPlace8=new JLabel();
-            labelRedPlace8.setBounds(1466, 678, 100, 100);
-            labelRedPlace8.setIcon(redPlace8);
-            frameGame.add(labelRedPlace8);
-
-            yellowPlace8= new ImageIcon("src/images/yellowHall.png");
-            labelYellowPlace8=new JLabel();
-            labelYellowPlace8.setBounds(1466, 678, 100, 100);
-            labelYellowPlace8.setIcon(yellowPlace8);
-            frameGame.add(labelYellowPlace8);
-
-            //images 9 slot students in the beginning hall
-            bluePlace9= new ImageIcon("src/images/blueHall.png");
-            labelBluePlace9=new JLabel();
-            labelBluePlace9.setBounds(1466, 728, 100, 100);
-            labelBluePlace9.setIcon(bluePlace9);
-            frameGame.add(labelBluePlace9);
-
-            pinkPlace9= new ImageIcon("src/images/pinkHall.png");
-            labelPinkPlace9=new JLabel();
-            labelPinkPlace9.setBounds(1466, 728, 100, 100);
-            labelPinkPlace9.setIcon(pinkPlace9);
-            frameGame.add(labelPinkPlace9);
-
-            greenPlace9= new ImageIcon("src/images/greenHall.png");
-            labelGreenPlace9=new JLabel();
-            labelGreenPlace9.setBounds(1466, 728, 100, 100);
-            labelGreenPlace9.setIcon(greenPlace9);
-            frameGame.add(labelGreenPlace9);
-
-            redPlace9= new ImageIcon("src/images/redHall.png");
-            labelRedPlace9=new JLabel();
-            labelRedPlace9.setBounds(1466, 728, 100, 100);
-            labelRedPlace9.setIcon(redPlace9);
-            frameGame.add(labelRedPlace9);
-
-            yellowPlace9= new ImageIcon("src/images/yellowHall.png");
-            labelYellowPlace9=new JLabel();
-            labelYellowPlace9.setBounds(1466, 728, 100, 100);
-            labelYellowPlace9.setIcon(yellowPlace9);
-            frameGame.add(labelYellowPlace9);
+        for(int i = 0; i < 9; i++){
+            labelEntranceStudents[i] = new JLabel();
         }
+        //
+        labelEntranceStudents[0].setBounds(1218, 678, 100, 100);
+        //images 2 slot students in the beginning hall
+        labelEntranceStudents[1].setBounds(1280, 678, 100, 100);
+        //images 3 slot students in the beginning hall
+        labelEntranceStudents[2].setBounds(1280, 728, 100, 100);
+        //images 4 slot students in the beginning hall
+        labelEntranceStudents[3].setBounds(1344, 678, 100, 100);
+        //images 5 slot students in the beginning hall
+        labelEntranceStudents[4].setBounds(1344, 728, 100, 100);
+        //images 6 slot students in the beginning hall
+        labelEntranceStudents[5].setBounds(1404, 678, 100, 100);
+        //images 7 slot students in the beginning hall
+        labelEntranceStudents[6].setBounds(1404, 728, 100, 100);
+        //
+        labelEntranceStudents[7].setBounds(1466, 678, 100, 100);
+        //images 9 slot students in the beginning hall
+        labelEntranceStudents[8].setBounds(1466, 728, 100, 100);
 
         //button for the selection of the clouds based on the different field of the game
         if(size==2) {
@@ -2045,7 +1501,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelPlayerMessage.setBounds(485,205,200,50);
         labelPlayerMessage.setForeground(Color.WHITE);
         labelPlayerMessage.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
-        frameGame.add(labelPlayerMessage);
 
         //towers configuration
         for(int i = 0; i < 8; i++){
@@ -2285,15 +1740,15 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         else if(e.getSource()== buttonGetReady)
         {
             //ask roomCreation
-            size =Integer.parseInt(lobbyField.getText());
-            messageHandler.sendMessage(new RoomSizeMessage(size,this.username));
+            size = Integer.parseInt(lobbyField.getText());
+            messageHandler.sendMessage(new RoomSizeMessage(size, this.username));
             buttonGetReady.setVisible(false);
         }
         else if(e.getSource()== buttonPlus1)
         {
             labelPlayerMessage.setText("# 1 ISLAND SELECTED #");
-            whiteTowerCounter1=whiteTowerCounter1+1;
-            labelWhiteTowerCounter1.setText(whiteTowerCounter1+"");
+            /*whiteTowerCounter1=whiteTowerCounter1+1;
+            labelWhiteTowerCounter[0].setText(whiteTowerCounter1+"");*/
 
         }
         else if(e.getSource()== buttonPlus2)
@@ -2414,59 +1869,58 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             showCards();
             if(chosenCard1==1)
             {
-                labelAssistant1.setVisible(false);
+                labelAssistantDeck[0].setVisible(false);
                 buttonAssistant1.setVisible(false);
             }
             if(chosenCard2==1)
             {
-                labelAssistant2.setVisible(false);
+                labelAssistantDeck[1].setVisible(false);
                 buttonAssistant2.setVisible(false);
             }
             if(chosenCard3==1)
             {
-                labelAssistant3.setVisible(false);
+                labelAssistantDeck[2].setVisible(false);
                 buttonAssistant3.setVisible(false);
             }
             if(chosenCard4==1)
             {
-                labelAssistant4.setVisible(false);
+                labelAssistantDeck[3].setVisible(false);
                 buttonAssistant4.setVisible(false);
             }
             if(chosenCard5==1)
             {
-                labelAssistant5.setVisible(false);
+                labelAssistantDeck[4].setVisible(false);
                 buttonAssistant5.setVisible(false);
             }
             if(chosenCard6==1)
             {
-                labelAssistant6.setVisible(false);
+                labelAssistantDeck[5].setVisible(false);
                 buttonAssistant6.setVisible(false);
             }
             if(chosenCard7==1)
             {
-                labelAssistant7.setVisible(false);
+                labelAssistantDeck[6].setVisible(false);
                 buttonAssistant7.setVisible(false);
             }
             if(chosenCard8==1)
             {
-                labelAssistant8.setVisible(false);
+                labelAssistantDeck[7].setVisible(false);
                 buttonAssistant8.setVisible(false);
             }
             if(chosenCard9==1)
             {
-                labelAssistant9.setVisible(false);
+                labelAssistantDeck[8].setVisible(false);
                 buttonAssistant9.setVisible(false);
             }
             if(chosenCard10==1)
             {
-                labelAssistant10.setVisible(false);
+                labelAssistantDeck[9].setVisible(false);
                 buttonAssistant10.setVisible(false);
             }
         }
-        else if(e.getSource()== buttonAssistant1)
-        {
+        else if(e.getSource()== buttonAssistant1) {
             labelPlayerMessage.setText("# CARD 1 SELECTED #");
-            labelAssistant1.setVisible(false);
+            labelAssistantDeck[0].setVisible(false);
             buttonAssistant1.setVisible(false);
             chosenCard1=1;
             hideOnlyButtonCards();
@@ -2474,88 +1928,77 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             int choice=1;
             messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
         }
-        else if(e.getSource()== buttonAssistant2)
-        {
+        else if(e.getSource()== buttonAssistant2) {
             labelPlayerMessage.setText("# CARD 2 SELECTED #");
-            labelAssistant2.setVisible(false);
+            labelAssistantDeck[1].setVisible(false);
             buttonAssistant2.setVisible(false);
             chosenCard2=1;
             hideOnlyButtonCards();
         }
-        else if(e.getSource()== buttonAssistant3)
-        {
+        else if(e.getSource()== buttonAssistant3) {
             labelPlayerMessage.setText("# CARD 3 SELECTED #");
-            labelAssistant3.setVisible(false);
+            labelAssistantDeck[2].setVisible(false);
             buttonAssistant3.setVisible(false);
             chosenCard3=1;
             hideOnlyButtonCards();
 
         }
-        else if(e.getSource()== buttonAssistant4)
-        {
+        else if(e.getSource()== buttonAssistant4) {
             labelPlayerMessage.setText("# CARD 4 SELECTED #");
-            labelAssistant4.setVisible(false);
+            labelAssistantDeck[3].setVisible(false);
             buttonAssistant4.setVisible(false);
             chosenCard4=1;
             hideOnlyButtonCards();
 
         }
-        else if(e.getSource()== buttonAssistant5)
-        {
+        else if(e.getSource()== buttonAssistant5) {
             labelPlayerMessage.setText("# CARD 5 SELECTED #");
-            labelAssistant5.setVisible(false);
+            labelAssistantDeck[4].setVisible(false);
             buttonAssistant5.setVisible(false);
             chosenCard5=1;
             hideOnlyButtonCards();
 
         }
-        else if(e.getSource()== buttonAssistant6)
-        {
+        else if(e.getSource()== buttonAssistant6) {
             labelPlayerMessage.setText("# CARD 6 SELECTED #");
-            labelAssistant6.setVisible(false);
+            labelAssistantDeck[5].setVisible(false);
             buttonAssistant6.setVisible(false);
             chosenCard6=1;
             hideOnlyButtonCards();
 
         }
-        else if(e.getSource()== buttonAssistant7)
-        {
+        else if(e.getSource()== buttonAssistant7) {
             labelPlayerMessage.setText("# CARD 7 SELECTED #");
-            labelAssistant7.setVisible(false);
+            labelAssistantDeck[6].setVisible(false);
             buttonAssistant7.setVisible(false);
             chosenCard7=1;
             hideOnlyButtonCards();
 
         }
-        else if(e.getSource()== buttonAssistant8)
-        {
+        else if(e.getSource()== buttonAssistant8) {
             labelPlayerMessage.setText("# CARD 8 SELECTED #");
-            labelAssistant8.setVisible(false);
+            labelAssistantDeck[7].setVisible(false);
             buttonAssistant8.setVisible(false);
             chosenCard8=1;
             hideOnlyButtonCards();
 
         }
-        else if(e.getSource()== buttonAssistant9)
-        {
+        else if(e.getSource()== buttonAssistant9) {
             labelPlayerMessage.setText("# CARD 9 SELECTED #");
-            labelAssistant9.setVisible(false);
+            labelAssistantDeck[8].setVisible(false);
             buttonAssistant9.setVisible(false);
             chosenCard9=1;
             hideOnlyButtonCards();
 
         }
-        else if(e.getSource()== buttonAssistant10)
-        {
+        else if(e.getSource()== buttonAssistant10) {
             labelPlayerMessage.setText("# CARD 10 SELECTED #");
-            labelAssistant10.setVisible(false);
+            labelAssistantDeck[9].setVisible(false);
             buttonAssistant10.setVisible(false);
             chosenCard10=1;
             hideOnlyButtonCards();
 
         }
-
-
     }
 
     @Override
@@ -2565,7 +2008,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         size = game.getPlayers().length;
         if(size==2){
             setBackground = new ImageIcon("src/images/background2Player.jpg");
-
         }else if(size==3){
             setBackground = new ImageIcon("src/images/background3Player.jpg");
             frameGame.add(labelRedCloudCounter3);
@@ -2578,18 +2020,18 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             frameGame.add(buttonSelectStudent8);
             frameGame.add(buttonSelectStudent9);
 
-            frameGame.add(labelGreyTowerCounter1);
-            frameGame.add(labelGreyTowerCounter2);
-            frameGame.add(labelGreyTowerCounter3);
-            frameGame.add(labelGreyTowerCounter4);
-            frameGame.add(labelGreyTowerCounter5);
-            frameGame.add(labelGreyTowerCounter6);
-            frameGame.add(labelGreyTowerCounter7);
-            frameGame.add(labelGreyTowerCounter8);
-            frameGame.add(labelGreyTowerCounter9);
-            frameGame.add(labelGreyTowerCounter10);
-            frameGame.add(labelGreyTowerCounter11);
-            frameGame.add(labelGreyTowerCounter12);
+            frameGame.add(labelGreyTowerCounter[0]);
+            frameGame.add(labelGreyTowerCounter[1]);
+            frameGame.add(labelGreyTowerCounter[2]);
+            frameGame.add(labelGreyTowerCounter[3]);
+            frameGame.add(labelGreyTowerCounter[4]);
+            frameGame.add(labelGreyTowerCounter[5]);
+            frameGame.add(labelGreyTowerCounter[6]);
+            frameGame.add(labelGreyTowerCounter[7]);
+            frameGame.add(labelGreyTowerCounter[8]);
+            frameGame.add(labelGreyTowerCounter[9]);
+            frameGame.add(labelGreyTowerCounter[10]);
+            frameGame.add(labelGreyTowerCounter[11]);
 
         }else if(size==4){
             setBackground = new ImageIcon("src/images/background4Player.jpg");
@@ -2611,18 +2053,20 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelSetBackground.setBounds(0,0,1600,800);
         labelSetBackground.setIcon(setBackground);
 
-        frameGame.add(labelAssistant1);
-        frameGame.add(labelAssistant2);
-        frameGame.add(labelAssistant3);
-        frameGame.add(labelAssistant4);
-        frameGame.add(labelAssistant5);
-        frameGame.add(labelAssistant6);
-        frameGame.add(labelAssistant7);
-        frameGame.add(labelAssistant8);
-        frameGame.add(labelAssistant9);
-        frameGame.add(labelAssistant10);
+        frameGame.add(labelAssistantDeck[0]);
+        frameGame.add(labelAssistantDeck[1]);
+        frameGame.add(labelAssistantDeck[2]);
+        frameGame.add(labelAssistantDeck[3]);
+        frameGame.add(labelAssistantDeck[4]);
+        frameGame.add(labelAssistantDeck[5]);
+        frameGame.add(labelAssistantDeck[6]);
+        frameGame.add(labelAssistantDeck[7]);
+        frameGame.add(labelAssistantDeck[8]);
+        frameGame.add(labelAssistantDeck[9]);
 
         frameGame.add(labelBackgroundCards);
+
+        frameGame.add(labelPlayerMessage);
 
         frameGame.add(labelRedCloudCounter1);
         frameGame.add(labelBlueCloudCounter1);
@@ -2635,31 +2079,31 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         frameGame.add(labelGreenCloudCounter2);
         frameGame.add(labelPinkCloudCounter2);
 
-        frameGame.add(labelWhiteTowerCounter1);
-        frameGame.add(labelWhiteTowerCounter2);
-        frameGame.add(labelWhiteTowerCounter3);
-        frameGame.add(labelWhiteTowerCounter4);
-        frameGame.add(labelWhiteTowerCounter5);
-        frameGame.add(labelWhiteTowerCounter6);
-        frameGame.add(labelWhiteTowerCounter7);
-        frameGame.add(labelWhiteTowerCounter8);
-        frameGame.add(labelWhiteTowerCounter9);
-        frameGame.add(labelWhiteTowerCounter10);
-        frameGame.add(labelWhiteTowerCounter11);
-        frameGame.add(labelWhiteTowerCounter12);
+        frameGame.add(labelWhiteTowerCounter[0]);
+        frameGame.add(labelWhiteTowerCounter[1]);
+        frameGame.add(labelWhiteTowerCounter[2]);
+        frameGame.add(labelWhiteTowerCounter[3]);
+        frameGame.add(labelWhiteTowerCounter[4]);
+        frameGame.add(labelWhiteTowerCounter[5]);
+        frameGame.add(labelWhiteTowerCounter[6]);
+        frameGame.add(labelWhiteTowerCounter[7]);
+        frameGame.add(labelWhiteTowerCounter[8]);
+        frameGame.add(labelWhiteTowerCounter[9]);
+        frameGame.add(labelWhiteTowerCounter[10]);
+        frameGame.add(labelWhiteTowerCounter[11]);
 
-        frameGame.add(labelBlackTowerCounter1);
-        frameGame.add(labelBlackTowerCounter2);
-        frameGame.add(labelBlackTowerCounter3);
-        frameGame.add(labelBlackTowerCounter4);
-        frameGame.add(labelBlackTowerCounter5);
-        frameGame.add(labelBlackTowerCounter6);
-        frameGame.add(labelBlackTowerCounter7);
-        frameGame.add(labelBlackTowerCounter8);
-        frameGame.add(labelBlackTowerCounter9);
-        frameGame.add(labelBlackTowerCounter10);
-        frameGame.add(labelBlackTowerCounter11);
-        frameGame.add(labelBlackTowerCounter12);
+        frameGame.add(labelBlackTowerCounter[0]);
+        frameGame.add(labelBlackTowerCounter[1]);
+        frameGame.add(labelBlackTowerCounter[2]);
+        frameGame.add(labelBlackTowerCounter[3]);
+        frameGame.add(labelBlackTowerCounter[4]);
+        frameGame.add(labelBlackTowerCounter[5]);
+        frameGame.add(labelBlackTowerCounter[6]);
+        frameGame.add(labelBlackTowerCounter[7]);
+        frameGame.add(labelBlackTowerCounter[8]);
+        frameGame.add(labelBlackTowerCounter[9]);
+        frameGame.add(labelBlackTowerCounter[10]);
+        frameGame.add(labelBlackTowerCounter[11]);
 
         frameGame.add(labelRedCounter1);
         frameGame.add(labelRedCounter2);
@@ -2774,6 +2218,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 break;
             }
         }
+        //print the situation of each player
         for(Player player : game.getPlayers()){
             int i = 0;
             while(player.getSchool().getSchoolHall()[0].getTableHall()[i] != null){
@@ -2801,15 +2246,15 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 i++;
             }
             switch (player.getSchool().getPlayersTowers().get(0).getColor()) {
-
-                case BLACK -> {
-                    for (int j = 0; j < player.getSchool().getPlayersTowers().size(); j++) {
-                        frameGame.add(labelBlackTowerList[j]);
-                    }
-                }
+                //TODO check real print for towers
                 case WHITE -> {
                     for (int j = 0; j < player.getSchool().getPlayersTowers().size(); j++) {
                         frameGame.add(labelWhiteTowerList[j]);
+                    }
+                }
+                case BLACK -> {
+                    for (int j = 0; j < player.getSchool().getPlayersTowers().size(); j++) {
+                        frameGame.add(labelBlackTowerList[j]);
                     }
                 }
                 case GREY -> {
@@ -2818,13 +2263,44 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                     }
                 }
             }
+            for(int j = 0; j < player.getSchool().getEntranceStudent().size(); j++){
+                PawnColor color = player.getSchool().getEntranceStudent().get(j).getColor();
+                switch (color){
+                    case BLUE -> {
+                        labelEntranceStudents[j].setIcon(blueHallIcon);
+                        frameGame.add(labelEntranceStudents[j]);
+                    }
+                    case GREEN -> {
+                        labelEntranceStudents[j].setIcon(greenHallIcon);
+                        frameGame.add(labelEntranceStudents[j]);
+                    }
+                    case PINK -> {
+                        labelEntranceStudents[j].setIcon(pinkHallIcon);
+                        frameGame.add(labelEntranceStudents[j]);
+                    }
+                    case RED -> {
+                        labelEntranceStudents[j].setIcon(redHallIcon);
+                        frameGame.add(labelEntranceStudents[j]);
+                    }
+                    case YELLOW -> {
+                        labelEntranceStudents[j].setIcon(yellowHall);
+                        frameGame.add(labelEntranceStudents[j]);
+                    }
+                }
+            }
+        }
+        //print the situation of each island
+        for(int i = 0; i < game.getTable().getIslands().size(); i++){
+            int towerOnIsland = game.getTable().getIslands().get(i).getTowers().size();
+            if(0 < towerOnIsland){
+                TowerColor color = game.getTable().getIslands().get(i).getTowers().get(0).getColor();
+                switch (color){
+                    case WHITE -> labelWhiteTowerCounter[i].setText(towerOnIsland+"");
+                }
+            }
+
         }
         frameGame.add(labelSetBackground);
-
-        for(Island island : game.getTable().getIslands()){
-            //updateIslandStudentCounter(island);
-        }
-
     }
 
     /*public void updateIslandStudentCounter(Island island){
