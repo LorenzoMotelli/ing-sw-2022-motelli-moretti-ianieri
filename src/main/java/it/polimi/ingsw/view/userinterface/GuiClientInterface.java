@@ -735,7 +735,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         ImageIcon logoGame = new ImageIcon("src/images/logWallpaperRaw.jpg");
         frameGame.setIconImage(logoGame.getImage());
         frameGame.setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
-        frameGame.setSize(1600,900);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frameGame.setSize(dim.width, dim.height);
+        //frameGame.setSize(1600,900);
         frameGame.setLayout(null);
         frameGame.setTitle("ERYANTIS");
         frameGame.setExtendedState(JFrame.MAXIMIZED_BOTH);
