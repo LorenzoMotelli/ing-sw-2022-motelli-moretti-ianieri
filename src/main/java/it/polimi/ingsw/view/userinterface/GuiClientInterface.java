@@ -4,6 +4,7 @@ package it.polimi.ingsw.view.userinterface;
 import it.polimi.ingsw.model.GeneralGame;
 import it.polimi.ingsw.model.Island;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.Tower;
 import it.polimi.ingsw.network.client.ClientMessageHandler;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
@@ -179,23 +180,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     private JLabel labelPlayerMessage;
 
-    private JLabel labelWhiteTower1;
-    private JLabel labelWhiteTower2;
-    private JLabel labelWhiteTower3;
-    private JLabel labelWhiteTower4;
-    private JLabel labelWhiteTower5;
-    private JLabel labelWhiteTower6;
-    private JLabel labelWhiteTower7;
-    private JLabel labelWhiteTower8;
+    private ImageIcon whiteTowerImage = new ImageIcon("src/images/whiteTowerRaw.png");
+    private JLabel[] labelWhiteTowerList = new JLabel[8];
 
-    private ImageIcon whiteTower1;
-    private ImageIcon whiteTower2;
-    private ImageIcon whiteTower3;
-    private ImageIcon whiteTower4;
-    private ImageIcon whiteTower5;
-    private ImageIcon whiteTower6;
-    private ImageIcon whiteTower7;
-    private ImageIcon whiteTower8;
 
 
     private ImageIcon blackTowerIcon = new ImageIcon("src/images/blackTowerRaw.png");
@@ -2257,41 +2244,25 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         frameGame.add(labelPlayerMessage);
 
         //towers configuration
-        whiteTower1= new ImageIcon("src/images/whiteTowerRaw.png");
-        labelWhiteTower1=new JLabel();
-        labelWhiteTower1.setBounds(1244, 0, 60, 60);
-        labelWhiteTower1.setIcon(whiteTower1);
-        frameGame.add(labelWhiteTower1);
+        for(int i = 0; i < 8; i++){
+            labelWhiteTowerList[i] = new JLabel();
+            labelWhiteTowerList[i].setIcon(whiteTowerImage);
+        }
+        labelWhiteTowerList[0].setBounds(1244, 0, 60, 60);
 
-        whiteTower2= new ImageIcon("src/images/whiteTowerRaw.png");
-        labelWhiteTower2=new JLabel();
-        labelWhiteTower2.setBounds(1244, 65, 60, 60);
-        labelWhiteTower2.setIcon(whiteTower2);
-        frameGame.add(labelWhiteTower2);
+        labelWhiteTowerList[1].setBounds(1244, 65, 60, 60);
 
-        whiteTower3= new ImageIcon("src/images/whiteTowerRaw.png");
-        labelWhiteTower3=new JLabel();
-        labelWhiteTower3.setBounds(1306, 0, 60, 60);
-        labelWhiteTower3.setIcon(whiteTower3);
-        frameGame.add(labelWhiteTower3);
+        labelWhiteTowerList[2].setBounds(1306, 0, 60, 60);
 
-        whiteTower4= new ImageIcon("src/images/whiteTowerRaw.png");
-        labelWhiteTower4=new JLabel();
-        labelWhiteTower4.setBounds(1306, 65, 60, 60);
-        labelWhiteTower4.setIcon(whiteTower4);
-        frameGame.add(labelWhiteTower4);
+        labelWhiteTowerList[3].setBounds(1306, 65, 60, 60);
 
-        whiteTower5= new ImageIcon("src/images/whiteTowerRaw.png");
-        labelWhiteTower5=new JLabel();
-        labelWhiteTower5.setBounds(1368, 0, 60, 60);
-        labelWhiteTower5.setIcon(whiteTower5);
-        frameGame.add(labelWhiteTower5);
+        labelWhiteTowerList[4].setBounds(1368, 0, 60, 60);
 
-        whiteTower6= new ImageIcon("src/images/whiteTowerRaw.png");
-        labelWhiteTower6=new JLabel();
-        labelWhiteTower6.setBounds(1368, 65, 60, 60);
-        labelWhiteTower6.setIcon(whiteTower6);
-        frameGame.add(labelWhiteTower6);
+        labelWhiteTowerList[5].setBounds(1368, 65, 60, 60);
+
+        labelWhiteTowerList[6].setBounds(1430, 0, 60, 60);
+
+        labelWhiteTowerList[7].setBounds(1430, 65, 60, 60);
 
         //blackTower
         for(int i=0;i<8;i++){
@@ -2310,11 +2281,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelBlackTowerList[4].setBounds(1368, 0, 60, 60);
 
         labelBlackTowerList[5].setBounds(1368, 65, 60, 60);
-
-
-        labelWhiteTower7.setBounds(1430, 0, 60, 60);
-
-        labelWhiteTower8.setBounds(1430, 65, 60, 60);
 
         labelBlackTowerList[6].setBounds(1430, 0, 60, 60);
 
@@ -2836,6 +2802,24 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             while(player.getSchool().getSchoolHall()[4].getTableHall()[i] != null){
                 frameGame.add(labelYellowHallList[i]);
                 i++;
+            }
+            switch (player.getSchool().getPlayersTowers().get(0).getColor()) {
+
+                case BLACK -> {
+                    for (int j = 0; j < player.getSchool().getPlayersTowers().size(); j++) {
+                        frameGame.add(labelBlackTowerList[j]);
+                    }
+                }
+                case WHITE -> {
+                    for (int j = 0; j < player.getSchool().getPlayersTowers().size(); j++) {
+                        frameGame.add(labelWhiteTowerList[j]);
+                    }
+                }
+                case GREY -> {
+                    for (int j = 0; j < player.getSchool().getPlayersTowers().size(); j++) {
+                        frameGame.add(labelGreyTowerList[j]);
+                    }
+                }
             }
         }
         frameGame.add(labelSetBackground);
