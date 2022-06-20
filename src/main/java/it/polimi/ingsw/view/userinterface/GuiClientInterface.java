@@ -101,49 +101,21 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private ImageIcon redHall9;
     private ImageIcon redHall10;
 
-    private JLabel labelYellowHall1;
-    private JLabel labelYellowHall2;
-    private JLabel labelYellowHall3;
-    private JLabel labelYellowHall4;
-    private JLabel labelYellowHall5;
-    private JLabel labelYellowHall6;
-    private JLabel labelYellowHall7;
-    private JLabel labelYellowHall8;
-    private JLabel labelYellowHall9;
-    private JLabel labelYellowHall10;
 
-    private ImageIcon yellowHall1;
-    private ImageIcon yellowHall2;
-    private ImageIcon yellowHall3;
-    private ImageIcon yellowHall4;
-    private ImageIcon yellowHall5;
-    private ImageIcon yellowHall6;
-    private ImageIcon yellowHall7;
-    private ImageIcon yellowHall8;
-    private ImageIcon yellowHall9;
-    private ImageIcon yellowHall10;
 
-    private JLabel labelPinkHall1;
-    private JLabel labelPinkHall2;
-    private JLabel labelPinkHall3;
-    private JLabel labelPinkHall4;
-    private JLabel labelPinkHall5;
-    private JLabel labelPinkHall6;
-    private JLabel labelPinkHall7;
-    private JLabel labelPinkHall8;
-    private JLabel labelPinkHall9;
-    private JLabel labelPinkHall10;
+    private JLabel[] labelYellowHallList = new JLabel[10];
 
-    private ImageIcon pinkHall1;
-    private ImageIcon pinkHall2;
-    private ImageIcon pinkHall3;
-    private ImageIcon pinkHall4;
-    private ImageIcon pinkHall5;
-    private ImageIcon pinkHall6;
-    private ImageIcon pinkHall7;
-    private ImageIcon pinkHall8;
-    private ImageIcon pinkHall9;
-    private ImageIcon pinkHall10;
+    private ImageIcon yellowHall = new ImageIcon("src/images/yellowHall.png");
+
+
+
+
+
+    private JLabel[] labelPinkHallList = new JLabel[10];
+
+    private ImageIcon pinkHall = new ImageIcon("src/images/pinkHall.png");
+
+
 
     private JLabel labelBlueHall1;
     private JLabel labelBlueHall2;
@@ -2018,126 +1990,74 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         frameGame.add(labelRedHall10);
 
         //add player to yellow table
-        yellowHall1= new ImageIcon("src/images/yellowHall.png");
-        labelYellowHall1=new JLabel();
-        labelYellowHall1.setBounds(1343, 225, 100, 100);
-        labelYellowHall1.setIcon(yellowHall1);
-        frameGame.add(labelYellowHall1);
+        for(int i=0;i<10; i++){
+            labelYellowHallList[i].setIcon(yellowHall);
+        }
 
-        yellowHall2= new ImageIcon("src/images/yellowHall.png");
-        labelYellowHall2=new JLabel();
-        labelYellowHall2.setBounds(1343, 266, 100, 100);
-        labelYellowHall2.setIcon(yellowHall2);
-        frameGame.add(labelYellowHall2);
+        labelYellowHallList[0].setBounds(1343, 225, 100, 100);
+        frameGame.add(labelYellowHallList[0]);
 
-        yellowHall3= new ImageIcon("src/images/yellowHall.png");
-        labelYellowHall3=new JLabel();
-        labelYellowHall3.setBounds(1343, 307, 100, 100);
-        labelYellowHall3.setIcon(yellowHall3);
-        frameGame.add(labelYellowHall3);
+        labelYellowHallList[1].setBounds(1343, 266, 100, 100);
+        frameGame.add(labelYellowHallList[1]);
 
-        yellowHall4= new ImageIcon("src/images/yellowHall.png");
-        labelYellowHall4=new JLabel();
-        labelYellowHall4.setBounds(1343, 348, 100, 100);
-        labelYellowHall4.setIcon(yellowHall4);
-        frameGame.add(labelYellowHall4);
+        labelYellowHallList[2].setBounds(1343, 307, 100, 100);
+        frameGame.add(labelYellowHallList[2]);
 
-        yellowHall5= new ImageIcon("src/images/yellowHall.png");
-        labelYellowHall5=new JLabel();
-        labelYellowHall5.setBounds(1343, 389, 100, 100);
-        labelYellowHall5.setIcon(yellowHall5);
-        frameGame.add(labelYellowHall5);
+        labelYellowHallList[3].setBounds(1343, 348, 100, 100);
+        frameGame.add(labelYellowHallList[3]);
 
-        yellowHall6= new ImageIcon("src/images/yellowHall.png");
-        labelYellowHall6=new JLabel();
-        labelYellowHall6.setBounds(1343, 430, 100, 100);
-        labelYellowHall6.setIcon(yellowHall6);
-        frameGame.add(labelYellowHall6);
+        labelYellowHallList[4].setBounds(1343, 389, 100, 100);
+        frameGame.add(labelYellowHallList[4]);
 
-        yellowHall7= new ImageIcon("src/images/yellowHall.png");
-        labelYellowHall7=new JLabel();
-        labelYellowHall7.setBounds(1343, 471, 100, 100);
-        labelYellowHall7.setIcon(yellowHall7);
-        frameGame.add(labelYellowHall7);
+        labelYellowHallList[5].setBounds(1343, 430, 100, 100);
+        frameGame.add(labelYellowHallList[5]);
 
-        yellowHall8= new ImageIcon("src/images/yellowHall.png");
-        labelYellowHall8=new JLabel();
-        labelYellowHall8.setBounds(1343, 512, 100, 100);
-        labelYellowHall8.setIcon(yellowHall8);
-        frameGame.add(labelYellowHall8);
+        labelYellowHallList[6].setBounds(1343, 471, 100, 100);
+        frameGame.add(labelYellowHallList[6]);
 
-        yellowHall9= new ImageIcon("src/images/yellowHall.png");
-        labelYellowHall9=new JLabel();
-        labelYellowHall9.setBounds(1343, 553, 100, 100);
-        labelYellowHall9.setIcon(yellowHall9);
-        frameGame.add(labelYellowHall9);
+        labelYellowHallList[7].setBounds(1343, 512, 100, 100);
+        frameGame.add(labelYellowHallList[7]);
 
-        yellowHall10= new ImageIcon("src/images/yellowHall.png");
-        labelYellowHall10=new JLabel();
-        labelYellowHall10.setBounds(1343, 594, 100, 100);
-        labelYellowHall10.setIcon(yellowHall10);
-        frameGame.add(labelYellowHall10);
+        labelYellowHallList[8].setBounds(1343, 553, 100, 100);
+        frameGame.add(labelYellowHallList[8]);
+
+        labelYellowHallList[9].setBounds(1343, 594, 100, 100);
+        frameGame.add(labelYellowHallList[9]);
 
         //add player to pink table
-        pinkHall1= new ImageIcon("src/images/pinkHall.png");
-        labelPinkHall1=new JLabel();
-        labelPinkHall1.setBounds(1404, 225, 100, 100);
-        labelPinkHall1.setIcon(pinkHall1);
-        frameGame.add(labelPinkHall1);
+        for(int i=0;i<10; i++){
+            labelPinkHallList[i].setIcon(pinkHall);
+        }
 
-        pinkHall2= new ImageIcon("src/images/pinkHall.png");
-        labelPinkHall2=new JLabel();
-        labelPinkHall2.setBounds(1404, 266, 100, 100);
-        labelPinkHall2.setIcon(pinkHall2);
-        frameGame.add(labelPinkHall2);
+        labelPinkHallList[0].setBounds(1404, 225, 100, 100);
+        frameGame.add(labelPinkHallList[0]);
 
-        pinkHall3= new ImageIcon("src/images/pinkHall.png");
-        labelPinkHall3=new JLabel();
-        labelPinkHall3.setBounds(1404, 307, 100, 100);
-        labelPinkHall3.setIcon(pinkHall3);
-        frameGame.add(labelPinkHall3);
+        labelPinkHallList[1].setBounds(1404, 266, 100, 100);
+        frameGame.add(labelPinkHallList[1]);
 
-        pinkHall4= new ImageIcon("src/images/pinkHall.png");
-        labelPinkHall4=new JLabel();
-        labelPinkHall4.setBounds(1404, 348, 100, 100);
-        labelPinkHall4.setIcon(pinkHall4);
-        frameGame.add(labelPinkHall4);
+        labelPinkHallList[2].setBounds(1404, 307, 100, 100);
+        frameGame.add(labelPinkHallList[2]);
 
-        pinkHall5= new ImageIcon("src/images/pinkHall.png");
-        labelPinkHall5=new JLabel();
-        labelPinkHall5.setBounds(1404, 389, 100, 100);
-        labelPinkHall5.setIcon(pinkHall5);
-        frameGame.add(labelPinkHall5);
+        labelPinkHallList[3].setBounds(1404, 348, 100, 100);
+        frameGame.add(labelPinkHallList[3]);
 
-        pinkHall6= new ImageIcon("src/images/pinkHall.png");
-        labelPinkHall6=new JLabel();
-        labelPinkHall6.setBounds(1404, 430, 100, 100);
-        labelPinkHall6.setIcon(pinkHall6);
-        frameGame.add(labelPinkHall6);
+        labelPinkHallList[4].setBounds(1404, 389, 100, 100);
+        frameGame.add(labelPinkHallList[4]);
 
-        pinkHall7= new ImageIcon("src/images/pinkHall.png");
-        labelPinkHall7=new JLabel();
-        labelPinkHall7.setBounds(1404, 471, 100, 100);
-        labelPinkHall7.setIcon(pinkHall7);
-        frameGame.add(labelPinkHall7);
+        labelPinkHallList[5].setBounds(1404, 430, 100, 100);
+        frameGame.add(labelPinkHallList[5]);
 
-        pinkHall8= new ImageIcon("src/images/pinkHall.png");
-        labelPinkHall8=new JLabel();
-        labelPinkHall8.setBounds(1404, 512, 100, 100);
-        labelPinkHall8.setIcon(pinkHall8);
-        frameGame.add(labelPinkHall8);
+        labelPinkHallList[6].setBounds(1404, 471, 100, 100);
+        frameGame.add(labelPinkHallList[6]);
 
-        pinkHall9= new ImageIcon("src/images/pinkHall.png");
-        labelPinkHall9=new JLabel();
-        labelPinkHall9.setBounds(1404, 553, 100, 100);
-        labelPinkHall9.setIcon(pinkHall9);
-        frameGame.add(labelPinkHall9);
+        labelPinkHallList[7].setBounds(1404, 512, 100, 100);
+        frameGame.add(labelPinkHallList[7]);
 
-        pinkHall10= new ImageIcon("src/images/pinkHall.png");
-        labelPinkHall10=new JLabel();
-        labelPinkHall10.setBounds(1404, 594, 100, 100);
-        labelPinkHall10.setIcon(pinkHall10);
-        frameGame.add(labelPinkHall10);
+        labelPinkHallList[8].setBounds(1404, 553, 100, 100);
+        frameGame.add(labelPinkHallList[8]);
+
+        labelPinkHallList[9].setBounds(1404, 594, 100, 100);
+        frameGame.add(labelPinkHallList[9]);
 
         //add player to blue table
         blueHall1= new ImageIcon("src/images/blueHall.png");
