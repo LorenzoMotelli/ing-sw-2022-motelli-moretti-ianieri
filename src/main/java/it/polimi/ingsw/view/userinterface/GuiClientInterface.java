@@ -197,37 +197,13 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private ImageIcon whiteTower7;
     private ImageIcon whiteTower8;
 
-    private JLabel labelBlackTower1;
-    private JLabel labelBlackTower2;
-    private JLabel labelBlackTower3;
-    private JLabel labelBlackTower4;
-    private JLabel labelBlackTower5;
-    private JLabel labelBlackTower6;
-    private JLabel labelBlackTower7;
-    private JLabel labelBlackTower8;
 
-    private ImageIcon blackTower1 = new ImageIcon("src/images/blackTowerRaw.png");
-    private ImageIcon blackTower2 = new ImageIcon("src/images/blackTowerRaw.png");
-    private ImageIcon blackTower3 = new ImageIcon("src/images/blackTowerRaw.png");
-    private ImageIcon blackTower4 = new ImageIcon("src/images/blackTowerRaw.png");
-    private ImageIcon blackTower5 = new ImageIcon("src/images/blackTowerRaw.png");
-    private ImageIcon blackTower6 = new ImageIcon("src/images/blackTowerRaw.png");
-    private ImageIcon blackTower7 = new ImageIcon("src/images/blackTowerRaw.png");
-    private ImageIcon blackTower8 = new ImageIcon("src/images/blackTowerRaw.png");
+    private ImageIcon blackTowerIcon = new ImageIcon("src/images/blackTowerRaw.png");
+    private JLabel[] labelBlackTowerList = new JLabel[8];
 
-    private JLabel labelGreyTower1;
-    private JLabel labelGreyTower2;
-    private JLabel labelGreyTower3;
-    private JLabel labelGreyTower4;
-    private JLabel labelGreyTower5;
-    private JLabel labelGreyTower6;
+    private ImageIcon greyTowerIcon = new ImageIcon("src/images/greyTowerRaw.png");
+    private JLabel[] labelGreyTowerList = new JLabel[6];
 
-    private ImageIcon greyTower1;
-    private ImageIcon greyTower2;
-    private ImageIcon greyTower3;
-    private ImageIcon greyTower4;
-    private ImageIcon greyTower5;
-    private ImageIcon greyTower6;
 
     private JLabel labelBackgroundCards;
     private ImageIcon backgroundCards;
@@ -2317,105 +2293,51 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelWhiteTower6.setIcon(whiteTower6);
         frameGame.add(labelWhiteTower6);
 
-        //blackTower1= new ImageIcon("src/images/blackTowerRaw.png");
-        labelBlackTower1=new JLabel();
-        labelBlackTower1.setBounds(1244, 0, 60, 60);
-        labelBlackTower1.setIcon(blackTower1);
-        frameGame.add(labelBlackTower1);
-
-        //blackTower2= new ImageIcon("src/images/blackTowerRaw.png");
-        labelBlackTower2=new JLabel();
-        labelBlackTower2.setBounds(1244, 65, 60, 60);
-        labelBlackTower2.setIcon(blackTower2);
-        frameGame.add(labelBlackTower2);
-
-        //blackTower3= new ImageIcon("src/images/blackTowerRaw.png");
-        labelBlackTower3=new JLabel();
-        labelBlackTower3.setBounds(1306, 0, 60, 60);
-        labelBlackTower3.setIcon(blackTower3);
-        frameGame.add(labelBlackTower3);
-
-        //blackTower4= new ImageIcon("src/images/blackTowerRaw.png");
-        labelBlackTower4=new JLabel();
-        labelBlackTower4.setBounds(1306, 65, 60, 60);
-        labelBlackTower4.setIcon(blackTower4);
-        frameGame.add(labelBlackTower4);
-
-        //blackTower5= new ImageIcon("src/images/blackTowerRaw.png");
-        labelBlackTower5=new JLabel();
-        labelBlackTower5.setBounds(1368, 0, 60, 60);
-        labelBlackTower5.setIcon(blackTower5);
-        frameGame.add(labelBlackTower5);
-
-        //blackTower6= new ImageIcon("src/images/blackTowerRaw.png");
-        labelBlackTower6=new JLabel();
-        labelBlackTower6.setBounds(1368, 65, 60, 60);
-        labelBlackTower6.setIcon(blackTower6);
-        frameGame.add(labelBlackTower6);
-
-        if(size==2 || size==4)
-        {
-            whiteTower7= new ImageIcon("src/images/whiteTowerRaw.png");
-            labelWhiteTower7=new JLabel();
-            labelWhiteTower7.setBounds(1430, 0, 60, 60);
-            labelWhiteTower7.setIcon(whiteTower7);
-            frameGame.add(labelWhiteTower7);
-
-            whiteTower8= new ImageIcon("src/images/whiteTowerRaw.png");
-            labelWhiteTower8=new JLabel();
-            labelWhiteTower8.setBounds(1430, 65, 60, 60);
-            labelWhiteTower8.setIcon(whiteTower8);
-            frameGame.add(labelWhiteTower8);
-
-            //blackTower7= new ImageIcon("src/images/blackTowerRaw.png");
-            labelBlackTower7=new JLabel();
-            labelBlackTower7.setBounds(1430, 0, 60, 60);
-            labelBlackTower7.setIcon(blackTower7);
-            frameGame.add(labelBlackTower7);
-
-            //blackTower8= new ImageIcon("src/images/blackTowerRaw.png");
-            labelBlackTower8=new JLabel();
-            labelBlackTower8.setBounds(1430, 65, 60, 60);
-            labelBlackTower8.setIcon(blackTower8);
-            frameGame.add(labelBlackTower8);
-
-        }else if(size==3){
-            greyTower1= new ImageIcon("src/images/greyTowerRaw.png");
-            labelGreyTower1=new JLabel();
-            labelGreyTower1.setBounds(1244, 0, 60, 60);
-            labelGreyTower1.setIcon(greyTower1);
-            frameGame.add(labelGreyTower1);
-
-            greyTower2= new ImageIcon("src/images/greyTowerRaw.png");
-            labelGreyTower2=new JLabel();
-            labelGreyTower2.setBounds(1244, 65, 60, 60);
-            labelGreyTower2.setIcon(greyTower2);
-            frameGame.add(labelGreyTower2);
-
-            greyTower3= new ImageIcon("src/images/greyTowerRaw.png");
-            labelGreyTower3=new JLabel();
-            labelGreyTower3.setBounds(1306, 0, 60, 60);
-            labelGreyTower3.setIcon(greyTower3);
-            frameGame.add(labelGreyTower3);
-
-            greyTower4= new ImageIcon("src/images/greyTowerRaw.png");
-            labelGreyTower4=new JLabel();
-            labelGreyTower4.setBounds(1306, 65, 60, 60);
-            labelGreyTower4.setIcon(greyTower4);
-            frameGame.add(labelGreyTower4);
-
-            greyTower5= new ImageIcon("src/images/greyTowerRaw.png");
-            labelGreyTower5=new JLabel();
-            labelGreyTower5.setBounds(1368, 0, 60, 60);
-            labelGreyTower5.setIcon(greyTower5);
-            frameGame.add(labelGreyTower5);
-
-            greyTower6= new ImageIcon("src/images/greyTowerRaw.png");
-            labelGreyTower6=new JLabel();
-            labelGreyTower6.setBounds(1368, 65, 60, 60);
-            labelGreyTower6.setIcon(greyTower6);
-            frameGame.add(labelGreyTower6);
+        //blackTower
+        for(int i=0;i<8;i++){
+            labelBlackTowerList[i]=new JLabel();
+            labelBlackTowerList[i].setIcon(blackTowerIcon);
         }
+
+        labelBlackTowerList[0].setBounds(1244, 0, 60, 60);
+
+        labelBlackTowerList[1].setBounds(1244, 65, 60, 60);
+
+        labelBlackTowerList[2].setBounds(1306, 0, 60, 60);
+
+        labelBlackTowerList[3].setBounds(1306, 65, 60, 60);
+
+        labelBlackTowerList[4].setBounds(1368, 0, 60, 60);
+
+        labelBlackTowerList[5].setBounds(1368, 65, 60, 60);
+
+
+        labelWhiteTower7.setBounds(1430, 0, 60, 60);
+
+        labelWhiteTower8.setBounds(1430, 65, 60, 60);
+
+        labelBlackTowerList[6].setBounds(1430, 0, 60, 60);
+
+        labelBlackTowerList[7].setBounds(1430, 65, 60, 60);
+
+
+        for(int i=0;i<6;i++){
+            labelGreyTowerList[i]=new JLabel();
+            labelGreyTowerList[i].setIcon(greyTowerIcon);
+        }
+
+        labelGreyTowerList[0].setBounds(1244, 0, 60, 60);
+
+        labelGreyTowerList[1].setBounds(1244, 65, 60, 60);
+
+        labelGreyTowerList[2].setBounds(1306, 0, 60, 60);
+
+        labelGreyTowerList[3].setBounds(1306, 65, 60, 60);
+
+        labelGreyTowerList[4].setBounds(1368, 0, 60, 60);
+
+        labelGreyTowerList[5].setBounds(1368, 65, 60, 60);
+
 
         //button for select cards
         buttonViewCards = new JButton("# VIEW CARDS #");
