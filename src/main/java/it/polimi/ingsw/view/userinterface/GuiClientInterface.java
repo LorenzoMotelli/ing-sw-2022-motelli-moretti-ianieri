@@ -190,6 +190,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private static JButton buttonViewCards;
     private static JButton buttonHideCards;
 
+    private static JButton startGame;
+
     private InputStreamReader inputStreamReader;
     Scanner cmdIn;
     private String serverIp = "localhost";
@@ -1302,41 +1304,13 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         buttonHideCards.addActionListener(this);
         buttonHideCards.setVisible(false);
 
-        //set the beginning phase
-        /*buttonPlus1.setVisible(false);
-        buttonPlus2.setVisible(false);
-        buttonPlus3.setVisible(false);
-        buttonPlus4.setVisible(false);
-        buttonPlus5.setVisible(false);
-        buttonPlus6.setVisible(false);
-        buttonPlus7.setVisible(false);
-        buttonPlus8.setVisible(false);
-        buttonPlus9.setVisible(false);
-        buttonPlus10.setVisible(false);
-        buttonPlus11.setVisible(false);
-        buttonPlus12.setVisible(false);
+        startGame = new JButton("# START GAME #");
+        startGame.setBounds(0, 0, 1600, 800);
+        startGame.addActionListener(this);
+        frameGame.add(startGame);
 
-        buttonSelectStudent1.setVisible(false);
-        buttonSelectStudent2.setVisible(false);
-        buttonSelectStudent3.setVisible(false);
-        buttonSelectStudent4.setVisible(false);
-        buttonSelectStudent5.setVisible(false);
-        buttonSelectStudent6.setVisible(false);
-        buttonSelectStudent7.setVisible(false);
-        if(size==3){
-            buttonSelectStudent8.setVisible(false);
-            buttonSelectStudent9.setVisible(false);
-            buttonSelectCloud3.setVisible(false);
-        }
-
-        buttonPutOnTable.setVisible(false);
-
-        buttonSelectCloud1.setVisible(false);
-        buttonSelectCloud2.setVisible(false);
-        if(size==4){
-            buttonSelectCloud4.setVisible(false);
-        }*/
-
+        labelSetBackground=new JLabel();
+        labelSetBackground.setBounds(0,0,1600,800);
 
         hideCards();
         frameGame.setVisible(false);
@@ -1344,9 +1318,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     }
 
-    /*public void main(String[] args) {
+    public void main(String[] args) {
         new GuiClientInterface();
-    }*/
+    }
 
     @Override
     public void askUsername() {
@@ -1716,11 +1690,65 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             hideOnlyButtonCards();
 
         }
+        else if (e.getSource()==startGame) {
+            startGame.setVisible(false);
+
+            setBackground = new ImageIcon("src/images/background2Player.jpg");
+
+            if(size==3){
+                setBackground = new ImageIcon("src/images/background3Player.jpg");
+            }
+            if(size==4){
+                setBackground = new ImageIcon("src/images/background4Player.jpg");
+            }
+            labelSetBackground.setIcon(setBackground);
+
+            frameGame.add(buttonAssistant1);
+            frameGame.add(buttonAssistant2);
+            frameGame.add(buttonAssistant3);
+            frameGame.add(buttonAssistant4);
+            frameGame.add(buttonAssistant5);
+            frameGame.add(buttonAssistant6);
+            frameGame.add(buttonAssistant7);
+            frameGame.add(buttonAssistant8);
+            frameGame.add(buttonAssistant9);
+            frameGame.add(buttonAssistant10);
+
+            for(int i=0;i<10;i++){
+                frameGame.add(labelAssistantDeck[i]);
+            }
+
+            frameGame.add(labelBackgroundCards);
+
+            frameGame.add(labelPlayerMessage);
+
+            for(int i = 0; i < 12; i++){
+                frameGame.add(labelWhiteTowerCounter[i]);
+                frameGame.add(labelBlackTowerCounter[i]);
+                frameGame.add(labelRedCounter[i]);
+                frameGame.add(labelYellowCounters[i]);
+                frameGame.add(labelBlueCounters[i]);
+                frameGame.add(labelGreenCounters[i]);
+                frameGame.add(labelPinkCounters[i]);
+                frameGame.add(labelMotherNatureList[i]);
+            }
+
+
+            frameGame.add(buttonViewCards);
+            frameGame.add(buttonHideCards);
+
+            frameGame.add(labelSetBackground);
+
+        }
     }
 
     @Override
     public void boardUpdate(UpdateBoardMessage updateBoardMessage) {
-        labelSetBackground=new JLabel();
+
+        GeneralGame game = updateBoardMessage.getGame();
+        size = game.getPlayers().length;
+
+        /*labelSetBackground=new JLabel();
         GeneralGame game = updateBoardMessage.getGame();
         size = game.getPlayers().length;
         if(size==2){
@@ -1943,7 +1971,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             }
 
         }
-        frameGame.add(labelSetBackground);
+        frameGame.add(labelSetBackground);*/
     }
 
     /*public void updateIslandStudentCounter(Island island){
