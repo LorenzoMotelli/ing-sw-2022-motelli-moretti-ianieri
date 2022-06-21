@@ -120,15 +120,15 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     private final JLabel[] labelPinkCounters = new JLabel[12];
 
-    private JLabel[] labelRedCloudCounters;
+    private JLabel[] labelRedCloudCounters=new JLabel[4];
 
-    private JLabel[] labelBlueCloudCounters;
+    private JLabel[] labelBlueCloudCounters=new JLabel[4];
 
-    private JLabel[] labelYellowCloudCounters;
+    private JLabel[] labelYellowCloudCounters=new JLabel[4];
 
-    private JLabel[] labelPinkCloudCounters;
+    private JLabel[] labelPinkCloudCounters=new JLabel[4];
 
-    private JLabel[] labelGreenCloudCounters;
+    private JLabel[] labelGreenCloudCounters=new JLabel[4];
 
     private final JButton[] buttonsAssistant = new JButton[10];
 
@@ -162,20 +162,16 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     public void showCards() {
         labelBackgroundCards.setVisible(true);
-        for(int i = 0; i < labelAssistantDeck.length; i++){
+        for(int i = 0; i < 10; i++){
             labelAssistantDeck[i].setVisible(true);
-        }
-        for(int i = 0; i < buttonsAssistant.length; i++){
             buttonsAssistant[i].setVisible(true);
         }
     }
 
     public void hideCards() {
         labelBackgroundCards.setVisible(false);
-        for(int i = 0; i < labelAssistantDeck.length; i++){
+        for(int i = 0; i < 10; i++){
             labelAssistantDeck[i].setVisible(false);
-        }
-        for(int i = 0; i < buttonsAssistant.length; i++){
             buttonsAssistant[i].setVisible(false);
         }
     }
@@ -346,6 +342,10 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelBlackTowerCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
             labelBlackTowerCounter[i].setForeground(Color.WHITE);
             labelBlackTowerCounter[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+
+            labelGreyTowerCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreyTowerCounter[i].setForeground(Color.WHITE);
+            labelGreyTowerCounter[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
         }
         //white counters
         labelWhiteTowerCounter[0].setBounds(322,85,25,25);
@@ -374,12 +374,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelBlackTowerCounter[10].setBounds(55,373,25,25);
         labelBlackTowerCounter[11].setBounds(55,155,25,25);
 
-        if(size==3) {
-            for(int i = 0; i < 12; i++){
-                labelGreyTowerCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
-                labelGreyTowerCounter[i].setForeground(Color.WHITE);
-                labelGreyTowerCounter[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-            }
             labelGreyTowerCounter[0].setBounds(266,85,25,25);
             labelGreyTowerCounter[1].setBounds(488,85,25,25);
             labelGreyTowerCounter[2].setBounds(724,85,25,25);
@@ -392,7 +386,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelGreyTowerCounter[9].setBounds(27,575,25,25);
             labelGreyTowerCounter[10].setBounds(27,373,25,25);
             labelGreyTowerCounter[11].setBounds(27,155,25,25);
-        }
+
 
         for(int i = 0; i < 12; i++){
             labelRedCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
@@ -481,6 +475,40 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelPinkCounters[10].setBounds(153,459,25,25);
         labelPinkCounters[11].setBounds(153,239,25,25);
 
+        for(int i = 0; i < 4; i++){
+            labelRedCloudCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelRedCloudCounters[i].setForeground(Color.black);
+            labelRedCloudCounters[i].setBorder(BorderFactory.createLineBorder(Color.black, 3));
+
+            labelYellowCloudCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelYellowCloudCounters[i].setForeground(Color.black);
+            labelYellowCloudCounters[i].setBorder(BorderFactory.createLineBorder(Color.black, 3));
+
+            labelBlueCloudCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelBlueCloudCounters[i].setForeground(Color.black);
+            labelBlueCloudCounters[i].setBorder(BorderFactory.createLineBorder(Color.black, 3));
+
+            labelGreenCloudCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreenCloudCounters[i].setForeground(Color.black);
+            labelGreenCloudCounters[i].setBorder(BorderFactory.createLineBorder(Color.black, 3));
+
+            labelPinkCloudCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelPinkCloudCounters[i].setForeground(Color.black);
+            labelPinkCloudCounters[i].setBorder(BorderFactory.createLineBorder(Color.black, 3));
+        }
+        labelRedCloudCounters[0].setBounds(415,388,25,25);
+        labelGreenCloudCounters[0].setBounds(443,388,25,25);
+        labelBlueCloudCounters[0].setBounds(471,388,25,25);
+        labelYellowCloudCounters[0].setBounds(499,388,25,25);
+        labelPinkCloudCounters[0].setBounds(526,388,25,25);
+        labelRedCloudCounters[1].setBounds(614,388,25,25);
+        labelGreenCloudCounters[1].setBounds(642,388,25,25);
+        labelBlueCloudCounters[1].setBounds(670,388,25,25);
+        labelYellowCloudCounters[1].setBounds(698,388,25,25);
+        labelPinkCloudCounters[1].setBounds(726,388,25,25);
+
+
+
         /*labelGreenCloudCounters = new JLabel[size];
         labelPinkCloudCounters = new JLabel[size];
         labelRedCloudCounters = new JLabel[size];
@@ -494,186 +522,54 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         }
         if(size==2) {
             labelRedCloudCounters[0].setBounds(415,388,25,25);
-            labelRedCloudCounters[0].setForeground(Color.BLACK);
-            labelRedCloudCounters[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelGreenCloudCounters[0].setBounds(443,388,25,25);
-            labelRedCloudCounters[0].setForeground(Color.BLACK);
-            labelRedCloudCounters[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelBlueCloudCounters[0].setBounds(471,388,25,25);
-            labelRedCloudCounters[0].setForeground(Color.BLACK);
-            labelRedCloudCounters[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelYellowCloudCounters[0].setBounds(499,388,25,25);
-            labelYellowCloudCounters[0].setForeground(Color.BLACK);
-            labelYellowCloudCounters[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelPinkCloudCounters[0].setBounds(526,388,25,25);
-            labelPinkCloudCounters[0].setForeground(Color.BLACK);
-            labelPinkCloudCounters[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelRedCloudCounters[1].setBounds(614,388,25,25);
-            labelRedCloudCounters[1].setForeground(Color.BLACK);
-            labelRedCloudCounters[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelGreenCloudCounters[1].setBounds(642,388,25,25);
-            labelGreenCloudCounters[1].setForeground(Color.BLACK);
-            labelGreenCloudCounters[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelBlueCloudCounters[1].setBounds(670,388,25,25);
-            labelBlueCloudCounters[1].setForeground(Color.BLACK);
-            labelBlueCloudCounters[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelYellowCloudCounters[1].setBounds(698,388,25,25);
-            labelYellowCloudCounters[1].setForeground(Color.BLACK);
-            labelYellowCloudCounters[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelPinkCloudCounters[1].setBounds(726,388,25,25);
-            labelPinkCloudCounters[1].setForeground(Color.BLACK);
-            labelPinkCloudCounters[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         }
         if(size==3) {
             labelRedCloudCounters[0].setBounds(415,310,25,25);
-            labelRedCloudCounters[0].setForeground(Color.BLACK);
-            labelRedCloudCounters[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelGreenCloudCounters[0].setBounds(443,310,25,25);
-            labelGreenCloudCounters[0].setForeground(Color.BLACK);
-            labelGreenCloudCounters[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelBlueCloudCounters[0].setBounds(471,310,25,25);
-            labelBlueCloudCounters[0].setForeground(Color.BLACK);
-            labelBlueCloudCounters[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelYellowCloudCounters[0].setBounds(499,310,25,25);
-            labelYellowCloudCounters[0].setForeground(Color.BLACK);
-            labelYellowCloudCounters[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelPinkCloudCounters[0].setBounds(527,310,25,25);
-            labelPinkCloudCounters[0].setForeground(Color.BLACK);
-            labelPinkCloudCounters[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelRedCloudCounters[1].setBounds(613,310,25,25);
-            labelRedCloudCounters[1].setForeground(Color.BLACK);
-            labelRedCloudCounters[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelGreenCloudCounters[1].setBounds(641,310,25,25);
-            labelGreenCloudCounters[1].setForeground(Color.BLACK);
-            labelGreenCloudCounters[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelBlueCloudCounters[1].setBounds(669,310,25,25);
-            labelBlueCloudCounters[1].setForeground(Color.BLACK);
-            labelBlueCloudCounters[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelYellowCloudCounters[1].setBounds(697,310,25,25);
-            labelYellowCloudCounters[1].setForeground(Color.BLACK);
-            labelYellowCloudCounters[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelPinkCloudCounters[1].setBounds(725,310,25,25);
-            labelPinkCloudCounters[1].setForeground(Color.BLACK);
-            labelPinkCloudCounters[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelRedCloudCounters[2].setBounds(513,474,25,25);
-            labelRedCloudCounters[2].setForeground(Color.BLACK);
-            labelRedCloudCounters[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelGreenCloudCounters[2].setBounds(541,474,25,25);
-            labelGreenCloudCounters[2].setForeground(Color.BLACK);
-            labelGreenCloudCounters[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelBlueCloudCounters[2].setBounds(569,474,25,25);
-            labelBlueCloudCounters[2].setForeground(Color.BLACK);
-            labelBlueCloudCounters[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelYellowCloudCounters[2].setBounds(597,474,25,25);
-            labelYellowCloudCounters[2].setForeground(Color.BLACK);
-            labelYellowCloudCounters[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelPinkCloudCounters[2].setBounds(625,474,25,25);
-            labelPinkCloudCounters[2].setForeground(Color.BLACK);
-            labelPinkCloudCounters[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         }
         if(size==4) {
             labelRedCloudCounters[0].setBounds(415,313,25,25);
-            labelRedCloudCounters[0].setForeground(Color.BLACK);
-            labelRedCloudCounters[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelGreenCloudCounters[0].setBounds(443,313,25,25);
-            labelGreenCloudCounters[0].setForeground(Color.BLACK);
-            labelGreenCloudCounters[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelBlueCloudCounters[0].setBounds(471,313,25,25);
-            labelBlueCloudCounters[0].setForeground(Color.BLACK);
-            labelBlueCloudCounters[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelYellowCloudCounters[0].setBounds(499,313,25,25);
-            labelYellowCloudCounters[0].setForeground(Color.BLACK);
-            labelYellowCloudCounters[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelPinkCloudCounters[0].setBounds(527,313,25,25);
-            labelPinkCloudCounters[0].setForeground(Color.BLACK);
-            labelPinkCloudCounters[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelRedCloudCounters[1].setBounds(613,313,25,25);
-            labelRedCloudCounters[1].setForeground(Color.BLACK);
-            labelRedCloudCounters[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelGreenCloudCounters[1].setBounds(641,313,25,25);
-            labelGreenCloudCounters[1].setForeground(Color.BLACK);
-            labelGreenCloudCounters[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelBlueCloudCounters[1].setBounds(669,313,25,25);
-            labelBlueCloudCounters[1].setForeground(Color.BLACK);
-            labelBlueCloudCounters[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelYellowCloudCounters[1].setBounds(697,313,25,25);
-            labelYellowCloudCounters[1].setForeground(Color.BLACK);
-            labelYellowCloudCounters[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelPinkCloudCounters[1].setBounds(725,313,25,25);
-            labelPinkCloudCounters[1].setForeground(Color.BLACK);
-            labelPinkCloudCounters[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelRedCloudCounters[2].setBounds(415,472,25,25);
-            labelRedCloudCounters[2].setForeground(Color.BLACK);
-            labelRedCloudCounters[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelGreenCloudCounters[2].setBounds(443,472,25,25);
-            labelGreenCloudCounters[2].setForeground(Color.BLACK);
-            labelGreenCloudCounters[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelBlueCloudCounters[2].setBounds(471,472,25,25);
-            labelBlueCloudCounters[2].setForeground(Color.BLACK);
-            labelBlueCloudCounters[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelYellowCloudCounters[2].setBounds(499,472,25,25);
-            labelYellowCloudCounters[2].setForeground(Color.BLACK);
-            labelYellowCloudCounters[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelPinkCloudCounters[2].setBounds(527,472,25,25);
-            labelPinkCloudCounters[2].setForeground(Color.BLACK);
-            labelPinkCloudCounters[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelRedCloudCounters[3].setBounds(630,472,25,25);
-            labelRedCloudCounters[3].setForeground(Color.BLACK);
-            labelRedCloudCounters[3].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelGreenCloudCounters[3].setBounds(658,472,25,25);
-            labelGreenCloudCounters[3].setForeground(Color.BLACK);
-            labelGreenCloudCounters[3].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelBlueCloudCounters[3].setBounds(686,472,25,25);
-            labelBlueCloudCounters[3].setForeground(Color.BLACK);
-            labelBlueCloudCounters[3].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelYellowCloudCounters[3].setBounds(714,472,25,25);
-            labelYellowCloudCounters[3].setForeground(Color.BLACK);
-            labelYellowCloudCounters[3].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
             labelPinkCloudCounters[3].setBounds(742,472,25,25);
-            labelPinkCloudCounters[3].setForeground(Color.BLACK);
-            labelPinkCloudCounters[3].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         }*/
 
         //1 island
@@ -724,7 +620,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         //tenth island
         labelMotherNatureList[9].setBounds(65, 580, 100, 100);
         buttonsSelectIsland[9].setBounds(50, 520, 150, 150);
-        transparentButton(buttonsSelectIsland[5]);
+        transparentButton(buttonsSelectIsland[9]);
         //eleventh island
         labelMotherNatureList[10].setBounds(65, 380, 100, 100);
         buttonsSelectIsland[10].setBounds(50, 320, 150, 150);
@@ -877,10 +773,10 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelEntranceStudents[8].setBounds(1466, 728, 100, 100);
 
         //button for the selection of the clouds based on the different field of the game
-        for(int i = 0; i < size; i++){
+        for(int i = 0; i < 4; i++){
             buttonsSelectCloud[i] = new JButton("");
         }
-        if(size==2) {
+
             buttonsSelectCloud[0].setBounds(430, 350, 100, 100);
             buttonsSelectCloud[0].addActionListener(this);
             transparentButton(buttonsSelectCloud[0]);//images 7 slot students in the beginning hall
@@ -889,36 +785,14 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsSelectCloud[1].addActionListener(this);
             transparentButton(buttonsSelectCloud[1]);
 
-        }else if(size==3) {
-            buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
-            buttonsSelectCloud[0].addActionListener(this);
-            transparentButton(buttonsSelectCloud[0]);
-
-            buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
-            buttonsSelectCloud[1].addActionListener(this);
-            transparentButton(buttonsSelectCloud[1]);
-
             buttonsSelectCloud[2].setBounds(530, 430, 100, 100);
-            buttonsSelectCloud[2].addActionListener(this);
-            transparentButton(buttonsSelectCloud[2]);
-
-        }else if(size==4) {
-            buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
-            buttonsSelectCloud[0].addActionListener(this);
-            transparentButton(buttonsSelectCloud[0]);
-
-            buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
-            buttonsSelectCloud[1].addActionListener(this);
-            transparentButton(buttonsSelectCloud[1]);
-
-            buttonsSelectCloud[2].setBounds(430, 430, 100, 100);
             buttonsSelectCloud[2].addActionListener(this);
             transparentButton(buttonsSelectCloud[2]);
 
             buttonsSelectCloud[3].setBounds(640, 430, 100, 100);
             buttonsSelectCloud[3].addActionListener(this);
             transparentButton(buttonsSelectCloud[3]);
-        }
+
 
         //a way to communicate with the players
         labelPlayerMessage = new JLabel("# TEXT BOX #", SwingConstants.CENTER);
@@ -982,9 +856,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelSetBackground=new JLabel();
         labelSetBackground.setBounds(0,0,1600,800);
 
-        hideCards();
         frameGame.setVisible(false);
-        //TODO TOGLI TRUE FINITO TESTING
 
     }
 
@@ -1368,9 +1240,56 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
             if(size==3){
                 setBackground = new ImageIcon("src/images/background3Player.jpg");
+
+                buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
+
+                buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
+
+                labelRedCloudCounters[0].setBounds(415,310,25,25);
+                labelGreenCloudCounters[0].setBounds(443,310,25,25);
+                labelBlueCloudCounters[0].setBounds(471,310,25,25);
+                labelYellowCloudCounters[0].setBounds(499,310,25,25);
+                labelPinkCloudCounters[0].setBounds(527,310,25,25);
+                labelRedCloudCounters[1].setBounds(613,310,25,25);
+                labelGreenCloudCounters[1].setBounds(641,310,25,25);
+                labelBlueCloudCounters[1].setBounds(669,310,25,25);
+                labelYellowCloudCounters[1].setBounds(697,310,25,25);
+                labelPinkCloudCounters[1].setBounds(725,310,25,25);
+                labelRedCloudCounters[2].setBounds(513,474,25,25);
+                labelGreenCloudCounters[2].setBounds(541,474,25,25);
+                labelBlueCloudCounters[2].setBounds(569,474,25,25);
+                labelYellowCloudCounters[2].setBounds(597,474,25,25);
+                labelPinkCloudCounters[2].setBounds(625,474,25,25);
             }
             if(size==4){
                 setBackground = new ImageIcon("src/images/background4Player.jpg");
+
+                buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
+
+                buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
+
+                buttonsSelectCloud[2].setBounds(430, 430, 100, 100);
+
+                labelRedCloudCounters[0].setBounds(415,313,25,25);
+                labelGreenCloudCounters[0].setBounds(443,313,25,25);
+                labelBlueCloudCounters[0].setBounds(471,313,25,25);
+                labelYellowCloudCounters[0].setBounds(499,313,25,25);
+                labelPinkCloudCounters[0].setBounds(527,313,25,25);
+                labelRedCloudCounters[1].setBounds(613,313,25,25);
+                labelGreenCloudCounters[1].setBounds(641,313,25,25);
+                labelBlueCloudCounters[1].setBounds(669,313,25,25);
+                labelYellowCloudCounters[1].setBounds(697,313,25,25);
+                labelPinkCloudCounters[1].setBounds(725,313,25,25);
+                labelRedCloudCounters[2].setBounds(415,472,25,25);
+                labelGreenCloudCounters[2].setBounds(443,472,25,25);
+                labelBlueCloudCounters[2].setBounds(471,472,25,25);
+                labelYellowCloudCounters[2].setBounds(499,472,25,25);
+                labelPinkCloudCounters[2].setBounds(527,472,25,25);
+                labelRedCloudCounters[3].setBounds(630,472,25,25);
+                labelGreenCloudCounters[3].setBounds(658,472,25,25);
+                labelBlueCloudCounters[3].setBounds(686,472,25,25);
+                labelYellowCloudCounters[3].setBounds(714,472,25,25);
+                labelPinkCloudCounters[3].setBounds(742,472,25,25);
             }
             labelSetBackground.setIcon(setBackground);
 
@@ -1381,11 +1300,41 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
             frameGame.add(labelBackgroundCards);
 
+            frameGame.add(buttonsSelectCloud[0]);
+            frameGame.add(buttonsSelectCloud[1]);
+            frameGame.add(buttonsSelectCloud[2]);
+            frameGame.add(buttonsSelectCloud[3]);
+
+            for(int i=0;i<10;i++){
+                frameGame.add(labelBlueHallList[i]);
+                frameGame.add(labelGreenHallList[i]);
+                frameGame.add(labelPinkHallList[i]);
+                frameGame.add(labelRedHallList[i]);
+                frameGame.add(labelYellowHallList[i]);
+            }
+
+            for(int i=0;i<12;i++){
+                frameGame.add(buttonsSelectIsland[i]);
+            }
+            for(int i=0;i<9;i++){
+                frameGame.add(buttonsSelectStudent[i]);
+                frameGame.add(labelEntranceStudents[i]);
+            }
+
+            for (int j = 0; j < 8; j++) {
+                frameGame.add(labelBlackTowerList[j]);
+                frameGame.add(labelWhiteTowerList[j]);
+                frameGame.add(labelGreyTowerList[j]);
+            }
+
             frameGame.add(labelPlayerMessage);
+
+            frameGame.add(buttonPutOnTable);
 
             for(int i = 0; i < 12; i++){
                 frameGame.add(labelWhiteTowerCounter[i]);
                 frameGame.add(labelBlackTowerCounter[i]);
+                frameGame.add(labelGreyTowerCounter[i]);
                 frameGame.add(labelRedCounter[i]);
                 frameGame.add(labelYellowCounters[i]);
                 frameGame.add(labelBlueCounters[i]);
@@ -1394,12 +1343,18 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 frameGame.add(labelMotherNatureList[i]);
             }
 
-
+            for(int i=0;i<4;i++){
+                frameGame.add(labelRedCloudCounters[i]);
+                frameGame.add(labelBlueCloudCounters[i]);
+                frameGame.add(labelYellowCloudCounters[i]);
+                frameGame.add(labelPinkCloudCounters[i]);
+                frameGame.add(labelGreenCloudCounters[i]);
+            }
             frameGame.add(buttonViewCards);
             frameGame.add(buttonHideCards);
 
             frameGame.add(labelSetBackground);
-
+            hideCards();
         }
     }
 
@@ -1448,7 +1403,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelGreyTowerCounter[i].setVisible(true);
         }
 
-        if(size==4){
+        /*if(size==4){
             setBackground = new ImageIcon("src/images/background4Player.jpg");
             frameGame.add(buttonsSelectCloud[2]);
             frameGame.add(buttonsSelectCloud[3]);
@@ -1463,8 +1418,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             frameGame.add(labelBlueCloudCounters[3]);
             frameGame.add(labelYellowCloudCounters[3]);
             frameGame.add(labelPinkCloudCounters[3]);
-            frameGame.add(labelGreenCloudCounters[3]);*/
-        }
+            frameGame.add(labelGreenCloudCounters[3]);
+        }*/
 
         for(int i = 0; i < size; i++){
             labelRedCloudCounters[i].setVisible(true);
@@ -1488,42 +1443,57 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelAssistantDeck[i].setVisible(true);
         }
 
-        frameGame.add(labelBackgroundCards);
+        //frameGame.add(labelBackgroundCards);
 
-        frameGame.add(labelPlayerMessage);
+        //frameGame.add(labelPlayerMessage);
 
         //label of the counters on the islands
         for(int i = 0; i < size; i++){
-            frameGame.add(labelRedCloudCounters[i]);
-            frameGame.add(labelBlueCloudCounters[i]);
-            frameGame.add(labelYellowCloudCounters[i]);
-            frameGame.add(labelPinkCloudCounters[i]);
-            frameGame.add(labelGreenCloudCounters[i]);
+            //frameGame.add(labelRedCloudCounters[i]);
+            //frameGame.add(labelBlueCloudCounters[i]);
+            //frameGame.add(labelYellowCloudCounters[i]);
+            //frameGame.add(labelPinkCloudCounters[i]);
+            //frameGame.add(labelGreenCloudCounters[i]);
+            labelRedCloudCounters[i].setVisible(true);
+            labelBlueCloudCounters[i].setVisible(true);
+            labelYellowCloudCounters[i].setVisible(true);
+            labelGreenCloudCounters[i].setVisible(true);
+            labelPinkCloudCounters[i].setVisible(true);
+
         }
 
         //frame of the towers
         for(int i = 0; i < 12; i++){
-            frameGame.add(labelWhiteTowerCounter[i]);
-            frameGame.add(labelBlackTowerCounter[i]);
+            //frameGame.add(labelWhiteTowerCounter[i]);
+            //frameGame.add(labelBlackTowerCounter[i]);
+            labelWhiteTowerCounter[i].setVisible(true);
+            labelBlackTowerCounter[i].setVisible(true);
         }
 
         //frame of the students on islands
         for(int i = 0; i < 12; i++){
-            frameGame.add(labelRedCounter[i]);
-            frameGame.add(labelYellowCounters[i]);
-            frameGame.add(labelBlueCounters[i]);
-            frameGame.add(labelGreenCounters[i]);
-            frameGame.add(labelPinkCounters[i]);
+            //frameGame.add(labelRedCounter[i]);
+            //frameGame.add(labelYellowCounters[i]);
+            //frameGame.add(labelBlueCounters[i]);
+            //frameGame.add(labelGreenCounters[i]);
+            //frameGame.add(labelPinkCounters[i]);
+            labelRedCounter[i].setVisible(true);
+            labelYellowCounters[i].setVisible(true);
+            labelBlueCounters[i].setVisible(true);
+            labelGreenCounters[i].setVisible(true);
+            labelPinkCounters[i].setVisible(true);
         }
 
         for(int i = 0; i < buttonsSelectIsland.length; i++){
-            frameGame.add(buttonsSelectIsland[i]);
+            //frameGame.add(buttonsSelectIsland[i]);
+            buttonsSelectStudent[i].setVisible(true);
         }
 
         for(int i = 0; i < buttonsSelectStudent.length; i++){
-            frameGame.add(buttonsSelectStudent[i]);
+            //frameGame.add(buttonsSelectStudent[i]);
+            buttonsSelectStudent[i].setVisible(true);
         }
-
+       /*
         frameGame.add(buttonPutOnTable);
 
         frameGame.add(buttonsSelectCloud[0]);
@@ -1542,7 +1512,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         frameGame.add(buttonsAssistant[7]);
         frameGame.add(buttonsAssistant[8]);
         frameGame.add(buttonsAssistant[9]);
-
+*/
         //one motherNature for each island
         for(int i = 0; i < 12; i++){
             if(game.getTable().getIslands().get(i).equals(game.getTable().getIslandWithMotherNature())){
@@ -1623,23 +1593,28 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 switch (color){
                     case BLUE -> {
                         labelEntranceStudents[j].setIcon(blueHallIcon);
-                        frameGame.add(labelEntranceStudents[j]);
+                        //frameGame.add(labelEntranceStudents[j]);
+                        labelEntranceStudents[j].setVisible(true);
                     }
                     case GREEN -> {
                         labelEntranceStudents[j].setIcon(greenHallIcon);
-                        frameGame.add(labelEntranceStudents[j]);
+                        //frameGame.add(labelEntranceStudents[j]);
+                        labelEntranceStudents[j].setVisible(true);
                     }
                     case PINK -> {
                         labelEntranceStudents[j].setIcon(pinkHallIcon);
-                        frameGame.add(labelEntranceStudents[j]);
+                        //frameGame.add(labelEntranceStudents[j]);
+                        labelEntranceStudents[j].setVisible(true);
                     }
                     case RED -> {
                         labelEntranceStudents[j].setIcon(redHallIcon);
-                        frameGame.add(labelEntranceStudents[j]);
+                        //frameGame.add(labelEntranceStudents[j]);
+                        labelEntranceStudents[j].setVisible(true);
                     }
                     case YELLOW -> {
                         labelEntranceStudents[j].setIcon(yellowHall);
-                        frameGame.add(labelEntranceStudents[j]);
+                        //frameGame.add(labelEntranceStudents[j]);
+                        labelEntranceStudents[j].setVisible(true);
                     }
                 }
             }
@@ -1657,7 +1632,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             }
 
         }
-        frameGame.add(labelSetBackground);
     }
 
     @Override
