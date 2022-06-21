@@ -148,10 +148,11 @@ public class CliClientInterface implements UserInterface {
         System.out.print("Insert the number of players: ");
         Scanner in = new Scanner(System.in);
         int size = -1;
-
         try {
             size = in.nextInt();
         } catch (Exception e) {
+            System.out.println("This is not a number!");
+            askUsername();
         }
 
         // send lobbySize message to Server through the ClientMessageHandler
@@ -211,7 +212,7 @@ public class CliClientInterface implements UserInterface {
                 System.out.print(color + colorString + " " + PawnColor.RESET);
             }
             if(game.getTable().getIslands().get(i).getStudents().size() == 0){
-                System.out.print(" NO STUDENTS ");
+                System.out.print("NO STUDENTS ");
             }
             if(game.getTable().getIslands().get(i).equals(game.getTable().getIslandWithMotherNature())){
                 System.out.print("[MN]");
@@ -280,13 +281,11 @@ public class CliClientInterface implements UserInterface {
     public void selectAssistantCard(AskAssistantCardsMessage message) {
         System.out.println("Please select one assistant card");
         List<AssistantCard> cards = message.getAssistantCards();
-        for (int i = 0; i < cards.size(); i++) {
-            int moveMN = cards.get(i).getMovementMotherNature();
-            int weight = cards.get(i).getTurnHeaviness();
-            System.out.println("Card " + cards.get(i).getTurnHeaviness() + " has movement MN " + moveMN + " and heaviness " + weight);
+        for (AssistantCard card : cards) {
+            int moveMN = card.getMovementMotherNature();
+            int weight = card.getTurnHeaviness();
+            System.out.println("Card " + card.getTurnHeaviness() + " has movement MN " + moveMN + " and heaviness " + weight);
         }
-        // ASK USER FOR AN INT
-        //TODO: validate user input
         cmdIn = new Scanner(System.in);
         int choice;
         try{

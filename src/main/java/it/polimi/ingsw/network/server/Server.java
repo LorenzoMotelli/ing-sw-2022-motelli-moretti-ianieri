@@ -17,18 +17,13 @@ import java.util.concurrent.Executors;
 /**
  * ERIANTYS SERVER
  */
-public class Server
-{
+public class Server {
     // Default PORT
     private  int PORT = 12345;
     // Socket to accept connection
     private ServerSocket serverSocket;
     // List of client connected
     private final List<Connection> waitingConnections = new ArrayList<>();
-    // Map of the connections accepted
-    //private final Map<String, Connection> clientsConnected = new HashMap<>();
-    // Map of the connections in the rooms
-    //private final Map<Integer, List<Connection>> roomsIdConnection = new HashMap<>();
 
     Controller controller;
     //
@@ -76,8 +71,7 @@ public class Server
         }
     }
 
-    private void insertPORT()
-    {
+    private void insertPORT() {
         System.out.println("Enter the server PORT: ");
         Scanner in= new Scanner(System.in);
         try{
@@ -133,8 +127,7 @@ public class Server
 
     }
 
-    private void createRoom(Connection c, RoomSizeMessage message)
-    {
+    private void createRoom(Connection c, RoomSizeMessage message) {
         System.out.println("Creating room number " + currentRoomId + " ...\n");
 
         Message messageToSend;
@@ -147,20 +140,14 @@ public class Server
             }
             else {
                 System.out.println("A new room has been created");
-
                 waitingRoom.setRoomSize(size);
-                //List<Connection> connections = new ArrayList<>();
-                //connections.add(c);
-                //roomsIdConnection.put(currentRoomId, connections);
-
                 messageToSend = new RoomSizeMessage(size, message.getPlayerName());
             }
             c.sendMessage(messageToSend);
         }
     }
 
-    public void loginClient(Connection c, Message msg)
-    {
+    public void loginClient(Connection c, Message msg) {
         System.out.println("Login client...");
         String username = msg.getPlayerName();
 
@@ -201,25 +188,13 @@ public class Server
         c.sendMessage(message);
     }
 
-    private void clientReady(Connection c, Message msg)
-    {
+    private void clientReady(Connection c, Message msg) {
         String username = msg.getPlayerName();
         waitingRoom.addClient(username);
-
-        //registration of the connection in the room map
-        /*List<Connection> connections = roomsIdConnection.get(waitingRoom.getRoomId());
-        if (!connections.contains(c))
-            connections.add(c);
-        roomsIdConnection.put(currentRoomId, connections);
-        */
 
         // room size reached, the game can start
         if (waitingRoom.isFull()) {
             controller = new Controller(this, waitingRoom.getRoomSize());
-            /*for (Connection connection : waitingRoomConnections) {
-                controller.addClient(connection, connection.getName());
-            }
-            controller.startGame();*/
             for (int i = 0; i < waitingRoom.getRoomSize(); i++) {
                 Connection conn = waitingConnections.get(0);
                 controller.addClient(conn, conn.getName());
@@ -229,7 +204,6 @@ public class Server
             controller.startGame();
 
             // reset the room and the temporary connections
-            //waitingRoomConnections.clear();
             waitingRoom = null;
             currentRoomId++;
         }
@@ -237,7 +211,6 @@ public class Server
         else {
             c.sendMessage(new Message(MessageAction.WAITING_PLAYERS, c.getName()));
         }
-
     }
 
     public void handleMessage(Message message, Connection c) {
@@ -246,9 +219,7 @@ public class Server
             case ROOM_SIZE -> createRoom(c, (RoomSizeMessage) message);
             case CLIENT_READY -> clientReady(c, message);
 
-            default -> {
-                System.out.println("MessageAction not recognized");
-            }
+            default -> System.out.println("MessageAction not recognized");
         }
     }
 }
