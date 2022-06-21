@@ -93,6 +93,17 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     private final JLabel[] labelAssistantDeck = new JLabel[10];
 
+    private final JLabel[] labelProfessorList=new JLabel[5];
+    private final ImageIcon blueProfessor = new ImageIcon("src/images/blueProfessor.png");
+    private final ImageIcon greenProfessor = new ImageIcon("src/images/greenProfessor.png");
+    private final ImageIcon pinkProfessor = new ImageIcon("src/images/pinkProfessor.png");
+    private final ImageIcon redProfessor = new ImageIcon("src/images/redProfessor.png");
+    private final ImageIcon yellowProfessor = new ImageIcon("src/images/yellowProfessor.png");
+
+    private final JLabel[] labelEmptyIsland=new JLabel[12];
+    private final ImageIcon emptyIsland=new ImageIcon("src/images/emptyIsland.png");
+
+
     /*private final ImageIcon assistant1 = new ImageIcon("src/images/assistant1.jpg");
     private final ImageIcon assistant2 = new ImageIcon("src/images/assistant2.jpg");
     private final ImageIcon assistant3 = new ImageIcon("src/images/assistant3.jpg");
@@ -345,6 +356,42 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
         buttonsAssistant[9].setBounds(825, 415, 160, 235);
         transparentButton(buttonsAssistant[9]);
+
+        //professors
+        for(int i=0;i<5;i++)
+        {
+            labelProfessorList[i]=new JLabel();
+        }
+        labelProfessorList[0].setIcon(blueProfessor);
+        labelProfessorList[1].setIcon(greenProfessor);
+        labelProfessorList[2].setIcon(pinkProfessor);
+        labelProfessorList[3].setIcon(redProfessor);
+        labelProfessorList[4].setIcon(yellowProfessor);
+
+        labelProfessorList[0].setBounds(1415,135,100,100);
+        labelProfessorList[1].setBounds(1170,135,100,100);
+        labelProfessorList[2].setBounds(1355,135,100,100);
+        labelProfessorList[3].setBounds(1231,135,100,100);
+        labelProfessorList[4].setBounds(1293,135,100,100);
+
+        //emptyIsland
+        for(int i=0;i<12;i++)
+        {
+            labelEmptyIsland[i]=new JLabel();
+            labelEmptyIsland[i].setIcon(emptyIsland);
+        }
+        labelEmptyIsland[0].setBounds(242,-5,235,235);
+        labelEmptyIsland[1].setBounds(468,-15,235,235);
+        labelEmptyIsland[2].setBounds(705,-15,235,235);
+        labelEmptyIsland[3].setBounds(910,55,235,235);
+        labelEmptyIsland[11].setBounds(11,60,235,235);
+        labelEmptyIsland[10].setBounds(11,280,235,235);
+        labelEmptyIsland[4].setBounds(910,280,235,235);
+        labelEmptyIsland[5].setBounds(910,480,235,235);
+        labelEmptyIsland[9].setBounds(11,480,235,235);
+        labelEmptyIsland[8].setBounds(212,580,235,235);
+        labelEmptyIsland[7].setBounds(468,580,235,235);
+        labelEmptyIsland[6].setBounds(707,580,235,235);
 
         //counters
         for(int i = 0; i < 12; i++){
@@ -1328,6 +1375,11 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
             frameGame.add(labelBackgroundCards);
 
+            for(int i=0;i<12;i++){
+                frameGame.add(labelEmptyIsland[i]);
+                labelEmptyIsland[i].setVisible(false);
+            }
+
             frameGame.add(buttonsSelectCloud[0]);
             frameGame.add(buttonsSelectCloud[1]);
             frameGame.add(buttonsSelectCloud[2]);
@@ -1339,6 +1391,11 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 frameGame.add(labelPinkHallList[i]);
                 frameGame.add(labelRedHallList[i]);
                 frameGame.add(labelYellowHallList[i]);
+            }
+
+            for(int i=0;i<5;i++)
+            {
+                frameGame.add(labelProfessorList[i]);
             }
 
             for(int i=0;i<12;i++){
