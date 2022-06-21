@@ -93,7 +93,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     private final JLabel[] labelAssistantDeck = new JLabel[10];
 
-    private final ImageIcon assistant1 = new ImageIcon("src/images/assistant1.jpg");
+    /*private final ImageIcon assistant1 = new ImageIcon("src/images/assistant1.jpg");
     private final ImageIcon assistant2 = new ImageIcon("src/images/assistant2.jpg");
     private final ImageIcon assistant3 = new ImageIcon("src/images/assistant3.jpg");
     private final ImageIcon assistant4 = new ImageIcon("src/images/assistant4.jpg");
@@ -102,7 +102,18 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private final ImageIcon assistant7 = new ImageIcon("src/images/assistant7.jpg");
     private final ImageIcon assistant8 = new ImageIcon("src/images/assistant8.jpg");
     private final ImageIcon assistant9 = new ImageIcon("src/images/assistant9.jpg");
-    private final ImageIcon assistant10 = new ImageIcon("src/images/assistant10.jpg");
+    private final ImageIcon assistant10 = new ImageIcon("src/images/assistant10.jpg");*/
+    private final ImageIcon[] assistantsImage = {new ImageIcon("src/images/assistant1.jpg"),
+            new ImageIcon("src/images/assistant2.jpg"),
+            new ImageIcon("src/images/assistant3.jpg"),
+            new ImageIcon("src/images/assistant4.jpg"),
+            new ImageIcon("src/images/assistant5.jpg"),
+            new ImageIcon("src/images/assistant6.jpg"),
+            new ImageIcon("src/images/assistant7.jpg"),
+            new ImageIcon("src/images/assistant8.jpg"),
+            new ImageIcon("src/images/assistant9.jpg"),
+            new ImageIcon("src/images/assistant10.jpg")
+    };
 
     private final JLabel[] labelWhiteTowerCounter = new JLabel[12];
 
@@ -268,36 +279,38 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
         for(int i = 0; i < 10; i++){
             labelAssistantDeck[i] = new JLabel();
+            setLabelAssistantCardBounds(labelAssistantDeck[i], i);
+            labelAssistantDeck[i].setIcon(assistantsImage[i]);
         }
-        labelAssistantDeck[0].setBounds(165, 160, 160, 235);
-        labelAssistantDeck[0].setIcon(assistant1);
+        /*labelAssistantDeck[0].setBounds(165, 160, 160, 235);
+        //labelAssistantDeck[0].setIcon(assistant1);
 
         labelAssistantDeck[1].setBounds(330, 160, 160, 235);
-        labelAssistantDeck[1].setIcon(assistant2);
+        //labelAssistantDeck[1].setIcon(assistant2);
 
         labelAssistantDeck[2].setBounds(495, 160, 160, 235);
-        labelAssistantDeck[2].setIcon(assistant3);
+        //labelAssistantDeck[2].setIcon(assistant3);
 
         labelAssistantDeck[3].setBounds(660, 160, 160, 235);
-        labelAssistantDeck[3].setIcon(assistant4);
+        //labelAssistantDeck[3].setIcon(assistant4);
 
         labelAssistantDeck[4].setBounds(825, 160, 160, 235);
-        labelAssistantDeck[4].setIcon(assistant5);
+        //labelAssistantDeck[4].setIcon(assistant5);
 
         labelAssistantDeck[9].setBounds(825, 415, 160, 235);
-        labelAssistantDeck[9].setIcon(assistant10);
+        //labelAssistantDeck[9].setIcon(assistant10);
 
         labelAssistantDeck[8].setBounds(660, 415, 160, 235);
-        labelAssistantDeck[8].setIcon(assistant9);
+        //labelAssistantDeck[8].setIcon(assistant9);
 
         labelAssistantDeck[7].setBounds(495, 415, 160, 235);
-        labelAssistantDeck[7].setIcon(assistant8);
+        //labelAssistantDeck[7].setIcon(assistant8);
 
         labelAssistantDeck[6].setBounds(330, 415, 160, 235);
-        labelAssistantDeck[6].setIcon(assistant7);
+        //labelAssistantDeck[6].setIcon(assistant7);
 
         labelAssistantDeck[5].setBounds(165, 415, 160, 235);
-        labelAssistantDeck[5].setIcon(assistant6);
+        //labelAssistantDeck[5].setIcon(assistant6);*/
 
         for(int i = 0; i < buttonsAssistant.length; i++){
             buttonsAssistant[i] = new JButton("");
@@ -860,6 +873,21 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     }
 
+    public void setLabelAssistantCardBounds(JLabel labelAssistantCard, int cardNumber){
+        switch (cardNumber){
+            case 0 -> labelAssistantCard.setBounds(165, 160, 160, 235);
+            case 1 -> labelAssistantCard.setBounds(330, 160, 160, 235);
+            case 2 -> labelAssistantCard.setBounds(495, 160, 160, 235);
+            case 3 -> labelAssistantCard.setBounds(660, 160, 160, 235);
+            case 4 -> labelAssistantCard.setBounds(825, 160, 160, 235);
+            case 5 -> labelAssistantCard.setBounds(165, 415, 160, 235);
+            case 6 -> labelAssistantCard.setBounds(330, 415, 160, 235);
+            case 7 -> labelAssistantCard.setBounds(495, 415, 160, 235);
+            case 8 -> labelAssistantCard.setBounds(660, 415, 160, 235);
+            case 9 -> labelAssistantCard.setBounds(825, 415, 160, 235);
+        }
+    }
+
     /*public void main(String[] args) {
         new GuiClientInterface();
     }*/
@@ -1322,8 +1350,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             }
 
             for (int j = 0; j < 8; j++) {
-                frameGame.add(labelBlackTowerList[j]);
                 frameGame.add(labelWhiteTowerList[j]);
+                frameGame.add(labelBlackTowerList[j]);
                 frameGame.add(labelGreyTowerList[j]);
             }
 
@@ -1360,66 +1388,10 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     @Override
     public void boardUpdate(UpdateBoardMessage updateBoardMessage) {
-        //labelSetBackground = new JLabel();
-
         GeneralGame game = updateBoardMessage.getGame();
         size = game.getPlayers().length;
 
-        /*labelSetBackground=new JLabel();
-        GeneralGame game = updateBoardMessage.getGame();
-        size = game.getPlayers().length;
-        if(size==2){
-            setBackground = new ImageIcon("src/images/background2Player.jpg");
-        }else if(size==3){
-            setBackground = new ImageIcon("src/images/background3Player.jpg");
-            //frameGame.add(labelRedCloudCounters[2]);
-            //frameGame.add(labelBlueCloudCounters[2]);
-            //frameGame.add(labelYellowCloudCounters[2]);
-            //frameGame.add(labelPinkCloudCounters[2]);
-            //frameGame.add(labelGreenCloudCounters[2]);
-            labelRedCloudCounters[2].setVisible(true);
-            labelBlueCloudCounters[2].setVisible(true);
-            labelYellowCloudCounters[2].setVisible(true);
-            labelPinkCloudCounters[2].setVisible(true);
-            labelGreenCloudCounters[2].setVisible(true);
 
-            /*frameGame.add(buttonSelectCloud3);
-            frameGame.add(selectStudentButtons[7]);
-            frameGame.add(selectStudentButtons[8]);*/
-
-            /*frameGame.add(labelGreyTowerCounter[0]);
-            frameGame.add(labelGreyTowerCounter[1]);
-            frameGame.add(labelGreyTowerCounter[2]);
-            frameGame.add(labelGreyTowerCounter[3]);
-            frameGame.add(labelGreyTowerCounter[4]);
-            frameGame.add(labelGreyTowerCounter[5]);
-            frameGame.add(labelGreyTowerCounter[6]);
-            frameGame.add(labelGreyTowerCounter[7]);
-            frameGame.add(labelGreyTowerCounter[8]);
-            frameGame.add(labelGreyTowerCounter[9]);
-            frameGame.add(labelGreyTowerCounter[10]);
-            frameGame.add(labelGreyTowerCounter[11]);*/
-        for(int i = 0; i < labelGreyTowerCounter.length; i++){
-            labelGreyTowerCounter[i].setVisible(true);
-        }
-
-        /*if(size==4){
-            setBackground = new ImageIcon("src/images/background4Player.jpg");
-            frameGame.add(buttonsSelectCloud[2]);
-            frameGame.add(buttonsSelectCloud[3]);
-
-            /*frameGame.add(labelRedCloudCounters[2]);
-            frameGame.add(labelBlueCloudCounters[2]);
-            frameGame.add(labelYellowCloudCounters[2]);
-            frameGame.add(labelPinkCloudCounters[2]);
-            frameGame.add(labelGreenCloudCounters[2]);
-
-            frameGame.add(labelRedCloudCounters[3]);
-            frameGame.add(labelBlueCloudCounters[3]);
-            frameGame.add(labelYellowCloudCounters[3]);
-            frameGame.add(labelPinkCloudCounters[3]);
-            frameGame.add(labelGreenCloudCounters[3]);
-        }*/
 
         for(int i = 0; i < size; i++){
             labelRedCloudCounters[i].setVisible(true);
@@ -1428,32 +1400,10 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelPinkCloudCounters[i].setVisible(true);
             labelGreenCloudCounters[i].setVisible(true);
         }
-
-        /*frameGame.add(labelAssistantDeck[0]);
-        frameGame.add(labelAssistantDeck[1]);
-        frameGame.add(labelAssistantDeck[2]);
-        frameGame.add(labelAssistantDeck[3]);
-        frameGame.add(labelAssistantDeck[4]);
-        frameGame.add(labelAssistantDeck[5]);
-        frameGame.add(labelAssistantDeck[6]);
-        frameGame.add(labelAssistantDeck[7]);
-        frameGame.add(labelAssistantDeck[8]);
-        frameGame.add(labelAssistantDeck[9]);*/
         for(int i = 0; i < labelAssistantDeck.length; i++){
             labelAssistantDeck[i].setVisible(true);
         }
-
-        //frameGame.add(labelBackgroundCards);
-
-        //frameGame.add(labelPlayerMessage);
-
-        //label of the counters on the islands
         for(int i = 0; i < size; i++){
-            //frameGame.add(labelRedCloudCounters[i]);
-            //frameGame.add(labelBlueCloudCounters[i]);
-            //frameGame.add(labelYellowCloudCounters[i]);
-            //frameGame.add(labelPinkCloudCounters[i]);
-            //frameGame.add(labelGreenCloudCounters[i]);
             labelRedCloudCounters[i].setVisible(true);
             labelBlueCloudCounters[i].setVisible(true);
             labelYellowCloudCounters[i].setVisible(true);
@@ -1462,127 +1412,99 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
         }
 
-        //frame of the towers
-        for(int i = 0; i < 12; i++){
-            //frameGame.add(labelWhiteTowerCounter[i]);
-            //frameGame.add(labelBlackTowerCounter[i]);
-            labelWhiteTowerCounter[i].setVisible(true);
-            labelBlackTowerCounter[i].setVisible(true);
-        }
-
-        //frame of the students on islands
-        for(int i = 0; i < 12; i++){
-            //frameGame.add(labelRedCounter[i]);
-            //frameGame.add(labelYellowCounters[i]);
-            //frameGame.add(labelBlueCounters[i]);
-            //frameGame.add(labelGreenCounters[i]);
-            //frameGame.add(labelPinkCounters[i]);
+        for(int i = 0; i < game.getTable().getIslands().size(); i++){
+            //counters of the students on the islands
             labelRedCounter[i].setVisible(true);
             labelYellowCounters[i].setVisible(true);
             labelBlueCounters[i].setVisible(true);
             labelGreenCounters[i].setVisible(true);
             labelPinkCounters[i].setVisible(true);
+
+            labelWhiteTowerCounter[i].setVisible(true);
+            labelBlackTowerCounter[i].setVisible(true);
+            if(3 != size) {
+                for (int j = 0; j < labelGreyTowerCounter.length; j++) {
+                    labelGreyTowerCounter[j].setVisible(false);
+                }
+            }
+
+            buttonsSelectIsland[i].setVisible(true);
+
+            if(!game.getTable().getIslands().get(i).equals(game.getTable().getIslandWithMotherNature())){
+                //frameGame.add(labelMotherNatureList[i]);
+                labelMotherNatureList[i].setVisible(false);
+                // break;
+            }
         }
+
+        //frame of the towers
+        /*for(int i = 0; i < 12; i++){
+
+        }
+
+        //frame of the students on islands
+        for(int i = 0; i < 12; i++){
+
+        }
+
+
 
         for(int i = 0; i < buttonsSelectIsland.length; i++){
-            //frameGame.add(buttonsSelectIsland[i]);
-            buttonsSelectStudent[i].setVisible(true);
+
         }
-
-        for(int i = 0; i < buttonsSelectStudent.length; i++){
-            //frameGame.add(buttonsSelectStudent[i]);
-            buttonsSelectStudent[i].setVisible(true);
-        }
-       /*
-        frameGame.add(buttonPutOnTable);
-
-        frameGame.add(buttonsSelectCloud[0]);
-        frameGame.add(buttonsSelectCloud[1]);
-
-        frameGame.add(buttonViewCards);
-        frameGame.add(buttonHideCards);
-
-        frameGame.add(buttonsAssistant[0]);
-        frameGame.add(buttonsAssistant[1]);
-        frameGame.add(buttonsAssistant[2]);
-        frameGame.add(buttonsAssistant[3]);
-        frameGame.add(buttonsAssistant[4]);
-        frameGame.add(buttonsAssistant[5]);
-        frameGame.add(buttonsAssistant[6]);
-        frameGame.add(buttonsAssistant[7]);
-        frameGame.add(buttonsAssistant[8]);
-        frameGame.add(buttonsAssistant[9]);
-*/
         //one motherNature for each island
         for(int i = 0; i < 12; i++){
-            if(game.getTable().getIslands().get(i).equals(game.getTable().getIslandWithMotherNature())){
-                frameGame.add(labelMotherNatureList[i]);
-                break;
-            }
+
+        }*/
+
+        for(int i = 0; i < buttonsSelectStudent.length; i++){
+            buttonsSelectStudent[i].setVisible(true);
         }
         //print the situation of each player
         for(Player player : game.getPlayers()){
+            System.out.println(player.getPlayerName());
             for(int i = 0; i < 10; i++){
-                if(player.getSchool().getSchoolHall()[0].getTableHall()[i] != null){
-                    labelBlueHallList[i].setVisible(true);
+                if(player.getSchool().getSchoolHall()[0].getTableHall()[i] == null){
+                    labelBlueHallList[i].setVisible(false);
                 }
-                if(player.getSchool().getSchoolHall()[1].getTableHall()[i] != null){
-                    labelGreenHallList[i].setVisible(true);
+                if(player.getSchool().getSchoolHall()[1].getTableHall()[i] == null){
+                    labelGreenHallList[i].setVisible(false);
                 }
-                if(player.getSchool().getSchoolHall()[2].getTableHall()[i] != null){
-                    labelPinkHallList[i].setVisible(true);
+                if(player.getSchool().getSchoolHall()[2].getTableHall()[i] == null){
+                    labelPinkHallList[i].setVisible(false);
                 }
-                if(player.getSchool().getSchoolHall()[3].getTableHall()[i] != null){
-                    labelRedHallList[i].setVisible(true);
+                if(player.getSchool().getSchoolHall()[3].getTableHall()[i] == null){
+                    labelRedHallList[i].setVisible(false);
                 }
-                if(player.getSchool().getSchoolHall()[4].getTableHall()[i] != null){
-                    labelYellowHallList[i].setVisible(true);
+                if(player.getSchool().getSchoolHall()[4].getTableHall()[i] == null){
+                    labelYellowHallList[i].setVisible(false);
                 }
             }
-            /*while(player.getSchool().getSchoolHall()[0].getTableHall()[i] != null){
-                //frameGame.add(labelBlueHallList[i]);
-                i++;
-            }
-            i = 0;
-            while(player.getSchool().getSchoolHall()[1].getTableHall()[i] != null){
-                frameGame.add(labelGreenHallList[i]);
-                i++;
-            }
-            i = 0;
-            while(player.getSchool().getSchoolHall()[2].getTableHall()[i] != null){
-                frameGame.add(labelPinkHallList[i]);
-                i++;
-            }
-            i = 0;
-            while(player.getSchool().getSchoolHall()[3].getTableHall()[i] != null){
-                frameGame.add(labelRedHallList[i]);
-                i++;
-            }
-            i = 0;
-            while(player.getSchool().getSchoolHall()[4].getTableHall()[i] != null){
-                frameGame.add(labelYellowHallList[i]);
-                i++;
-            }*/
             switch (player.getSchool().getPlayersTowers().get(0).getColor()) {
                 //TODO check real print for towers
                 case WHITE -> {
                     for (int i = 0; i < player.getSchool().getPlayersTowers().size(); i++) {
-
                         if(player.getSchool().getPlayersTowers().get(i) != null) {
                             labelWhiteTowerList[i].setVisible(true);
+                            labelBlackTowerCounter[i].setVisible(false);
+                            labelGreyTowerList[i].setVisible(false);
                         }
                     }
                 }
                 case BLACK -> {
                     for (int i = 0; i < player.getSchool().getPlayersTowers().size(); i++) {
                         if(player.getSchool().getPlayersTowers().get(i) != null) {
+                           labelWhiteTowerList[i].setVisible(false);
                             labelBlackTowerList[i].setVisible(true);
+                            labelGreyTowerList[i].setVisible(false);
                         }
                     }
                 }
                 case GREY -> {
                     for (int i = 0; i < player.getSchool().getPlayersTowers().size(); i++) {
                         if(player.getSchool().getPlayersTowers().get(i) != null) {
+                            labelWhiteTowerList[i].setVisible(false);
+                            labelBlackTowerCounter[i].setVisible(false);
                             labelGreyTowerList[i].setVisible(true);
                         }
                     }
@@ -1593,27 +1515,22 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 switch (color){
                     case BLUE -> {
                         labelEntranceStudents[j].setIcon(blueHallIcon);
-                        //frameGame.add(labelEntranceStudents[j]);
                         labelEntranceStudents[j].setVisible(true);
                     }
                     case GREEN -> {
                         labelEntranceStudents[j].setIcon(greenHallIcon);
-                        //frameGame.add(labelEntranceStudents[j]);
                         labelEntranceStudents[j].setVisible(true);
                     }
                     case PINK -> {
                         labelEntranceStudents[j].setIcon(pinkHallIcon);
-                        //frameGame.add(labelEntranceStudents[j]);
                         labelEntranceStudents[j].setVisible(true);
                     }
                     case RED -> {
                         labelEntranceStudents[j].setIcon(redHallIcon);
-                        //frameGame.add(labelEntranceStudents[j]);
                         labelEntranceStudents[j].setVisible(true);
                     }
                     case YELLOW -> {
                         labelEntranceStudents[j].setIcon(yellowHall);
-                        //frameGame.add(labelEntranceStudents[j]);
                         labelEntranceStudents[j].setVisible(true);
                     }
                 }
