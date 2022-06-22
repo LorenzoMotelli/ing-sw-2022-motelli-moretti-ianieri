@@ -1020,8 +1020,14 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==buttonServer) {
-            String ip = serverIPField.getText();
-            int port = Integer.parseInt(serverPortField.getText());
+            String ip="localhost";
+            int port=12345;
+            ip = serverIPField.getText();
+
+            if(ip.length()!=0){
+                port = Integer.parseInt(serverPortField.getText());
+            }
+
             this.serverIp = ip;
             this.serverPort = port;
 
