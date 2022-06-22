@@ -132,7 +132,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     private final JLabel[] labelGreyTowerCounter = new JLabel[12];
 
-    private final JLabel[] labelRedCounter = new JLabel[12];
+    private final JLabel[] labelRedCounters = new JLabel[12];
 
     private final JLabel[] labelYellowCounters = new JLabel[12];
 
@@ -275,9 +275,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         ImageIcon logoGame = new ImageIcon("src/images/logWallpaperRaw.jpg");
         frameGame.setIconImage(logoGame.getImage());
         frameGame.setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        frameGame.setSize(dim.width, dim.height);
-        //frameGame.setSize(1600,900);
+        frameGame.setSize(1600,900);
         frameGame.setLayout(null);
         frameGame.setTitle("ERYANTIS");
         frameGame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -449,9 +447,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
 
         for(int i = 0; i < 12; i++){
-            labelRedCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
-            labelRedCounter[i].setForeground(Color.WHITE);
-            labelRedCounter[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+            labelRedCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelRedCounters[i].setForeground(Color.WHITE);
+            labelRedCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
 
             labelYellowCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
             labelYellowCounters[i].setForeground(Color.WHITE);
@@ -470,18 +468,18 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelPinkCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
         }
         //set red counters bounds
-        labelRedCounter[0].setBounds(391,23,25,25);
-        labelRedCounter[1].setBounds(613,23,25,25);
-        labelRedCounter[2].setBounds(850,23,25,25);
-        labelRedCounter[3].setBounds(1056,92,25,25);
-        labelRedCounter[4].setBounds(1056,310,25,25);
-        labelRedCounter[5].setBounds(1056,511,25,25);
-        labelRedCounter[6].setBounds(850,604,25,25);
-        labelRedCounter[7].setBounds(613,604,25,25);
-        labelRedCounter[8].setBounds(358,608,25,25);
-        labelRedCounter[9].setBounds(153,510,25,25);
-        labelRedCounter[10].setBounds(153,310,25,25);
-        labelRedCounter[11].setBounds(153,90,25,25);
+        labelRedCounters[0].setBounds(391,23,25,25);
+        labelRedCounters[1].setBounds(613,23,25,25);
+        labelRedCounters[2].setBounds(850,23,25,25);
+        labelRedCounters[3].setBounds(1056,92,25,25);
+        labelRedCounters[4].setBounds(1056,310,25,25);
+        labelRedCounters[5].setBounds(1056,511,25,25);
+        labelRedCounters[6].setBounds(850,604,25,25);
+        labelRedCounters[7].setBounds(613,604,25,25);
+        labelRedCounters[8].setBounds(358,608,25,25);
+        labelRedCounters[9].setBounds(153,510,25,25);
+        labelRedCounters[10].setBounds(153,310,25,25);
+        labelRedCounters[11].setBounds(153,90,25,25);
         //set green counters bounds
         labelGreenCounters[0].setBounds(391,59,25,25);
         labelGreenCounters[1].setBounds(613,59,25,25);
@@ -1426,7 +1424,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 frameGame.add(labelWhiteTowerCounter[i]);
                 frameGame.add(labelBlackTowerCounter[i]);
                 frameGame.add(labelGreyTowerCounter[i]);
-                frameGame.add(labelRedCounter[i]);
+                frameGame.add(labelRedCounters[i]);
                 frameGame.add(labelYellowCounters[i]);
                 frameGame.add(labelBlueCounters[i]);
                 frameGame.add(labelGreenCounters[i]);
@@ -1454,8 +1452,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         GeneralGame game = updateBoardMessage.getGame();
         size = game.getPlayers().length;
 
-
-
         for(int i = 0; i < size; i++){
             labelRedCloudCounters[i].setVisible(true);
             labelBlueCloudCounters[i].setVisible(true);
@@ -1466,25 +1462,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         for(int i = 0; i < labelAssistantDeck.length; i++){
             labelAssistantDeck[i].setVisible(true);
         }
-        for(int i = 0; i < size; i++){
-            labelRedCloudCounters[i].setVisible(true);
-            labelBlueCloudCounters[i].setVisible(true);
-            labelYellowCloudCounters[i].setVisible(true);
-            labelGreenCloudCounters[i].setVisible(true);
-            labelPinkCloudCounters[i].setVisible(true);
-
-        }
 
         for(int i = 0; i < game.getTable().getIslands().size(); i++){
-            //counters of the students on the islands
-            labelRedCounter[i].setVisible(true);
-            labelYellowCounters[i].setVisible(true);
-            labelBlueCounters[i].setVisible(true);
-            labelGreenCounters[i].setVisible(true);
-            labelPinkCounters[i].setVisible(true);
-
-            labelWhiteTowerCounter[i].setVisible(true);
-            labelBlackTowerCounter[i].setVisible(true);
             if(3 != size) {
                 for (int j = 0; j < labelGreyTowerCounter.length; j++) {
                     labelGreyTowerCounter[j].setVisible(false);
@@ -1494,114 +1473,136 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsSelectIsland[i].setVisible(true);
 
             if(!game.getTable().getIslands().get(i).equals(game.getTable().getIslandWithMotherNature())){
-                //frameGame.add(labelMotherNatureList[i]);
                 labelMotherNatureList[i].setVisible(false);
-                // break;
             }
         }
-
-        //frame of the towers
-        /*for(int i = 0; i < 12; i++){
-
-        }
-
-        //frame of the students on islands
-        for(int i = 0; i < 12; i++){
-
-        }
-
-
-
-        for(int i = 0; i < buttonsSelectIsland.length; i++){
-
-        }
-        //one motherNature for each island
-        for(int i = 0; i < 12; i++){
-
-        }*/
 
         for(int i = 0; i < buttonsSelectStudent.length; i++){
             buttonsSelectStudent[i].setVisible(true);
         }
-        //print the situation of each player
+
+        //print the situation of the table of each player
         for(Player player : game.getPlayers()){
             System.out.println(player.getPlayerName());
-            for(int i = 0; i < 10; i++){
-                if(player.getSchool().getSchoolHall()[0].getTableHall()[i] == null){
-                    labelBlueHallList[i].setVisible(false);
+            if(username.equals(player.getPlayerName()))
+            {
+                labelPlayerMessage.setText(player.getPlayerName());
+
+
+                if(player.getSchool().getBlueProfessor()==null)
+                {
+                    labelProfessorList[0].setVisible(false);
                 }
-                if(player.getSchool().getSchoolHall()[1].getTableHall()[i] == null){
-                    labelGreenHallList[i].setVisible(false);
+                if(player.getSchool().getGreenProfessor()==null)
+                {
+                    labelProfessorList[1].setVisible(false);
                 }
-                if(player.getSchool().getSchoolHall()[2].getTableHall()[i] == null){
-                    labelPinkHallList[i].setVisible(false);
+                if(player.getSchool().getPinkProfessor()==null)
+                {
+                    labelProfessorList[2].setVisible(false);
                 }
-                if(player.getSchool().getSchoolHall()[3].getTableHall()[i] == null){
-                    labelRedHallList[i].setVisible(false);
+                if(player.getSchool().getRedProfessor()==null)
+                {
+                    labelProfessorList[3].setVisible(false);
                 }
-                if(player.getSchool().getSchoolHall()[4].getTableHall()[i] == null){
-                    labelYellowHallList[i].setVisible(false);
+                if(player.getSchool().getYellowProfessor()==null)
+                {
+                    labelProfessorList[4].setVisible(false);
                 }
-            }
-            switch (player.getSchool().getPlayersTowers().get(0).getColor()) {
-                //TODO check real print for towers
-                case WHITE -> {
-                    for (int i = 0; i < player.getSchool().getPlayersTowers().size(); i++) {
-                        if(player.getSchool().getPlayersTowers().get(i) != null) {
-                            labelWhiteTowerList[i].setVisible(true);
-                            labelBlackTowerCounter[i].setVisible(false);
-                            labelGreyTowerList[i].setVisible(false);
+
+                for(int i = 0; i < 10; i++){
+                    if(player.getSchool().getSchoolHall()[0].getTableHall()[i] == null){
+                        labelBlueHallList[i].setVisible(false);
+                    }
+                    if(player.getSchool().getSchoolHall()[1].getTableHall()[i] == null){
+                        labelGreenHallList[i].setVisible(false);
+                    }
+                    if(player.getSchool().getSchoolHall()[2].getTableHall()[i] == null){
+                        labelPinkHallList[i].setVisible(false);
+                    }
+                    if(player.getSchool().getSchoolHall()[3].getTableHall()[i] == null){
+                        labelRedHallList[i].setVisible(false);
+                    }
+                    if(player.getSchool().getSchoolHall()[4].getTableHall()[i] == null){
+                        labelYellowHallList[i].setVisible(false);
+                    }
+                }
+                switch (player.getSchool().getPlayersTowers().get(0).getColor()) {
+                    //TODO check real print for towers
+                    case WHITE -> {
+                        for (int i = 0; i < player.getSchool().getPlayersTowers().size(); i++) {
+                            if(player.getSchool().getPlayersTowers().get(i) != null) {
+                                labelWhiteTowerList[i].setVisible(true);
+                                labelBlackTowerList[i].setVisible(false);
+                                labelGreyTowerList[i].setVisible(false);
+                            }
+                        }
+                    }
+                    case BLACK -> {
+                        for (int i = 0; i < player.getSchool().getPlayersTowers().size(); i++) {
+                            if(player.getSchool().getPlayersTowers().get(i) != null) {
+                                labelWhiteTowerList[i].setVisible(false);
+                                labelBlackTowerList[i].setVisible(true);
+                                labelGreyTowerList[i].setVisible(false);
+                            }
+                        }
+                    }
+                    case GREY -> {
+                        for (int i = 0; i < player.getSchool().getPlayersTowers().size(); i++) {
+                            if(player.getSchool().getPlayersTowers().get(i) != null) {
+                                labelWhiteTowerList[i].setVisible(false);
+                                labelBlackTowerList[i].setVisible(false);
+                                labelGreyTowerList[i].setVisible(true);
+                            }
                         }
                     }
                 }
-                case BLACK -> {
-                    for (int i = 0; i < player.getSchool().getPlayersTowers().size(); i++) {
-                        if(player.getSchool().getPlayersTowers().get(i) != null) {
-                           labelWhiteTowerList[i].setVisible(false);
-                            labelBlackTowerList[i].setVisible(true);
-                            labelGreyTowerList[i].setVisible(false);
+                for(int j = 0; j < player.getSchool().getEntranceStudent().size(); j++){
+                    PawnColor color = player.getSchool().getEntranceStudent().get(j).getColor();
+                    switch (color){
+                        case BLUE -> {
+                            labelEntranceStudents[j].setIcon(blueHallIcon);
+                            labelEntranceStudents[j].setVisible(true);
                         }
-                    }
-                }
-                case GREY -> {
-                    for (int i = 0; i < player.getSchool().getPlayersTowers().size(); i++) {
-                        if(player.getSchool().getPlayersTowers().get(i) != null) {
-                            labelWhiteTowerList[i].setVisible(false);
-                            labelBlackTowerCounter[i].setVisible(false);
-                            labelGreyTowerList[i].setVisible(true);
+                        case GREEN -> {
+                            labelEntranceStudents[j].setIcon(greenHallIcon);
+                            labelEntranceStudents[j].setVisible(true);
+                        }
+                        case PINK -> {
+                            labelEntranceStudents[j].setIcon(pinkHallIcon);
+                            labelEntranceStudents[j].setVisible(true);
+                        }
+                        case RED -> {
+                            labelEntranceStudents[j].setIcon(redHallIcon);
+                            labelEntranceStudents[j].setVisible(true);
+                        }
+                        case YELLOW -> {
+                            labelEntranceStudents[j].setIcon(yellowHall);
+                            labelEntranceStudents[j].setVisible(true);
                         }
                     }
                 }
             }
-            for(int j = 0; j < player.getSchool().getEntranceStudent().size(); j++){
-                PawnColor color = player.getSchool().getEntranceStudent().get(j).getColor();
-                switch (color){
-                    case BLUE -> {
-                        labelEntranceStudents[j].setIcon(blueHallIcon);
-                        labelEntranceStudents[j].setVisible(true);
-                    }
-                    case GREEN -> {
-                        labelEntranceStudents[j].setIcon(greenHallIcon);
-                        labelEntranceStudents[j].setVisible(true);
-                    }
-                    case PINK -> {
-                        labelEntranceStudents[j].setIcon(pinkHallIcon);
-                        labelEntranceStudents[j].setVisible(true);
-                    }
-                    case RED -> {
-                        labelEntranceStudents[j].setIcon(redHallIcon);
-                        labelEntranceStudents[j].setVisible(true);
-                    }
-                    case YELLOW -> {
-                        labelEntranceStudents[j].setIcon(yellowHall);
-                        labelEntranceStudents[j].setVisible(true);
-                    }
-                }
-            }
+
         }
+
         //print the situation of each island
         for(int i = 0; i < game.getTable().getIslands().size(); i++){
+
+            int blueStudentCounter= game.getTable().getIslands().get(i).getBlueStudents().size();
+            int greenStudentCounter= game.getTable().getIslands().get(i).getGreenStudents().size();
+            int pinkStudentCounter= game.getTable().getIslands().get(i).getPinkStudents().size();
+            int redStudentCounter= game.getTable().getIslands().get(i).getRedStudents().size();
+            int yellowStudentCounter= game.getTable().getIslands().get(i).getYellowStudents().size();
+
             int towerOnIsland = game.getTable().getIslands().get(i).getTowers().size();
+
+            labelBlueCounters[i].setText(blueStudentCounter+"");
+            labelGreenCounters[i].setText(greenStudentCounter+"");
+            labelPinkCounters[i].setText(pinkStudentCounter+"");
+            labelRedCounters[i].setText(redStudentCounter+"");
+            labelYellowCounters[i].setText(yellowStudentCounter+"");
+
             if(0 < towerOnIsland){
                 TowerColor color = game.getTable().getIslands().get(i).getTowers().get(0).getColor();
                 switch (color){
@@ -1612,11 +1613,27 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             }
 
         }
+        //print cloud's situation
+        for(int i=0;i<game.getTable().getClouds().size();i++){
+
+            int blueStudentCounter=game.getTable().getClouds().get(i).getBlueStudent().size();
+            int greenStudentCounter=game.getTable().getClouds().get(i).getGreenStudent().size();
+            int yellowStudentCounter=game.getTable().getClouds().get(i).getYellowStudent().size();
+            int pinkStudentCounter=game.getTable().getClouds().get(i).getPinkStudent().size();
+            int redStudentCounter=game.getTable().getClouds().get(i).getRedStudent().size();
+
+            labelBlueCloudCounters[i].setText(blueStudentCounter+"");
+            labelGreenCloudCounters[i].setText(greenStudentCounter+"");
+            labelPinkCloudCounters[i].setText(pinkStudentCounter+"");
+            labelRedCloudCounters[i].setText(redStudentCounter+"");
+            labelYellowCloudCounters[i].setText(yellowStudentCounter+"");
+
+        }
     }
 
     @Override
     public void selectAssistantCard(AskAssistantCardsMessage message) {
-        labelPlayerMessage.setText("# SELECT ONE CARD #");
+        //labelPlayerMessage.setText("# SELECT ONE CARD #");
     }
 
     @Override
