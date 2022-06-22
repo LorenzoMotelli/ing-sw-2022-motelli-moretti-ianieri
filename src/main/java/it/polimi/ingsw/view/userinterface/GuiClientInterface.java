@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.userinterface;
 
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.AssistantCard;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.network.client.ClientMessageHandler;
@@ -11,6 +12,7 @@ import it.polimi.ingsw.network.messages.specific.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Scanner;
 
 import java.awt.event.ActionEvent;
@@ -43,16 +45,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private static JFrame frameGame;
     private static int size;
 
-    private static int chosenCard1=0;
-    private static int chosenCard2=0;
-    private static int chosenCard3=0;
-    private static int chosenCard4=0;
-    private static int chosenCard5=0;
-    private static int chosenCard6=0;
-    private static int chosenCard7=0;
-    private static int chosenCard8=0;
-    private static int chosenCard9=0;
-    private static int chosenCard10=0;
+    private static int chosenCard[]=new int[10];
 
     private JLabel labelSetBackground;
     private ImageIcon setBackground;
@@ -182,14 +175,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         return a;
     }
 
-    public void showCards() {
-        labelBackgroundCards.setVisible(true);
-        for(int i = 0; i < 10; i++){
-            labelAssistantDeck[i].setVisible(true);
-            buttonsAssistant[i].setVisible(true);
-        }
-    }
-
     public void hideCards() {
         labelBackgroundCards.setVisible(false);
         for(int i = 0; i < 10; i++){
@@ -280,6 +265,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         frameGame.setTitle("ERYANTIS");
         frameGame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        for(int i=0;i<9;i++){
+            chosenCard[i]=1;
+        }
         //menu for cards
         backgroundCards= new ImageIcon("src/images/backgroundCards.jpg");
         labelBackgroundCards=new JLabel();
@@ -1169,73 +1157,19 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         else if(e.getSource()== buttonHideCards)
         {
             buttonHideCards.setVisible(false);
-            buttonViewCards.setVisible(true);
-
             hideCards();
         }
         else if(e.getSource()== buttonViewCards)
         {
             buttonViewCards.setVisible(false);
             buttonHideCards.setVisible(true);
-
             showCards();
-            if(chosenCard1==1)
-            {
-                labelAssistantDeck[0].setVisible(false);
-                buttonsAssistant[0].setVisible(false);
-
-            }
-            if(chosenCard2==1)
-            {
-                labelAssistantDeck[1].setVisible(false);
-                buttonsAssistant[1].setVisible(false);
-            }
-            if(chosenCard3==1)
-            {
-                labelAssistantDeck[2].setVisible(false);
-                buttonsAssistant[2].setVisible(false);
-            }
-            if(chosenCard4==1)
-            {
-                labelAssistantDeck[3].setVisible(false);
-                buttonsAssistant[3].setVisible(false);
-            }
-            if(chosenCard5==1)
-            {
-                labelAssistantDeck[4].setVisible(false);
-                buttonsAssistant[4].setVisible(false);
-            }
-            if(chosenCard6==1)
-            {
-                labelAssistantDeck[5].setVisible(false);
-                buttonsAssistant[5].setVisible(false);
-            }
-            if(chosenCard7==1)
-            {
-                labelAssistantDeck[6].setVisible(false);
-                buttonsAssistant[6].setVisible(false);
-            }
-            if(chosenCard8==1)
-            {
-                labelAssistantDeck[7].setVisible(false);
-                buttonsAssistant[7].setVisible(false);
-            }
-            if(chosenCard9==1)
-            {
-                labelAssistantDeck[8].setVisible(false);
-                buttonsAssistant[8].setVisible(false);
-            }
-            if(chosenCard10==1)
-            {
-                labelAssistantDeck[9].setVisible(false);
-                buttonsAssistant[9].setVisible(false);
-            }
         }
         else if(e.getSource()== buttonsAssistant[0]) {
             labelPlayerMessage.setText("# CARD 1 SELECTED #");
             labelAssistantDeck[0].setVisible(false);
             buttonsAssistant[0].setVisible(false);
-            chosenCard1=1;
+            chosenCard[0]=1;
             hideOnlyButtonCards();
 
             int choice=1;
@@ -1245,72 +1179,91 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelPlayerMessage.setText("# CARD 2 SELECTED #");
             labelAssistantDeck[1].setVisible(false);
             buttonsAssistant[1].setVisible(false);
-            chosenCard2=1;
+            chosenCard[1]=1;
             hideOnlyButtonCards();
+
+            int choice=2;
+            messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
         }
         else if(e.getSource()== buttonsAssistant[2]) {
             labelPlayerMessage.setText("# CARD 3 SELECTED #");
             labelAssistantDeck[2].setVisible(false);
             buttonsAssistant[2].setVisible(false);
-            chosenCard3=1;
+            chosenCard[2]=1;
             hideOnlyButtonCards();
 
+            int choice=3;
+            messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
         }
         else if(e.getSource()== buttonsAssistant[3]) {
             labelPlayerMessage.setText("# CARD 4 SELECTED #");
             labelAssistantDeck[3].setVisible(false);
             buttonsAssistant[3].setVisible(false);
-            chosenCard4=1;
+            chosenCard[3]=1;
             hideOnlyButtonCards();
 
+            int choice=4;
+            messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
         }
         else if(e.getSource()== buttonsAssistant[4]) {
             labelPlayerMessage.setText("# CARD 5 SELECTED #");
             labelAssistantDeck[4].setVisible(false);
             buttonsAssistant[4].setVisible(false);
-            chosenCard5=1;
+            chosenCard[4]=1;
             hideOnlyButtonCards();
 
+            int choice=5;
+            messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
         }
         else if(e.getSource()== buttonsAssistant[5]) {
             labelPlayerMessage.setText("# CARD 6 SELECTED #");
             labelAssistantDeck[5].setVisible(false);
             buttonsAssistant[5].setVisible(false);
-            chosenCard6=1;
+            chosenCard[5]=1;
             hideOnlyButtonCards();
 
+            int choice=6;
+            messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
         }
         else if(e.getSource()== buttonsAssistant[6]) {
             labelPlayerMessage.setText("# CARD 7 SELECTED #");
             labelAssistantDeck[6].setVisible(false);
             buttonsAssistant[6].setVisible(false);
-            chosenCard7=1;
+            chosenCard[6]=1;
             hideOnlyButtonCards();
 
+            int choice=7;
+            messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
         }
         else if(e.getSource()== buttonsAssistant[7]) {
             labelPlayerMessage.setText("# CARD 8 SELECTED #");
             labelAssistantDeck[7].setVisible(false);
             buttonsAssistant[7].setVisible(false);
-            chosenCard8=1;
+            chosenCard[7]=1;
             hideOnlyButtonCards();
 
+            int choice=8;
+            messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
         }
         else if(e.getSource()== buttonsAssistant[8]) {
             labelPlayerMessage.setText("# CARD 9 SELECTED #");
             labelAssistantDeck[8].setVisible(false);
             buttonsAssistant[8].setVisible(false);
-            chosenCard9=1;
+            chosenCard[8]=1;
             hideOnlyButtonCards();
 
+            int choice=9;
+            messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
         }
         else if(e.getSource()== buttonsAssistant[9]) {
             labelPlayerMessage.setText("# CARD 10 SELECTED #");
             labelAssistantDeck[9].setVisible(false);
             buttonsAssistant[9].setVisible(false);
-            chosenCard10=1;
+            chosenCard[9]=1;
             hideOnlyButtonCards();
 
+            int choice=10;
+            messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
         }
         else if (e.getSource()==startGame) {
             startGame.setVisible(false);
@@ -1629,29 +1582,51 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelYellowCloudCounters[i].setText(yellowStudentCounter+"");
 
         }
+
     }
 
     @Override
     public void selectAssistantCard(AskAssistantCardsMessage message) {
-        //labelPlayerMessage.setText("# SELECT ONE CARD #");
+
+
+        labelPlayerMessage.setText("# SELECT ONE CARD #");
+        //force the player to use only buttonViewCard
+        for(int i=0;i<12;i++){
+            buttonsSelectIsland[i].setVisible(false);
+        }
+        for(int i=0;i<9;i++){
+            buttonsSelectStudent[i].setVisible(false);
+        }
+        for(int i=0;i<4;i++){
+            buttonsSelectCloud[i].setVisible(false);
+        }
+        buttonPutOnTable.setVisible(false);
+
+        List<AssistantCard> cards = message.getAssistantCards();
+        buttonViewCards.setVisible(true);
+
+        for (AssistantCard card : cards) {
+            chosenCard[card.getTurnHeaviness()-1]=0;
+        }
+
+    }
+
+    public void showCards(){
+        labelBackgroundCards.setVisible(true);
+        for(int i=0;i<10;i++){
+            if(chosenCard[i]==0)
+            {
+                buttonsAssistant[i].setVisible(true);
+                labelAssistantDeck[i].setVisible(true);
+            }
+        }
     }
 
     @Override
     public void selectStudent(AskStudentMessage message){
-        buttonViewCards.setVisible(false);
-        buttonsSelectStudent[0].setVisible(true);
-        buttonsSelectStudent[1].setVisible(true);
-        buttonsSelectStudent[2].setVisible(true);
-        buttonsSelectStudent[3].setVisible(true);
-        buttonsSelectStudent[4].setVisible(true);
-        buttonsSelectStudent[5].setVisible(true);
-        buttonsSelectStudent[6].setVisible(true);
-        if(size==3){
-            buttonsSelectStudent[7].setVisible(true);
-            buttonsSelectStudent[8].setVisible(true);
-        }
 
-        labelPlayerMessage.setText("# SELECT A STUDENT #");
+
+        //labelPlayerMessage.setText("# SELECT A STUDENT #");
     }
 
     @Override
