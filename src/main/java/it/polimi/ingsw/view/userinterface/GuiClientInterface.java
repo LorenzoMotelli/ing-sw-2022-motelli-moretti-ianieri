@@ -842,7 +842,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
         //a way to communicate with the players
         labelPlayerMessage = new JLabel("# TEXT BOX #", SwingConstants.CENTER);
-        labelPlayerMessage.setBounds(485,205,200,50);
+        labelPlayerMessage.setBounds(430,205,300,50);
         labelPlayerMessage.setForeground(Color.WHITE);
         labelPlayerMessage.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
 
@@ -1436,10 +1436,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
         //print the situation of the table of each player
         for(Player player : game.getPlayers()){
-            System.out.println(player.getPlayerName());
             if(username.equals(player.getPlayerName()))
             {
-                labelPlayerMessage.setText(player.getPlayerName());
+                labelPlayerMessage.setText("WAITING THE OTHER PLAYER");
 
 
                 if(player.getSchool().getBlueProfessor()==null)
@@ -1623,6 +1622,16 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     }
 
     @Override
+    public void playerOrder(NewOrderMessage message) {
+        labelPlayerMessage.setText("");
+        for(int i = 0; i < message.getPlayers().length; i++){
+            labelPlayerMessage.setText(message.getPlayers()[i].getPlayerName() + " " + labelPlayerMessage.getText());
+        }
+
+        labelPlayerMessage.setText("PLAYER ORDER: " + labelPlayerMessage.getText());
+    }
+
+    @Override
     public void selectStudent(AskStudentMessage message){
 
 
@@ -1640,10 +1649,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     }
 
-    @Override
-    public void playerOrder(NewOrderMessage message) {
-
-    }
 
     @Override
     public void schoolUpdate(SchoolUpdateMessage message) {
