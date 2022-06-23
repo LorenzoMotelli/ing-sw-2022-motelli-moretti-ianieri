@@ -12,6 +12,7 @@ import it.polimi.ingsw.network.messages.specific.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -148,6 +149,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private final JButton[] buttonsAssistant = new JButton[10];
 
     private final JButton[] buttonsSelectIsland = new JButton[12];
+    private final List<JButton> buttonsSelectIslandMotherNature = new ArrayList<>();
     private final JButton[] buttonsSelectStudent = new JButton[9];
 
     private static JButton buttonPutOnTable;
@@ -186,6 +188,12 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     public void hideOnlyButtonCards() {
         for(int i = 0; i < buttonsAssistant.length; i++){
             buttonsAssistant[i].setVisible(false);
+        }
+    }
+
+    public void hideAllButtonsMotherNature() {
+        for(int i = 0; i < 12; i++){
+            buttonsSelectIslandMotherNature.get(i).setVisible(false);
         }
     }
 
@@ -626,54 +634,71 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
             buttonsSelectIsland[i] = new JButton("");
             buttonsSelectIsland[i].addActionListener(this);
+
+            buttonsSelectIslandMotherNature.add(new JButton(""));
+            buttonsSelectIslandMotherNature.get(i).addActionListener(this);
+            transparentButton(buttonsSelectIslandMotherNature.get(i));
+
         }
         //first island
         labelMotherNatureList[0].setBounds(305, 100, 100, 100);
         buttonsSelectIsland[0].setBounds(285, 30, 150, 150);
+        buttonsSelectIslandMotherNature.get(0).setBounds(285, 30, 150, 150);
         transparentButton(buttonsSelectIsland[0]);
         //second island
         labelMotherNatureList[1].setBounds(525, 100, 100, 100);
         buttonsSelectIsland[1].setBounds(510, 30, 150, 150);
+        buttonsSelectIslandMotherNature.get(1).setBounds(510, 30, 150, 150);
         transparentButton(buttonsSelectIsland[1]);
         //third island
         labelMotherNatureList[2].setBounds(760, 100, 100, 100);
         buttonsSelectIsland[2].setBounds(750, 30, 150, 150);
+        buttonsSelectIslandMotherNature.get(2).setBounds(750, 30, 150, 150);
         transparentButton(buttonsSelectIsland[2]);
         //fourth island
         labelMotherNatureList[3].setBounds(970, 170, 100, 100);
         buttonsSelectIsland[3].setBounds(950, 100, 150, 150);
+        buttonsSelectIslandMotherNature.get(3).setBounds(950, 100, 150, 150);
         transparentButton(buttonsSelectIsland[3]);
         //fifth island
         labelMotherNatureList[4].setBounds(970, 380, 100, 100);
         buttonsSelectIsland[4].setBounds(950, 320, 150, 150);
+        buttonsSelectIslandMotherNature.get(4).setBounds(950, 320, 150, 150);
         transparentButton(buttonsSelectIsland[4]);
         //sixth island
         labelMotherNatureList[5].setBounds(970, 580, 100, 100);
         buttonsSelectIsland[5].setBounds(950, 510, 150, 150);
+        buttonsSelectIslandMotherNature.get(5).setBounds(950, 510, 150, 150);
         transparentButton(buttonsSelectIsland[5]);
         //seventh island
         labelMotherNatureList[6].setBounds(765, 680, 100, 100);
         buttonsSelectIsland[6].setBounds(750, 615, 150, 150);
+        buttonsSelectIslandMotherNature.get(6).setBounds(750, 615, 150, 150);
         transparentButton(buttonsSelectIsland[6]);
         //eighth island
         labelMotherNatureList[7].setBounds(525, 680, 100, 100);
         buttonsSelectIsland[7].setBounds(510, 615, 150, 150);
+        buttonsSelectIslandMotherNature.get(7).setBounds(510, 615, 150, 150);
         transparentButton(buttonsSelectIsland[7]);
         //ninth island
         labelMotherNatureList[8].setBounds(270, 680, 100, 100);
         buttonsSelectIsland[8].setBounds(255, 615, 150, 150);
+        buttonsSelectIslandMotherNature.get(8).setBounds(255, 615, 150, 150);
         transparentButton(buttonsSelectIsland[8]);
         //tenth island
         labelMotherNatureList[9].setBounds(65, 580, 100, 100);
         buttonsSelectIsland[9].setBounds(50, 520, 150, 150);
+        buttonsSelectIslandMotherNature.get(9).setBounds(50, 520, 150, 150);
         transparentButton(buttonsSelectIsland[9]);
         //eleventh island
         labelMotherNatureList[10].setBounds(65, 380, 100, 100);
         buttonsSelectIsland[10].setBounds(50, 320, 150, 150);
+        buttonsSelectIslandMotherNature.get(10).setBounds(50, 320, 150, 150);
         transparentButton(buttonsSelectIsland[10]);
         //twelfth island
         labelMotherNatureList[11].setBounds(65, 170, 100, 100);
         buttonsSelectIsland[11].setBounds(50, 100, 150, 150);
+        buttonsSelectIslandMotherNature.get(11).setBounds(50, 100, 150, 150);
         transparentButton(buttonsSelectIsland[11]);
 
         for(int i = 0; i < buttonsSelectStudent.length; i++){
@@ -740,60 +765,60 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelPinkHallList[i].setIcon(pinkHallIcon);
         }
         //add the green student in the hall
-        labelGreenHallList[0].setBounds(1219, 225,100,100);
-        labelGreenHallList[1].setBounds(1219, 266, 100, 100);
-        labelGreenHallList[2].setBounds(1219, 307, 100, 100);
-        labelGreenHallList[3].setBounds(1219, 348, 100, 100);
-        labelGreenHallList[4].setBounds(1219, 389, 100, 100);
-        labelGreenHallList[5].setBounds(1219, 430, 100, 100);
-        labelGreenHallList[6].setBounds(1219, 471, 100, 100);
-        labelGreenHallList[7].setBounds(1219, 512, 100, 100);
-        labelGreenHallList[8].setBounds(1219, 553, 100, 100);
-        labelGreenHallList[9].setBounds(1219, 594, 100, 100);
+        labelGreenHallList[9].setBounds(1219, 225,100,100);
+        labelGreenHallList[8].setBounds(1219, 266, 100, 100);
+        labelGreenHallList[7].setBounds(1219, 307, 100, 100);
+        labelGreenHallList[6].setBounds(1219, 348, 100, 100);
+        labelGreenHallList[5].setBounds(1219, 389, 100, 100);
+        labelGreenHallList[4].setBounds(1219, 430, 100, 100);
+        labelGreenHallList[3].setBounds(1219, 471, 100, 100);
+        labelGreenHallList[2].setBounds(1219, 512, 100, 100);
+        labelGreenHallList[1].setBounds(1219, 553, 100, 100);
+        labelGreenHallList[0].setBounds(1219, 594, 100, 100);
         //add the red student in the hall
-        labelRedHallList[0].setBounds(1281, 225, 100, 100);
-        labelRedHallList[1].setBounds(1281, 266, 100, 100);
-        labelRedHallList[2].setBounds(1281, 307, 100, 100);
-        labelRedHallList[3].setBounds(1281,348 , 100, 100);
-        labelRedHallList[4].setBounds(1281, 389, 100, 100);
-        labelRedHallList[5].setBounds(1281, 430, 100, 100);
-        labelRedHallList[6].setBounds(1281, 471, 100, 100);
-        labelRedHallList[7].setBounds(1281, 512, 100, 100);
-        labelRedHallList[8].setBounds(1281, 553, 100, 100);
-        labelRedHallList[9].setBounds(1281, 594, 100, 100);
+        labelRedHallList[9].setBounds(1281, 225, 100, 100);
+        labelRedHallList[8].setBounds(1281, 266, 100, 100);
+        labelRedHallList[7].setBounds(1281, 307, 100, 100);
+        labelRedHallList[6].setBounds(1281,348 , 100, 100);
+        labelRedHallList[5].setBounds(1281, 389, 100, 100);
+        labelRedHallList[4].setBounds(1281, 430, 100, 100);
+        labelRedHallList[3].setBounds(1281, 471, 100, 100);
+        labelRedHallList[2].setBounds(1281, 512, 100, 100);
+        labelRedHallList[1].setBounds(1281, 553, 100, 100);
+        labelRedHallList[0].setBounds(1281, 594, 100, 100);
         //add the yellow student in the hall
-        labelYellowHallList[0].setBounds(1343, 225, 100, 100);
-        labelYellowHallList[1].setBounds(1343, 266, 100, 100);
-        labelYellowHallList[2].setBounds(1343, 307, 100, 100);
-        labelYellowHallList[3].setBounds(1343, 348, 100, 100);
-        labelYellowHallList[4].setBounds(1343, 389, 100, 100);
-        labelYellowHallList[5].setBounds(1343, 430, 100, 100);
-        labelYellowHallList[6].setBounds(1343, 471, 100, 100);
-        labelYellowHallList[7].setBounds(1343, 512, 100, 100);
-        labelYellowHallList[8].setBounds(1343, 553, 100, 100);
-        labelYellowHallList[9].setBounds(1343, 594, 100, 100);
+        labelYellowHallList[9].setBounds(1343, 225, 100, 100);
+        labelYellowHallList[8].setBounds(1343, 266, 100, 100);
+        labelYellowHallList[7].setBounds(1343, 307, 100, 100);
+        labelYellowHallList[6].setBounds(1343, 348, 100, 100);
+        labelYellowHallList[5].setBounds(1343, 389, 100, 100);
+        labelYellowHallList[4].setBounds(1343, 430, 100, 100);
+        labelYellowHallList[3].setBounds(1343, 471, 100, 100);
+        labelYellowHallList[2].setBounds(1343, 512, 100, 100);
+        labelYellowHallList[1].setBounds(1343, 553, 100, 100);
+        labelYellowHallList[0].setBounds(1343, 594, 100, 100);
         ///add the pink student in the hall
-        labelPinkHallList[0].setBounds(1404, 225, 100, 100);
-        labelPinkHallList[1].setBounds(1404, 266, 100, 100);
-        labelPinkHallList[2].setBounds(1404, 307, 100, 100);
-        labelPinkHallList[3].setBounds(1404, 348, 100, 100);
-        labelPinkHallList[4].setBounds(1404, 389, 100, 100);
-        labelPinkHallList[5].setBounds(1404, 430, 100, 100);
-        labelPinkHallList[6].setBounds(1404, 471, 100, 100);
-        labelPinkHallList[7].setBounds(1404, 512, 100, 100);
-        labelPinkHallList[8].setBounds(1404, 553, 100, 100);
-        labelPinkHallList[9].setBounds(1404, 594, 100, 100);
+        labelPinkHallList[9].setBounds(1404, 225, 100, 100);
+        labelPinkHallList[8].setBounds(1404, 266, 100, 100);
+        labelPinkHallList[7].setBounds(1404, 307, 100, 100);
+        labelPinkHallList[6].setBounds(1404, 348, 100, 100);
+        labelPinkHallList[5].setBounds(1404, 389, 100, 100);
+        labelPinkHallList[4].setBounds(1404, 430, 100, 100);
+        labelPinkHallList[3].setBounds(1404, 471, 100, 100);
+        labelPinkHallList[2].setBounds(1404, 512, 100, 100);
+        labelPinkHallList[1].setBounds(1404, 553, 100, 100);
+        labelPinkHallList[0].setBounds(1404, 594, 100, 100);
         ////add the blue student in the hall
-        labelBlueHallList[0].setBounds(1465, 225, 100, 100);
-        labelBlueHallList[1].setBounds(1465, 266, 100, 100);
-        labelBlueHallList[2].setBounds(1465, 307, 100, 100);
-        labelBlueHallList[3].setBounds(1465, 348, 100, 100);
-        labelBlueHallList[4].setBounds(1465, 389, 100, 100);
-        labelBlueHallList[5].setBounds(1465, 430, 100, 100);
-        labelBlueHallList[6].setBounds(1465, 471, 100, 100);
-        labelBlueHallList[7].setBounds(1465, 512, 100, 100);
-        labelBlueHallList[8].setBounds(1465, 553, 100, 100);
-        labelBlueHallList[9].setBounds(1465, 594, 100, 100);
+        labelBlueHallList[9].setBounds(1465, 225, 100, 100);
+        labelBlueHallList[8].setBounds(1465, 266, 100, 100);
+        labelBlueHallList[7].setBounds(1465, 307, 100, 100);
+        labelBlueHallList[6].setBounds(1465, 348, 100, 100);
+        labelBlueHallList[5].setBounds(1465, 389, 100, 100);
+        labelBlueHallList[4].setBounds(1465, 430, 100, 100);
+        labelBlueHallList[3].setBounds(1465, 471, 100, 100);
+        labelBlueHallList[2].setBounds(1465, 512, 100, 100);
+        labelBlueHallList[1].setBounds(1465, 553, 100, 100);
+        labelBlueHallList[0].setBounds(1465, 594, 100, 100);
 
         //initializing all the student in the entrance
         for(int i = 0; i < 9; i++){
@@ -1044,99 +1069,243 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             messageHandler.sendMessage(new RoomSizeMessage(size, this.username));
             buttonGetReady.setVisible(false);
         }
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(0))
+        {
+            labelPlayerMessage.setText("# 1 ISLAND MOTHER NATURE SELECTED #");
+            messageHandler.sendMessage(new PlaceMotherNatureMessage(0));
+            hideAllButtonsMotherNature();
+        }
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(1))
+        {
+            labelPlayerMessage.setText("# 2 ISLAND MOTHER NATURE SELECTED #");
+            messageHandler.sendMessage(new PlaceMotherNatureMessage(1));
+            hideAllButtonsMotherNature();
+        }
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(2))
+        {
+            labelPlayerMessage.setText("# 3 ISLAND MOTHER NATURE SELECTED #");
+            messageHandler.sendMessage(new PlaceMotherNatureMessage(2));
+            hideAllButtonsMotherNature();
+        }
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(3))
+        {
+            labelPlayerMessage.setText("# 4 ISLAND MOTHER NATURE SELECTED #");
+            messageHandler.sendMessage(new PlaceMotherNatureMessage(3));
+            hideAllButtonsMotherNature();
+        }
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(4))
+        {
+            labelPlayerMessage.setText("# 5 ISLAND MOTHER NATURE SELECTED #");
+            messageHandler.sendMessage(new PlaceMotherNatureMessage(4));
+            hideAllButtonsMotherNature();
+        }
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(5))
+        {
+            labelPlayerMessage.setText("# 6 ISLAND MOTHER NATURE SELECTED #");
+            messageHandler.sendMessage(new PlaceMotherNatureMessage(5));
+            hideAllButtonsMotherNature();
+        }
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(6))
+        {
+            labelPlayerMessage.setText("# 7 ISLAND MOTHER NATURE SELECTED #");
+            messageHandler.sendMessage(new PlaceMotherNatureMessage(6));
+            hideAllButtonsMotherNature();
+        }
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(7))
+        {
+            labelPlayerMessage.setText("# 8 ISLAND MOTHER NATURE SELECTED #");
+            messageHandler.sendMessage(new PlaceMotherNatureMessage(7));
+            hideAllButtonsMotherNature();
+        }
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(9))
+        {
+            labelPlayerMessage.setText("# 10 ISLAND MOTHER NATURE SELECTED #");
+            messageHandler.sendMessage(new PlaceMotherNatureMessage(9));
+            hideAllButtonsMotherNature();
+        }
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(10))
+        {
+            labelPlayerMessage.setText("# 11 ISLAND MOTHER NATURE SELECTED #");
+            messageHandler.sendMessage(new PlaceMotherNatureMessage(10));
+            hideAllButtonsMotherNature();
+        }
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(11))
+        {
+            labelPlayerMessage.setText("# 12 ISLAND MOTHER NATURE SELECTED #");
+            messageHandler.sendMessage(new PlaceMotherNatureMessage(11));
+            hideAllButtonsMotherNature();
+        }
         else if(e.getSource()== buttonsSelectIsland[0])
         {
             labelPlayerMessage.setText("# 1 ISLAND SELECTED #");
-            /*whiteTowerCounter1=whiteTowerCounter1+1;
-            labelWhiteTowerCounter[0].setText(whiteTowerCounter1+"");*/
+
+            int choice=0;
+            messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
 
         }
         else if(e.getSource()== buttonsSelectIsland[1])
         {
             labelPlayerMessage.setText("# 2 ISLAND SELECTED #");
+            int choice=1;
+            messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
         else if(e.getSource()== buttonsSelectIsland[2])
         {
             labelPlayerMessage.setText("# 3 ISLAND SELECTED #");
+
+            int choice=2;
+            messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
         else if(e.getSource()== buttonsSelectIsland[3])
         {
             labelPlayerMessage.setText("# 4 ISLAND SELECTED #");
+
+            int choice=3;
+            messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
         else if(e.getSource()== buttonsSelectIsland[4])
         {
             labelPlayerMessage.setText("# 5 ISLAND SELECTED #");
+
+            int choice=4;
+            messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
         else if(e.getSource()== buttonsSelectIsland[5])
         {
             labelPlayerMessage.setText("# 6 ISLAND SELECTED #");
+
+            int choice=5;
+            messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
         else if(e.getSource()== buttonsSelectIsland[6])
         {
             labelPlayerMessage.setText("# 7 ISLAND SELECTED #");
+
+            int choice=6;
+            messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
         else if(e.getSource()== buttonsSelectIsland[7])
         {
             labelPlayerMessage.setText("# 8 ISLAND SELECTED #");
+
+            int choice=7;
+            messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
         else if(e.getSource()== buttonsSelectIsland[8])
         {
             labelPlayerMessage.setText("# 9 ISLAND SELECTED #");
+
+
+            int choice=8;
+            messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
         else if(e.getSource()== buttonsSelectIsland[9])
         {
             labelPlayerMessage.setText("# 10 ISLAND SELECTED #");
+
+            int choice=9;
+            messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
         else if(e.getSource()== buttonsSelectIsland[10])
         {
             labelPlayerMessage.setText("# 11 ISLAND SELECTED #");
+            int choice=10;
+            messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
         else if(e.getSource()== buttonsSelectIsland[11])
         {
             labelPlayerMessage.setText("# 12 ISLAND SELECTED #");
+            int choice=11;
+            messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
         else if(e.getSource()== buttonsSelectStudent[0])
         {
-            labelPlayerMessage.setText("# SLOT 1 SELECTED #");
+            labelPlayerMessage.setText("# STUDENT 1 SELECTED #");
 
-            int choice = 1;
-            messageHandler.sendMessage(new SelectStudentMessage(choice));
+            messageHandler.sendMessage(new SelectStudentMessage(0));
+
+            buttonsSelectStudent[0].setVisible(false);
+            labelEntranceStudents[0].setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[1])
         {
-            labelPlayerMessage.setText("# SLOT 2 SELECTED #");
+            labelPlayerMessage.setText("# STUDENT 2 SELECTED #");
+
+            messageHandler.sendMessage(new SelectStudentMessage(1));
+
+            buttonsSelectStudent[1].setVisible(false);
+            labelEntranceStudents[1].setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[2])
         {
-            labelPlayerMessage.setText("# SLOT 3 SELECTED #");
+            labelPlayerMessage.setText("# STUDENT 3 SELECTED #");
+
+            messageHandler.sendMessage(new SelectStudentMessage(2));
+
+            buttonsSelectStudent[2].setVisible(false);
+            labelEntranceStudents[2].setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[3])
         {
-            labelPlayerMessage.setText("# SLOT 4 SELECTED #");
+            labelPlayerMessage.setText("# STUDENT 4 SELECTED #");
+
+            messageHandler.sendMessage(new SelectStudentMessage(3));
+
+            buttonsSelectStudent[3].setVisible(false);
+            labelEntranceStudents[3].setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[4])
         {
-            labelPlayerMessage.setText("# SLOT 5 SELECTED #");
+            labelPlayerMessage.setText("# STUDENT 5 SELECTED #");
+
+            messageHandler.sendMessage(new SelectStudentMessage(4));
+
+            buttonsSelectStudent[4].setVisible(false);
+            labelEntranceStudents[4].setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[5])
         {
-            labelPlayerMessage.setText("# SLOT 6 SELECTED #");
+            labelPlayerMessage.setText("# STUDENT 6 SELECTED #");
+
+            messageHandler.sendMessage(new SelectStudentMessage(5));
+
+            buttonsSelectStudent[5].setVisible(false);
+            labelEntranceStudents[5].setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[6])
         {
-            labelPlayerMessage.setText("# SLOT 7 SELECTED #");
+            labelPlayerMessage.setText("# STUDENT 7 SELECTED #");
+
+            messageHandler.sendMessage(new SelectStudentMessage(6));
+
+            buttonsSelectStudent[6].setVisible(false);
+            labelEntranceStudents[6].setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[7])
         {
-            labelPlayerMessage.setText("# SLOT 8 SELECTED #");
+            labelPlayerMessage.setText("# STUDENT 8 SELECTED #");
+
+            messageHandler.sendMessage(new SelectStudentMessage(7));
+
+            buttonsSelectStudent[7].setVisible(false);
+            labelEntranceStudents[7].setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[8])
         {
-            labelPlayerMessage.setText("# SLOT 9 SELECTED #");
+            labelPlayerMessage.setText("# STUDENT 9 SELECTED #");
+
+            messageHandler.sendMessage(new SelectStudentMessage(8));
+
+            buttonsSelectStudent[8].setVisible(false);
+            labelEntranceStudents[8].setVisible(false);
         }
         else if(e.getSource()== buttonPutOnTable)
         {
-            labelPlayerMessage.setText("# TABLE SELECTED #");
+            labelPlayerMessage.setText("# HALL SELECTED #");
+
+            messageHandler.sendMessage(new PlaceInHallMessage());
+
+            buttonPutOnTable.setVisible(false);
         }
         else if(e.getSource()== buttonsSelectCloud[0])
         {
@@ -1357,6 +1526,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
             for(int i=0;i<12;i++){
                 frameGame.add(buttonsSelectIsland[i]);
+                frameGame.add(buttonsSelectIslandMotherNature.get(i));
             }
             for(int i=0;i<9;i++){
                 frameGame.add(buttonsSelectStudent[i]);
@@ -1587,11 +1757,11 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     @Override
     public void selectAssistantCard(AskAssistantCardsMessage message) {
 
-
         labelPlayerMessage.setText("# SELECT ONE CARD #");
         //force the player to use only buttonViewCard
         for(int i=0;i<12;i++){
             buttonsSelectIsland[i].setVisible(false);
+            buttonsSelectIslandMotherNature.get(i).setVisible(false);
         }
         for(int i=0;i<9;i++){
             buttonsSelectStudent[i].setVisible(false);
@@ -1625,7 +1795,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     public void playerOrder(NewOrderMessage message) {
         labelPlayerMessage.setText("");
         for(int i = 0; i < message.getPlayers().length; i++){
-            labelPlayerMessage.setText(message.getPlayers()[i].getPlayerName() + " " + labelPlayerMessage.getText());
+            labelPlayerMessage.setText(labelPlayerMessage.getText() + " " + message.getPlayers()[i].getPlayerName());
         }
 
         labelPlayerMessage.setText("PLAYER ORDER: " + labelPlayerMessage.getText());
@@ -1633,30 +1803,232 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     @Override
     public void selectStudent(AskStudentMessage message){
+        labelPlayerMessage.setText("# SELECT A STUDENT #");
+        for(int i=0;i<message.getStudent().size();i++){
+            buttonsSelectStudent[i].setVisible(true);
+            }
+    }
 
-
-        //labelPlayerMessage.setText("# SELECT A STUDENT #");
+    public void shiftStudent(){
+        for(int i=0;i<buttonsSelectStudent.length-1;i++){
+            if(!labelEntranceStudents[i].isVisible()){
+                labelEntranceStudents[i].setIcon(labelEntranceStudents[i+1].getIcon());
+                labelEntranceStudents[i].setVisible(true);
+                labelEntranceStudents[i+1].setVisible(false);
+            }
+        }
     }
 
     @Override
-    public void selectPlace(AskWherePlaceMessage message){}
+    public void selectPlace(AskWherePlaceMessage message){
+        labelPlayerMessage.setText("# CHOOSE AN ISLAND OR THE HALL #");
+        buttonPutOnTable.setVisible(true);
+        for(int j=0;j<message.getIslandsNumAvailable();j++){
+            buttonsSelectIsland[j].setVisible(true);
+        }
+        shiftStudent();
+    }
 
     @Override
-    public void selectMotherNatureIsland(AskMotherNatureMessage message) {}
+    public void selectMotherNatureIsland(AskMotherNatureMessage message) {
+        buttonPutOnTable.setVisible(false);
+        for(int j=0;j<9;j++){
+            buttonsSelectStudent[j].setVisible(false);
+        }
+
+        labelPlayerMessage.setText("# SELECT AN ISLAND FOR MOTHER NATURE #");
+
+        for(int i=0;i<labelMotherNatureList.length;i++){
+            buttonsSelectIsland[i].setVisible(false);
+            buttonsSelectIslandMotherNature.get(i).setVisible(false);
+        }
+        for(int i = 0; i <labelMotherNatureList.length; i++){
+           if(labelMotherNatureList[i].isVisible())
+           {
+               shiftButtonsMotherNature(i+1);
+               break;
+           }
+        }
+        for(int i=0;i<message.getIslands().size();i++){
+            buttonsSelectIslandMotherNature.get(i).setVisible(true);
+        }
+    }
+
+    public void shiftButtonsMotherNature(int index){
+        switch(index)
+        {
+            case 0->{
+                buttonsSelectIslandMotherNature.get(0).setBounds(285, 30, 150, 150);
+                buttonsSelectIslandMotherNature.get(1).setBounds(510, 30, 150, 150);
+                buttonsSelectIslandMotherNature.get(2).setBounds(750, 30, 150, 150);
+                buttonsSelectIslandMotherNature.get(3).setBounds(950, 100, 150, 150);
+                buttonsSelectIslandMotherNature.get(4).setBounds(950, 320, 150, 150);
+            }
+            case 1->{
+                buttonsSelectIslandMotherNature.get(0).setBounds(510, 30, 150, 150);
+                buttonsSelectIslandMotherNature.get(1).setBounds(750, 30, 150, 150);
+                buttonsSelectIslandMotherNature.get(2).setBounds(950, 100, 150, 150);
+                buttonsSelectIslandMotherNature.get(3).setBounds(950, 320, 150, 150);
+                buttonsSelectIslandMotherNature.get(4).setBounds(950, 510, 150, 150);
+            }
+            case 2->{
+                buttonsSelectIslandMotherNature.get(0).setBounds(750, 30, 150, 150);
+                buttonsSelectIslandMotherNature.get(1).setBounds(950, 100, 150, 150);
+                buttonsSelectIslandMotherNature.get(2).setBounds(950, 320, 150, 150);
+                buttonsSelectIslandMotherNature.get(3).setBounds(950, 510, 150, 150);
+                buttonsSelectIslandMotherNature.get(4).setBounds(750, 615, 150, 150);
+            }
+            case 3->{
+                buttonsSelectIslandMotherNature.get(0).setBounds(950, 100, 150, 150);
+                buttonsSelectIslandMotherNature.get(1).setBounds(950, 320, 150, 150);
+                buttonsSelectIslandMotherNature.get(2).setBounds(950, 510, 150, 150);
+                buttonsSelectIslandMotherNature.get(3).setBounds(750, 615, 150, 150);
+                buttonsSelectIslandMotherNature.get(4).setBounds(510, 615, 150, 150);
+            }
+            case 4->{
+                buttonsSelectIslandMotherNature.get(0).setBounds(950, 320, 150, 150);
+                buttonsSelectIslandMotherNature.get(1).setBounds(950, 510, 150, 150);
+                buttonsSelectIslandMotherNature.get(2).setBounds(750, 615, 150, 150);
+                buttonsSelectIslandMotherNature.get(3).setBounds(510, 615, 150, 150);
+                buttonsSelectIslandMotherNature.get(4).setBounds(255, 615, 150, 150);
+            }
+            case 5->{
+                buttonsSelectIslandMotherNature.get(0).setBounds(950, 510, 150, 150);
+                buttonsSelectIslandMotherNature.get(1).setBounds(750, 615, 150, 150);
+                buttonsSelectIslandMotherNature.get(2).setBounds(510, 615, 150, 150);
+                buttonsSelectIslandMotherNature.get(3).setBounds(255, 615, 150, 150);
+                buttonsSelectIslandMotherNature.get(4).setBounds(50, 520, 150, 150);
+            }
+            case 6->{
+                buttonsSelectIslandMotherNature.get(0).setBounds(750, 615, 150, 150);
+                buttonsSelectIslandMotherNature.get(1).setBounds(510, 615, 150, 150);
+                buttonsSelectIslandMotherNature.get(2).setBounds(255, 615, 150, 150);
+                buttonsSelectIslandMotherNature.get(3).setBounds(50, 520, 150, 150);
+                buttonsSelectIslandMotherNature.get(4).setBounds(50, 320, 150, 150);
+            }
+            case 7->{
+                buttonsSelectIslandMotherNature.get(0).setBounds(510, 615, 150, 150);
+                buttonsSelectIslandMotherNature.get(1).setBounds(255, 615, 150, 150);
+                buttonsSelectIslandMotherNature.get(2).setBounds(50, 520, 150, 150);
+                buttonsSelectIslandMotherNature.get(3).setBounds(50, 320, 150, 150);
+                buttonsSelectIslandMotherNature.get(4).setBounds(50, 100, 150, 150);
+            }
+            case 8->{
+                buttonsSelectIslandMotherNature.get(0).setBounds(255, 615, 150, 150);
+                buttonsSelectIslandMotherNature.get(1).setBounds(50, 520, 150, 150);
+                buttonsSelectIslandMotherNature.get(2).setBounds(50, 320, 150, 150);
+                buttonsSelectIslandMotherNature.get(3).setBounds(50, 100, 150, 150);
+                buttonsSelectIslandMotherNature.get(4).setBounds(285, 30, 150, 150);
+            }
+            case 9->{
+                buttonsSelectIslandMotherNature.get(0).setBounds(50, 520, 150, 150);
+                buttonsSelectIslandMotherNature.get(1).setBounds(50, 320, 150, 150);
+                buttonsSelectIslandMotherNature.get(2).setBounds(50, 100, 150, 150);
+                buttonsSelectIslandMotherNature.get(3).setBounds(285, 30, 150, 150);
+                buttonsSelectIslandMotherNature.get(4).setBounds(510, 30, 150, 150);
+            }
+            case 10->{
+                buttonsSelectIslandMotherNature.get(0).setBounds(50, 320, 150, 150);
+                buttonsSelectIslandMotherNature.get(1).setBounds(50, 100, 150, 150);
+                buttonsSelectIslandMotherNature.get(2).setBounds(285, 30, 150, 150);
+                buttonsSelectIslandMotherNature.get(3).setBounds(510, 30, 150, 150);
+                buttonsSelectIslandMotherNature.get(4).setBounds(750, 30, 150, 150);
+            }
+            case 11->{
+                buttonsSelectIslandMotherNature.get(0).setBounds(50, 100, 150, 150);
+                buttonsSelectIslandMotherNature.get(1).setBounds(285, 30, 150, 150);
+                buttonsSelectIslandMotherNature.get(2).setBounds(510, 30, 150, 150);
+                buttonsSelectIslandMotherNature.get(3).setBounds(750, 30, 150, 150);
+                buttonsSelectIslandMotherNature.get(4).setBounds(950, 100, 150, 150);
+            }
+        }
+    }
 
     @Override
     public void selectCloud(AskCloudMessage message) {
+        labelPlayerMessage.setText("# SELECT A CLOUD #");
+        for(int i=0;i<message.getClouds().size();i++){
+            buttonsSelectCloud[i].setVisible(true);
+        }
 
+
+    }
+
+    public void shiftButtonClouds(int index){
+        switch(index)
+        {
+
+        }
     }
 
 
     @Override
     public void schoolUpdate(SchoolUpdateMessage message) {
-
+        if(username.equals(message.getPlayerName())){
+            for (int i = 0; i < 10; i++) {
+                if (message.getSchool().getSchoolHall()[0].getTableHall()[i] != null) {
+                    labelBlueHallList[i].setVisible(true);
+                }
+                if (message.getSchool().getSchoolHall()[1].getTableHall()[i] != null) {
+                    labelGreenHallList[i].setVisible(true);
+                }
+                if (message.getSchool().getSchoolHall()[2].getTableHall()[i] != null) {
+                    labelPinkHallList[i].setVisible(true);
+                }
+                if (message.getSchool().getSchoolHall()[3].getTableHall()[i] != null) {
+                    labelRedHallList[i].setVisible(true);
+                }
+                if (message.getSchool().getSchoolHall()[4].getTableHall()[i] != null) {
+                    labelYellowHallList[i].setVisible(true);
+                }
+            }
+            if (message.getSchool().getBlueProfessor() != null) {
+                labelProfessorList[0].setVisible(true);
+            }
+            if (message.getSchool().getGreenProfessor() != null) {
+                labelProfessorList[1].setVisible(true);
+            }
+            if (message.getSchool().getPinkProfessor() != null) {
+                labelProfessorList[2].setVisible(true);
+            }
+            if (message.getSchool().getRedProfessor() != null) {
+                labelProfessorList[3].setVisible(true);
+            }
+            if (message.getSchool().getYellowProfessor() != null) {
+                labelProfessorList[4].setVisible(true);
+            }
+        }
     }
 
     @Override
     public void islandsUpdate(ChangeOnIslandMessage message) {
+
+        for(int i = 0; i < message.getIslands().size(); i++){
+            int blueStudentCounter= message.getIslands().get(i).getBlueStudents().size();
+            int greenStudentCounter= message.getIslands().get(i).getGreenStudents().size();
+            int pinkStudentCounter= message.getIslands().get(i).getPinkStudents().size();
+            int redStudentCounter= message.getIslands().get(i).getRedStudents().size();
+            int yellowStudentCounter= message.getIslands().get(i).getYellowStudents().size();
+
+            int towerOnIsland = message.getIslands().get(i).getTowers().size();
+
+            labelBlueCounters[i].setText(blueStudentCounter+"");
+            labelGreenCounters[i].setText(greenStudentCounter+"");
+            labelPinkCounters[i].setText(pinkStudentCounter+"");
+            labelRedCounters[i].setText(redStudentCounter+"");
+            labelYellowCounters[i].setText(yellowStudentCounter+"");
+
+            if(0 < towerOnIsland){
+                TowerColor color = message.getIslands().get(i).getTowers().get(0).getColor();
+                switch (color){
+                    case WHITE -> labelWhiteTowerCounter[i].setText(towerOnIsland+"");
+                    case BLACK -> labelBlackTowerCounter[i].setText(towerOnIsland+"");
+                    case GREY -> labelGreyTowerCounter[i].setText(towerOnIsland+"");
+                }
+            }
+            //set the visibility of MN for each island received by the message
+            labelMotherNatureList[i].setVisible(message.getIslands().get(i).hasMotherNature());
+        }
 
     }
 
