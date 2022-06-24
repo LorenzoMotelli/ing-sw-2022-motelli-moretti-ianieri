@@ -305,35 +305,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             setLabelAssistantCardBounds(labelAssistantDeck[i], i);
             labelAssistantDeck[i].setIcon(assistantsImage[i]);
         }
-        /*labelAssistantDeck[0].setBounds(165, 160, 160, 235);
-        //labelAssistantDeck[0].setIcon(assistant1);
-
-        labelAssistantDeck[1].setBounds(330, 160, 160, 235);
-        //labelAssistantDeck[1].setIcon(assistant2);
-
-        labelAssistantDeck[2].setBounds(495, 160, 160, 235);
-        //labelAssistantDeck[2].setIcon(assistant3);
-
-        labelAssistantDeck[3].setBounds(660, 160, 160, 235);
-        //labelAssistantDeck[3].setIcon(assistant4);
-
-        labelAssistantDeck[4].setBounds(825, 160, 160, 235);
-        //labelAssistantDeck[4].setIcon(assistant5);
-
-        labelAssistantDeck[9].setBounds(825, 415, 160, 235);
-        //labelAssistantDeck[9].setIcon(assistant10);
-
-        labelAssistantDeck[8].setBounds(660, 415, 160, 235);
-        //labelAssistantDeck[8].setIcon(assistant9);
-
-        labelAssistantDeck[7].setBounds(495, 415, 160, 235);
-        //labelAssistantDeck[7].setIcon(assistant8);
-
-        labelAssistantDeck[6].setBounds(330, 415, 160, 235);
-        //labelAssistantDeck[6].setIcon(assistant7);
-
-        labelAssistantDeck[5].setBounds(165, 415, 160, 235);
-        //labelAssistantDeck[5].setIcon(assistant6);*/
 
         for(int i = 0; i < buttonsAssistant.length; i++){
             buttonsAssistant[i] = new JButton("");
@@ -446,18 +417,18 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelBlackTowerCounter[10].setBounds(55,373,25,25);
         labelBlackTowerCounter[11].setBounds(55,155,25,25);
 
-            labelGreyTowerCounter[0].setBounds(266,85,25,25);
-            labelGreyTowerCounter[1].setBounds(488,85,25,25);
-            labelGreyTowerCounter[2].setBounds(724,85,25,25);
-            labelGreyTowerCounter[3].setBounds(931,156,25,25);
-            labelGreyTowerCounter[4].setBounds(931,373,25,25);
-            labelGreyTowerCounter[5].setBounds(931,575,25,25);
-            labelGreyTowerCounter[6].setBounds(724,668,25,25);
-            labelGreyTowerCounter[7].setBounds(488,668,25,25);
-            labelGreyTowerCounter[8].setBounds(233,672,25,25);
-            labelGreyTowerCounter[9].setBounds(27,575,25,25);
-            labelGreyTowerCounter[10].setBounds(27,373,25,25);
-            labelGreyTowerCounter[11].setBounds(27,155,25,25);
+        labelGreyTowerCounter[0].setBounds(266,85,25,25);
+        labelGreyTowerCounter[1].setBounds(488,85,25,25);
+        labelGreyTowerCounter[2].setBounds(724,85,25,25);
+        labelGreyTowerCounter[3].setBounds(931,156,25,25);
+        labelGreyTowerCounter[4].setBounds(931,373,25,25);
+        labelGreyTowerCounter[5].setBounds(931,575,25,25);
+        labelGreyTowerCounter[6].setBounds(724,668,25,25);
+        labelGreyTowerCounter[7].setBounds(488,668,25,25);
+        labelGreyTowerCounter[8].setBounds(233,672,25,25);
+        labelGreyTowerCounter[9].setBounds(27,575,25,25);
+        labelGreyTowerCounter[10].setBounds(27,373,25,25);
+        labelGreyTowerCounter[11].setBounds(27,155,25,25);
 
 
         for(int i = 0; i < 12; i++){
@@ -579,73 +550,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelYellowCloudCounters[1].setBounds(698,388,25,25);
         labelPinkCloudCounters[1].setBounds(726,388,25,25);
 
-
-
-        /*labelGreenCloudCounters = new JLabel[size];
-        labelPinkCloudCounters = new JLabel[size];
-        labelRedCloudCounters = new JLabel[size];
-        labelYellowCloudCounters = new JLabel[size];
-        for(int i = 0; i < size; i++) {
-            labelBlueCloudCounters[i] = new JLabel();
-            labelGreenCloudCounters[i] = new JLabel();
-            labelPinkCloudCounters[i] = new JLabel();
-            labelRedCloudCounters[i] = new JLabel();
-            labelYellowCloudCounters[i] = new JLabel();
-        }
-        if(size==2) {
-            labelRedCloudCounters[0].setBounds(415,388,25,25);
-            labelGreenCloudCounters[0].setBounds(443,388,25,25);
-            labelBlueCloudCounters[0].setBounds(471,388,25,25);
-            labelYellowCloudCounters[0].setBounds(499,388,25,25);
-            labelPinkCloudCounters[0].setBounds(526,388,25,25);
-            labelRedCloudCounters[1].setBounds(614,388,25,25);
-            labelGreenCloudCounters[1].setBounds(642,388,25,25);
-            labelBlueCloudCounters[1].setBounds(670,388,25,25);
-            labelYellowCloudCounters[1].setBounds(698,388,25,25);
-            labelPinkCloudCounters[1].setBounds(726,388,25,25);
-        }
-        if(size==3) {
-            labelRedCloudCounters[0].setBounds(415,310,25,25);
-            labelGreenCloudCounters[0].setBounds(443,310,25,25);
-            labelBlueCloudCounters[0].setBounds(471,310,25,25);
-            labelYellowCloudCounters[0].setBounds(499,310,25,25);
-            labelPinkCloudCounters[0].setBounds(527,310,25,25);
-            labelRedCloudCounters[1].setBounds(613,310,25,25);
-            labelGreenCloudCounters[1].setBounds(641,310,25,25);
-            labelBlueCloudCounters[1].setBounds(669,310,25,25);
-            labelYellowCloudCounters[1].setBounds(697,310,25,25);
-            labelPinkCloudCounters[1].setBounds(725,310,25,25);
-            labelRedCloudCounters[2].setBounds(513,474,25,25);
-            labelGreenCloudCounters[2].setBounds(541,474,25,25);
-            labelBlueCloudCounters[2].setBounds(569,474,25,25);
-            labelYellowCloudCounters[2].setBounds(597,474,25,25);
-            labelPinkCloudCounters[2].setBounds(625,474,25,25);
-        }
-        if(size==4) {
-            labelRedCloudCounters[0].setBounds(415,313,25,25);
-            labelGreenCloudCounters[0].setBounds(443,313,25,25);
-            labelBlueCloudCounters[0].setBounds(471,313,25,25);
-            labelYellowCloudCounters[0].setBounds(499,313,25,25);
-            labelPinkCloudCounters[0].setBounds(527,313,25,25);
-            labelRedCloudCounters[1].setBounds(613,313,25,25);
-            labelGreenCloudCounters[1].setBounds(641,313,25,25);
-            labelBlueCloudCounters[1].setBounds(669,313,25,25);
-            labelYellowCloudCounters[1].setBounds(697,313,25,25);
-            labelPinkCloudCounters[1].setBounds(725,313,25,25);
-            labelRedCloudCounters[2].setBounds(415,472,25,25);
-            labelGreenCloudCounters[2].setBounds(443,472,25,25);
-            labelBlueCloudCounters[2].setBounds(471,472,25,25);
-            labelYellowCloudCounters[2].setBounds(499,472,25,25);
-            labelPinkCloudCounters[2].setBounds(527,472,25,25);
-            labelRedCloudCounters[3].setBounds(630,472,25,25);
-            labelGreenCloudCounters[3].setBounds(658,472,25,25);
-            labelBlueCloudCounters[3].setBounds(686,472,25,25);
-            labelYellowCloudCounters[3].setBounds(714,472,25,25);
-            labelPinkCloudCounters[3].setBounds(742,472,25,25);
-        }*/
-
-        //1 island
-        //ImageIcon motherNatureImage = new ImageIcon("src/images/motherNature.png");
         for(int i = 0; i < 12; i++){
             labelMotherNatureList[i] = new JLabel();
             labelMotherNatureList[i].setIcon(motherNatureImage);
@@ -656,7 +560,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsSelectIslandMotherNature.add(new JButton(""));
             buttonsSelectIslandMotherNature.get(i).addActionListener(this);
             transparentButton(buttonsSelectIslandMotherNature.get(i));
-
         }
         //first island
         labelMotherNatureList[0].setBounds(305, 100, 100, 100);
@@ -744,19 +647,14 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         //7 select student
         buttonsSelectStudent[6].setBounds(1410, 758, 40, 40);
         transparentButton(buttonsSelectStudent[6]);
-
-        //for the game with 3 players you have to use 9 students
-        //if(size==3) {
         //8 select student
         buttonsSelectStudent[7].setBounds(1470, 708, 40, 40);
        // buttonsSelectStudent[7].addActionListener(this);
         transparentButton(buttonsSelectStudent[7]);
-
         //9 select student
         buttonsSelectStudent[8].setBounds(1470, 758, 40, 40);
         //buttonsSelectStudent[8].addActionListener(this);
         transparentButton(buttonsSelectStudent[8]);
-        //}
 
         //button for put student in tha tables
         buttonPutOnTable= new JButton("");
@@ -863,25 +761,17 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
         //button for the selection of the clouds based on the different field of the game
         for(int i = 0; i < 4; i++){
-            buttonsSelectCloud[i] = new JButton("");
+            buttonsSelectCloud[i] = new JButton("number " + i);
+            buttonsSelectCloud[i].addActionListener(this);
+            transparentButton(buttonsSelectCloud[i]);
         }
 
-            buttonsSelectCloud[0].setBounds(430, 350, 100, 100);
-            buttonsSelectCloud[0].addActionListener(this);
-            transparentButton(buttonsSelectCloud[0]);//images 7 slot students in the beginning hall
-
-            buttonsSelectCloud[1].setBounds(630, 350, 100, 100);
-            buttonsSelectCloud[1].addActionListener(this);
-            transparentButton(buttonsSelectCloud[1]);
-
-            buttonsSelectCloud[2].setBounds(530, 430, 100, 100);
-            buttonsSelectCloud[2].addActionListener(this);
-            transparentButton(buttonsSelectCloud[2]);
-
-            buttonsSelectCloud[3].setBounds(640, 430, 100, 100);
-            buttonsSelectCloud[3].addActionListener(this);
-            transparentButton(buttonsSelectCloud[3]);
-
+        buttonsSelectCloud[0].setBounds(430, 350, 100, 100);
+        buttonsSelectCloud[1].setBounds(630, 350, 100, 100);
+        buttonsSelectCloud[2].setBounds(530, 430, 100, 100);
+        buttonsSelectCloud[2].setVisible(false);
+        buttonsSelectCloud[3].setBounds(640, 430, 100, 100);
+        buttonsSelectCloud[3].setVisible(false);
 
         //a way to communicate with the players
         labelPlayerMessage = new JLabel("# TEXT BOX #", SwingConstants.CENTER);
@@ -926,7 +816,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelGreyTowerList[4].setBounds(1368, 0, 60, 60);
         labelGreyTowerList[5].setBounds(1368, 65, 60, 60);
 
-
         //button for select cards
         buttonViewCards = new JButton("# VIEW CARDS #");
         buttonViewCards.setBounds(950, 720, 150, 50);
@@ -946,7 +835,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelSetBackground.setBounds(0,0,1600,800);
 
         frameGame.setVisible(false);
-
     }
 
     public void setLabelAssistantCardBounds(JLabel labelAssistantCard, int cardNumber){
@@ -963,10 +851,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             case 9 -> labelAssistantCard.setBounds(825, 415, 160, 235);
         }
     }
-
-    /*public void main(String[] args) {
-        new GuiClientInterface();
-    }*/
 
     @Override
     public void askUsername() {
@@ -1282,7 +1166,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         }
         else if(e.getSource()== buttonsSelectStudent[5])
         {
-            labelPlayerMessage.setText("# STUDENT 6 SELECTED #");
+            labelPlayerMessage.setText("# STUD buttonsSelectCloud[size-1].setVisible(false);ENT 6 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(5));
 
@@ -1312,7 +1196,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelPlayerMessage.setText("# STUDENT 9 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(8));
-
             buttonsSelectStudent[8].setVisible(false);
             labelEntranceStudents[8].setVisible(false);
         }
@@ -1324,21 +1207,80 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
             buttonPutOnTable.setVisible(false);
         }
-        else if(e.getSource()== buttonsSelectCloud[0])
-        {
+        else if(e.getSource()== buttonsSelectCloud[0]) {
             labelPlayerMessage.setText("# CLOUD 1 SELECTED #");
+            messageHandler.sendMessage(new SelectCloudMessage(0));
+            if (size == 3) {
+                buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
+                buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
+                buttonsSelectCloud[2].setBounds(530, 430, 100, 100);
+            }
+            else if(size==4) {
+                buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
+                buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
+                buttonsSelectCloud[2].setBounds(430, 430, 100, 100);
+                buttonsSelectCloud[3].setBounds(640, 430, 100, 100);
+            }
+            for(int i = 0; i < 4; i++){
+                buttonsSelectCloud[i].setVisible(false);
+            }
         }
         else if(e.getSource()== buttonsSelectCloud[1])
         {
             labelPlayerMessage.setText("# CLOUD 2 SELECTED #");
+            messageHandler.sendMessage(new SelectCloudMessage(1));
+            if (size == 3) {
+                buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
+                buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
+                buttonsSelectCloud[2].setBounds(530, 430, 100, 100);
+            }
+            else if(size==4) {
+                buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
+                buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
+                buttonsSelectCloud[2].setBounds(430, 430, 100, 100);
+                buttonsSelectCloud[3].setBounds(640, 430, 100, 100);
+            }
+            for(int i = 0; i < 4; i++){
+                buttonsSelectCloud[i].setVisible(false);
+            }
         }
         else if(e.getSource()== buttonsSelectCloud[2])
         {
             labelPlayerMessage.setText("# CLOUD 3 SELECTED #");
+            messageHandler.sendMessage(new SelectCloudMessage(2));
+            if (size == 3) {
+                buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
+                buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
+                buttonsSelectCloud[2].setBounds(530, 430, 100, 100);
+            }
+            else if(size==4) {
+                buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
+                buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
+                buttonsSelectCloud[2].setBounds(430, 430, 100, 100);
+                buttonsSelectCloud[3].setBounds(640, 430, 100, 100);
+            }
+            for(int i = 0; i < 4; i++){
+                buttonsSelectCloud[i].setVisible(false);
+            }
         }
         else if(e.getSource()== buttonsSelectCloud[3])
         {
             labelPlayerMessage.setText("# CLOUD 4 SELECTED #");
+            messageHandler.sendMessage(new SelectCloudMessage(3));
+            if (size == 3) {
+                buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
+                buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
+                buttonsSelectCloud[2].setBounds(530, 430, 100, 100);
+            }
+            else if(size==4) {
+                buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
+                buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
+                buttonsSelectCloud[2].setBounds(430, 430, 100, 100);
+                buttonsSelectCloud[3].setBounds(640, 430, 100, 100);
+            }
+            for(int i = 0; i < 4; i++){
+                buttonsSelectCloud[i].setVisible(false);
+            }
         }
         else if(e.getSource()== buttonHideCards)
         {
@@ -1483,7 +1425,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 setBackground = new ImageIcon("src/images/background4Player.jpg");
 
                 buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
-
+                buttonsSelectCloud[size-1].setVisible(false);
                 buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
 
                 buttonsSelectCloud[2].setBounds(430, 430, 100, 100);
@@ -1599,9 +1541,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelPinkCloudCounters[i].setVisible(true);
             labelGreenCloudCounters[i].setVisible(true);
         }
-        for(int i = 0; i < labelAssistantDeck.length; i++){
+        /*for(int i = 0; i < labelAssistantDeck.length; i++){
             labelAssistantDeck[i].setVisible(true);
-        }
+        }*/
 
         for(int i = 0; i < game.getTable().getIslands().size(); i++){
             if(3 != size) {
@@ -1964,20 +1906,27 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     @Override
     public void selectCloud(AskCloudMessage message) {
         labelPlayerMessage.setText("# SELECT A CLOUD #");
-        for(int i=0;i<message.getClouds().size();i++){
+        for(int i = 0; i < size; i++){
             buttonsSelectCloud[i].setVisible(true);
         }
-
-
+        for(int i=0;i<size;i++){
+            int redStudentsOnCloud = Integer.parseInt(labelRedCloudCounters[i].getText());
+            int greenStudentsOnCloud = Integer.parseInt(labelGreenCloudCounters[i].getText());
+            int pinkStudentsOnCloud = Integer.parseInt(labelPinkCloudCounters[i].getText());
+            int blueStudentsOnCloud = Integer.parseInt(labelBlueCloudCounters[i].getText());
+            int yellowStudentsOnCloud = Integer.parseInt(labelYellowCloudCounters[i].getText());
+            if(redStudentsOnCloud+greenStudentsOnCloud+pinkStudentsOnCloud+blueStudentsOnCloud+yellowStudentsOnCloud == 0){
+                shiftButtonClouds(i);
+            }
+        }
     }
 
     public void shiftButtonClouds(int index){
-        switch(index)
-        {
-
+        for(int i = index; i < size-1; i++){
+            buttonsSelectCloud[i].setBounds(buttonsSelectCloud[i+1].getBounds());
         }
+        buttonsSelectCloud[size-1].setVisible(false);
     }
-
 
     @Override
     public void schoolUpdate(SchoolUpdateMessage message) {
@@ -2019,7 +1968,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     @Override
     public void islandsUpdate(ChangeOnIslandMessage message) {
-
         for(int i = 0; i < message.getIslands().size(); i++){
             int blueStudentCounter= message.getIslands().get(i).getBlueStudents().size();
             int greenStudentCounter= message.getIslands().get(i).getGreenStudents().size();
@@ -2051,6 +1999,12 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     @Override
     public void endGame(WinnersMessage message) {
-
+        labelPlayerMessage.setText("# PLAYERS ");
+        for(int i = 0; i < message.getPlayers().size(); i++){
+            labelPlayerMessage.setText(labelPlayerMessage.getText() + message.getPlayers().get(i).getPlayerName() + " ");
+        }
+        hideOnlyButtonCards();
+        hideAllButtonsMotherNature();
+        //TODO hide all buttons
     }
 }
