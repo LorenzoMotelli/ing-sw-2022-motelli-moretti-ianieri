@@ -1376,7 +1376,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 setBackground = new ImageIcon("src/images/background3Player.jpg");
 
                 buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
-
                 buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
 
                 labelRedCloudCounters[0].setBounds(415,310,25,25);
