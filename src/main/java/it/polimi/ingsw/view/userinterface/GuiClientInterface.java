@@ -175,6 +175,13 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         return a;
     }
 
+    public static JButton coolerButton(JButton button){
+        button.setBackground(Color.darkGray);
+        button.setForeground(Color.white);
+
+        return button;
+    }
+
     public void hideCards() {
         labelBackgroundCards.setVisible(false);
         for(int i = 0; i < 10; i++){
@@ -240,26 +247,31 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         buttonServer = new JButton("Connect");
         buttonServer.setBounds(300, 400, 150, 25);
         buttonServer.addActionListener(this);
+        coolerButton(buttonServer);
         frameLogin.add(buttonServer);
 
         buttonNext = new JButton("Next");
         buttonNext.setBounds(300, 400, 150, 25);
         buttonNext.addActionListener(this);
+        coolerButton(buttonNext);
         frameLogin.add(buttonNext);
 
         buttonConfirmName = new JButton("Confirm");
         buttonConfirmName.setBounds(300, 400, 150, 25);
         buttonConfirmName.addActionListener(this);
+        coolerButton(buttonConfirmName);
         frameLogin.add(buttonConfirmName);
 
         buttonNextLobby = new JButton("To the lobby");
         buttonNextLobby.setBounds(300, 400, 150, 25);
         buttonNextLobby.addActionListener(this);
+        coolerButton(buttonNextLobby);
         frameLogin.add(buttonNextLobby);
 
         buttonGetReady = new JButton("Get Ready!");
         buttonGetReady.setBounds(300, 400, 150, 25);
         buttonGetReady.addActionListener(this);
+        coolerButton(buttonGetReady);
         frameLogin.add(buttonGetReady);
         buttonGetReady.setVisible(false);
 
