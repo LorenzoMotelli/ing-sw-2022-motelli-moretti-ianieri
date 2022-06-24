@@ -41,7 +41,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private static JButton buttonNextLobby;
     private static JButton buttonConfirmName;
     private static JButton buttonGetReady;
-    private static JPanel panelLogin;
     private static JFrame frameLogin;
     private static JFrame frameGame;
     private static int size;
@@ -162,7 +161,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private static JButton startGame;
 
     private InputStreamReader inputStreamReader;
-    Scanner cmdIn;
     private String serverIp = "localhost";
     private int serverPort =12345 ;
     private String username;
@@ -202,67 +200,75 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         inputStreamReader = new InputStreamReader(System.in);
 
         frameLogin = new JFrame();
-
         ImageIcon logoAPP = new ImageIcon("src/images/LOGO CRANIO CREATIONS_bianco.png");
         frameLogin.setIconImage(logoAPP.getImage());
-
-        panelLogin = new JPanel();
-        panelLogin.setBorder(BorderFactory.createEmptyBorder(150, 300, 300, 300));
-
-        frameLogin.add(panelLogin, BorderLayout.CENTER);
         frameLogin.setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
-        frameLogin.setTitle("ERYANTIS LOGIN");
-        frameLogin.pack();
+        frameLogin.setSize(760,530);
+        frameLogin.setLayout(null);
+        frameLogin.setTitle("LOGIN TO ERYANTIS");
+        frameLogin.setLocationRelativeTo(null);
+
+        ImageIcon backgroundLogin = new ImageIcon("src/images/backgroundLogin.jpg");
+        JLabel labelBackgroundLogin=new JLabel();
+        labelBackgroundLogin.setBounds(0,0,750,500);
+        labelBackgroundLogin.setIcon(backgroundLogin);
 
         labelInsertIP = new JLabel("Insert the server IP: ");
-        labelInsertIP.setBounds(10, 20, 80, 25);
-        panelLogin.add(labelInsertIP);
+        labelInsertIP.setBounds(215, 300, 150, 25);
+        frameLogin.add(labelInsertIP);
 
         serverIPField = new JTextField(20);
-        serverIPField.setBounds(100, 20, 165, 25);
-        panelLogin.add(serverIPField);
+        serverIPField.setBounds(395, 300, 150, 25);
+        frameLogin.add(serverIPField);
 
         labelInsertPort = new JLabel("Insert the server PORT: ");
-        labelInsertPort.setBounds(10, 50, 80, 25);
-        panelLogin.add(labelInsertPort);
+        labelInsertPort.setBounds(215, 350, 150, 25);
+        frameLogin.add(labelInsertPort);
 
         serverPortField = new JTextField(20);
-        serverPortField.setBounds(100, 50, 165, 25);
-        panelLogin.add(serverPortField);
+        serverPortField.setBounds(395, 350, 150, 25);
+        frameLogin.add(serverPortField);
 
         usernameField = new JTextField(20);
-        usernameField.setBounds(100, 20, 165, 25);
+        usernameField.setBounds(395, 300, 150, 25);
+        frameLogin.add(usernameField);
 
         lobbyField = new JTextField(20);
-        lobbyField.setBounds(100, 20, 165, 25);
+        lobbyField.setBounds(395, 300, 150, 25);
+        frameLogin.add(lobbyField);
 
         buttonServer = new JButton("Connect");
-        buttonServer.setBounds(10, 80, 80, 25);
+        buttonServer.setBounds(300, 400, 150, 25);
         buttonServer.addActionListener(this);
-        panelLogin.add(buttonServer);
+        frameLogin.add(buttonServer);
 
         buttonNext = new JButton("Next");
-        buttonNext.setBounds(10, 80, 80, 25);
+        buttonNext.setBounds(300, 400, 150, 25);
         buttonNext.addActionListener(this);
+        frameLogin.add(buttonNext);
 
         buttonConfirmName = new JButton("Confirm");
-        buttonConfirmName.setBounds(10, 80, 80, 25);
+        buttonConfirmName.setBounds(300, 400, 150, 25);
         buttonConfirmName.addActionListener(this);
+        frameLogin.add(buttonConfirmName);
 
         buttonNextLobby = new JButton("To the lobby");
-        buttonNextLobby.setBounds(10, 80, 80, 25);
+        buttonNextLobby.setBounds(300, 400, 150, 25);
         buttonNextLobby.addActionListener(this);
+        frameLogin.add(buttonNextLobby);
 
         buttonGetReady = new JButton("Get Ready!");
-        buttonGetReady.setBounds(10, 80, 80, 25);
+        buttonGetReady.setBounds(300, 400, 150, 25);
         buttonGetReady.addActionListener(this);
+        frameLogin.add(buttonGetReady);
+        buttonGetReady.setVisible(false);
 
-        messageOutput = new JLabel("");
-        messageOutput.setBounds(10,110,300,25);
-        panelLogin.add(messageOutput);
+        messageOutput = new JLabel("", SwingConstants.CENTER);
+        messageOutput.setBounds(230,430,300,25);
+        frameLogin.add(messageOutput);
 
+        frameLogin.add(labelBackgroundLogin);
         frameLogin.setVisible(true);
-        //TODO TOGLI FALSE FINITO TESTING
 
         frameGame=new JFrame();
         ImageIcon logoGame = new ImageIcon("src/images/logWallpaperRaw.jpg");
@@ -952,16 +958,16 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     @Override
     public void askUsername() {
-        buttonNext.setVisible(false);
         buttonServer.setVisible(false);
         serverIPField.setVisible(false);
         serverPortField.setVisible(false);
         labelInsertPort.setVisible(false);
+        buttonNext.setVisible(false);
         messageOutput.setText("");
 
         labelInsertIP.setText("Insert your username: ");
-        panelLogin.add(usernameField);
-        panelLogin.add(buttonConfirmName);
+        usernameField.setVisible(true);
+        buttonConfirmName.setVisible(true);
 
     }
 
@@ -972,7 +978,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         } else if (message.hasToCreateRoom()) {
             this.username = message.getUsername();
             messageOutput.setText("Username accepted");
-            panelLogin.add(buttonNextLobby);
+            buttonNextLobby.setVisible(true);
             buttonConfirmName.setVisible(false);
         } else {
             messageOutput.setText("Username accepted");
@@ -1002,13 +1008,12 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     @Override
     public void askRoomCreation() {
         buttonNextLobby.setVisible(false);
-        buttonConfirmName.setVisible(false);
         usernameField.setVisible(false);
         messageOutput.setText("");
 
-        labelInsertIP.setText("Insert the number of players: ");
-        panelLogin.add(lobbyField);
-        panelLogin.add(buttonGetReady);
+        labelInsertIP.setText("Set the number of players:");
+        lobbyField.setVisible(true);
+        buttonGetReady.setVisible(true);
     }
 
     @Override
@@ -1017,7 +1022,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             messageOutput.setText("Room size is not valid");
 
         } else {
-            messageOutput.setText("Room size accepted\nRoom created");
+            messageOutput.setText("Room created");
             messageHandler.sendMessage(new Message(MessageAction.CLIENT_READY, this.username));
         }
     }
@@ -1047,7 +1052,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             } else {
                 messageOutput.setText("Connected!");
                 buttonServer.setVisible(false);
-                panelLogin.add(buttonNext);
+                buttonNext.setVisible(true);
             }
 
         }
