@@ -81,8 +81,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private final ImageIcon greyTowerIcon = new ImageIcon("src/images/greyTowerRaw.png");
     private final JLabel[] labelGreyTowerList = new JLabel[8];
 
-    private final JLabel labelBackgroundCards;
-    private final ImageIcon backgroundCards;
+    private JLabel labelBackgroundCards;
+    private ImageIcon backgroundCards;
 
     private final JLabel[] labelAssistantDeck = new JLabel[10];
 
@@ -96,17 +96,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private final JLabel[] labelEmptyIsland=new JLabel[12];
     private final ImageIcon emptyIsland=new ImageIcon("src/images/emptyIsland.png");
 
-
-    /*private final ImageIcon assistant1 = new ImageIcon("src/images/assistant1.jpg");
-    private final ImageIcon assistant2 = new ImageIcon("src/images/assistant2.jpg");
-    private final ImageIcon assistant3 = new ImageIcon("src/images/assistant3.jpg");
-    private final ImageIcon assistant4 = new ImageIcon("src/images/assistant4.jpg");
-    private final ImageIcon assistant5 = new ImageIcon("src/images/assistant5.jpg");
-    private final ImageIcon assistant6 = new ImageIcon("src/images/assistant6.jpg");
-    private final ImageIcon assistant7 = new ImageIcon("src/images/assistant7.jpg");
-    private final ImageIcon assistant8 = new ImageIcon("src/images/assistant8.jpg");
-    private final ImageIcon assistant9 = new ImageIcon("src/images/assistant9.jpg");
-    private final ImageIcon assistant10 = new ImageIcon("src/images/assistant10.jpg");*/
     private final ImageIcon[] assistantsImage = {new ImageIcon("src/images/assistant1.jpg"),
             new ImageIcon("src/images/assistant2.jpg"),
             new ImageIcon("src/images/assistant3.jpg"),
@@ -206,6 +195,53 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         messageHandler = new ClientMessageHandler(this);
         inputStreamReader = new InputStreamReader(System.in);
 
+        createLogin();
+
+        frameGame=new JFrame();
+        ImageIcon logoGame = new ImageIcon("src/images/logWallpaperRaw.jpg");
+        frameGame.setIconImage(logoGame.getImage());
+        frameGame.setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
+        frameGame.setSize(1600,900);
+        frameGame.setLayout(null);
+        frameGame.setTitle("ERYANTIS");
+        frameGame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        createAssistantDeck();
+
+        createSchool();
+
+        createIslands();
+
+        createClouds();
+
+        //a way to communicate with the players
+        labelPlayerMessage = new JLabel("# TEXT BOX #", SwingConstants.CENTER);
+        labelPlayerMessage.setBounds(430,205,300,50);
+        labelPlayerMessage.setForeground(Color.WHITE);
+        labelPlayerMessage.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+
+        //button for select cards
+        buttonViewCards = new JButton("# VIEW CARDS #");
+        buttonViewCards.setBounds(950, 720, 150, 50);
+        buttonViewCards.addActionListener(this);
+
+        buttonHideCards = new JButton("# HIDE CARDS #");
+        buttonHideCards.setBounds(950, 720, 150, 50);
+        buttonHideCards.addActionListener(this);
+        buttonHideCards.setVisible(false);
+
+        startGame = new JButton("# START GAME #");
+        startGame.setBounds(0, 0, 1600, 800);
+        startGame.addActionListener(this);
+        frameGame.add(startGame);
+
+        labelSetBackground=new JLabel();
+        labelSetBackground.setBounds(0,0,1600,800);
+
+        frameGame.setVisible(false);
+    }
+
+    public void createLogin(){
         frameLogin = new JFrame();
         ImageIcon logoAPP = new ImageIcon("src/images/LOGO CRANIO CREATIONS_bianco.png");
         frameLogin.setIconImage(logoAPP.getImage());
@@ -281,16 +317,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
         frameLogin.add(labelBackgroundLogin);
         frameLogin.setVisible(true);
+    }
 
-        frameGame=new JFrame();
-        ImageIcon logoGame = new ImageIcon("src/images/logWallpaperRaw.jpg");
-        frameGame.setIconImage(logoGame.getImage());
-        frameGame.setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
-        frameGame.setSize(1600,900);
-        frameGame.setLayout(null);
-        frameGame.setTitle("ERYANTIS");
-        frameGame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+    public void createAssistantDeck(){
         for(int i=0;i<9;i++){
             chosenCard[i]=1;
         }
@@ -305,70 +334,50 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             setLabelAssistantCardBounds(labelAssistantDeck[i], i);
             labelAssistantDeck[i].setIcon(assistantsImage[i]);
         }
-        /*labelAssistantDeck[0].setBounds(165, 160, 160, 235);
-        //labelAssistantDeck[0].setIcon(assistant1);
-
+        labelAssistantDeck[0].setBounds(165, 160, 160, 235);
         labelAssistantDeck[1].setBounds(330, 160, 160, 235);
-        //labelAssistantDeck[1].setIcon(assistant2);
-
         labelAssistantDeck[2].setBounds(495, 160, 160, 235);
-        //labelAssistantDeck[2].setIcon(assistant3);
-
         labelAssistantDeck[3].setBounds(660, 160, 160, 235);
-        //labelAssistantDeck[3].setIcon(assistant4);
-
         labelAssistantDeck[4].setBounds(825, 160, 160, 235);
-        //labelAssistantDeck[4].setIcon(assistant5);
-
         labelAssistantDeck[9].setBounds(825, 415, 160, 235);
-        //labelAssistantDeck[9].setIcon(assistant10);
-
         labelAssistantDeck[8].setBounds(660, 415, 160, 235);
-        //labelAssistantDeck[8].setIcon(assistant9);
-
         labelAssistantDeck[7].setBounds(495, 415, 160, 235);
-        //labelAssistantDeck[7].setIcon(assistant8);
-
         labelAssistantDeck[6].setBounds(330, 415, 160, 235);
-        //labelAssistantDeck[6].setIcon(assistant7);
-
         labelAssistantDeck[5].setBounds(165, 415, 160, 235);
-        //labelAssistantDeck[5].setIcon(assistant6);*/
 
         for(int i = 0; i < buttonsAssistant.length; i++){
             buttonsAssistant[i] = new JButton("");
             buttonsAssistant[i].addActionListener(this);
+            transparentButton(buttonsAssistant[i]);
         }
         buttonsAssistant[0].setBounds(165, 160, 160, 235);
-        transparentButton(buttonsAssistant[0]);
-
         buttonsAssistant[1].setBounds(330, 160, 160, 235);
-        transparentButton(buttonsAssistant[1]);
-
         buttonsAssistant[2].setBounds(495, 160, 160, 235);
-        transparentButton(buttonsAssistant[2]);
-
         buttonsAssistant[3].setBounds(660, 160, 160, 235);
-        transparentButton(buttonsAssistant[3]);
-
         buttonsAssistant[4].setBounds(825, 160, 160, 235);
-        transparentButton(buttonsAssistant[4]);
-
         buttonsAssistant[5].setBounds(165, 415, 160, 235);
-        transparentButton(buttonsAssistant[5]);
-
         buttonsAssistant[6].setBounds(330, 415, 160, 235);
-        transparentButton(buttonsAssistant[6]);
-
         buttonsAssistant[7].setBounds(495, 415, 160, 235);
-        transparentButton(buttonsAssistant[7]);
-
         buttonsAssistant[8].setBounds(660, 415, 160, 235);
-        transparentButton(buttonsAssistant[8]);
-
         buttonsAssistant[9].setBounds(825, 415, 160, 235);
-        transparentButton(buttonsAssistant[9]);
+    }
 
+    public void setLabelAssistantCardBounds(JLabel labelAssistantCard, int cardNumber){
+        switch (cardNumber){
+            case 0 -> labelAssistantCard.setBounds(165, 160, 160, 235);
+            case 1 -> labelAssistantCard.setBounds(330, 160, 160, 235);
+            case 2 -> labelAssistantCard.setBounds(495, 160, 160, 235);
+            case 3 -> labelAssistantCard.setBounds(660, 160, 160, 235);
+            case 4 -> labelAssistantCard.setBounds(825, 160, 160, 235);
+            case 5 -> labelAssistantCard.setBounds(165, 415, 160, 235);
+            case 6 -> labelAssistantCard.setBounds(330, 415, 160, 235);
+            case 7 -> labelAssistantCard.setBounds(495, 415, 160, 235);
+            case 8 -> labelAssistantCard.setBounds(660, 415, 160, 235);
+            case 9 -> labelAssistantCard.setBounds(825, 415, 160, 235);
+        }
+    }
+
+    public void createSchool(){
         //professors
         for(int i=0;i<5;i++)
         {
@@ -386,378 +395,29 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelProfessorList[3].setBounds(1231,135,100,100);
         labelProfessorList[4].setBounds(1293,135,100,100);
 
-        //emptyIsland
-        for(int i=0;i<12;i++)
-        {
-            labelEmptyIsland[i]=new JLabel();
-            labelEmptyIsland[i].setIcon(emptyIsland);
-        }
-        labelEmptyIsland[0].setBounds(242,-5,235,235);
-        labelEmptyIsland[1].setBounds(468,-15,235,235);
-        labelEmptyIsland[2].setBounds(705,-15,235,235);
-        labelEmptyIsland[3].setBounds(910,55,235,235);
-        labelEmptyIsland[11].setBounds(11,60,235,235);
-        labelEmptyIsland[10].setBounds(11,280,235,235);
-        labelEmptyIsland[4].setBounds(910,280,235,235);
-        labelEmptyIsland[5].setBounds(910,480,235,235);
-        labelEmptyIsland[9].setBounds(11,480,235,235);
-        labelEmptyIsland[8].setBounds(212,580,235,235);
-        labelEmptyIsland[7].setBounds(468,580,235,235);
-        labelEmptyIsland[6].setBounds(707,580,235,235);
-
-        //counters
-        for(int i = 0; i < 12; i++){
-            labelWhiteTowerCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
-            labelWhiteTowerCounter[i].setForeground(Color.WHITE);
-            labelWhiteTowerCounter[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-            labelBlackTowerCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
-            labelBlackTowerCounter[i].setForeground(Color.WHITE);
-            labelBlackTowerCounter[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-            labelGreyTowerCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
-            labelGreyTowerCounter[i].setForeground(Color.WHITE);
-            labelGreyTowerCounter[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-        }
-        //white counters
-        labelWhiteTowerCounter[0].setBounds(322,85,25,25);
-        labelWhiteTowerCounter[1].setBounds(544,85,25,25);
-        labelWhiteTowerCounter[2].setBounds(780,85,25,25);
-        labelWhiteTowerCounter[3].setBounds(987,156,25,25);
-        labelWhiteTowerCounter[4].setBounds(987,373,25,25);
-        labelWhiteTowerCounter[5].setBounds(986,575,25,25);
-        labelWhiteTowerCounter[6].setBounds(780,668,25,25);
-        labelWhiteTowerCounter[7].setBounds(544,668,25,25);
-        labelWhiteTowerCounter[8].setBounds(289,672,25,25);
-        labelWhiteTowerCounter[9].setBounds(83,575,25,25);
-        labelWhiteTowerCounter[10].setBounds(83,373,25,25);
-        labelWhiteTowerCounter[11].setBounds(83,155,25,25);
-        //black counters
-        labelBlackTowerCounter[0].setBounds(294,85,25,25);
-        labelBlackTowerCounter[1].setBounds(516,85,25,25);
-        labelBlackTowerCounter[2].setBounds(752,85,25,25);
-        labelBlackTowerCounter[3].setBounds(959,156,25,25);
-        labelBlackTowerCounter[4].setBounds(959,373,25,25);
-        labelBlackTowerCounter[5].setBounds(959,575,25,25);
-        labelBlackTowerCounter[6].setBounds(752,668,25,25);
-        labelBlackTowerCounter[7].setBounds(516,668,25,25);
-        labelBlackTowerCounter[8].setBounds(261,672,25,25);
-        labelBlackTowerCounter[9].setBounds(55,575,25,25);
-        labelBlackTowerCounter[10].setBounds(55,373,25,25);
-        labelBlackTowerCounter[11].setBounds(55,155,25,25);
-
-            labelGreyTowerCounter[0].setBounds(266,85,25,25);
-            labelGreyTowerCounter[1].setBounds(488,85,25,25);
-            labelGreyTowerCounter[2].setBounds(724,85,25,25);
-            labelGreyTowerCounter[3].setBounds(931,156,25,25);
-            labelGreyTowerCounter[4].setBounds(931,373,25,25);
-            labelGreyTowerCounter[5].setBounds(931,575,25,25);
-            labelGreyTowerCounter[6].setBounds(724,668,25,25);
-            labelGreyTowerCounter[7].setBounds(488,668,25,25);
-            labelGreyTowerCounter[8].setBounds(233,672,25,25);
-            labelGreyTowerCounter[9].setBounds(27,575,25,25);
-            labelGreyTowerCounter[10].setBounds(27,373,25,25);
-            labelGreyTowerCounter[11].setBounds(27,155,25,25);
-
-
-        for(int i = 0; i < 12; i++){
-            labelRedCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
-            labelRedCounters[i].setForeground(Color.WHITE);
-            labelRedCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-            labelYellowCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
-            labelYellowCounters[i].setForeground(Color.WHITE);
-            labelYellowCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-            labelBlueCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
-            labelBlueCounters[i].setForeground(Color.WHITE);
-            labelBlueCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-            labelGreenCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
-            labelGreenCounters[i].setForeground(Color.WHITE);
-            labelGreenCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-
-            labelPinkCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
-            labelPinkCounters[i].setForeground(Color.WHITE);
-            labelPinkCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
-        }
-        //set red counters bounds
-        labelRedCounters[0].setBounds(391,23,25,25);
-        labelRedCounters[1].setBounds(613,23,25,25);
-        labelRedCounters[2].setBounds(850,23,25,25);
-        labelRedCounters[3].setBounds(1056,92,25,25);
-        labelRedCounters[4].setBounds(1056,310,25,25);
-        labelRedCounters[5].setBounds(1056,511,25,25);
-        labelRedCounters[6].setBounds(850,604,25,25);
-        labelRedCounters[7].setBounds(613,604,25,25);
-        labelRedCounters[8].setBounds(358,608,25,25);
-        labelRedCounters[9].setBounds(153,510,25,25);
-        labelRedCounters[10].setBounds(153,310,25,25);
-        labelRedCounters[11].setBounds(153,90,25,25);
-        //set green counters bounds
-        labelGreenCounters[0].setBounds(391,59,25,25);
-        labelGreenCounters[1].setBounds(613,59,25,25);
-        labelGreenCounters[2].setBounds(850,59,25,25);
-        labelGreenCounters[3].setBounds(1056,128,25,25);
-        labelGreenCounters[4].setBounds(1056,346,25,25);
-        labelGreenCounters[5].setBounds(1056,547,25,25);
-        labelGreenCounters[6].setBounds(850,640,25,25);
-        labelGreenCounters[7].setBounds(613,640,25,25);
-        labelGreenCounters[8].setBounds(358,644,25,25);
-        labelGreenCounters[9].setBounds(153,546,25,25);
-        labelGreenCounters[10].setBounds(153,346,25,25);
-        labelGreenCounters[11].setBounds(153,126,25,25);
-        //set blue counters bounds
-        labelBlueCounters[0].setBounds(391,96,25,25);
-        labelBlueCounters[1].setBounds(613,96,25,25);
-        labelBlueCounters[2].setBounds(850,96,25,25);
-        labelBlueCounters[3].setBounds(1056,165,25,25);
-        labelBlueCounters[4].setBounds(1056,383,25,25);
-        labelBlueCounters[5].setBounds(1056,584,25,25);
-        labelBlueCounters[6].setBounds(850,677,25,25);
-        labelBlueCounters[7].setBounds(613,677,25,25);
-        labelBlueCounters[8].setBounds(358,681,25,25);
-        labelBlueCounters[9].setBounds(153,583,25,25);
-        labelBlueCounters[10].setBounds(153,383,25,25);
-        labelBlueCounters[11].setBounds(153,163,25,25);
-        //set yellow counters bounds
-        labelYellowCounters[0].setBounds(391,134,25,25);
-        labelYellowCounters[1].setBounds(613,134,25,25);
-        labelYellowCounters[2].setBounds(850,134,25,25);
-        labelYellowCounters[3].setBounds(1056,203,25,25);
-        labelYellowCounters[4].setBounds(1056,424,25,25);
-        labelYellowCounters[5].setBounds(1056,622,25,25);
-        labelYellowCounters[6].setBounds(850,715,25,25);
-        labelYellowCounters[7].setBounds(613,715,25,25);
-        labelYellowCounters[8].setBounds(358,719,25,25);
-        labelYellowCounters[9].setBounds(153,621,25,25);
-        labelYellowCounters[10].setBounds(153,421,25,25);
-        labelYellowCounters[11].setBounds(153,201,25,25);
-        //set pink counters bounds
-        labelPinkCounters[0].setBounds(391,172,25,25);
-        labelPinkCounters[1].setBounds(613,172,25,25);
-        labelPinkCounters[2].setBounds(850,172,25,25);
-        labelPinkCounters[3].setBounds(1056,241,25,25);
-        labelPinkCounters[4].setBounds(1056,462,25,25);
-        labelPinkCounters[5].setBounds(1056,660,25,25);
-        labelPinkCounters[6].setBounds(850,753,25,25);
-        labelPinkCounters[7].setBounds(613,753,25,25);
-        labelPinkCounters[8].setBounds(358,757,25,25);
-        labelPinkCounters[9].setBounds(153,659,25,25);
-        labelPinkCounters[10].setBounds(153,459,25,25);
-        labelPinkCounters[11].setBounds(153,239,25,25);
-
-        for(int i = 0; i < 4; i++){
-            labelRedCloudCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
-            labelRedCloudCounters[i].setForeground(Color.black);
-            labelRedCloudCounters[i].setBorder(BorderFactory.createLineBorder(Color.black, 3));
-
-            labelYellowCloudCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
-            labelYellowCloudCounters[i].setForeground(Color.black);
-            labelYellowCloudCounters[i].setBorder(BorderFactory.createLineBorder(Color.black, 3));
-
-            labelBlueCloudCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
-            labelBlueCloudCounters[i].setForeground(Color.black);
-            labelBlueCloudCounters[i].setBorder(BorderFactory.createLineBorder(Color.black, 3));
-
-            labelGreenCloudCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
-            labelGreenCloudCounters[i].setForeground(Color.black);
-            labelGreenCloudCounters[i].setBorder(BorderFactory.createLineBorder(Color.black, 3));
-
-            labelPinkCloudCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
-            labelPinkCloudCounters[i].setForeground(Color.black);
-            labelPinkCloudCounters[i].setBorder(BorderFactory.createLineBorder(Color.black, 3));
-        }
-        labelRedCloudCounters[0].setBounds(415,388,25,25);
-        labelGreenCloudCounters[0].setBounds(443,388,25,25);
-        labelBlueCloudCounters[0].setBounds(471,388,25,25);
-        labelYellowCloudCounters[0].setBounds(499,388,25,25);
-        labelPinkCloudCounters[0].setBounds(526,388,25,25);
-        labelRedCloudCounters[1].setBounds(614,388,25,25);
-        labelGreenCloudCounters[1].setBounds(642,388,25,25);
-        labelBlueCloudCounters[1].setBounds(670,388,25,25);
-        labelYellowCloudCounters[1].setBounds(698,388,25,25);
-        labelPinkCloudCounters[1].setBounds(726,388,25,25);
-
-
-
-        /*labelGreenCloudCounters = new JLabel[size];
-        labelPinkCloudCounters = new JLabel[size];
-        labelRedCloudCounters = new JLabel[size];
-        labelYellowCloudCounters = new JLabel[size];
-        for(int i = 0; i < size; i++) {
-            labelBlueCloudCounters[i] = new JLabel();
-            labelGreenCloudCounters[i] = new JLabel();
-            labelPinkCloudCounters[i] = new JLabel();
-            labelRedCloudCounters[i] = new JLabel();
-            labelYellowCloudCounters[i] = new JLabel();
-        }
-        if(size==2) {
-            labelRedCloudCounters[0].setBounds(415,388,25,25);
-            labelGreenCloudCounters[0].setBounds(443,388,25,25);
-            labelBlueCloudCounters[0].setBounds(471,388,25,25);
-            labelYellowCloudCounters[0].setBounds(499,388,25,25);
-            labelPinkCloudCounters[0].setBounds(526,388,25,25);
-            labelRedCloudCounters[1].setBounds(614,388,25,25);
-            labelGreenCloudCounters[1].setBounds(642,388,25,25);
-            labelBlueCloudCounters[1].setBounds(670,388,25,25);
-            labelYellowCloudCounters[1].setBounds(698,388,25,25);
-            labelPinkCloudCounters[1].setBounds(726,388,25,25);
-        }
-        if(size==3) {
-            labelRedCloudCounters[0].setBounds(415,310,25,25);
-            labelGreenCloudCounters[0].setBounds(443,310,25,25);
-            labelBlueCloudCounters[0].setBounds(471,310,25,25);
-            labelYellowCloudCounters[0].setBounds(499,310,25,25);
-            labelPinkCloudCounters[0].setBounds(527,310,25,25);
-            labelRedCloudCounters[1].setBounds(613,310,25,25);
-            labelGreenCloudCounters[1].setBounds(641,310,25,25);
-            labelBlueCloudCounters[1].setBounds(669,310,25,25);
-            labelYellowCloudCounters[1].setBounds(697,310,25,25);
-            labelPinkCloudCounters[1].setBounds(725,310,25,25);
-            labelRedCloudCounters[2].setBounds(513,474,25,25);
-            labelGreenCloudCounters[2].setBounds(541,474,25,25);
-            labelBlueCloudCounters[2].setBounds(569,474,25,25);
-            labelYellowCloudCounters[2].setBounds(597,474,25,25);
-            labelPinkCloudCounters[2].setBounds(625,474,25,25);
-        }
-        if(size==4) {
-            labelRedCloudCounters[0].setBounds(415,313,25,25);
-            labelGreenCloudCounters[0].setBounds(443,313,25,25);
-            labelBlueCloudCounters[0].setBounds(471,313,25,25);
-            labelYellowCloudCounters[0].setBounds(499,313,25,25);
-            labelPinkCloudCounters[0].setBounds(527,313,25,25);
-            labelRedCloudCounters[1].setBounds(613,313,25,25);
-            labelGreenCloudCounters[1].setBounds(641,313,25,25);
-            labelBlueCloudCounters[1].setBounds(669,313,25,25);
-            labelYellowCloudCounters[1].setBounds(697,313,25,25);
-            labelPinkCloudCounters[1].setBounds(725,313,25,25);
-            labelRedCloudCounters[2].setBounds(415,472,25,25);
-            labelGreenCloudCounters[2].setBounds(443,472,25,25);
-            labelBlueCloudCounters[2].setBounds(471,472,25,25);
-            labelYellowCloudCounters[2].setBounds(499,472,25,25);
-            labelPinkCloudCounters[2].setBounds(527,472,25,25);
-            labelRedCloudCounters[3].setBounds(630,472,25,25);
-            labelGreenCloudCounters[3].setBounds(658,472,25,25);
-            labelBlueCloudCounters[3].setBounds(686,472,25,25);
-            labelYellowCloudCounters[3].setBounds(714,472,25,25);
-            labelPinkCloudCounters[3].setBounds(742,472,25,25);
-        }*/
-
-        //1 island
-        //ImageIcon motherNatureImage = new ImageIcon("src/images/motherNature.png");
-        for(int i = 0; i < 12; i++){
-            labelMotherNatureList[i] = new JLabel();
-            labelMotherNatureList[i].setIcon(motherNatureImage);
-
-            buttonsSelectIsland[i] = new JButton("");
-            buttonsSelectIsland[i].addActionListener(this);
-
-            buttonsSelectIslandMotherNature.add(new JButton(""));
-            buttonsSelectIslandMotherNature.get(i).addActionListener(this);
-            transparentButton(buttonsSelectIslandMotherNature.get(i));
-
-        }
-        //first island
-        labelMotherNatureList[0].setBounds(305, 100, 100, 100);
-        buttonsSelectIsland[0].setBounds(285, 30, 150, 150);
-        buttonsSelectIslandMotherNature.get(0).setBounds(285, 30, 150, 150);
-        transparentButton(buttonsSelectIsland[0]);
-        //second island
-        labelMotherNatureList[1].setBounds(525, 100, 100, 100);
-        buttonsSelectIsland[1].setBounds(510, 30, 150, 150);
-        buttonsSelectIslandMotherNature.get(1).setBounds(510, 30, 150, 150);
-        transparentButton(buttonsSelectIsland[1]);
-        //third island
-        labelMotherNatureList[2].setBounds(760, 100, 100, 100);
-        buttonsSelectIsland[2].setBounds(750, 30, 150, 150);
-        buttonsSelectIslandMotherNature.get(2).setBounds(750, 30, 150, 150);
-        transparentButton(buttonsSelectIsland[2]);
-        //fourth island
-        labelMotherNatureList[3].setBounds(970, 170, 100, 100);
-        buttonsSelectIsland[3].setBounds(950, 100, 150, 150);
-        buttonsSelectIslandMotherNature.get(3).setBounds(950, 100, 150, 150);
-        transparentButton(buttonsSelectIsland[3]);
-        //fifth island
-        labelMotherNatureList[4].setBounds(970, 380, 100, 100);
-        buttonsSelectIsland[4].setBounds(950, 320, 150, 150);
-        buttonsSelectIslandMotherNature.get(4).setBounds(950, 320, 150, 150);
-        transparentButton(buttonsSelectIsland[4]);
-        //sixth island
-        labelMotherNatureList[5].setBounds(970, 580, 100, 100);
-        buttonsSelectIsland[5].setBounds(950, 510, 150, 150);
-        buttonsSelectIslandMotherNature.get(5).setBounds(950, 510, 150, 150);
-        transparentButton(buttonsSelectIsland[5]);
-        //seventh island
-        labelMotherNatureList[6].setBounds(765, 680, 100, 100);
-        buttonsSelectIsland[6].setBounds(750, 615, 150, 150);
-        buttonsSelectIslandMotherNature.get(6).setBounds(750, 615, 150, 150);
-        transparentButton(buttonsSelectIsland[6]);
-        //eighth island
-        labelMotherNatureList[7].setBounds(525, 680, 100, 100);
-        buttonsSelectIsland[7].setBounds(510, 615, 150, 150);
-        buttonsSelectIslandMotherNature.get(7).setBounds(510, 615, 150, 150);
-        transparentButton(buttonsSelectIsland[7]);
-        //ninth island
-        labelMotherNatureList[8].setBounds(270, 680, 100, 100);
-        buttonsSelectIsland[8].setBounds(255, 615, 150, 150);
-        buttonsSelectIslandMotherNature.get(8).setBounds(255, 615, 150, 150);
-        transparentButton(buttonsSelectIsland[8]);
-        //tenth island
-        labelMotherNatureList[9].setBounds(65, 580, 100, 100);
-        buttonsSelectIsland[9].setBounds(50, 520, 150, 150);
-        buttonsSelectIslandMotherNature.get(9).setBounds(50, 520, 150, 150);
-        transparentButton(buttonsSelectIsland[9]);
-        //eleventh island
-        labelMotherNatureList[10].setBounds(65, 380, 100, 100);
-        buttonsSelectIsland[10].setBounds(50, 320, 150, 150);
-        buttonsSelectIslandMotherNature.get(10).setBounds(50, 320, 150, 150);
-        transparentButton(buttonsSelectIsland[10]);
-        //twelfth island
-        labelMotherNatureList[11].setBounds(65, 170, 100, 100);
-        buttonsSelectIsland[11].setBounds(50, 100, 150, 150);
-        buttonsSelectIslandMotherNature.get(11).setBounds(50, 100, 150, 150);
-        transparentButton(buttonsSelectIsland[11]);
-
         for(int i = 0; i < buttonsSelectStudent.length; i++){
             buttonsSelectStudent[i] = new JButton("");
             buttonsSelectStudent[i].addActionListener(this);
+            transparentButton(buttonsSelectStudent[i]);
         }
         //1 select student
         buttonsSelectStudent[0].setBounds(1225, 708, 40, 40);
-        transparentButton(buttonsSelectStudent[0]);
         //2 select student
         buttonsSelectStudent[1].setBounds(1285, 708, 40, 40);
-        transparentButton(buttonsSelectStudent[1]);
         //3 select student
         buttonsSelectStudent[2].setBounds(1285, 758, 40, 40);
-        transparentButton(buttonsSelectStudent[2]);
         //4 select student
         buttonsSelectStudent[3].setBounds(1350, 708, 40, 40);
-        transparentButton(buttonsSelectStudent[3]);
         //5 select student
         buttonsSelectStudent[4].setBounds(1350, 758, 40, 40);
-        transparentButton(buttonsSelectStudent[4]);
         //6 select student
         buttonsSelectStudent[5].setBounds(1410, 708, 40, 40);
-        transparentButton(buttonsSelectStudent[5]);
         //7 select student
         buttonsSelectStudent[6].setBounds(1410, 758, 40, 40);
-        transparentButton(buttonsSelectStudent[6]);
-
-        //for the game with 3 players you have to use 9 students
-        //if(size==3) {
         //8 select student
         buttonsSelectStudent[7].setBounds(1470, 708, 40, 40);
-       // buttonsSelectStudent[7].addActionListener(this);
-        transparentButton(buttonsSelectStudent[7]);
-
         //9 select student
         buttonsSelectStudent[8].setBounds(1470, 758, 40, 40);
-        //buttonsSelectStudent[8].addActionListener(this);
-        transparentButton(buttonsSelectStudent[8]);
-        //}
-
         //button for put student in tha tables
         buttonPutOnTable= new JButton("");
         buttonPutOnTable.setBounds(1180, 190, 353, 480);
@@ -861,34 +521,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         //images 9 slot students in the beginning hall
         labelEntranceStudents[8].setBounds(1466, 728, 100, 100);
 
-        //button for the selection of the clouds based on the different field of the game
-        for(int i = 0; i < 4; i++){
-            buttonsSelectCloud[i] = new JButton("");
-        }
-
-            buttonsSelectCloud[0].setBounds(430, 350, 100, 100);
-            buttonsSelectCloud[0].addActionListener(this);
-            transparentButton(buttonsSelectCloud[0]);//images 7 slot students in the beginning hall
-
-            buttonsSelectCloud[1].setBounds(630, 350, 100, 100);
-            buttonsSelectCloud[1].addActionListener(this);
-            transparentButton(buttonsSelectCloud[1]);
-
-            buttonsSelectCloud[2].setBounds(530, 430, 100, 100);
-            buttonsSelectCloud[2].addActionListener(this);
-            transparentButton(buttonsSelectCloud[2]);
-
-            buttonsSelectCloud[3].setBounds(640, 430, 100, 100);
-            buttonsSelectCloud[3].addActionListener(this);
-            transparentButton(buttonsSelectCloud[3]);
-
-
-        //a way to communicate with the players
-        labelPlayerMessage = new JLabel("# TEXT BOX #", SwingConstants.CENTER);
-        labelPlayerMessage.setBounds(430,205,300,50);
-        labelPlayerMessage.setForeground(Color.WHITE);
-        labelPlayerMessage.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
-
         //towers configuration
         for(int i = 0; i < 8; i++){
             labelWhiteTowerList[i] = new JLabel();
@@ -925,43 +557,332 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelGreyTowerList[3].setBounds(1306, 65, 60, 60);
         labelGreyTowerList[4].setBounds(1368, 0, 60, 60);
         labelGreyTowerList[5].setBounds(1368, 65, 60, 60);
-
-
-        //button for select cards
-        buttonViewCards = new JButton("# VIEW CARDS #");
-        buttonViewCards.setBounds(950, 720, 150, 50);
-        buttonViewCards.addActionListener(this);
-
-        buttonHideCards = new JButton("# HIDE CARDS #");
-        buttonHideCards.setBounds(950, 720, 150, 50);
-        buttonHideCards.addActionListener(this);
-        buttonHideCards.setVisible(false);
-
-        startGame = new JButton("# START GAME #");
-        startGame.setBounds(0, 0, 1600, 800);
-        startGame.addActionListener(this);
-        frameGame.add(startGame);
-
-        labelSetBackground=new JLabel();
-        labelSetBackground.setBounds(0,0,1600,800);
-
-        frameGame.setVisible(false);
-
     }
 
-    public void setLabelAssistantCardBounds(JLabel labelAssistantCard, int cardNumber){
-        switch (cardNumber){
-            case 0 -> labelAssistantCard.setBounds(165, 160, 160, 235);
-            case 1 -> labelAssistantCard.setBounds(330, 160, 160, 235);
-            case 2 -> labelAssistantCard.setBounds(495, 160, 160, 235);
-            case 3 -> labelAssistantCard.setBounds(660, 160, 160, 235);
-            case 4 -> labelAssistantCard.setBounds(825, 160, 160, 235);
-            case 5 -> labelAssistantCard.setBounds(165, 415, 160, 235);
-            case 6 -> labelAssistantCard.setBounds(330, 415, 160, 235);
-            case 7 -> labelAssistantCard.setBounds(495, 415, 160, 235);
-            case 8 -> labelAssistantCard.setBounds(660, 415, 160, 235);
-            case 9 -> labelAssistantCard.setBounds(825, 415, 160, 235);
+    public void createIslands(){
+        //emptyIsland
+        for(int i=0;i<12;i++)
+        {
+            labelEmptyIsland[i]=new JLabel();
+            labelEmptyIsland[i].setIcon(emptyIsland);
         }
+        labelEmptyIsland[0].setBounds(242,-5,235,235);
+        labelEmptyIsland[1].setBounds(468,-15,235,235);
+        labelEmptyIsland[2].setBounds(705,-15,235,235);
+        labelEmptyIsland[3].setBounds(910,55,235,235);
+        labelEmptyIsland[11].setBounds(11,60,235,235);
+        labelEmptyIsland[10].setBounds(11,280,235,235);
+        labelEmptyIsland[4].setBounds(910,280,235,235);
+        labelEmptyIsland[5].setBounds(910,480,235,235);
+        labelEmptyIsland[9].setBounds(11,480,235,235);
+        labelEmptyIsland[8].setBounds(212,580,235,235);
+        labelEmptyIsland[7].setBounds(468,580,235,235);
+        labelEmptyIsland[6].setBounds(707,580,235,235);
+
+        //counters
+        for(int i = 0; i < 12; i++){
+            labelWhiteTowerCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelWhiteTowerCounter[i].setForeground(Color.WHITE);
+            labelWhiteTowerCounter[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+
+            labelBlackTowerCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelBlackTowerCounter[i].setForeground(Color.WHITE);
+            labelBlackTowerCounter[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+
+            labelGreyTowerCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreyTowerCounter[i].setForeground(Color.WHITE);
+            labelGreyTowerCounter[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        }
+        //white counters
+        labelWhiteTowerCounter[0].setBounds(322,85,25,25);
+        labelWhiteTowerCounter[1].setBounds(544,85,25,25);
+        labelWhiteTowerCounter[2].setBounds(780,85,25,25);
+        labelWhiteTowerCounter[3].setBounds(987,156,25,25);
+        labelWhiteTowerCounter[4].setBounds(987,373,25,25);
+        labelWhiteTowerCounter[5].setBounds(986,575,25,25);
+        labelWhiteTowerCounter[6].setBounds(780,668,25,25);
+        labelWhiteTowerCounter[7].setBounds(544,668,25,25);
+        labelWhiteTowerCounter[8].setBounds(289,672,25,25);
+        labelWhiteTowerCounter[9].setBounds(83,575,25,25);
+        labelWhiteTowerCounter[10].setBounds(83,373,25,25);
+        labelWhiteTowerCounter[11].setBounds(83,155,25,25);
+        //black counters
+        labelBlackTowerCounter[0].setBounds(294,85,25,25);
+        labelBlackTowerCounter[1].setBounds(516,85,25,25);
+        labelBlackTowerCounter[2].setBounds(752,85,25,25);
+        labelBlackTowerCounter[3].setBounds(959,156,25,25);
+        labelBlackTowerCounter[4].setBounds(959,373,25,25);
+        labelBlackTowerCounter[5].setBounds(959,575,25,25);
+        labelBlackTowerCounter[6].setBounds(752,668,25,25);
+        labelBlackTowerCounter[7].setBounds(516,668,25,25);
+        labelBlackTowerCounter[8].setBounds(261,672,25,25);
+        labelBlackTowerCounter[9].setBounds(55,575,25,25);
+        labelBlackTowerCounter[10].setBounds(55,373,25,25);
+        labelBlackTowerCounter[11].setBounds(55,155,25,25);
+
+        labelGreyTowerCounter[0].setBounds(266,85,25,25);
+        labelGreyTowerCounter[1].setBounds(488,85,25,25);
+        labelGreyTowerCounter[2].setBounds(724,85,25,25);
+        labelGreyTowerCounter[3].setBounds(931,156,25,25);
+        labelGreyTowerCounter[4].setBounds(931,373,25,25);
+        labelGreyTowerCounter[5].setBounds(931,575,25,25);
+        labelGreyTowerCounter[6].setBounds(724,668,25,25);
+        labelGreyTowerCounter[7].setBounds(488,668,25,25);
+        labelGreyTowerCounter[8].setBounds(233,672,25,25);
+        labelGreyTowerCounter[9].setBounds(27,575,25,25);
+        labelGreyTowerCounter[10].setBounds(27,373,25,25);
+        labelGreyTowerCounter[11].setBounds(27,155,25,25);
+
+
+        for(int i = 0; i < 12; i++){
+            labelRedCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelRedCounters[i].setForeground(Color.WHITE);
+            labelRedCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+
+            labelYellowCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelYellowCounters[i].setForeground(Color.WHITE);
+            labelYellowCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+
+            labelBlueCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelBlueCounters[i].setForeground(Color.WHITE);
+            labelBlueCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+
+            labelGreenCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreenCounters[i].setForeground(Color.WHITE);
+            labelGreenCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+
+            labelPinkCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelPinkCounters[i].setForeground(Color.WHITE);
+            labelPinkCounters[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        }
+        //set red counters bounds
+        labelRedCounters[0].setBounds(391,23,25,25);
+        labelRedCounters[1].setBounds(613,23,25,25);
+        labelRedCounters[2].setBounds(850,23,25,25);
+        labelRedCounters[3].setBounds(1056,92,25,25);
+        labelRedCounters[4].setBounds(1056,310,25,25);
+        labelRedCounters[5].setBounds(1056,511,25,25);
+        labelRedCounters[6].setBounds(850,604,25,25);
+        labelRedCounters[7].setBounds(613,604,25,25);
+        labelRedCounters[8].setBounds(358,608,25,25);
+        labelRedCounters[9].setBounds(153,510,25,25);
+        labelRedCounters[10].setBounds(153,310,25,25);
+        labelRedCounters[11].setBounds(153,90,25,25);
+        //set green counters bounds
+        labelGreenCounters[0].setBounds(391,59,25,25);
+        labelGreenCounters[1].setBounds(613,59,25,25);
+        labelGreenCounters[2].setBounds(850,59,25,25);
+        labelGreenCounters[3].setBounds(1056,128,25,25);
+        labelGreenCounters[4].setBounds(1056,346,25,25);
+        labelGreenCounters[5].setBounds(1056,547,25,25);
+        labelGreenCounters[6].setBounds(850,640,25,25);
+        labelGreenCounters[7].setBounds(613,640,25,25);
+        labelGreenCounters[8].setBounds(358,644,25,25);
+        labelGreenCounters[9].setBounds(153,546,25,25);
+        labelGreenCounters[10].setBounds(153,346,25,25);
+        labelGreenCounters[11].setBounds(153,126,25,25);
+        //set blue counters bounds
+        labelBlueCounters[0].setBounds(391,96,25,25);
+        labelBlueCounters[1].setBounds(613,96,25,25);
+        labelBlueCounters[2].setBounds(850,96,25,25);
+        labelBlueCounters[3].setBounds(1056,165,25,25);
+        labelBlueCounters[4].setBounds(1056,383,25,25);
+        labelBlueCounters[5].setBounds(1056,584,25,25);
+        labelBlueCounters[6].setBounds(850,677,25,25);
+        labelBlueCounters[7].setBounds(613,677,25,25);
+        labelBlueCounters[8].setBounds(358,681,25,25);
+        labelBlueCounters[9].setBounds(153,583,25,25);
+        labelBlueCounters[10].setBounds(153,383,25,25);
+        labelBlueCounters[11].setBounds(153,163,25,25);
+        //set yellow counters bounds
+        labelYellowCounters[0].setBounds(391,134,25,25);
+        labelYellowCounters[1].setBounds(613,134,25,25);
+        labelYellowCounters[2].setBounds(850,134,25,25);
+        labelYellowCounters[3].setBounds(1056,203,25,25);
+        labelYellowCounters[4].setBounds(1056,424,25,25);
+        labelYellowCounters[5].setBounds(1056,622,25,25);
+        labelYellowCounters[6].setBounds(850,715,25,25);
+        labelYellowCounters[7].setBounds(613,715,25,25);
+        labelYellowCounters[8].setBounds(358,719,25,25);
+        labelYellowCounters[9].setBounds(153,621,25,25);
+        labelYellowCounters[10].setBounds(153,421,25,25);
+        labelYellowCounters[11].setBounds(153,201,25,25);
+        //set pink counters bounds
+        labelPinkCounters[0].setBounds(391,172,25,25);
+        labelPinkCounters[1].setBounds(613,172,25,25);
+        labelPinkCounters[2].setBounds(850,172,25,25);
+        labelPinkCounters[3].setBounds(1056,241,25,25);
+        labelPinkCounters[4].setBounds(1056,462,25,25);
+        labelPinkCounters[5].setBounds(1056,660,25,25);
+        labelPinkCounters[6].setBounds(850,753,25,25);
+        labelPinkCounters[7].setBounds(613,753,25,25);
+        labelPinkCounters[8].setBounds(358,757,25,25);
+        labelPinkCounters[9].setBounds(153,659,25,25);
+        labelPinkCounters[10].setBounds(153,459,25,25);
+        labelPinkCounters[11].setBounds(153,239,25,25);
+
+        for(int i = 0; i < 12; i++){
+            labelMotherNatureList[i] = new JLabel();
+            labelMotherNatureList[i].setIcon(motherNatureImage);
+
+            buttonsSelectIsland[i] = new JButton("");
+            buttonsSelectIsland[i].addActionListener(this);
+            transparentButton(buttonsSelectIsland[i]);
+
+            if(i < 5){
+                buttonsSelectIslandMotherNature.add(new JButton(""));
+                buttonsSelectIslandMotherNature.get(i).addActionListener(this);
+                transparentButton(buttonsSelectIslandMotherNature.get(i));
+            }
+        }
+        //first island
+        labelMotherNatureList[0].setBounds(305, 100, 100, 100);
+        buttonsSelectIsland[0].setBounds(285, 30, 150, 150);
+        buttonsSelectIslandMotherNature.get(0).setBounds(285, 30, 150, 150);
+        //second island
+        labelMotherNatureList[1].setBounds(525, 100, 100, 100);
+        buttonsSelectIsland[1].setBounds(510, 30, 150, 150);
+        buttonsSelectIslandMotherNature.get(1).setBounds(510, 30, 150, 150);
+        //third island
+        labelMotherNatureList[2].setBounds(760, 100, 100, 100);
+        buttonsSelectIsland[2].setBounds(750, 30, 150, 150);
+        buttonsSelectIslandMotherNature.get(2).setBounds(750, 30, 150, 150);
+        //fourth island
+        labelMotherNatureList[3].setBounds(970, 170, 100, 100);
+        buttonsSelectIsland[3].setBounds(950, 100, 150, 150);
+        buttonsSelectIslandMotherNature.get(3).setBounds(950, 100, 150, 150);
+        //fifth island
+        labelMotherNatureList[4].setBounds(970, 380, 100, 100);
+        buttonsSelectIsland[4].setBounds(950, 320, 150, 150);
+        buttonsSelectIslandMotherNature.get(4).setBounds(950, 320, 150, 150);
+        //sixth island
+        labelMotherNatureList[5].setBounds(970, 580, 100, 100);
+        buttonsSelectIsland[5].setBounds(950, 510, 150, 150);
+        //seventh island
+        labelMotherNatureList[6].setBounds(765, 680, 100, 100);
+        buttonsSelectIsland[6].setBounds(750, 615, 150, 150);
+        //eighth island
+        labelMotherNatureList[7].setBounds(525, 680, 100, 100);
+        buttonsSelectIsland[7].setBounds(510, 615, 150, 150);
+        //ninth island
+        labelMotherNatureList[8].setBounds(270, 680, 100, 100);
+        buttonsSelectIsland[8].setBounds(255, 615, 150, 150);
+        //tenth island
+        labelMotherNatureList[9].setBounds(65, 580, 100, 100);
+        buttonsSelectIsland[9].setBounds(50, 520, 150, 150);
+        //eleventh island
+        labelMotherNatureList[10].setBounds(65, 380, 100, 100);
+        buttonsSelectIsland[10].setBounds(50, 320, 150, 150);
+        //twelfth island
+        labelMotherNatureList[11].setBounds(65, 170, 100, 100);
+        buttonsSelectIsland[11].setBounds(50, 100, 150, 150);
+    }
+
+    public void createClouds(){
+        for(int i = 0; i < 4; i++){
+            labelRedCloudCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelRedCloudCounters[i].setForeground(Color.black);
+            labelRedCloudCounters[i].setBorder(BorderFactory.createLineBorder(Color.black, 3));
+
+            labelYellowCloudCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelYellowCloudCounters[i].setForeground(Color.black);
+            labelYellowCloudCounters[i].setBorder(BorderFactory.createLineBorder(Color.black, 3));
+
+            labelBlueCloudCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelBlueCloudCounters[i].setForeground(Color.black);
+            labelBlueCloudCounters[i].setBorder(BorderFactory.createLineBorder(Color.black, 3));
+
+            labelGreenCloudCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelGreenCloudCounters[i].setForeground(Color.black);
+            labelGreenCloudCounters[i].setBorder(BorderFactory.createLineBorder(Color.black, 3));
+
+            labelPinkCloudCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
+            labelPinkCloudCounters[i].setForeground(Color.black);
+            labelPinkCloudCounters[i].setBorder(BorderFactory.createLineBorder(Color.black, 3));
+        }
+        labelRedCloudCounters[0].setBounds(415,388,25,25);
+        labelGreenCloudCounters[0].setBounds(443,388,25,25);
+        labelBlueCloudCounters[0].setBounds(471,388,25,25);
+        labelYellowCloudCounters[0].setBounds(499,388,25,25);
+        labelPinkCloudCounters[0].setBounds(526,388,25,25);
+        labelRedCloudCounters[1].setBounds(614,388,25,25);
+        labelGreenCloudCounters[1].setBounds(642,388,25,25);
+        labelBlueCloudCounters[1].setBounds(670,388,25,25);
+        labelYellowCloudCounters[1].setBounds(698,388,25,25);
+        labelPinkCloudCounters[1].setBounds(726,388,25,25);
+
+        labelGreenCloudCounters = new JLabel[size];
+        labelPinkCloudCounters = new JLabel[size];
+        labelRedCloudCounters = new JLabel[size];
+        labelYellowCloudCounters = new JLabel[size];
+        for(int i = 0; i < size; i++) {
+            labelBlueCloudCounters[i] = new JLabel();
+            labelGreenCloudCounters[i] = new JLabel();
+            labelPinkCloudCounters[i] = new JLabel();
+            labelRedCloudCounters[i] = new JLabel();
+            labelYellowCloudCounters[i] = new JLabel();
+        }
+        if(size==2) {
+            labelRedCloudCounters[0].setBounds(415,388,25,25);
+            labelGreenCloudCounters[0].setBounds(443,388,25,25);
+            labelBlueCloudCounters[0].setBounds(471,388,25,25);
+            labelYellowCloudCounters[0].setBounds(499,388,25,25);
+            labelPinkCloudCounters[0].setBounds(526,388,25,25);
+            labelRedCloudCounters[1].setBounds(614,388,25,25);
+            labelGreenCloudCounters[1].setBounds(642,388,25,25);
+            labelBlueCloudCounters[1].setBounds(670,388,25,25);
+            labelYellowCloudCounters[1].setBounds(698,388,25,25);
+            labelPinkCloudCounters[1].setBounds(726,388,25,25);
+        }
+        if(size==3) {
+            labelRedCloudCounters[0].setBounds(415,310,25,25);
+            labelGreenCloudCounters[0].setBounds(443,310,25,25);
+            labelBlueCloudCounters[0].setBounds(471,310,25,25);
+            labelYellowCloudCounters[0].setBounds(499,310,25,25);
+            labelPinkCloudCounters[0].setBounds(527,310,25,25);
+            labelRedCloudCounters[1].setBounds(613,310,25,25);
+            labelGreenCloudCounters[1].setBounds(641,310,25,25);
+            labelBlueCloudCounters[1].setBounds(669,310,25,25);
+            labelYellowCloudCounters[1].setBounds(697,310,25,25);
+            labelPinkCloudCounters[1].setBounds(725,310,25,25);
+            labelRedCloudCounters[2].setBounds(513,474,25,25);
+            labelGreenCloudCounters[2].setBounds(541,474,25,25);
+            labelBlueCloudCounters[2].setBounds(569,474,25,25);
+            labelYellowCloudCounters[2].setBounds(597,474,25,25);
+            labelPinkCloudCounters[2].setBounds(625,474,25,25);
+        }
+        if(size==4) {
+            labelRedCloudCounters[0].setBounds(415,313,25,25);
+            labelGreenCloudCounters[0].setBounds(443,313,25,25);
+            labelBlueCloudCounters[0].setBounds(471,313,25,25);
+            labelYellowCloudCounters[0].setBounds(499,313,25,25);
+            labelPinkCloudCounters[0].setBounds(527,313,25,25);
+            labelRedCloudCounters[1].setBounds(613,313,25,25);
+            labelGreenCloudCounters[1].setBounds(641,313,25,25);
+            labelBlueCloudCounters[1].setBounds(669,313,25,25);
+            labelYellowCloudCounters[1].setBounds(697,313,25,25);
+            labelPinkCloudCounters[1].setBounds(725,313,25,25);
+            labelRedCloudCounters[2].setBounds(415,472,25,25);
+            labelGreenCloudCounters[2].setBounds(443,472,25,25);
+            labelBlueCloudCounters[2].setBounds(471,472,25,25);
+            labelYellowCloudCounters[2].setBounds(499,472,25,25);
+            labelPinkCloudCounters[2].setBounds(527,472,25,25);
+            labelRedCloudCounters[3].setBounds(630,472,25,25);
+            labelGreenCloudCounters[3].setBounds(658,472,25,25);
+            labelBlueCloudCounters[3].setBounds(686,472,25,25);
+            labelYellowCloudCounters[3].setBounds(714,472,25,25);
+            labelPinkCloudCounters[3].setBounds(742,472,25,25);
+        }
+        //button for the selection of the clouds based on the different field of the game
+        for(int i = 0; i < 4; i++){
+            buttonsSelectCloud[i] = new JButton("");
+            buttonsSelectCloud[i].addActionListener(this);
+            transparentButton(buttonsSelectCloud[i]);
+        }
+        buttonsSelectCloud[0].setBounds(430, 350, 100, 100);
+        buttonsSelectCloud[1].setBounds(630, 350, 100, 100);
+        buttonsSelectCloud[2].setBounds(530, 430, 100, 100);
+        buttonsSelectCloud[3].setBounds(640, 430, 100, 100);
     }
 
     /*public void main(String[] args) {
@@ -980,7 +901,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelInsertIP.setText("Insert your username: ");
         usernameField.setVisible(true);
         buttonConfirmName.setVisible(true);
-
     }
 
     @Override
@@ -1823,7 +1743,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelPlayerMessage.setText("# SELECT A STUDENT #");
         for(int i=0;i<message.getStudent().size();i++){
             buttonsSelectStudent[i].setVisible(true);
-            }
+        }
     }
 
     public void shiftStudent(){
@@ -1860,8 +1780,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsSelectIslandMotherNature.get(i).setVisible(false);
         }
         for(int i = 0; i <labelMotherNatureList.length; i++){
-           if(labelMotherNatureList[i].isVisible())
-           {
+           if(labelMotherNatureList[i].isVisible()) {
                shiftButtonsMotherNature(i+1);
                break;
            }
@@ -1872,8 +1791,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     }
 
     public void shiftButtonsMotherNature(int index){
-        switch(index)
-        {
+        switch(index) {
             case 0->{
                 buttonsSelectIslandMotherNature.get(0).setBounds(285, 30, 150, 150);
                 buttonsSelectIslandMotherNature.get(1).setBounds(510, 30, 150, 150);
@@ -1967,13 +1885,10 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         for(int i=0;i<message.getClouds().size();i++){
             buttonsSelectCloud[i].setVisible(true);
         }
-
-
     }
 
     public void shiftButtonClouds(int index){
-        switch(index)
-        {
+        switch(index) {
 
         }
     }
@@ -2046,7 +1961,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             //set the visibility of MN for each island received by the message
             labelMotherNatureList[i].setVisible(message.getIslands().get(i).hasMotherNature());
         }
-
     }
 
     @Override
