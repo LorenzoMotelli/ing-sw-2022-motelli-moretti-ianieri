@@ -325,11 +325,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         buttonsAssistant[7].setBounds(495, 415, 160, 235);
         buttonsAssistant[8].setBounds(660, 415, 160, 235);
         buttonsAssistant[9].setBounds(825, 415, 160, 235);
-        transparentButton(buttonsAssistant[9]);
 
         //professors
-        for(int i=0;i<5;i++)
-        {
+        for(int i=0;i<5;i++) {
             labelProfessorList[i]=new JLabel();
         }
         labelProfessorList[0].setIcon(blueProfessor);
@@ -345,8 +343,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelProfessorList[4].setBounds(1293,135,100,100);
 
         //emptyIsland
-        for(int i=0;i<12;i++)
-        {
+        for(int i=0;i<12;i++) {
             labelEmptyIsland[i]=new JLabel();
             labelEmptyIsland[i].setIcon(emptyIsland);
         }
@@ -377,7 +374,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelGreyTowerCounter[i].setForeground(Color.WHITE);
             labelGreyTowerCounter[i].setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
         }
-        //white counters
+        //white tower counters
         labelWhiteTowerCounter[0].setBounds(322,85,25,25);
         labelWhiteTowerCounter[1].setBounds(544,85,25,25);
         labelWhiteTowerCounter[2].setBounds(780,85,25,25);
@@ -390,7 +387,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelWhiteTowerCounter[9].setBounds(83,575,25,25);
         labelWhiteTowerCounter[10].setBounds(83,373,25,25);
         labelWhiteTowerCounter[11].setBounds(83,155,25,25);
-        //black counters
+        //white tower counters
         labelBlackTowerCounter[0].setBounds(294,85,25,25);
         labelBlackTowerCounter[1].setBounds(516,85,25,25);
         labelBlackTowerCounter[2].setBounds(752,85,25,25);
@@ -403,7 +400,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelBlackTowerCounter[9].setBounds(55,575,25,25);
         labelBlackTowerCounter[10].setBounds(55,373,25,25);
         labelBlackTowerCounter[11].setBounds(55,155,25,25);
-
+        //grey tower counters
         labelGreyTowerCounter[0].setBounds(266,85,25,25);
         labelGreyTowerCounter[1].setBounds(488,85,25,25);
         labelGreyTowerCounter[2].setBounds(724,85,25,25);
@@ -416,7 +413,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelGreyTowerCounter[9].setBounds(27,575,25,25);
         labelGreyTowerCounter[10].setBounds(27,373,25,25);
         labelGreyTowerCounter[11].setBounds(27,155,25,25);
-
 
         for(int i = 0; i < 12; i++){
             labelRedCounters[i] = new JLabel(" 0", SwingConstants.CENTER);
@@ -543,6 +539,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
             buttonsSelectIsland[i] = new JButton("");
             buttonsSelectIsland[i].addActionListener(this);
+            transparentButton(buttonsSelectIsland[i]);
 
             buttonsSelectIslandMotherNature.add(new JButton(""));
             buttonsSelectIslandMotherNature.get(i).addActionListener(this);
@@ -552,96 +549,75 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelMotherNatureList[0].setBounds(305, 100, 100, 100);
         buttonsSelectIsland[0].setBounds(285, 30, 150, 150);
         buttonsSelectIslandMotherNature.get(0).setBounds(285, 30, 150, 150);
-        transparentButton(buttonsSelectIsland[0]);
+
         //second island
         labelMotherNatureList[1].setBounds(525, 100, 100, 100);
         buttonsSelectIsland[1].setBounds(510, 30, 150, 150);
         buttonsSelectIslandMotherNature.get(1).setBounds(510, 30, 150, 150);
-        transparentButton(buttonsSelectIsland[1]);
         //third island
         labelMotherNatureList[2].setBounds(760, 100, 100, 100);
         buttonsSelectIsland[2].setBounds(750, 30, 150, 150);
         buttonsSelectIslandMotherNature.get(2).setBounds(750, 30, 150, 150);
-        transparentButton(buttonsSelectIsland[2]);
         //fourth island
         labelMotherNatureList[3].setBounds(970, 170, 100, 100);
         buttonsSelectIsland[3].setBounds(950, 100, 150, 150);
         buttonsSelectIslandMotherNature.get(3).setBounds(950, 100, 150, 150);
-        transparentButton(buttonsSelectIsland[3]);
         //fifth island
         labelMotherNatureList[4].setBounds(970, 380, 100, 100);
         buttonsSelectIsland[4].setBounds(950, 320, 150, 150);
         buttonsSelectIslandMotherNature.get(4).setBounds(950, 320, 150, 150);
-        transparentButton(buttonsSelectIsland[4]);
         //sixth island
         labelMotherNatureList[5].setBounds(970, 580, 100, 100);
         buttonsSelectIsland[5].setBounds(950, 510, 150, 150);
         buttonsSelectIslandMotherNature.get(5).setBounds(950, 510, 150, 150);
-        transparentButton(buttonsSelectIsland[5]);
         //seventh island
         labelMotherNatureList[6].setBounds(765, 680, 100, 100);
         buttonsSelectIsland[6].setBounds(750, 615, 150, 150);
         buttonsSelectIslandMotherNature.get(6).setBounds(750, 615, 150, 150);
-        transparentButton(buttonsSelectIsland[6]);
         //eighth island
         labelMotherNatureList[7].setBounds(525, 680, 100, 100);
         buttonsSelectIsland[7].setBounds(510, 615, 150, 150);
         buttonsSelectIslandMotherNature.get(7).setBounds(510, 615, 150, 150);
-        transparentButton(buttonsSelectIsland[7]);
         //ninth island
         labelMotherNatureList[8].setBounds(270, 680, 100, 100);
         buttonsSelectIsland[8].setBounds(255, 615, 150, 150);
         buttonsSelectIslandMotherNature.get(8).setBounds(255, 615, 150, 150);
-        transparentButton(buttonsSelectIsland[8]);
         //tenth island
         labelMotherNatureList[9].setBounds(65, 580, 100, 100);
         buttonsSelectIsland[9].setBounds(50, 520, 150, 150);
         buttonsSelectIslandMotherNature.get(9).setBounds(50, 520, 150, 150);
-        transparentButton(buttonsSelectIsland[9]);
         //eleventh island
         labelMotherNatureList[10].setBounds(65, 380, 100, 100);
         buttonsSelectIsland[10].setBounds(50, 320, 150, 150);
         buttonsSelectIslandMotherNature.get(10).setBounds(50, 320, 150, 150);
-        transparentButton(buttonsSelectIsland[10]);
         //twelfth island
         labelMotherNatureList[11].setBounds(65, 170, 100, 100);
         buttonsSelectIsland[11].setBounds(50, 100, 150, 150);
         buttonsSelectIslandMotherNature.get(11).setBounds(50, 100, 150, 150);
-        transparentButton(buttonsSelectIsland[11]);
 
         for(int i = 0; i < buttonsSelectStudent.length; i++){
             buttonsSelectStudent[i] = new JButton("");
             buttonsSelectStudent[i].addActionListener(this);
+            transparentButton(buttonsSelectStudent[i]);
         }
         //1 select student
         buttonsSelectStudent[0].setBounds(1225, 708, 40, 40);
-        transparentButton(buttonsSelectStudent[0]);
         //2 select student
         buttonsSelectStudent[1].setBounds(1285, 708, 40, 40);
-        transparentButton(buttonsSelectStudent[1]);
         //3 select student
         buttonsSelectStudent[2].setBounds(1285, 758, 40, 40);
-        transparentButton(buttonsSelectStudent[2]);
         //4 select student
         buttonsSelectStudent[3].setBounds(1350, 708, 40, 40);
-        transparentButton(buttonsSelectStudent[3]);
         //5 select student
         buttonsSelectStudent[4].setBounds(1350, 758, 40, 40);
-        transparentButton(buttonsSelectStudent[4]);
         //6 select student
         buttonsSelectStudent[5].setBounds(1410, 708, 40, 40);
-        transparentButton(buttonsSelectStudent[5]);
         //7 select student
         buttonsSelectStudent[6].setBounds(1410, 758, 40, 40);
-        transparentButton(buttonsSelectStudent[6]);
         //8 select student
         buttonsSelectStudent[7].setBounds(1470, 708, 40, 40);
-       // buttonsSelectStudent[7].addActionListener(this);
-        transparentButton(buttonsSelectStudent[7]);
         //9 select student
         buttonsSelectStudent[8].setBounds(1470, 758, 40, 40);
-        //buttonsSelectStudent[8].addActionListener(this);
-        transparentButton(buttonsSelectStudent[8]);
 
         //button for put student in tha tables
         buttonPutOnTable= new JButton("");
@@ -870,7 +846,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             messageHandler.sendMessage(new Message(MessageAction.CLIENT_READY, this.username));
             buttonConfirmName.setVisible(false);
         }
-
     }
 
     @Override
@@ -887,7 +862,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     @Override
     public void someoneDisconnected(DisconnectMessage message) {
-
+        labelPlayerMessage.setText("# SOMEONE DISCONNECTED #");
+        endGame(new WinnersMessage(null));
     }
 
     @Override
@@ -917,7 +893,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         messageOutput.setText("The lobby is full");
     }
 
-    //connectToServer
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==buttonServer) {
@@ -939,7 +914,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 buttonServer.setVisible(false);
                 buttonNext.setVisible(true);
             }
-
         }
         else if (e.getSource()==buttonNext) {
             askUsername();
@@ -948,168 +922,142 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             //askUsername
             username=usernameField.getText();
             messageHandler.sendMessage(new Message(MessageAction.CHOSE_USERNAME, username));
-
         }
         else if(e.getSource()==buttonNextLobby) {
             askRoomCreation();
         }
         else if(e.getSource()== buttonGetReady) {
-            //ask roomCreation
             size = Integer.parseInt(lobbyField.getText());
             messageHandler.sendMessage(new RoomSizeMessage(size, this.username));
             buttonGetReady.setVisible(false);
         }
-        else if(e.getSource()== buttonsSelectIslandMotherNature.get(0))
-        {
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(0)) {
             labelPlayerMessage.setText("# 1 ISLAND MOTHER NATURE SELECTED #");
             messageHandler.sendMessage(new PlaceMotherNatureMessage(0));
             hideAllButtonsMotherNature();
         }
-        else if(e.getSource()== buttonsSelectIslandMotherNature.get(1))
-        {
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(1)) {
             labelPlayerMessage.setText("# 2 ISLAND MOTHER NATURE SELECTED #");
             messageHandler.sendMessage(new PlaceMotherNatureMessage(1));
             hideAllButtonsMotherNature();
         }
-        else if(e.getSource()== buttonsSelectIslandMotherNature.get(2))
-        {
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(2)) {
             labelPlayerMessage.setText("# 3 ISLAND MOTHER NATURE SELECTED #");
             messageHandler.sendMessage(new PlaceMotherNatureMessage(2));
             hideAllButtonsMotherNature();
         }
-        else if(e.getSource()== buttonsSelectIslandMotherNature.get(3))
-        {
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(3)) {
             labelPlayerMessage.setText("# 4 ISLAND MOTHER NATURE SELECTED #");
             messageHandler.sendMessage(new PlaceMotherNatureMessage(3));
             hideAllButtonsMotherNature();
         }
-        else if(e.getSource()== buttonsSelectIslandMotherNature.get(4))
-        {
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(4)) {
             labelPlayerMessage.setText("# 5 ISLAND MOTHER NATURE SELECTED #");
             messageHandler.sendMessage(new PlaceMotherNatureMessage(4));
             hideAllButtonsMotherNature();
         }
-        else if(e.getSource()== buttonsSelectIslandMotherNature.get(5))
-        {
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(5)) {
             labelPlayerMessage.setText("# 6 ISLAND MOTHER NATURE SELECTED #");
             messageHandler.sendMessage(new PlaceMotherNatureMessage(5));
             hideAllButtonsMotherNature();
         }
-        else if(e.getSource()== buttonsSelectIslandMotherNature.get(6))
-        {
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(6)) {
             labelPlayerMessage.setText("# 7 ISLAND MOTHER NATURE SELECTED #");
             messageHandler.sendMessage(new PlaceMotherNatureMessage(6));
             hideAllButtonsMotherNature();
         }
-        else if(e.getSource()== buttonsSelectIslandMotherNature.get(7))
-        {
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(7)) {
             labelPlayerMessage.setText("# 8 ISLAND MOTHER NATURE SELECTED #");
             messageHandler.sendMessage(new PlaceMotherNatureMessage(7));
             hideAllButtonsMotherNature();
         }
-        else if(e.getSource()== buttonsSelectIslandMotherNature.get(9))
-        {
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(9)) {
             labelPlayerMessage.setText("# 10 ISLAND MOTHER NATURE SELECTED #");
             messageHandler.sendMessage(new PlaceMotherNatureMessage(9));
             hideAllButtonsMotherNature();
         }
-        else if(e.getSource()== buttonsSelectIslandMotherNature.get(10))
-        {
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(10)) {
             labelPlayerMessage.setText("# 11 ISLAND MOTHER NATURE SELECTED #");
             messageHandler.sendMessage(new PlaceMotherNatureMessage(10));
             hideAllButtonsMotherNature();
         }
-        else if(e.getSource()== buttonsSelectIslandMotherNature.get(11))
-        {
+        else if(e.getSource()== buttonsSelectIslandMotherNature.get(11)) {
             labelPlayerMessage.setText("# 12 ISLAND MOTHER NATURE SELECTED #");
             messageHandler.sendMessage(new PlaceMotherNatureMessage(11));
             hideAllButtonsMotherNature();
         }
-        else if(e.getSource()== buttonsSelectIsland[0])
-        {
+        else if(e.getSource()== buttonsSelectIsland[0]) {
             labelPlayerMessage.setText("# 1 ISLAND SELECTED #");
 
             int choice=0;
             messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
 
         }
-        else if(e.getSource()== buttonsSelectIsland[1])
-        {
+        else if(e.getSource()== buttonsSelectIsland[1]) {
             labelPlayerMessage.setText("# 2 ISLAND SELECTED #");
             int choice=1;
             messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
-        else if(e.getSource()== buttonsSelectIsland[2])
-        {
+        else if(e.getSource()== buttonsSelectIsland[2]) {
             labelPlayerMessage.setText("# 3 ISLAND SELECTED #");
 
             int choice=2;
             messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
-        else if(e.getSource()== buttonsSelectIsland[3])
-        {
+        else if(e.getSource()== buttonsSelectIsland[3]) {
             labelPlayerMessage.setText("# 4 ISLAND SELECTED #");
 
             int choice=3;
             messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
-        else if(e.getSource()== buttonsSelectIsland[4])
-        {
+        else if(e.getSource()== buttonsSelectIsland[4]) {
             labelPlayerMessage.setText("# 5 ISLAND SELECTED #");
 
             int choice=4;
             messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
-        else if(e.getSource()== buttonsSelectIsland[5])
-        {
+        else if(e.getSource()== buttonsSelectIsland[5]) {
             labelPlayerMessage.setText("# 6 ISLAND SELECTED #");
 
             int choice=5;
             messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
-        else if(e.getSource()== buttonsSelectIsland[6])
-        {
+        else if(e.getSource()== buttonsSelectIsland[6]) {
             labelPlayerMessage.setText("# 7 ISLAND SELECTED #");
 
             int choice=6;
             messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
-        else if(e.getSource()== buttonsSelectIsland[7])
-        {
+        else if(e.getSource()== buttonsSelectIsland[7]) {
             labelPlayerMessage.setText("# 8 ISLAND SELECTED #");
 
             int choice=7;
             messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
-        else if(e.getSource()== buttonsSelectIsland[8])
-        {
+        else if(e.getSource()== buttonsSelectIsland[8]) {
             labelPlayerMessage.setText("# 9 ISLAND SELECTED #");
 
 
             int choice=8;
             messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
-        else if(e.getSource()== buttonsSelectIsland[9])
-        {
+        else if(e.getSource()== buttonsSelectIsland[9]) {
             labelPlayerMessage.setText("# 10 ISLAND SELECTED #");
 
             int choice=9;
             messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
-        else if(e.getSource()== buttonsSelectIsland[10])
-        {
+        else if(e.getSource()== buttonsSelectIsland[10]) {
             labelPlayerMessage.setText("# 11 ISLAND SELECTED #");
             int choice=10;
             messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
-        else if(e.getSource()== buttonsSelectIsland[11])
-        {
+        else if(e.getSource()== buttonsSelectIsland[11]) {
             labelPlayerMessage.setText("# 12 ISLAND SELECTED #");
             int choice=11;
             messageHandler.sendMessage(new PlaceOnIslandMessage(choice));
         }
-        else if(e.getSource()== buttonsSelectStudent[0])
-        {
+        else if(e.getSource()== buttonsSelectStudent[0]) {
             labelPlayerMessage.setText("# STUDENT 1 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(0));
@@ -1117,8 +1065,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsSelectStudent[0].setVisible(false);
             labelEntranceStudents[0].setVisible(false);
         }
-        else if(e.getSource()== buttonsSelectStudent[1])
-        {
+        else if(e.getSource()== buttonsSelectStudent[1]) {
             labelPlayerMessage.setText("# STUDENT 2 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(1));
@@ -1126,8 +1073,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsSelectStudent[1].setVisible(false);
             labelEntranceStudents[1].setVisible(false);
         }
-        else if(e.getSource()== buttonsSelectStudent[2])
-        {
+        else if(e.getSource()== buttonsSelectStudent[2]) {
             labelPlayerMessage.setText("# STUDENT 3 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(2));
@@ -1135,8 +1081,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsSelectStudent[2].setVisible(false);
             labelEntranceStudents[2].setVisible(false);
         }
-        else if(e.getSource()== buttonsSelectStudent[3])
-        {
+        else if(e.getSource()== buttonsSelectStudent[3]) {
             labelPlayerMessage.setText("# STUDENT 4 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(3));
@@ -1144,8 +1089,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsSelectStudent[3].setVisible(false);
             labelEntranceStudents[3].setVisible(false);
         }
-        else if(e.getSource()== buttonsSelectStudent[4])
-        {
+        else if(e.getSource()== buttonsSelectStudent[4]) {
             labelPlayerMessage.setText("# STUDENT 5 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(4));
@@ -1153,8 +1097,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsSelectStudent[4].setVisible(false);
             labelEntranceStudents[4].setVisible(false);
         }
-        else if(e.getSource()== buttonsSelectStudent[5])
-        {
+        else if(e.getSource()== buttonsSelectStudent[5]) {
             labelPlayerMessage.setText("# STUDENT 6 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(5));
@@ -1162,8 +1105,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsSelectStudent[5].setVisible(false);
             labelEntranceStudents[5].setVisible(false);
         }
-        else if(e.getSource()== buttonsSelectStudent[6])
-        {
+        else if(e.getSource()== buttonsSelectStudent[6]) {
             labelPlayerMessage.setText("# STUDENT 7 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(6));
@@ -1171,8 +1113,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsSelectStudent[6].setVisible(false);
             labelEntranceStudents[6].setVisible(false);
         }
-        else if(e.getSource()== buttonsSelectStudent[7])
-        {
+        else if(e.getSource()== buttonsSelectStudent[7]) {
             labelPlayerMessage.setText("# STUDENT 8 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(7));
@@ -1180,16 +1121,14 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsSelectStudent[7].setVisible(false);
             labelEntranceStudents[7].setVisible(false);
         }
-        else if(e.getSource()== buttonsSelectStudent[8])
-        {
+        else if(e.getSource()== buttonsSelectStudent[8]) {
             labelPlayerMessage.setText("# STUDENT 9 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(8));
             buttonsSelectStudent[8].setVisible(false);
             labelEntranceStudents[8].setVisible(false);
         }
-        else if(e.getSource()== buttonPutOnTable)
-        {
+        else if(e.getSource()== buttonPutOnTable) {
             labelPlayerMessage.setText("# HALL SELECTED #");
 
             messageHandler.sendMessage(new PlaceInHallMessage());
@@ -1214,8 +1153,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 buttonsSelectCloud[i].setVisible(false);
             }
         }
-        else if(e.getSource()== buttonsSelectCloud[1])
-        {
+        else if(e.getSource()== buttonsSelectCloud[1]) {
             labelPlayerMessage.setText("# CLOUD 2 SELECTED #");
             messageHandler.sendMessage(new SelectCloudMessage(1));
             if (size == 3) {
@@ -1233,8 +1171,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 buttonsSelectCloud[i].setVisible(false);
             }
         }
-        else if(e.getSource()== buttonsSelectCloud[2])
-        {
+        else if(e.getSource()== buttonsSelectCloud[2]) {
             labelPlayerMessage.setText("# CLOUD 3 SELECTED #");
             messageHandler.sendMessage(new SelectCloudMessage(2));
             if (size == 3) {
@@ -1252,8 +1189,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 buttonsSelectCloud[i].setVisible(false);
             }
         }
-        else if(e.getSource()== buttonsSelectCloud[3])
-        {
+        else if(e.getSource()== buttonsSelectCloud[3]) {
             labelPlayerMessage.setText("# CLOUD 4 SELECTED #");
             messageHandler.sendMessage(new SelectCloudMessage(3));
             if (size == 3) {
@@ -1271,13 +1207,11 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 buttonsSelectCloud[i].setVisible(false);
             }
         }
-        else if(e.getSource()== buttonHideCards)
-        {
+        else if(e.getSource()== buttonHideCards) {
             buttonHideCards.setVisible(false);
             hideCards();
         }
-        else if(e.getSource()== buttonViewCards)
-        {
+        else if(e.getSource()== buttonViewCards) {
             buttonViewCards.setVisible(false);
             buttonHideCards.setVisible(true);
             showCards();
@@ -1531,9 +1465,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelPinkCloudCounters[i].setVisible(true);
             labelGreenCloudCounters[i].setVisible(true);
         }
-        /*for(int i = 0; i < labelAssistantDeck.length; i++){
-            labelAssistantDeck[i].setVisible(true);
-        }*/
 
         for(int i = 0; i < game.getTable().getIslands().size(); i++){
             if(3 != size) {
@@ -1986,14 +1917,16 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     @Override
     public void endGame(WinnersMessage message) {
-        labelWinningImage.setVisible(true);
-        labelWinningMessage.setVisible(true);
-        labelWinningMessage.setText("# PLAYERS ");
-        for(int i = 0; i < message.getPlayers().size(); i++){
-            labelWinningMessage.setText(labelWinningMessage.getText() + message.getPlayers().get(i).getPlayerName() + " ");
+        if(message.getPlayers() != null) {
+            labelWinningImage.setVisible(true);
+            labelWinningMessage.setVisible(true);
+            labelWinningMessage.setText("# PLAYERS ");
+            for (int i = 0; i < message.getPlayers().size(); i++) {
+                labelWinningMessage.setText(labelWinningMessage.getText() + message.getPlayers().get(i).getPlayerName() + " ");
+            }
+            hideOnlyButtonCards();
+            hideAllButtonsMotherNature();
+            //TODO hide all buttons
         }
-        hideOnlyButtonCards();
-        hideAllButtonsMotherNature();
-        //TODO hide all buttons
     }
 }
