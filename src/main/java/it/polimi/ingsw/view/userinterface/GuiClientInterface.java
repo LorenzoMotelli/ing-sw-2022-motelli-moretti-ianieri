@@ -96,17 +96,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private final JLabel[] labelEmptyIsland=new JLabel[12];
     private final ImageIcon emptyIsland=new ImageIcon("src/images/emptyIsland.png");
 
-
-    /*private final ImageIcon assistant1 = new ImageIcon("src/images/assistant1.jpg");
-    private final ImageIcon assistant2 = new ImageIcon("src/images/assistant2.jpg");
-    private final ImageIcon assistant3 = new ImageIcon("src/images/assistant3.jpg");
-    private final ImageIcon assistant4 = new ImageIcon("src/images/assistant4.jpg");
-    private final ImageIcon assistant5 = new ImageIcon("src/images/assistant5.jpg");
-    private final ImageIcon assistant6 = new ImageIcon("src/images/assistant6.jpg");
-    private final ImageIcon assistant7 = new ImageIcon("src/images/assistant7.jpg");
-    private final ImageIcon assistant8 = new ImageIcon("src/images/assistant8.jpg");
-    private final ImageIcon assistant9 = new ImageIcon("src/images/assistant9.jpg");
-    private final ImageIcon assistant10 = new ImageIcon("src/images/assistant10.jpg");*/
     private final ImageIcon[] assistantsImage = {new ImageIcon("src/images/assistant1.jpg"),
             new ImageIcon("src/images/assistant2.jpg"),
             new ImageIcon("src/images/assistant3.jpg"),
@@ -309,34 +298,17 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         for(int i = 0; i < buttonsAssistant.length; i++){
             buttonsAssistant[i] = new JButton("");
             buttonsAssistant[i].addActionListener(this);
+            transparentButton(buttonsAssistant[i]);
         }
         buttonsAssistant[0].setBounds(165, 160, 160, 235);
-        transparentButton(buttonsAssistant[0]);
-
         buttonsAssistant[1].setBounds(330, 160, 160, 235);
-        transparentButton(buttonsAssistant[1]);
-
         buttonsAssistant[2].setBounds(495, 160, 160, 235);
-        transparentButton(buttonsAssistant[2]);
-
         buttonsAssistant[3].setBounds(660, 160, 160, 235);
-        transparentButton(buttonsAssistant[3]);
-
         buttonsAssistant[4].setBounds(825, 160, 160, 235);
-        transparentButton(buttonsAssistant[4]);
-
         buttonsAssistant[5].setBounds(165, 415, 160, 235);
-        transparentButton(buttonsAssistant[5]);
-
         buttonsAssistant[6].setBounds(330, 415, 160, 235);
-        transparentButton(buttonsAssistant[6]);
-
         buttonsAssistant[7].setBounds(495, 415, 160, 235);
-        transparentButton(buttonsAssistant[7]);
-
         buttonsAssistant[8].setBounds(660, 415, 160, 235);
-        transparentButton(buttonsAssistant[8]);
-
         buttonsAssistant[9].setBounds(825, 415, 160, 235);
         transparentButton(buttonsAssistant[9]);
 
@@ -761,6 +733,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
         //button for the selection of the clouds based on the different field of the game
         for(int i = 0; i < 4; i++){
+            buttonsSelectCloud[i] = new JButton("");
+            buttonsSelectCloud[i].addActionListener(this);
+            transparentButton(buttonsSelectCloud[i]);
             buttonsSelectCloud[i] = new JButton("number " + i);
             buttonsSelectCloud[i].addActionListener(this);
             transparentButton(buttonsSelectCloud[i]);
@@ -864,7 +839,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelInsertIP.setText("Insert your username: ");
         usernameField.setVisible(true);
         buttonConfirmName.setVisible(true);
-
     }
 
     @Override
@@ -1166,7 +1140,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         }
         else if(e.getSource()== buttonsSelectStudent[5])
         {
-            labelPlayerMessage.setText("# STUD buttonsSelectCloud[size-1].setVisible(false);ENT 6 SELECTED #");
+            labelPlayerMessage.setText("# STUDENT 6 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(5));
 
@@ -1425,7 +1399,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 setBackground = new ImageIcon("src/images/background4Player.jpg");
 
                 buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
-                buttonsSelectCloud[size-1].setVisible(false);
                 buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
 
                 buttonsSelectCloud[2].setBounds(430, 430, 100, 100);
@@ -1765,7 +1738,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelPlayerMessage.setText("# SELECT A STUDENT #");
         for(int i=0;i<message.getStudent().size();i++){
             buttonsSelectStudent[i].setVisible(true);
-            }
+        }
     }
 
     public void shiftStudent(){
@@ -1802,8 +1775,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsSelectIslandMotherNature.get(i).setVisible(false);
         }
         for(int i = 0; i <labelMotherNatureList.length; i++){
-           if(labelMotherNatureList[i].isVisible())
-           {
+           if(labelMotherNatureList[i].isVisible()) {
                shiftButtonsMotherNature(i+1);
                break;
            }
@@ -1814,8 +1786,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     }
 
     public void shiftButtonsMotherNature(int index){
-        switch(index)
-        {
+        switch(index) {
             case 0->{
                 buttonsSelectIslandMotherNature.get(0).setBounds(285, 30, 150, 150);
                 buttonsSelectIslandMotherNature.get(1).setBounds(510, 30, 150, 150);
@@ -1994,7 +1965,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             //set the visibility of MN for each island received by the message
             labelMotherNatureList[i].setVisible(message.getIslands().get(i).hasMotherNature());
         }
-
     }
 
     @Override
