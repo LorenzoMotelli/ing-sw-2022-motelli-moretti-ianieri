@@ -71,6 +71,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private final JLabel[] labelEntranceStudents = new JLabel[9];
 
     private final JLabel labelPlayerMessage;
+    private final JLabel labelWinningMessage;
 
     private final ImageIcon whiteTowerImage = new ImageIcon("src/images/whiteTowerRaw.png");
     private final JLabel[] labelWhiteTowerList = new JLabel[8];
@@ -83,6 +84,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     private final JLabel labelBackgroundCards;
     private final ImageIcon backgroundCards;
+    private final JLabel labelWinningImage;
+    private final ImageIcon winningImage;
 
     private final JLabel[] labelAssistantDeck = new JLabel[10];
 
@@ -283,6 +286,18 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         for(int i=0;i<9;i++){
             chosenCard[i]=1;
         }
+        //label for the winner
+        winningImage= new ImageIcon("src/images/winningImage.jpg");
+        labelWinningImage=new JLabel();
+        labelWinningImage.setBounds(320,0,540,800);
+        labelWinningImage.setIcon(winningImage);
+
+        labelWinningMessage = new JLabel("", SwingConstants.CENTER);
+        labelWinningMessage.setBounds(365,44,450,80);
+        labelWinningMessage.setForeground(Color.darkGray);
+        labelWinningMessage.setBorder(BorderFactory.createLineBorder(Color.darkGray, 5));
+        labelWinningMessage.setFont(new Font("", Font.ITALIC,20));
+
         //menu for cards
         backgroundCards= new ImageIcon("src/images/backgroundCards.jpg");
         labelBackgroundCards=new JLabel();
@@ -1429,7 +1444,10 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 frameGame.add(labelAssistantDeck[i]);
                 frameGame.add(buttonsAssistant[i]);
             }
-
+            frameGame.add(labelWinningMessage);
+            frameGame.add(labelWinningImage);
+            labelWinningImage.setVisible(false);
+            labelWinningMessage.setVisible(false);
             frameGame.add(labelBackgroundCards);
 
             for(int i=0;i<12;i++){
@@ -1968,9 +1986,11 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     @Override
     public void endGame(WinnersMessage message) {
-        labelPlayerMessage.setText("# PLAYERS ");
+        labelWinningImage.setVisible(true);
+        labelWinningMessage.setVisible(true);
+        labelWinningMessage.setText("# PLAYERS ");
         for(int i = 0; i < message.getPlayers().size(); i++){
-            labelPlayerMessage.setText(labelPlayerMessage.getText() + message.getPlayers().get(i).getPlayerName() + " ");
+            labelWinningMessage.setText(labelWinningMessage.getText() + message.getPlayers().get(i).getPlayerName() + " ");
         }
         hideOnlyButtonCards();
         hideAllButtonsMotherNature();
