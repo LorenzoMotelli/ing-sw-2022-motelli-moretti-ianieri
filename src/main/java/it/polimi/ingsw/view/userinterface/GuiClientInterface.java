@@ -69,6 +69,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private final JLabel[] labelYellowHallList = new JLabel[10];
 
     private final JLabel[] labelEntranceStudents = new JLabel[9];
+    //private List<JLabel> labelEntranceStudents = new ArrayList<>();
 
     private final JLabel labelPlayerMessage;
     private final JLabel labelWinningMessage;
@@ -702,32 +703,39 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         //initializing all the student in the entrance
         for(int i = 0; i < 9; i++){
             labelEntranceStudents[i] = new JLabel();
+            //labelEntranceStudents.add(new JLabel());
         }
         //images 1 slot students in the beginning hall
         labelEntranceStudents[0].setBounds(1218, 678, 100, 100);
+        //labelEntranceStudents.get(0).setBounds(1218, 678, 100, 100);
         //images 2 slot students in the beginning hall
         labelEntranceStudents[1].setBounds(1280, 678, 100, 100);
+        //labelEntranceStudents.get(1).setBounds(1280, 678, 100, 100);
         //images 3 slot students in the beginning hall
         labelEntranceStudents[2].setBounds(1280, 728, 100, 100);
+        //labelEntranceStudents.get(2).setBounds(1280, 728, 100, 100);
         //images 4 slot students in the beginning hall
         labelEntranceStudents[3].setBounds(1344, 678, 100, 100);
+        //labelEntranceStudents.get(3).setBounds(1344, 678, 100, 100);
         //images 5 slot students in the beginning hall
         labelEntranceStudents[4].setBounds(1344, 728, 100, 100);
+        //labelEntranceStudents.get(4).setBounds(1344, 728, 100, 100);
         //images 6 slot students in the beginning hall
         labelEntranceStudents[5].setBounds(1404, 678, 100, 100);
+        //labelEntranceStudents.get(5).setBounds(1404, 678, 100, 100);
         //images 7 slot students in the beginning hall
         labelEntranceStudents[6].setBounds(1404, 728, 100, 100);
+        //labelEntranceStudents.get(6).setBounds(1404, 728, 100, 100);
         //images 8 slot students in the beginning hall
         labelEntranceStudents[7].setBounds(1466, 678, 100, 100);
+        //labelEntranceStudents.get(7).setBounds(1466, 678, 100, 100);
         //images 9 slot students in the beginning hall
         labelEntranceStudents[8].setBounds(1466, 728, 100, 100);
+        //labelEntranceStudents.get(8).setBounds(1466, 728, 100, 100);
 
         //button for the selection of the clouds based on the different field of the game
         for(int i = 0; i < 4; i++){
             buttonsSelectCloud[i] = new JButton("");
-            buttonsSelectCloud[i].addActionListener(this);
-            transparentButton(buttonsSelectCloud[i]);
-            buttonsSelectCloud[i] = new JButton("number " + i);
             buttonsSelectCloud[i].addActionListener(this);
             transparentButton(buttonsSelectCloud[i]);
         }
@@ -1062,71 +1070,98 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
             messageHandler.sendMessage(new SelectStudentMessage(0));
 
-            buttonsSelectStudent[0].setVisible(false);
+            for(int i = 0; i < 9; i++){
+                buttonsSelectStudent[i].setVisible(false);
+            }
             labelEntranceStudents[0].setVisible(false);
+            //labelEntranceStudents.get(0).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[1]) {
             labelPlayerMessage.setText("# STUDENT 2 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(1));
 
-            buttonsSelectStudent[1].setVisible(false);
+            for(int i = 0; i < 9; i++){
+                buttonsSelectStudent[i].setVisible(false);
+            }
             labelEntranceStudents[1].setVisible(false);
+            //labelEntranceStudents.get(1).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[2]) {
             labelPlayerMessage.setText("# STUDENT 3 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(2));
 
-            buttonsSelectStudent[2].setVisible(false);
+            for(int i = 0; i < 9; i++){
+                buttonsSelectStudent[i].setVisible(false);
+            }
             labelEntranceStudents[2].setVisible(false);
+            //labelEntranceStudents.get(2).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[3]) {
             labelPlayerMessage.setText("# STUDENT 4 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(3));
 
-            buttonsSelectStudent[3].setVisible(false);
+            for(int i = 0; i < 9; i++){
+                buttonsSelectStudent[i].setVisible(false);
+            }
             labelEntranceStudents[3].setVisible(false);
+            //labelEntranceStudents.get(3).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[4]) {
             labelPlayerMessage.setText("# STUDENT 5 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(4));
 
-            buttonsSelectStudent[4].setVisible(false);
+            for(int i = 0; i < 9; i++){
+                buttonsSelectStudent[i].setVisible(false);
+            }
             labelEntranceStudents[4].setVisible(false);
+            //labelEntranceStudents.get(4).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[5]) {
             labelPlayerMessage.setText("# STUDENT 6 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(5));
 
-            buttonsSelectStudent[5].setVisible(false);
+            for(int i = 0; i < 9; i++){
+                buttonsSelectStudent[i].setVisible(false);
+            }
             labelEntranceStudents[5].setVisible(false);
+            //labelEntranceStudents.get(5).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[6]) {
             labelPlayerMessage.setText("# STUDENT 7 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(6));
 
-            buttonsSelectStudent[6].setVisible(false);
+            for(int i = 0; i < 9; i++){
+                buttonsSelectStudent[i].setVisible(false);
+            }
             labelEntranceStudents[6].setVisible(false);
+            //labelEntranceStudents.get(6).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[7]) {
             labelPlayerMessage.setText("# STUDENT 8 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(7));
 
-            buttonsSelectStudent[7].setVisible(false);
+            for(int i = 0; i < 9; i++){
+                buttonsSelectStudent[i].setVisible(false);
+            }
             labelEntranceStudents[7].setVisible(false);
+            //labelEntranceStudents.get(7).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[8]) {
             labelPlayerMessage.setText("# STUDENT 9 SELECTED #");
 
             messageHandler.sendMessage(new SelectStudentMessage(8));
-            buttonsSelectStudent[8].setVisible(false);
+            for(int i = 0; i < 9; i++){
+                buttonsSelectStudent[i].setVisible(false);
+            }
             labelEntranceStudents[8].setVisible(false);
+            //labelEntranceStudents.get(8).setVisible(false);
         }
         else if(e.getSource()== buttonPutOnTable) {
             labelPlayerMessage.setText("# HALL SELECTED #");
@@ -1414,6 +1449,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             for(int i=0;i<9;i++){
                 frameGame.add(buttonsSelectStudent[i]);
                 frameGame.add(labelEntranceStudents[i]);
+                //frameGame.add(labelEntranceStudents.get(i));
             }
 
             for (int j = 0; j < 8; j++) {
@@ -1486,29 +1522,22 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
         //print the situation of the table of each player
         for(Player player : game.getPlayers()){
-            if(username.equals(player.getPlayerName()))
-            {
+            if(username.equals(player.getPlayerName())) {
                 labelPlayerMessage.setText("WAITING THE OTHER PLAYER");
 
-
-                if(player.getSchool().getBlueProfessor()==null)
-                {
+                if(player.getSchool().getBlueProfessor()==null) {
                     labelProfessorList[0].setVisible(false);
                 }
-                if(player.getSchool().getGreenProfessor()==null)
-                {
+                if(player.getSchool().getGreenProfessor()==null) {
                     labelProfessorList[1].setVisible(false);
                 }
-                if(player.getSchool().getPinkProfessor()==null)
-                {
+                if(player.getSchool().getPinkProfessor()==null) {
                     labelProfessorList[2].setVisible(false);
                 }
-                if(player.getSchool().getRedProfessor()==null)
-                {
+                if(player.getSchool().getRedProfessor()==null) {
                     labelProfessorList[3].setVisible(false);
                 }
-                if(player.getSchool().getYellowProfessor()==null)
-                {
+                if(player.getSchool().getYellowProfessor()==null) {
                     labelProfessorList[4].setVisible(false);
                 }
 
@@ -1529,68 +1558,74 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                         labelYellowHallList[i].setVisible(false);
                     }
                 }
+                for(int i = 0; i < 8; i++){
+                    labelWhiteTowerList[i].setVisible(false);
+                    labelBlackTowerList[i].setVisible(false);
+                    labelGreyTowerList[i].setVisible(false);
+                }
                 switch (player.getSchool().getPlayersTowers().get(0).getColor()) {
-                    //TODO check real print for towers
+                    //TODO improve
                     case WHITE -> {
                         for (int i = 0; i < player.getSchool().getPlayersTowers().size(); i++) {
-                            if(player.getSchool().getPlayersTowers().get(i) != null) {
-                                labelWhiteTowerList[i].setVisible(true);
-                                labelBlackTowerList[i].setVisible(false);
-                                labelGreyTowerList[i].setVisible(false);
-                            }
+                            labelWhiteTowerList[i].setVisible(true);
                         }
                     }
                     case BLACK -> {
                         for (int i = 0; i < player.getSchool().getPlayersTowers().size(); i++) {
-                            if(player.getSchool().getPlayersTowers().get(i) != null) {
-                                labelWhiteTowerList[i].setVisible(false);
-                                labelBlackTowerList[i].setVisible(true);
-                                labelGreyTowerList[i].setVisible(false);
-                            }
+                            labelBlackTowerList[i].setVisible(true);
                         }
                     }
                     case GREY -> {
                         for (int i = 0; i < player.getSchool().getPlayersTowers().size(); i++) {
-                            if(player.getSchool().getPlayersTowers().get(i) != null) {
-                                labelWhiteTowerList[i].setVisible(false);
-                                labelBlackTowerList[i].setVisible(false);
-                                labelGreyTowerList[i].setVisible(true);
-                            }
+                            labelGreyTowerList[i].setVisible(true);
                         }
                     }
+                }
+                if(3 == size){
+                    labelWhiteTowerList[6].setVisible(false);
+                    labelWhiteTowerList[7].setVisible(false);
+                    labelBlackTowerList[6].setVisible(false);
+                    labelBlackTowerList[7].setVisible(false);
+                    labelGreyTowerList[6].setVisible(false);
+                    labelGreyTowerList[7].setVisible(false);
                 }
                 for(int j = 0; j < player.getSchool().getEntranceStudent().size(); j++){
                     PawnColor color = player.getSchool().getEntranceStudent().get(j).getColor();
                     switch (color){
                         case BLUE -> {
                             labelEntranceStudents[j].setIcon(blueHallIcon);
-                            labelEntranceStudents[j].setVisible(true);
+                            //labelEntranceStudents[j].setVisible(true);
+                            //labelEntranceStudents.get(j).setIcon(blueHallIcon);
                         }
                         case GREEN -> {
                             labelEntranceStudents[j].setIcon(greenHallIcon);
-                            labelEntranceStudents[j].setVisible(true);
+                            //labelEntranceStudents[j].setVisible(true);
+                            //labelEntranceStudents.get(j).setIcon(greenHallIcon);
                         }
                         case PINK -> {
                             labelEntranceStudents[j].setIcon(pinkHallIcon);
-                            labelEntranceStudents[j].setVisible(true);
+                            //labelEntranceStudents[j].setVisible(true);
+                            //labelEntranceStudents.get(j).setIcon(pinkHallIcon);
                         }
                         case RED -> {
                             labelEntranceStudents[j].setIcon(redHallIcon);
-                            labelEntranceStudents[j].setVisible(true);
+                            //labelEntranceStudents[j].setVisible(true);*/
+                            //labelEntranceStudents.get(j).setIcon(redHallIcon);
                         }
                         case YELLOW -> {
                             labelEntranceStudents[j].setIcon(yellowHall);
-                            labelEntranceStudents[j].setVisible(true);
+                            //labelEntranceStudents[j].setVisible(true);*/
+                            //labelEntranceStudents.get(j).setIcon(yellowHall);
                         }
                     }
+                    //labelEntranceStudents.get(j).setVisible(true);
+                    labelEntranceStudents[j].setVisible(true);
                 }
             }
-
         }
 
         //print the situation of each island
         for(int i = 0; i < game.getTable().getIslands().size(); i++){
-
             int blueStudentCounter= game.getTable().getIslands().get(i).getBlueStudents().size();
             int greenStudentCounter= game.getTable().getIslands().get(i).getGreenStudents().size();
             int pinkStudentCounter= game.getTable().getIslands().get(i).getPinkStudents().size();
@@ -1613,11 +1648,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                     case GREY -> labelGreyTowerCounter[i].setText(towerOnIsland+"");
                 }
             }
-
         }
         //print cloud's situation
         for(int i=0;i<game.getTable().getClouds().size();i++){
-
             int blueStudentCounter=game.getTable().getClouds().get(i).getBlueStudent().size();
             int greenStudentCounter=game.getTable().getClouds().get(i).getGreenStudent().size();
             int yellowStudentCounter=game.getTable().getClouds().get(i).getYellowStudent().size();
@@ -1629,9 +1662,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelPinkCloudCounters[i].setText(pinkStudentCounter+"");
             labelRedCloudCounters[i].setText(redStudentCounter+"");
             labelYellowCloudCounters[i].setText(yellowStudentCounter+"");
-
         }
-
     }
 
     @Override
@@ -1690,13 +1721,16 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     }
 
     public void shiftStudent(){
-        for(int i=0;i<buttonsSelectStudent.length-1;i++){
+        int last = 8;
+        for(int i=0;i< buttonsSelectStudent.length;i++){
             if(!labelEntranceStudents[i].isVisible()){
                 labelEntranceStudents[i].setIcon(labelEntranceStudents[i+1].getIcon());
                 labelEntranceStudents[i].setVisible(true);
                 labelEntranceStudents[i+1].setVisible(false);
+                last = i+1;
             }
         }
+        labelEntranceStudents[last].setVisible(false);
     }
 
     @Override
