@@ -35,6 +35,6 @@ Client launch:
 ```bash
 cd /path/to/server_jar
 
-#launch server
+#launch client
 java -jar Eriantys-client-1.0.jar
 ```
