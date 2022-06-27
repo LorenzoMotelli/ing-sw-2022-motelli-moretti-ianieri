@@ -4,11 +4,11 @@ Group ID: PSP16
 
 ## Components
 
-[Lorenzo Motelli] (https://github.com/LorenzoMotelli) : focus on model
+[Lorenzo Motelli](https://github.com/LorenzoMotelli) : focus on model
 
-[Giovanni Giuseppe Moretti] (https://github.com/JJmoretti) : focus on network
+[Giovanni Giuseppe Moretti](https://github.com/JJmoretti) : focus on network
 
-[Manuel Ianieri] (https://github.com/manuelianieri) : focus on GUI
+[Manuel Ianieri](https://github.com/manuelianieri) : focus on GUI
 
 # Features
 
