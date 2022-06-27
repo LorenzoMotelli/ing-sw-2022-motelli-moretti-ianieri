@@ -1943,35 +1943,44 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 for(int j = 0; j < player.getSchool().getEntranceStudent().size(); j++){
                     PawnColor color = player.getSchool().getEntranceStudent().get(j).getColor();
                     switch (color){
-                        case BLUE -> {
-                            labelEntranceStudents[j].setIcon(blueHallIcon);
-                            //labelEntranceStudents[j].setVisible(true);
-                            //labelEntranceStudents.get(j).setIcon(blueHallIcon);
-                        }
-                        case GREEN -> {
-                            labelEntranceStudents[j].setIcon(greenHallIcon);
-                            //labelEntranceStudents[j].setVisible(true);
-                            //labelEntranceStudents.get(j).setIcon(greenHallIcon);
-                        }
-                        case PINK -> {
-                            labelEntranceStudents[j].setIcon(pinkHallIcon);
-                            //labelEntranceStudents[j].setVisible(true);
-                            //labelEntranceStudents.get(j).setIcon(pinkHallIcon);
-                        }
-                        case RED -> {
-                            labelEntranceStudents[j].setIcon(redHallIcon);
-                            //labelEntranceStudents[j].setVisible(true);*/
-                            //labelEntranceStudents.get(j).setIcon(redHallIcon);
-                        }
-                        case YELLOW -> {
-                            labelEntranceStudents[j].setIcon(yellowHall);
-                            //labelEntranceStudents[j].setVisible(true);*/
-                            //labelEntranceStudents.get(j).setIcon(yellowHall);
-                        }
+                        case BLUE -> labelEntranceStudents[j].setIcon(blueHallIcon);
+                        case GREEN -> labelEntranceStudents[j].setIcon(greenHallIcon);
+                        case PINK -> labelEntranceStudents[j].setIcon(pinkHallIcon);
+                        case RED -> labelEntranceStudents[j].setIcon(redHallIcon);
+                        case YELLOW -> labelEntranceStudents[j].setIcon(yellowHall);
                     }
-                    //labelEntranceStudents.get(j).setVisible(true);
                     labelEntranceStudents[j].setVisible(true);
                 }
+            }
+        }
+        for(int i = 0; i < 12; i++){
+            labelBlueCounters[i].setVisible(false);
+            labelGreenCounters[i].setVisible(false);
+            labelPinkCounters[i].setVisible(false);
+            labelRedCounters[i].setVisible(false);
+            labelYellowCounters[i].setVisible(false);
+            labelWhiteTowerCounter[i].setVisible(false);
+            labelBlackTowerCounter[i].setVisible(false);
+            labelGreyTowerCounter[i].setVisible(false);
+
+            labelBlueCounters[i].setText(0+"");
+            labelGreenCounters[i].setText(0+"");
+            labelPinkCounters[i].setText(0+"");
+            labelRedCounters[i].setText(0+"");
+            labelYellowCounters[i].setText(0+"");
+            labelWhiteTowerCounter[i].setText(0+"");
+            labelBlackTowerCounter[i].setText(0+"");
+            labelGreyTowerCounter[i].setText(0+"");
+
+            labelBlueCounters[i].setVisible(true);
+            labelGreenCounters[i].setVisible(true);
+            labelPinkCounters[i].setVisible(true);
+            labelRedCounters[i].setVisible(true);
+            labelYellowCounters[i].setVisible(true);
+            labelWhiteTowerCounter[i].setVisible(true);
+            labelBlackTowerCounter[i].setVisible(true);
+            if(size == 3) {
+                labelGreyTowerCounter[i].setVisible(true);
             }
         }
 
@@ -1999,6 +2008,11 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                     case GREY -> labelGreyTowerCounter[i].setText(towerOnIsland+"");
                 }
             }
+        }
+        for(int i = game.getTable().getIslands().size(); i < 12; i++){
+            labelEmptyIsland[i].setVisible(true);
+            buttonsSelectIsland[i].setVisible(false);
+            labelRedCounters[i].setVisible(false);
         }
         //print cloud's situation
         for(int i=0;i<game.getTable().getClouds().size();i++){
@@ -2084,7 +2098,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     @Override
     public void selectPlace(AskWherePlaceMessage message){
         labelPlayerMessage.setText("# CHOOSE AN ISLAND OR THE HALL #");
-        buttonPutOnTable.setVisible(true);
+        buttonPutOnTable.setVisible(message.isHallAvailable());
         for(int j=0;j<message.getIslandsNumAvailable();j++){
             buttonsSelectIsland[j].setVisible(true);
         }
@@ -2106,7 +2120,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         }
         for(int i = 0; i <labelMotherNatureList.length; i++){
            if(labelMotherNatureList[i].isVisible()) {
-               shiftButtonsMotherNature(i+1);
+               shiftButtonsMotherNature((i+1)%12);
                break;
            }
         }
@@ -2139,67 +2153,286 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 buttonsSelectIslandMotherNature.get(4).setBounds(750, 615, 150, 150);
             }
             case 3->{
-                buttonsSelectIslandMotherNature.get(0).setBounds(950, 100, 150, 150);
-                buttonsSelectIslandMotherNature.get(1).setBounds(950, 320, 150, 150);
-                buttonsSelectIslandMotherNature.get(2).setBounds(950, 510, 150, 150);
-                buttonsSelectIslandMotherNature.get(3).setBounds(750, 615, 150, 150);
-                buttonsSelectIslandMotherNature.get(4).setBounds(510, 615, 150, 150);
+                if(labelRedCounters[3].isVisible()){
+                    buttonsSelectIslandMotherNature.get(0).setBounds(950, 100, 150, 150);
+                    if(labelRedCounters[4].isVisible()){
+                        buttonsSelectIslandMotherNature.get(1).setBounds(950, 320, 150, 150);
+                        if(labelRedCounters[5].isVisible()){
+                            buttonsSelectIslandMotherNature.get(2).setBounds(950, 510, 150, 150);
+                            if(labelRedCounters[6].isVisible()){
+                                buttonsSelectIslandMotherNature.get(3).setBounds(750, 615, 150, 150);
+                                if(labelRedCounters[7].isVisible()){
+                                    buttonsSelectIslandMotherNature.get(4).setBounds(510, 615, 150, 150);
+                                }
+                                else {
+                                    buttonsSelectIslandMotherNature.get(4).setBounds(285, 30, 150, 150);
+                                }
+                            }
+                            else {
+                                buttonsSelectIslandMotherNature.get(3).setBounds(285, 30, 150, 150);
+                                buttonsSelectIslandMotherNature.get(4).setBounds(510, 30, 150, 150);
+                            }
+                        }
+                        else {
+                            buttonsSelectIslandMotherNature.get(2).setBounds(285, 30, 150, 150);
+                            buttonsSelectIslandMotherNature.get(3).setBounds(510, 30, 150, 150);
+                            buttonsSelectIslandMotherNature.get(4).setBounds(750, 30, 150, 150);
+                        }
+                    }
+                    else{
+                        buttonsSelectIslandMotherNature.get(1).setBounds(285, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(2).setBounds(510, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(3).setBounds(750, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(4).setBounds(285, 30, 150, 150);
+                    }
+                }
+                else{
+                    shiftButtonsMotherNature(0);
+                }
             }
             case 4->{
-                buttonsSelectIslandMotherNature.get(0).setBounds(950, 320, 150, 150);
-                buttonsSelectIslandMotherNature.get(1).setBounds(950, 510, 150, 150);
-                buttonsSelectIslandMotherNature.get(2).setBounds(750, 615, 150, 150);
-                buttonsSelectIslandMotherNature.get(3).setBounds(510, 615, 150, 150);
-                buttonsSelectIslandMotherNature.get(4).setBounds(255, 615, 150, 150);
+                if(labelRedCounters[4].isVisible()) {
+                    buttonsSelectIslandMotherNature.get(0).setBounds(950, 320, 150, 150);
+                    if(labelRedCounters[5].isVisible()) {
+                        buttonsSelectIslandMotherNature.get(1).setBounds(950, 510, 150, 150);
+                        if(labelRedCounters[6].isVisible()){
+                            buttonsSelectIslandMotherNature.get(2).setBounds(750, 615, 150, 150);
+                            if(labelRedCounters[7].isVisible()){
+                                buttonsSelectIslandMotherNature.get(3).setBounds(510, 615, 150, 150);
+                                if(labelRedCounters[8].isVisible()){
+                                    buttonsSelectIslandMotherNature.get(4).setBounds(255, 615, 150, 150);
+                                }
+                                else {
+                                    buttonsSelectIslandMotherNature.get(4).setBounds(285, 30, 150, 150);
+                                }
+                            }
+                            else {
+                                buttonsSelectIslandMotherNature.get(3).setBounds(285, 30, 150, 150);
+                                buttonsSelectIslandMotherNature.get(4).setBounds(510, 30, 150, 150);
+                            }
+                        }
+                        else {
+                            buttonsSelectIslandMotherNature.get(2).setBounds(285, 30, 150, 150);
+                            buttonsSelectIslandMotherNature.get(3).setBounds(510, 30, 150, 150);
+                            buttonsSelectIslandMotherNature.get(4).setBounds(750, 30, 150, 150);
+                        }
+                    }
+                    else{
+                        buttonsSelectIslandMotherNature.get(1).setBounds(285, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(2).setBounds(510, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(3).setBounds(750, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(4).setBounds(285, 30, 150, 150);
+                    }
+                }
+                else {
+                    shiftButtonsMotherNature(0);
+                }
             }
             case 5->{
-                buttonsSelectIslandMotherNature.get(0).setBounds(950, 510, 150, 150);
-                buttonsSelectIslandMotherNature.get(1).setBounds(750, 615, 150, 150);
-                buttonsSelectIslandMotherNature.get(2).setBounds(510, 615, 150, 150);
-                buttonsSelectIslandMotherNature.get(3).setBounds(255, 615, 150, 150);
-                buttonsSelectIslandMotherNature.get(4).setBounds(50, 520, 150, 150);
+                if(labelRedCounters[5].isVisible()) {
+                    buttonsSelectIslandMotherNature.get(0).setBounds(950, 510, 150, 150);
+                    if(labelRedCounters[6].isVisible()){
+                        buttonsSelectIslandMotherNature.get(1).setBounds(750, 615, 150, 150);
+                        if(labelRedCounters[7].isVisible()){
+                            buttonsSelectIslandMotherNature.get(2).setBounds(510, 615, 150, 150);
+                            if(labelRedCounters[8].isVisible()){
+                                buttonsSelectIslandMotherNature.get(3).setBounds(255, 615, 150, 150);
+                                if(labelRedCounters[9].isVisible()){
+                                    buttonsSelectIslandMotherNature.get(4).setBounds(50, 520, 150, 150);
+                                }
+                                else {
+                                    buttonsSelectIslandMotherNature.get(4).setBounds(285, 30, 150, 150);
+                                }
+                            }
+                            else {
+                                buttonsSelectIslandMotherNature.get(3).setBounds(285, 30, 150, 150);
+                                buttonsSelectIslandMotherNature.get(4).setBounds(510, 30, 150, 150);
+                            }
+                        }
+                        else {
+                            buttonsSelectIslandMotherNature.get(2).setBounds(285, 30, 150, 150);
+                            buttonsSelectIslandMotherNature.get(3).setBounds(510, 30, 150, 150);
+                            buttonsSelectIslandMotherNature.get(4).setBounds(750, 30, 150, 150);
+                        }
+                    }
+                    else{
+                        buttonsSelectIslandMotherNature.get(1).setBounds(285, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(2).setBounds(510, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(3).setBounds(750, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(4).setBounds(285, 30, 150, 150);
+                    }
+                }
+                else {
+                    shiftButtonsMotherNature(0);
+                }
             }
             case 6->{
-                buttonsSelectIslandMotherNature.get(0).setBounds(750, 615, 150, 150);
-                buttonsSelectIslandMotherNature.get(1).setBounds(510, 615, 150, 150);
-                buttonsSelectIslandMotherNature.get(2).setBounds(255, 615, 150, 150);
-                buttonsSelectIslandMotherNature.get(3).setBounds(50, 520, 150, 150);
-                buttonsSelectIslandMotherNature.get(4).setBounds(50, 320, 150, 150);
+                if(labelRedCounters[6].isVisible()) {
+                    buttonsSelectIslandMotherNature.get(0).setBounds(750, 615, 150, 150);
+                    if(labelRedCounters[7].isVisible()){
+                        buttonsSelectIslandMotherNature.get(1).setBounds(510, 615, 150, 150);
+                        if(labelRedCounters[8].isVisible()){
+                            buttonsSelectIslandMotherNature.get(2).setBounds(255, 615, 150, 150);
+                            if(labelRedCounters[9].isVisible()){
+                                buttonsSelectIslandMotherNature.get(3).setBounds(50, 520, 150, 150);
+                                if(labelRedCounters[10].isVisible()){
+                                    buttonsSelectIslandMotherNature.get(4).setBounds(50, 320, 150, 150);
+                                }
+                                else {
+                                    buttonsSelectIslandMotherNature.get(4).setBounds(285, 30, 150, 150);
+                                }
+                            }
+                            else {
+                                buttonsSelectIslandMotherNature.get(3).setBounds(285, 30, 150, 150);
+                                buttonsSelectIslandMotherNature.get(4).setBounds(510, 30, 150, 150);
+                            }
+                        }
+                        else{
+                            buttonsSelectIslandMotherNature.get(2).setBounds(285, 30, 150, 150);
+                            buttonsSelectIslandMotherNature.get(3).setBounds(510, 30, 150, 150);
+                            buttonsSelectIslandMotherNature.get(4).setBounds(750, 30, 150, 150);
+                        }
+                    }
+                    else{
+                        buttonsSelectIslandMotherNature.get(1).setBounds(285, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(2).setBounds(510, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(3).setBounds(750, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(4).setBounds(285, 30, 150, 150);
+                    }
+                }
+                else{
+                    shiftButtonsMotherNature(0);
+                }
             }
             case 7->{
-                buttonsSelectIslandMotherNature.get(0).setBounds(510, 615, 150, 150);
-                buttonsSelectIslandMotherNature.get(1).setBounds(255, 615, 150, 150);
-                buttonsSelectIslandMotherNature.get(2).setBounds(50, 520, 150, 150);
-                buttonsSelectIslandMotherNature.get(3).setBounds(50, 320, 150, 150);
-                buttonsSelectIslandMotherNature.get(4).setBounds(50, 100, 150, 150);
+                if(labelRedCounters[7].isVisible()) {
+                    buttonsSelectIslandMotherNature.get(0).setBounds(510, 615, 150, 150);
+                    if(labelRedCounters[8].isVisible()){
+                        buttonsSelectIslandMotherNature.get(1).setBounds(255, 615, 150, 150);
+                        if(labelRedCounters[9].isVisible()){
+                            buttonsSelectIslandMotherNature.get(2).setBounds(50, 520, 150, 150);
+                            if(labelRedCounters[10].isVisible()){
+                                buttonsSelectIslandMotherNature.get(3).setBounds(750, 30, 150, 150);
+                                if(labelRedCounters[11].isVisible()){
+                                    buttonsSelectIslandMotherNature.get(4).setBounds(50, 100, 150, 150);
+                                }
+                                else{
+                                    buttonsSelectIslandMotherNature.get(4).setBounds(285, 30, 150, 150);
+                                }
+                            }
+                            else{
+                                buttonsSelectIslandMotherNature.get(3).setBounds(285, 30, 150, 150);
+                                buttonsSelectIslandMotherNature.get(4).setBounds(510, 30, 150, 150);
+                            }
+                        }
+                        else {
+                            buttonsSelectIslandMotherNature.get(2).setBounds(285, 30, 150, 150);
+                            buttonsSelectIslandMotherNature.get(3).setBounds(510, 30, 150, 150);
+                            buttonsSelectIslandMotherNature.get(4).setBounds(750, 30, 150, 150);
+                        }
+                    }
+                    else{
+                        buttonsSelectIslandMotherNature.get(1).setBounds(285, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(2).setBounds(510, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(3).setBounds(750, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(4).setBounds(285, 30, 150, 150);
+                    }
+                }
+                else{
+                    shiftButtonsMotherNature(0);
+                }
             }
             case 8->{
-                buttonsSelectIslandMotherNature.get(0).setBounds(255, 615, 150, 150);
-                buttonsSelectIslandMotherNature.get(1).setBounds(50, 520, 150, 150);
-                buttonsSelectIslandMotherNature.get(2).setBounds(50, 320, 150, 150);
-                buttonsSelectIslandMotherNature.get(3).setBounds(50, 100, 150, 150);
-                buttonsSelectIslandMotherNature.get(4).setBounds(285, 30, 150, 150);
+                if(labelRedCounters[8].isVisible()) {
+                    buttonsSelectIslandMotherNature.get(0).setBounds(255, 615, 150, 150);
+                    if(labelRedCounters[9].isVisible()){
+                        buttonsSelectIslandMotherNature.get(1).setBounds(50, 520, 150, 150);
+                        if (labelRedCounters[10].isVisible()) {
+                            buttonsSelectIslandMotherNature.get(2).setBounds(50, 320, 150, 150);
+                            if(labelRedCounters[11].isVisible()){
+                                buttonsSelectIslandMotherNature.get(3).setBounds(50, 100, 150, 150);
+                                buttonsSelectIslandMotherNature.get(4).setBounds(285, 30, 150, 150);
+                            }
+                            else{
+                                buttonsSelectIslandMotherNature.get(3).setBounds(285, 30, 150, 150);
+                                buttonsSelectIslandMotherNature.get(4).setBounds(510, 30, 150, 150);
+                            }
+                        }
+                        else{
+                            buttonsSelectIslandMotherNature.get(2).setBounds(285, 30, 150, 150);
+                            buttonsSelectIslandMotherNature.get(3).setBounds(510, 30, 150, 150);
+                            buttonsSelectIslandMotherNature.get(4).setBounds(750, 30, 150, 150);
+                        }
+                    }
+                    else{
+                        buttonsSelectIslandMotherNature.get(1).setBounds(285, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(2).setBounds(510, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(3).setBounds(750, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(4).setBounds(285, 30, 150, 150);
+                    }
+                }
+                else{
+                    shiftButtonsMotherNature(0);
+                }
             }
             case 9->{
-                buttonsSelectIslandMotherNature.get(0).setBounds(50, 520, 150, 150);
-                buttonsSelectIslandMotherNature.get(1).setBounds(50, 320, 150, 150);
-                buttonsSelectIslandMotherNature.get(2).setBounds(50, 100, 150, 150);
-                buttonsSelectIslandMotherNature.get(3).setBounds(285, 30, 150, 150);
-                buttonsSelectIslandMotherNature.get(4).setBounds(510, 30, 150, 150);
+                if(labelRedCounters[9].isVisible()) {
+                    buttonsSelectIslandMotherNature.get(0).setBounds(50, 520, 150, 150);
+                    if(labelRedCounters[10].isVisible()){
+                        buttonsSelectIslandMotherNature.get(1).setBounds(50, 320, 150, 150);
+                        if(labelRedCounters[11].isVisible()){
+                            buttonsSelectIslandMotherNature.get(2).setBounds(50, 100, 150, 150);
+                            buttonsSelectIslandMotherNature.get(3).setBounds(285, 30, 150, 150);
+                            buttonsSelectIslandMotherNature.get(4).setBounds(510, 30, 150, 150);
+                        }
+                        else{
+                            buttonsSelectIslandMotherNature.get(2).setBounds(285, 30, 150, 150);
+                            buttonsSelectIslandMotherNature.get(3).setBounds(510, 30, 150, 150);
+                            buttonsSelectIslandMotherNature.get(4).setBounds(750, 30, 150, 150);
+                        }
+                    }
+                    else{
+                        buttonsSelectIslandMotherNature.get(1).setBounds(285, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(2).setBounds(510, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(3).setBounds(750, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(4).setBounds(950, 510, 150, 150);
+                    }
+                }
+                else{
+                    shiftButtonsMotherNature(0);
+                }
             }
             case 10->{
-                buttonsSelectIslandMotherNature.get(0).setBounds(50, 320, 150, 150);
-                buttonsSelectIslandMotherNature.get(1).setBounds(50, 100, 150, 150);
-                buttonsSelectIslandMotherNature.get(2).setBounds(285, 30, 150, 150);
-                buttonsSelectIslandMotherNature.get(3).setBounds(510, 30, 150, 150);
-                buttonsSelectIslandMotherNature.get(4).setBounds(750, 30, 150, 150);
+                if(labelRedCounters[10].isVisible()) {
+                    buttonsSelectIslandMotherNature.get(0).setBounds(50, 320, 150, 150);
+                    if(labelRedCounters[11].isVisible()) {
+                        buttonsSelectIslandMotherNature.get(1).setBounds(50, 100, 150, 150);
+                        buttonsSelectIslandMotherNature.get(2).setBounds(285, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(3).setBounds(510, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(4).setBounds(750, 30, 150, 150);
+                    }
+                    else{
+                        buttonsSelectIslandMotherNature.get(1).setBounds(285, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(2).setBounds(510, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(3).setBounds(750, 30, 150, 150);
+                        buttonsSelectIslandMotherNature.get(4).setBounds(950, 510, 150, 150);
+                    }
+                }
+                else {
+                    shiftButtonsMotherNature(0);
+                }
             }
             case 11->{
-                buttonsSelectIslandMotherNature.get(0).setBounds(50, 100, 150, 150);
-                buttonsSelectIslandMotherNature.get(1).setBounds(285, 30, 150, 150);
-                buttonsSelectIslandMotherNature.get(2).setBounds(510, 30, 150, 150);
-                buttonsSelectIslandMotherNature.get(3).setBounds(750, 30, 150, 150);
-                buttonsSelectIslandMotherNature.get(4).setBounds(950, 100, 150, 150);
+                if(labelRedCounters[11].isVisible()) {
+                    buttonsSelectIslandMotherNature.get(0).setBounds(50, 100, 150, 150);
+                    buttonsSelectIslandMotherNature.get(1).setBounds(285, 30, 150, 150);
+                    buttonsSelectIslandMotherNature.get(2).setBounds(510, 30, 150, 150);
+                    buttonsSelectIslandMotherNature.get(3).setBounds(750, 30, 150, 150);
+                    buttonsSelectIslandMotherNature.get(4).setBounds(950, 100, 150, 150);
+                }
+                else {
+                    shiftButtonsMotherNature(0);
+                }
             }
         }
     }
@@ -2211,11 +2444,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsSelectCloud[i].setVisible(true);
         }
         for(int i=0;i<message.getClouds().size();i++){
-            /*int redStudentsOnCloud = Integer.parseInt(labelRedCloudCounters[i].getText());
-            int greenStudentsOnCloud = Integer.parseInt(labelGreenCloudCounters[i].getText());
-            int pinkStudentsOnCloud = Integer.parseInt(labelPinkCloudCounters[i].getText());
-            int blueStudentsOnCloud = Integer.parseInt(labelBlueCloudCounters[i].getText());
-            int yellowStudentsOnCloud = Integer.parseInt(labelYellowCloudCounters[i].getText());*/
             int redStudentsOnCloud = message.getClouds().get(i).getRedStudent().size();
             int greenStudentsOnCloud = message.getClouds().get(i).getGreenStudent().size();
             int pinkStudentsOnCloud = message.getClouds().get(i).getPinkStudent().size();
@@ -2323,8 +2551,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelWinningMessage.setVisible(true);
             labelWinningMessage.setText("# PLAYERS ");
             for (int i = 0; i < message.getPlayers().size(); i++) {
-                labelWinningMessage.setText(labelWinningMessage.getText() + message.getPlayers().get(i).getPlayerName() + " ");
+                labelWinningMessage.setText(labelWinningMessage.getText().concat(message.getPlayers().get(i).getPlayerName()) + " ");
             }
+            labelWinningMessage.setText(labelWinningMessage.getText().concat("WINS #"));
             hideOnlyButtonCards();
             hideAllButtonsMotherNature();
             //TODO hide all buttons
