@@ -864,6 +864,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelGreyTowerList[4].setBounds(1368, 0, 60, 60);
         labelGreyTowerList[5].setBounds(1368, 65, 60, 60);
     }
+
     public void setLabelAssistantCardBounds(JLabel labelAssistantCard, int cardNumber){
         switch (cardNumber){
             case 0 -> labelAssistantCard.setBounds(165, 160, 160, 235);
@@ -1231,7 +1232,11 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         else if(e.getSource()== buttonsSelectCloud[0]) {
             labelPlayerMessage.setText("# CLOUD 1 SELECTED #");
             messageHandler.sendMessage(new SelectCloudMessage(0));
-            if (size == 3) {
+            if(size == 2){
+                buttonsSelectCloud[0].setBounds(430, 350, 100, 100);
+                buttonsSelectCloud[1].setBounds(630, 350, 100, 100);
+            }
+            else if (size == 3) {
                 buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
                 buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
                 buttonsSelectCloud[2].setBounds(530, 430, 100, 100);
@@ -1249,7 +1254,11 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         else if(e.getSource()== buttonsSelectCloud[1]) {
             labelPlayerMessage.setText("# CLOUD 2 SELECTED #");
             messageHandler.sendMessage(new SelectCloudMessage(1));
-            if (size == 3) {
+            if(size == 2){
+                buttonsSelectCloud[0].setBounds(430, 350, 100, 100);
+                buttonsSelectCloud[1].setBounds(630, 350, 100, 100);
+            }
+            else if (size == 3) {
                 buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
                 buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
                 buttonsSelectCloud[2].setBounds(530, 430, 100, 100);
@@ -1267,7 +1276,11 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         else if(e.getSource()== buttonsSelectCloud[2]) {
             labelPlayerMessage.setText("# CLOUD 3 SELECTED #");
             messageHandler.sendMessage(new SelectCloudMessage(2));
-            if (size == 3) {
+            if(size == 2){
+                buttonsSelectCloud[0].setBounds(430, 350, 100, 100);
+                buttonsSelectCloud[1].setBounds(630, 350, 100, 100);
+            }
+            else if (size == 3) {
                 buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
                 buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
                 buttonsSelectCloud[2].setBounds(530, 430, 100, 100);
@@ -1839,16 +1852,16 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         }
 
         for(int i = 0; i < game.getTable().getIslands().size(); i++){
-            if(3 != size) {
-                for (JLabel jLabel : labelGreyTowerCounter) {
-                    jLabel.setVisible(false);
-                }
-            }
 
             buttonsSelectIsland[i].setVisible(true);
 
             if(!game.getTable().getIslands().get(i).equals(game.getTable().getIslandWithMotherNature())){
                 labelMotherNatureList[i].setVisible(false);
+            }
+        }
+        if(3 != size) {
+            for (JLabel jLabel : labelGreyTowerCounter) {
+                jLabel.setVisible(false);
             }
         }
 
@@ -2059,16 +2072,13 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     }
 
     public void shiftStudent(){
-        int last = 8;
-        for(int i=0;i< buttonsSelectStudent.length;i++){
+        for(int i=0;i< buttonsSelectStudent.length-1;i++){
             if(!labelEntranceStudents[i].isVisible()){
                 labelEntranceStudents[i].setIcon(labelEntranceStudents[i+1].getIcon());
                 labelEntranceStudents[i].setVisible(true);
                 labelEntranceStudents[i+1].setVisible(false);
-                last = i+1;
             }
         }
-        labelEntranceStudents[last].setVisible(false);
     }
 
     @Override
@@ -2200,15 +2210,34 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         for(int i = 0; i < size; i++){
             buttonsSelectCloud[i].setVisible(true);
         }
-        for(int i=0;i<size;i++){
-            int redStudentsOnCloud = Integer.parseInt(labelRedCloudCounters[i].getText());
+        for(int i=0;i<message.getClouds().size();i++){
+            /*int redStudentsOnCloud = Integer.parseInt(labelRedCloudCounters[i].getText());
             int greenStudentsOnCloud = Integer.parseInt(labelGreenCloudCounters[i].getText());
             int pinkStudentsOnCloud = Integer.parseInt(labelPinkCloudCounters[i].getText());
             int blueStudentsOnCloud = Integer.parseInt(labelBlueCloudCounters[i].getText());
-            int yellowStudentsOnCloud = Integer.parseInt(labelYellowCloudCounters[i].getText());
+            int yellowStudentsOnCloud = Integer.parseInt(labelYellowCloudCounters[i].getText());*/
+            int redStudentsOnCloud = message.getClouds().get(i).getRedStudent().size();
+            int greenStudentsOnCloud = message.getClouds().get(i).getGreenStudent().size();
+            int pinkStudentsOnCloud = message.getClouds().get(i).getPinkStudent().size();
+            int blueStudentsOnCloud = message.getClouds().get(i).getBlueStudent().size();
+            int yellowStudentsOnCloud = message.getClouds().get(i).getYellowStudent().size();
+
+            labelRedCloudCounters[i].setText(redStudentsOnCloud+"");
+            labelGreenCloudCounters[i].setText(greenStudentsOnCloud+"");
+            labelPinkCloudCounters[i].setText(pinkStudentsOnCloud+"");
+            labelBlueCloudCounters[i].setText(blueStudentsOnCloud+"");
+            labelYellowCloudCounters[i].setText(yellowStudentsOnCloud+"");
             if(redStudentsOnCloud+greenStudentsOnCloud+pinkStudentsOnCloud+blueStudentsOnCloud+yellowStudentsOnCloud == 0){
                 shiftButtonClouds(i);
             }
+        }
+        for(int i = message.getClouds().size(); i < size; i++){
+            labelRedCloudCounters[i].setText(0+"");
+            labelGreenCloudCounters[i].setText(0+"");
+            labelPinkCloudCounters[i].setText(0+"");
+            labelBlueCloudCounters[i].setText(0+"");
+            labelYellowCloudCounters[i].setText(0+"");
+            buttonsSelectCloud[i].setVisible(false);
         }
     }
 
