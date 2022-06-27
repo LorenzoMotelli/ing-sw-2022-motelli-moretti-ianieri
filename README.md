@@ -18,6 +18,7 @@ Group ID: PSP16
 
 # Starting a game
 There are two different JARs, one for the clients, one for the server. The JARs can be launched by command line by using the common maven command.
+
 **NOTE**: select exclusively one of the profile! If both or none are selected, we do not guarantee the correct behaviour.
 
 ## How to play
