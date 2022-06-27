@@ -71,6 +71,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private final JLabel[] labelEntranceStudents = new JLabel[9];
     //private List<JLabel> labelEntranceStudents = new ArrayList<>();
 
+    private final JLabel labelPlayerView;
     private final JLabel labelPlayerMessage;
     private final JLabel labelWinningMessage;
 
@@ -83,8 +84,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private final ImageIcon greyTowerIcon = new ImageIcon("src/images/greyTowerRaw.png");
     private final JLabel[] labelGreyTowerList = new JLabel[8];
 
-    private final JLabel labelBackgroundCards;
-    private final ImageIcon backgroundCards;
+    private JLabel labelBackgroundCards;
+    private ImageIcon backgroundCards;
     private final JLabel labelWinningImage;
     private final ImageIcon winningImage;
 
@@ -149,15 +150,19 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private final JButton[] buttonsSelectCloud = new JButton[4];
 
     private static JButton buttonViewCards;
-    private static JButton buttonHideCards;
 
     private static JButton startGame;
+
+    private static JButton buttonNextPlayerView;
+    private static JButton buttonPreviouslyPlayerView;
 
     private InputStreamReader inputStreamReader;
     private String serverIp = "localhost";
     private int serverPort =12345 ;
     private String username;
     private ClientMessageHandler messageHandler;
+    private Player[] playerList;
+    private Player currentView;
 
 
     public static JButton transparentButton(JButton a) {
@@ -196,9 +201,134 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     }
 
     public GuiClientInterface() {
-        messageHandler = new ClientMessageHandler(this);
-        inputStreamReader = new InputStreamReader(System.in);
 
+        createLoginGui();
+
+        createGameGui();
+
+        //label for the winner
+        winningImage= new ImageIcon("src/images/winningImage.jpg");
+        labelWinningImage=new JLabel();
+        labelWinningImage.setBounds(320,0,540,800);
+        labelWinningImage.setIcon(winningImage);
+
+        labelWinningMessage = new JLabel("", SwingConstants.CENTER);
+        labelWinningMessage.setBounds(365,44,450,80);
+        labelWinningMessage.setForeground(Color.darkGray);
+        labelWinningMessage.setBorder(BorderFactory.createLineBorder(Color.darkGray, 5));
+        labelWinningMessage.setFont(new Font("", Font.ITALIC,20));
+
+        //button to see other player's table
+        buttonNextPlayerView = new JButton(">>>");
+        buttonNextPlayerView.setBounds(1470,225,65,25);
+        buttonNextPlayerView.addActionListener(this);
+        buttonNextPlayerView.setOpaque(true);
+        buttonNextPlayerView.setBackground(Color.darkGray);
+        buttonNextPlayerView.setForeground(Color.white);
+
+        buttonPreviouslyPlayerView = new JButton("<<<");
+        buttonPreviouslyPlayerView.setBounds(1184,225,65,25);
+        buttonPreviouslyPlayerView.addActionListener(this);
+        buttonPreviouslyPlayerView.setOpaque(true);
+        buttonPreviouslyPlayerView.setBackground(Color.darkGray);
+        buttonPreviouslyPlayerView.setForeground(Color.white);
+
+        createDeck();
+
+        //professors
+        for(int i=0;i<5;i++) {
+            labelProfessorList[i]=new JLabel();
+        }
+        labelProfessorList[0].setIcon(blueProfessor);
+        labelProfessorList[1].setIcon(greenProfessor);
+        labelProfessorList[2].setIcon(pinkProfessor);
+        labelProfessorList[3].setIcon(redProfessor);
+        labelProfessorList[4].setIcon(yellowProfessor);
+
+        labelProfessorList[0].setBounds(1415,135,100,100);
+        labelProfessorList[1].setBounds(1170,135,100,100);
+        labelProfessorList[2].setBounds(1355,135,100,100);
+        labelProfessorList[3].setBounds(1231,135,100,100);
+        labelProfessorList[4].setBounds(1293,135,100,100);
+
+        //emptyIsland
+        for(int i=0;i<12;i++) {
+            labelEmptyIsland[i]=new JLabel();
+            labelEmptyIsland[i].setIcon(emptyIsland);
+        }
+        labelEmptyIsland[0].setBounds(242,-5,235,235);
+        labelEmptyIsland[1].setBounds(468,-15,235,235);
+        labelEmptyIsland[2].setBounds(705,-15,235,235);
+        labelEmptyIsland[3].setBounds(910,55,235,235);
+        labelEmptyIsland[11].setBounds(11,60,235,235);
+        labelEmptyIsland[10].setBounds(11,280,235,235);
+        labelEmptyIsland[4].setBounds(910,280,235,235);
+        labelEmptyIsland[5].setBounds(910,480,235,235);
+        labelEmptyIsland[9].setBounds(11,480,235,235);
+        labelEmptyIsland[8].setBounds(212,580,235,235);
+        labelEmptyIsland[7].setBounds(468,580,235,235);
+        labelEmptyIsland[6].setBounds(707,580,235,235);
+
+        createCounters();
+
+        createMotherNature();
+
+        createStudents();
+
+        //button for the selection of the clouds based on the different field of the game
+        for(int i = 0; i < 4; i++){
+            buttonsSelectCloud[i] = new JButton("");
+            buttonsSelectCloud[i].addActionListener(this);
+            transparentButton(buttonsSelectCloud[i]);
+        }
+
+        buttonsSelectCloud[0].setBounds(430, 350, 100, 100);
+        buttonsSelectCloud[1].setBounds(630, 350, 100, 100);
+        buttonsSelectCloud[2].setBounds(530, 430, 100, 100);
+        buttonsSelectCloud[2].setVisible(false);
+        buttonsSelectCloud[3].setBounds(640, 430, 100, 100);
+        buttonsSelectCloud[3].setVisible(false);
+
+        //a way to communicate with the players
+        labelPlayerMessage = new JLabel("# TEXT BOX #", SwingConstants.CENTER);
+        labelPlayerMessage.setBounds(430,205,300,50);
+        labelPlayerMessage.setForeground(Color.darkGray);
+        labelPlayerMessage.setOpaque(true);
+        labelPlayerMessage.setBackground(Color.white);
+        labelPlayerMessage.setBorder(BorderFactory.createLineBorder(Color.darkGray, 3));
+
+        //a way to communicate which table view the player is watching
+        labelPlayerView = new JLabel("", SwingConstants.CENTER);
+        labelPlayerView.setBounds(1184,225,352,25);
+        labelPlayerView.setForeground(Color.DARK_GRAY);
+        labelPlayerView.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3));
+        labelPlayerView.setBackground(Color.white);
+        labelPlayerView.setOpaque(true);
+
+        createTowers();
+
+        //button for select cards
+        buttonViewCards = new JButton("VIEW CARDS");
+        buttonViewCards.setBounds(950, 720, 150, 50);
+        buttonViewCards.addActionListener(this);
+        buttonViewCards.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3));
+        buttonViewCards.setVisible(false);
+        buttonViewCards.setBackground(Color.white);
+        buttonViewCards.setForeground(Color.darkGray);
+
+        ImageIcon tapToStart=new ImageIcon("src/images/tapToStart.jpg");
+        startGame = new JButton("",tapToStart);
+        startGame.setBounds(0, 0, 1536, 800);
+        startGame.addActionListener(this);
+        frameGame.add(startGame);
+
+        labelSetBackground=new JLabel();
+        labelSetBackground.setBounds(0,0,1600,800);
+
+        frameGame.setVisible(false);
+    }
+
+    public void createLoginGui(){
         frameLogin = new JFrame();
         ImageIcon logoAPP = new ImageIcon("src/images/LOGO CRANIO CREATIONS_bianco.png");
         frameLogin.setIconImage(logoAPP.getImage());
@@ -274,7 +404,11 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
         frameLogin.add(labelBackgroundLogin);
         frameLogin.setVisible(true);
+    }
 
+    public void createGameGui(){
+        messageHandler = new ClientMessageHandler(this);
+        inputStreamReader = new InputStreamReader(System.in);
         frameGame=new JFrame();
         ImageIcon logoGame = new ImageIcon("src/images/logWallpaperRaw.jpg");
         frameGame.setIconImage(logoGame.getImage());
@@ -287,18 +421,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         for(int i=0;i<9;i++){
             chosenCard[i]=1;
         }
-        //label for the winner
-        winningImage= new ImageIcon("src/images/winningImage.jpg");
-        labelWinningImage=new JLabel();
-        labelWinningImage.setBounds(320,0,540,800);
-        labelWinningImage.setIcon(winningImage);
+    }
 
-        labelWinningMessage = new JLabel("", SwingConstants.CENTER);
-        labelWinningMessage.setBounds(365,44,450,80);
-        labelWinningMessage.setForeground(Color.darkGray);
-        labelWinningMessage.setBorder(BorderFactory.createLineBorder(Color.darkGray, 5));
-        labelWinningMessage.setFont(new Font("", Font.ITALIC,20));
-
+    public void createDeck(){
         //menu for cards
         backgroundCards= new ImageIcon("src/images/backgroundCards.jpg");
         labelBackgroundCards=new JLabel();
@@ -326,41 +451,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         buttonsAssistant[7].setBounds(495, 415, 160, 235);
         buttonsAssistant[8].setBounds(660, 415, 160, 235);
         buttonsAssistant[9].setBounds(825, 415, 160, 235);
+    }
 
-        //professors
-        for(int i=0;i<5;i++) {
-            labelProfessorList[i]=new JLabel();
-        }
-        labelProfessorList[0].setIcon(blueProfessor);
-        labelProfessorList[1].setIcon(greenProfessor);
-        labelProfessorList[2].setIcon(pinkProfessor);
-        labelProfessorList[3].setIcon(redProfessor);
-        labelProfessorList[4].setIcon(yellowProfessor);
-
-        labelProfessorList[0].setBounds(1415,135,100,100);
-        labelProfessorList[1].setBounds(1170,135,100,100);
-        labelProfessorList[2].setBounds(1355,135,100,100);
-        labelProfessorList[3].setBounds(1231,135,100,100);
-        labelProfessorList[4].setBounds(1293,135,100,100);
-
-        //emptyIsland
-        for(int i=0;i<12;i++) {
-            labelEmptyIsland[i]=new JLabel();
-            labelEmptyIsland[i].setIcon(emptyIsland);
-        }
-        labelEmptyIsland[0].setBounds(242,-5,235,235);
-        labelEmptyIsland[1].setBounds(468,-15,235,235);
-        labelEmptyIsland[2].setBounds(705,-15,235,235);
-        labelEmptyIsland[3].setBounds(910,55,235,235);
-        labelEmptyIsland[11].setBounds(11,60,235,235);
-        labelEmptyIsland[10].setBounds(11,280,235,235);
-        labelEmptyIsland[4].setBounds(910,280,235,235);
-        labelEmptyIsland[5].setBounds(910,480,235,235);
-        labelEmptyIsland[9].setBounds(11,480,235,235);
-        labelEmptyIsland[8].setBounds(212,580,235,235);
-        labelEmptyIsland[7].setBounds(468,580,235,235);
-        labelEmptyIsland[6].setBounds(707,580,235,235);
-
+    public void createCounters(){
         //counters
         for(int i = 0; i < 12; i++){
             labelWhiteTowerCounter[i] = new JLabel(" 0", SwingConstants.CENTER);
@@ -533,7 +626,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelBlueCloudCounters[1].setBounds(670,388,25,25);
         labelYellowCloudCounters[1].setBounds(698,388,25,25);
         labelPinkCloudCounters[1].setBounds(726,388,25,25);
+    }
 
+    public void createMotherNature(){
         for(int i = 0; i < 12; i++){
             labelMotherNatureList[i] = new JLabel();
             labelMotherNatureList[i].setIcon(motherNatureImage);
@@ -595,7 +690,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelMotherNatureList[11].setBounds(65, 170, 100, 100);
         buttonsSelectIsland[11].setBounds(50, 100, 150, 150);
         buttonsSelectIslandMotherNature.get(11).setBounds(50, 100, 150, 150);
+    }
 
+    public void createStudents(){
         for(int i = 0; i < buttonsSelectStudent.length; i++){
             buttonsSelectStudent[i] = new JButton("");
             buttonsSelectStudent[i].addActionListener(this);
@@ -732,27 +829,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         //images 9 slot students in the beginning hall
         labelEntranceStudents[8].setBounds(1466, 728, 100, 100);
         //labelEntranceStudents.get(8).setBounds(1466, 728, 100, 100);
+    }
 
-        //button for the selection of the clouds based on the different field of the game
-        for(int i = 0; i < 4; i++){
-            buttonsSelectCloud[i] = new JButton("");
-            buttonsSelectCloud[i].addActionListener(this);
-            transparentButton(buttonsSelectCloud[i]);
-        }
-
-        buttonsSelectCloud[0].setBounds(430, 350, 100, 100);
-        buttonsSelectCloud[1].setBounds(630, 350, 100, 100);
-        buttonsSelectCloud[2].setBounds(530, 430, 100, 100);
-        buttonsSelectCloud[2].setVisible(false);
-        buttonsSelectCloud[3].setBounds(640, 430, 100, 100);
-        buttonsSelectCloud[3].setVisible(false);
-
-        //a way to communicate with the players
-        labelPlayerMessage = new JLabel("# TEXT BOX #", SwingConstants.CENTER);
-        labelPlayerMessage.setBounds(430,205,300,50);
-        labelPlayerMessage.setForeground(Color.WHITE);
-        labelPlayerMessage.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
-
+    public void createTowers(){
         //towers configuration
         for(int i = 0; i < 8; i++){
             labelWhiteTowerList[i] = new JLabel();
@@ -789,28 +868,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelGreyTowerList[3].setBounds(1306, 65, 60, 60);
         labelGreyTowerList[4].setBounds(1368, 0, 60, 60);
         labelGreyTowerList[5].setBounds(1368, 65, 60, 60);
-
-        //button for select cards
-        buttonViewCards = new JButton("# VIEW CARDS #");
-        buttonViewCards.setBounds(950, 720, 150, 50);
-        buttonViewCards.addActionListener(this);
-
-        buttonHideCards = new JButton("# HIDE CARDS #");
-        buttonHideCards.setBounds(950, 720, 150, 50);
-        buttonHideCards.addActionListener(this);
-        buttonHideCards.setVisible(false);
-
-        startGame = new JButton("# START GAME #");
-        startGame.setBounds(0, 0, 1600, 800);
-        startGame.addActionListener(this);
-        frameGame.add(startGame);
-
-        labelSetBackground=new JLabel();
-        labelSetBackground.setBounds(0,0,1600,800);
-
-        frameGame.setVisible(false);
     }
-
     public void setLabelAssistantCardBounds(JLabel labelAssistantCard, int cardNumber){
         switch (cardNumber){
             case 0 -> labelAssistantCard.setBounds(165, 160, 160, 235);
@@ -1242,13 +1300,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 buttonsSelectCloud[i].setVisible(false);
             }
         }
-        else if(e.getSource()== buttonHideCards) {
-            buttonHideCards.setVisible(false);
-            hideCards();
-        }
         else if(e.getSource()== buttonViewCards) {
             buttonViewCards.setVisible(false);
-            buttonHideCards.setVisible(true);
+            //buttonHideCards.setVisible(true);
             showCards();
         }
         else if(e.getSource()== buttonsAssistant[0]) {
@@ -1257,6 +1311,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsAssistant[0].setVisible(false);
             chosenCard[0]=1;
             hideOnlyButtonCards();
+            hideCards();
 
             int choice=1;
             messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
@@ -1267,6 +1322,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsAssistant[1].setVisible(false);
             chosenCard[1]=1;
             hideOnlyButtonCards();
+            hideCards();
 
             int choice=2;
             messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
@@ -1277,7 +1333,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsAssistant[2].setVisible(false);
             chosenCard[2]=1;
             hideOnlyButtonCards();
-
+            hideCards();
             int choice=3;
             messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
         }
@@ -1287,6 +1343,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsAssistant[3].setVisible(false);
             chosenCard[3]=1;
             hideOnlyButtonCards();
+            hideCards();
 
             int choice=4;
             messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
@@ -1297,6 +1354,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsAssistant[4].setVisible(false);
             chosenCard[4]=1;
             hideOnlyButtonCards();
+            hideCards();
 
             int choice=5;
             messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
@@ -1308,6 +1366,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             chosenCard[5]=1;
             hideOnlyButtonCards();
 
+            hideCards();
+
             int choice=6;
             messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
         }
@@ -1317,6 +1377,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsAssistant[6].setVisible(false);
             chosenCard[6]=1;
             hideOnlyButtonCards();
+            hideCards();
 
             int choice=7;
             messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
@@ -1327,6 +1388,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsAssistant[7].setVisible(false);
             chosenCard[7]=1;
             hideOnlyButtonCards();
+            hideCards();
 
             int choice=8;
             messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
@@ -1337,7 +1399,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsAssistant[8].setVisible(false);
             chosenCard[8]=1;
             hideOnlyButtonCards();
-
+            hideCards();
             int choice=9;
             messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
         }
@@ -1347,7 +1409,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsAssistant[9].setVisible(false);
             chosenCard[9]=1;
             hideOnlyButtonCards();
-
+            hideCards();
             int choice=10;
             messageHandler.sendMessage(new SelectAssistantCardMessage(choice));
         }
@@ -1458,7 +1520,10 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 frameGame.add(labelGreyTowerList[j]);
             }
 
+            frameGame.add(buttonPreviouslyPlayerView);
+            frameGame.add(buttonNextPlayerView);
             frameGame.add(labelPlayerMessage);
+            frameGame.add(labelPlayerView);
 
             frameGame.add(buttonPutOnTable);
 
@@ -1482,11 +1547,240 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 frameGame.add(labelGreenCloudCounters[i]);
             }
             frameGame.add(buttonViewCards);
-            frameGame.add(buttonHideCards);
 
             frameGame.add(labelSetBackground);
             hideCards();
         }
+        else if (e.getSource()==buttonNextPlayerView){
+            viewNextPlayerHall();
+        }
+        else if (e.getSource()==buttonPreviouslyPlayerView){
+            viewPreviousPlayerHall();
+        }
+    }
+
+    public void viewNextPlayerHall(){
+        int k=0,index=0;
+        for(k=0;k<size;k++){
+            if(currentView.getPlayerName().equals(playerList[k].getPlayerName())){
+                break;
+            }
+        }
+        index=(k+1)%size;
+        currentView = playerList[index];
+
+        labelPlayerView.setText("PLAYER "+playerList[index].getPlayerName()+"'S HALL");
+
+        if(playerList[index].getSchool().getBlueProfessor()==null) {
+            labelProfessorList[0].setVisible(false);
+        }
+        if(playerList[index].getSchool().getGreenProfessor()==null) {
+            labelProfessorList[1].setVisible(false);
+        }
+        if(playerList[index].getSchool().getPinkProfessor()==null) {
+            labelProfessorList[2].setVisible(false);
+        }
+        if(playerList[index].getSchool().getRedProfessor()==null) {
+            labelProfessorList[3].setVisible(false);
+        }
+        if(playerList[index].getSchool().getYellowProfessor()==null) {
+            labelProfessorList[4].setVisible(false);
+        }
+
+        for(int i = 0; i < 10; i++){
+            if(playerList[index].getSchool().getSchoolHall()[0].getTableHall()[i] == null){
+                labelBlueHallList[i].setVisible(false);
+            }
+            if(playerList[index].getSchool().getSchoolHall()[1].getTableHall()[i] == null){
+                labelGreenHallList[i].setVisible(false);
+            }
+            if(playerList[index].getSchool().getSchoolHall()[2].getTableHall()[i] == null){
+                labelPinkHallList[i].setVisible(false);
+            }
+            if(playerList[index].getSchool().getSchoolHall()[3].getTableHall()[i] == null){
+                labelRedHallList[i].setVisible(false);
+            }
+            if(playerList[index].getSchool().getSchoolHall()[4].getTableHall()[i] == null){
+                labelYellowHallList[i].setVisible(false);
+            }
+        }
+        for(int i = 0; i < 8; i++){
+            labelWhiteTowerList[i].setVisible(false);
+            labelBlackTowerList[i].setVisible(false);
+            labelGreyTowerList[i].setVisible(false);
+        }
+        switch (playerList[index].getSchool().getPlayersTowers().get(0).getColor()) {
+            //TODO improve
+            case WHITE -> {
+                for (int i = 0; i < playerList[index].getSchool().getPlayersTowers().size(); i++) {
+                    labelWhiteTowerList[i].setVisible(true);
+                }
+            }
+            case BLACK -> {
+                for (int i = 0; i < playerList[index].getSchool().getPlayersTowers().size(); i++) {
+                    labelBlackTowerList[i].setVisible(true);
+                }
+            }
+            case GREY -> {
+                for (int i = 0; i < playerList[index].getSchool().getPlayersTowers().size(); i++) {
+                    labelGreyTowerList[i].setVisible(true);
+                }
+            }
+        }
+        if(3 == size){
+            labelWhiteTowerList[6].setVisible(false);
+            labelWhiteTowerList[7].setVisible(false);
+            labelBlackTowerList[6].setVisible(false);
+            labelBlackTowerList[7].setVisible(false);
+            labelGreyTowerList[6].setVisible(false);
+            labelGreyTowerList[7].setVisible(false);
+        }
+        for(int j = 0; j < playerList[index].getSchool().getEntranceStudent().size(); j++){
+            PawnColor color = playerList[index].getSchool().getEntranceStudent().get(j).getColor();
+            switch (color){
+                case BLUE -> {
+                    labelEntranceStudents[j].setIcon(blueHallIcon);
+                    //labelEntranceStudents[j].setVisible(true);
+                    //labelEntranceStudents.get(j).setIcon(blueHallIcon);
+                }
+                case GREEN -> {
+                    labelEntranceStudents[j].setIcon(greenHallIcon);
+                    //labelEntranceStudents[j].setVisible(true);
+                    //labelEntranceStudents.get(j).setIcon(greenHallIcon);
+                }
+                case PINK -> {
+                    labelEntranceStudents[j].setIcon(pinkHallIcon);
+                    //labelEntranceStudents[j].setVisible(true);
+                    //labelEntranceStudents.get(j).setIcon(pinkHallIcon);
+                }
+                case RED -> {
+                    labelEntranceStudents[j].setIcon(redHallIcon);
+                    //labelEntranceStudents[j].setVisible(true);*/
+                    //labelEntranceStudents.get(j).setIcon(redHallIcon);
+                }
+                case YELLOW -> {
+                    labelEntranceStudents[j].setIcon(yellowHall);
+                    //labelEntranceStudents[j].setVisible(true);*/
+                    //labelEntranceStudents.get(j).setIcon(yellowHall);
+                }
+            }
+            //labelEntranceStudents.get(j).setVisible(true);
+            labelEntranceStudents[j].setVisible(true);
+        }
+    }
+
+    public void viewPreviousPlayerHall(){
+        int k=0,index=0;
+        for(k=0;k<size;k++){
+            if(currentView.getPlayerName().equals(playerList[k].getPlayerName())){
+                break;
+            }
+        }
+        index=(k-1)%size;
+        if(index<0){
+            index=-index;
+        }
+        currentView = playerList[index];
+        labelPlayerView.setText("PLAYER "+playerList[index].getPlayerName()+"'S HALL");
+
+        if(playerList[index].getSchool().getBlueProfessor()==null) {
+            labelProfessorList[0].setVisible(false);
+        }
+        if(playerList[index].getSchool().getGreenProfessor()==null) {
+            labelProfessorList[1].setVisible(false);
+        }
+        if(playerList[index].getSchool().getPinkProfessor()==null) {
+            labelProfessorList[2].setVisible(false);
+        }
+        if(playerList[index].getSchool().getRedProfessor()==null) {
+            labelProfessorList[3].setVisible(false);
+        }
+        if(playerList[index].getSchool().getYellowProfessor()==null) {
+            labelProfessorList[4].setVisible(false);
+        }
+
+        for(int i = 0; i < 10; i++){
+            if(playerList[index].getSchool().getSchoolHall()[0].getTableHall()[i] == null){
+                labelBlueHallList[i].setVisible(false);
+            }
+            if(playerList[index].getSchool().getSchoolHall()[1].getTableHall()[i] == null){
+                labelGreenHallList[i].setVisible(false);
+            }
+            if(playerList[index].getSchool().getSchoolHall()[2].getTableHall()[i] == null){
+                labelPinkHallList[i].setVisible(false);
+            }
+            if(playerList[index].getSchool().getSchoolHall()[3].getTableHall()[i] == null){
+                labelRedHallList[i].setVisible(false);
+            }
+            if(playerList[index].getSchool().getSchoolHall()[4].getTableHall()[i] == null){
+                labelYellowHallList[i].setVisible(false);
+            }
+        }
+        for(int i = 0; i < 8; i++){
+            labelWhiteTowerList[i].setVisible(false);
+            labelBlackTowerList[i].setVisible(false);
+            labelGreyTowerList[i].setVisible(false);
+        }
+        switch (playerList[index].getSchool().getPlayersTowers().get(0).getColor()) {
+            //TODO improve
+            case WHITE -> {
+                for (int i = 0; i < playerList[index].getSchool().getPlayersTowers().size(); i++) {
+                    labelWhiteTowerList[i].setVisible(true);
+                }
+            }
+            case BLACK -> {
+                for (int i = 0; i < playerList[index].getSchool().getPlayersTowers().size(); i++) {
+                    labelBlackTowerList[i].setVisible(true);
+                }
+            }
+            case GREY -> {
+                for (int i = 0; i < playerList[index].getSchool().getPlayersTowers().size(); i++) {
+                    labelGreyTowerList[i].setVisible(true);
+                }
+            }
+        }
+        if(3 == size){
+            labelWhiteTowerList[6].setVisible(false);
+            labelWhiteTowerList[7].setVisible(false);
+            labelBlackTowerList[6].setVisible(false);
+            labelBlackTowerList[7].setVisible(false);
+            labelGreyTowerList[6].setVisible(false);
+            labelGreyTowerList[7].setVisible(false);
+        }
+        for(int j = 0; j < playerList[index].getSchool().getEntranceStudent().size(); j++){
+            PawnColor color = playerList[index].getSchool().getEntranceStudent().get(j).getColor();
+            switch (color){
+                case BLUE -> {
+                    labelEntranceStudents[j].setIcon(blueHallIcon);
+                    //labelEntranceStudents[j].setVisible(true);
+                    //labelEntranceStudents.get(j).setIcon(blueHallIcon);
+                }
+                case GREEN -> {
+                    labelEntranceStudents[j].setIcon(greenHallIcon);
+                    //labelEntranceStudents[j].setVisible(true);
+                    //labelEntranceStudents.get(j).setIcon(greenHallIcon);
+                }
+                case PINK -> {
+                    labelEntranceStudents[j].setIcon(pinkHallIcon);
+                    //labelEntranceStudents[j].setVisible(true);
+                    //labelEntranceStudents.get(j).setIcon(pinkHallIcon);
+                }
+                case RED -> {
+                    labelEntranceStudents[j].setIcon(redHallIcon);
+                    //labelEntranceStudents[j].setVisible(true);*/
+                    //labelEntranceStudents.get(j).setIcon(redHallIcon);
+                }
+                case YELLOW -> {
+                    labelEntranceStudents[j].setIcon(yellowHall);
+                    //labelEntranceStudents[j].setVisible(true);*/
+                    //labelEntranceStudents.get(j).setIcon(yellowHall);
+                }
+            }
+            //labelEntranceStudents.get(j).setVisible(true);
+            labelEntranceStudents[j].setVisible(true);
+        }
+
+
     }
 
     @Override
@@ -1494,6 +1788,12 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         GeneralGame game = updateBoardMessage.getGame();
         size = game.getPlayers().length;
 
+        playerList=new Player[size];
+        currentView=game.getCurrentPlayer();
+
+        for(int i=0;i<size;i++){
+            playerList[i]=game.getPlayers()[i];
+        }
         for(int i = 0; i < size; i++){
             labelRedCloudCounters[i].setVisible(true);
             labelBlueCloudCounters[i].setVisible(true);
@@ -1521,9 +1821,11 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         }
 
         //print the situation of the table of each player
+
         for(Player player : game.getPlayers()){
             if(username.equals(player.getPlayerName())) {
                 labelPlayerMessage.setText("WAITING THE OTHER PLAYER");
+                labelPlayerView.setText("PLAYER "+player.getPlayerName()+"'S HALL");
 
                 if(player.getSchool().getBlueProfessor()==null) {
                     labelProfessorList[0].setVisible(false);
