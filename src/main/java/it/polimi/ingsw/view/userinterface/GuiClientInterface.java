@@ -1,6 +1,5 @@
 package it.polimi.ingsw.view.userinterface;
 
-
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.AssistantCard;
 import it.polimi.ingsw.model.enumeration.PawnColor;
@@ -14,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +20,6 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.ImageIcon;
-
 
 /**
  * CLIENT INTERFACE with GUI
@@ -45,9 +42,9 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private static JFrame frameGame;
     private static int size;
 
-    private static int chosenCard[]=new int[10];
+    private final static int chosenCard[]=new int[10];
 
-    private JLabel labelSetBackground;
+    private final JLabel labelSetBackground;
     private ImageIcon setBackground;
 
     ImageIcon motherNatureImage = new ImageIcon("src/images/motherNature.png");
@@ -69,7 +66,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private final JLabel[] labelYellowHallList = new JLabel[10];
 
     private final JLabel[] labelEntranceStudents = new JLabel[9];
-    //private List<JLabel> labelEntranceStudents = new ArrayList<>();
 
     private final JLabel labelPlayerView;
     private final JLabel labelPlayerMessage;
@@ -101,7 +97,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private final JLabel[] labelEmptyIsland=new JLabel[12];
     private final ImageIcon emptyIsland=new ImageIcon("src/images/emptyIsland.png");
 
-    private final ImageIcon[] assistantsImage = {new ImageIcon("src/images/assistant1.jpg"),
+    private final ImageIcon[] assistantsImage = {
+            new ImageIcon("src/images/assistant1.jpg"),
             new ImageIcon("src/images/assistant2.jpg"),
             new ImageIcon("src/images/assistant3.jpg"),
             new ImageIcon("src/images/assistant4.jpg"),
@@ -129,15 +126,15 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     private final JLabel[] labelPinkCounters = new JLabel[12];
 
-    private JLabel[] labelRedCloudCounters=new JLabel[4];
+    private final JLabel[] labelRedCloudCounters=new JLabel[4];
 
-    private JLabel[] labelBlueCloudCounters=new JLabel[4];
+    private final JLabel[] labelBlueCloudCounters=new JLabel[4];
 
-    private JLabel[] labelYellowCloudCounters=new JLabel[4];
+    private final JLabel[] labelYellowCloudCounters=new JLabel[4];
 
-    private JLabel[] labelPinkCloudCounters=new JLabel[4];
+    private final JLabel[] labelPinkCloudCounters=new JLabel[4];
 
-    private JLabel[] labelGreenCloudCounters=new JLabel[4];
+    private final JLabel[] labelGreenCloudCounters=new JLabel[4];
 
     private final JButton[] buttonsAssistant = new JButton[10];
 
@@ -165,19 +162,15 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private Player currentView;
 
 
-    public static JButton transparentButton(JButton a) {
+    public void transparentButton(JButton a) {
         a.setOpaque(false);
         a.setContentAreaFilled(false);
         a.setBorderPainted(false);
-
-        return a;
     }
 
-    public static JButton coolerButton(JButton button){
+    public void coolerButton(JButton button){
         button.setBackground(Color.darkGray);
         button.setForeground(Color.white);
-
-        return button;
     }
 
     public void hideCards() {
@@ -189,8 +182,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     }
 
     public void hideOnlyButtonCards() {
-        for(int i = 0; i < buttonsAssistant.length; i++){
-            buttonsAssistant[i].setVisible(false);
+        for (JButton button : buttonsAssistant) {
+            button.setVisible(false);
         }
     }
 
@@ -348,6 +341,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         frameLogin.add(labelInsertIP);
 
         serverIPField = new JTextField(20);
+        serverIPField.setText("localhost");
         serverIPField.setBounds(395, 300, 150, 25);
         frameLogin.add(serverIPField);
 
@@ -356,6 +350,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         frameLogin.add(labelInsertPort);
 
         serverPortField = new JTextField(20);
+        serverPortField.setText("12345");
         serverPortField.setBounds(395, 350, 150, 25);
         frameLogin.add(serverPortField);
 
@@ -987,7 +982,12 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         else if (e.getSource()== buttonConfirmName) {
             //askUsername
             username=usernameField.getText();
-            messageHandler.sendMessage(new Message(MessageAction.CHOSE_USERNAME, username));
+            if(username.length()<2){
+                messageOutput.setText("Name too short");
+                username=usernameField.getText();
+            }else{
+                messageHandler.sendMessage(new Message(MessageAction.CHOSE_USERNAME, username));
+            }
         }
         else if(e.getSource()==buttonNextLobby) {
             askRoomCreation();
@@ -1560,6 +1560,24 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     }
 
     public void viewNextPlayerHall(){
+        for(int j=0;j<size;j++){
+            if(username.equals(playerList[j].getPlayerName())){
+                for(int q=0;q<10;q++){
+                    labelBlueHallList[q].setVisible(false);
+
+                    labelGreenHallList[q].setVisible(false);
+
+                    labelPinkHallList[q].setVisible(false);
+
+                    labelRedHallList[q].setVisible(false);
+
+                    labelYellowHallList[q].setVisible(false);
+                }
+                for(int q=0;q<5;q++){
+                    labelProfessorList[q].setVisible(false);
+                }
+            }
+        }
         int k=0,index=0;
         for(k=0;k<size;k++){
             if(currentView.getPlayerName().equals(playerList[k].getPlayerName())){
@@ -1571,37 +1589,37 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
         labelPlayerView.setText("PLAYER "+playerList[index].getPlayerName()+"'S HALL");
 
-        if(playerList[index].getSchool().getBlueProfessor()==null) {
-            labelProfessorList[0].setVisible(false);
+        if(playerList[index].getSchool().getBlueProfessor()!=null) {
+            labelProfessorList[0].setVisible(true);
         }
-        if(playerList[index].getSchool().getGreenProfessor()==null) {
-            labelProfessorList[1].setVisible(false);
+        if(playerList[index].getSchool().getGreenProfessor()!=null) {
+            labelProfessorList[1].setVisible(true);
         }
-        if(playerList[index].getSchool().getPinkProfessor()==null) {
-            labelProfessorList[2].setVisible(false);
+        if(playerList[index].getSchool().getPinkProfessor()!=null) {
+            labelProfessorList[2].setVisible(true);
         }
-        if(playerList[index].getSchool().getRedProfessor()==null) {
-            labelProfessorList[3].setVisible(false);
+        if(playerList[index].getSchool().getRedProfessor()!=null) {
+            labelProfessorList[3].setVisible(true);
         }
-        if(playerList[index].getSchool().getYellowProfessor()==null) {
-            labelProfessorList[4].setVisible(false);
+        if(playerList[index].getSchool().getYellowProfessor()!=null) {
+            labelProfessorList[4].setVisible(true);
         }
 
         for(int i = 0; i < 10; i++){
-            if(playerList[index].getSchool().getSchoolHall()[0].getTableHall()[i] == null){
-                labelBlueHallList[i].setVisible(false);
+            if(playerList[index].getSchool().getSchoolHall()[0].getTableHall()[i] != null){
+                labelBlueHallList[i].setVisible(true);
             }
-            if(playerList[index].getSchool().getSchoolHall()[1].getTableHall()[i] == null){
-                labelGreenHallList[i].setVisible(false);
+            if(playerList[index].getSchool().getSchoolHall()[1].getTableHall()[i] != null){
+                labelGreenHallList[i].setVisible(true);
             }
-            if(playerList[index].getSchool().getSchoolHall()[2].getTableHall()[i] == null){
-                labelPinkHallList[i].setVisible(false);
+            if(playerList[index].getSchool().getSchoolHall()[2].getTableHall()[i] != null){
+                labelPinkHallList[i].setVisible(true);
             }
-            if(playerList[index].getSchool().getSchoolHall()[3].getTableHall()[i] == null){
-                labelRedHallList[i].setVisible(false);
+            if(playerList[index].getSchool().getSchoolHall()[3].getTableHall()[i] != null){
+                labelRedHallList[i].setVisible(true);
             }
-            if(playerList[index].getSchool().getSchoolHall()[4].getTableHall()[i] == null){
-                labelYellowHallList[i].setVisible(false);
+            if(playerList[index].getSchool().getSchoolHall()[4].getTableHall()[i] != null){
+                labelYellowHallList[i].setVisible(true);
             }
         }
         for(int i = 0; i < 8; i++){
@@ -1670,6 +1688,24 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     }
 
     public void viewPreviousPlayerHall(){
+        for(int j=0;j<size;j++){
+            if(username.equals(playerList[j].getPlayerName())){
+                for(int q=0;q<10;q++){
+                    labelBlueHallList[q].setVisible(false);
+
+                    labelGreenHallList[q].setVisible(false);
+
+                    labelPinkHallList[q].setVisible(false);
+
+                    labelRedHallList[q].setVisible(false);
+
+                    labelYellowHallList[q].setVisible(false);
+                }
+                for(int q=0;q<5;q++){
+                    labelProfessorList[q].setVisible(false);
+                }
+            }
+        }
         int k=0,index=0;
         for(k=0;k<size;k++){
             if(currentView.getPlayerName().equals(playerList[k].getPlayerName())){
@@ -1804,8 +1840,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
         for(int i = 0; i < game.getTable().getIslands().size(); i++){
             if(3 != size) {
-                for (int j = 0; j < labelGreyTowerCounter.length; j++) {
-                    labelGreyTowerCounter[j].setVisible(false);
+                for (JLabel jLabel : labelGreyTowerCounter) {
+                    jLabel.setVisible(false);
                 }
             }
 
@@ -1816,8 +1852,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             }
         }
 
-        for(int i = 0; i < buttonsSelectStudent.length; i++){
-            buttonsSelectStudent[i].setVisible(true);
+        for (JButton button : buttonsSelectStudent) {
+            button.setVisible(true);
         }
 
         //print the situation of the table of each player
