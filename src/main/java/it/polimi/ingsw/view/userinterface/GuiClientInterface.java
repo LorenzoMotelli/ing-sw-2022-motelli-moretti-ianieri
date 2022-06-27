@@ -69,7 +69,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     private final JLabel labelPlayerView;
     private final JLabel labelPlayerMessage;
-    private final JLabel labelWinningMessage;
+    private JLabel labelWinningMessage;
 
     private final ImageIcon whiteTowerImage = new ImageIcon("src/images/whiteTowerRaw.png");
     private final JLabel[] labelWhiteTowerList = new JLabel[8];
@@ -82,8 +82,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     private JLabel labelBackgroundCards;
     private ImageIcon backgroundCards;
-    private final JLabel labelWinningImage;
-    private final ImageIcon winningImage;
+    private JLabel labelWinningImage;
+    private ImageIcon winningImage;
 
     private final JLabel[] labelAssistantDeck = new JLabel[10];
 
@@ -161,7 +161,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private Player[] playerList;
     private Player currentView;
 
-
     public void transparentButton(JButton a) {
         a.setOpaque(false);
         a.setContentAreaFilled(false);
@@ -199,50 +198,13 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
         createGameGui();
 
-        //label for the winner
-        winningImage= new ImageIcon("src/images/winningImage.jpg");
-        labelWinningImage=new JLabel();
-        labelWinningImage.setBounds(320,0,540,800);
-        labelWinningImage.setIcon(winningImage);
+        winningMessage();
 
-        labelWinningMessage = new JLabel("", SwingConstants.CENTER);
-        labelWinningMessage.setBounds(365,44,450,80);
-        labelWinningMessage.setForeground(Color.darkGray);
-        labelWinningMessage.setBorder(BorderFactory.createLineBorder(Color.darkGray, 5));
-        labelWinningMessage.setFont(new Font("", Font.ITALIC,20));
-
-        //button to see other player's table
-        buttonNextPlayerView = new JButton(">>>");
-        buttonNextPlayerView.setBounds(1470,225,65,25);
-        buttonNextPlayerView.addActionListener(this);
-        buttonNextPlayerView.setOpaque(true);
-        buttonNextPlayerView.setBackground(Color.darkGray);
-        buttonNextPlayerView.setForeground(Color.white);
-
-        buttonPreviouslyPlayerView = new JButton("<<<");
-        buttonPreviouslyPlayerView.setBounds(1184,225,65,25);
-        buttonPreviouslyPlayerView.addActionListener(this);
-        buttonPreviouslyPlayerView.setOpaque(true);
-        buttonPreviouslyPlayerView.setBackground(Color.darkGray);
-        buttonPreviouslyPlayerView.setForeground(Color.white);
+        viewOtherPLayer();
 
         createDeck();
 
-        //professors
-        for(int i=0;i<5;i++) {
-            labelProfessorList[i]=new JLabel();
-        }
-        labelProfessorList[0].setIcon(blueProfessor);
-        labelProfessorList[1].setIcon(greenProfessor);
-        labelProfessorList[2].setIcon(pinkProfessor);
-        labelProfessorList[3].setIcon(redProfessor);
-        labelProfessorList[4].setIcon(yellowProfessor);
-
-        labelProfessorList[0].setBounds(1415,135,100,100);
-        labelProfessorList[1].setBounds(1170,135,100,100);
-        labelProfessorList[2].setBounds(1355,135,100,100);
-        labelProfessorList[3].setBounds(1231,135,100,100);
-        labelProfessorList[4].setBounds(1293,135,100,100);
+        createProfessors();
 
         //emptyIsland
         for(int i=0;i<12;i++) {
@@ -321,6 +283,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         frameGame.setVisible(false);
     }
 
+    //create the frame to use for the initialization of the match
     public void createLoginGui(){
         frameLogin = new JFrame();
         ImageIcon logoAPP = new ImageIcon("src/images/LOGO CRANIO CREATIONS_bianco.png");
@@ -401,6 +364,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         frameLogin.setVisible(true);
     }
 
+    //create a separated frame to use for the game
     public void createGameGui(){
         messageHandler = new ClientMessageHandler(this);
         inputStreamReader = new InputStreamReader(System.in);
@@ -418,6 +382,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         }
     }
 
+    //create the view of the deck with all the assistant cards
     public void createDeck(){
         //menu for cards
         backgroundCards= new ImageIcon("src/images/backgroundCards.jpg");
@@ -448,6 +413,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         buttonsAssistant[9].setBounds(825, 415, 160, 235);
     }
 
+    //initialize all the counters of the islands and of the clouds
     public void createCounters(){
         //counters
         for(int i = 0; i < 12; i++){
@@ -623,6 +589,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelPinkCloudCounters[1].setBounds(726,388,25,25);
     }
 
+    //create the movement of mother nature
     public void createMotherNature(){
         for(int i = 0; i < 12; i++){
             labelMotherNatureList[i] = new JLabel();
@@ -687,6 +654,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         buttonsSelectIslandMotherNature.get(11).setBounds(50, 100, 150, 150);
     }
 
+    //create all the students for the table and for the entrance
     public void createStudents(){
         for(int i = 0; i < buttonsSelectStudent.length; i++){
             buttonsSelectStudent[i] = new JButton("");
@@ -826,6 +794,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         //labelEntranceStudents.get(8).setBounds(1466, 728, 100, 100);
     }
 
+    //create all the towers for each player
     public void createTowers(){
         //towers configuration
         for(int i = 0; i < 8; i++){
@@ -864,6 +833,56 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         labelGreyTowerList[4].setBounds(1368, 0, 60, 60);
         labelGreyTowerList[5].setBounds(1368, 65, 60, 60);
     }
+
+    //create all the professors
+    public void createProfessors(){
+        for(int i=0;i<5;i++) {
+            labelProfessorList[i]=new JLabel();
+        }
+        labelProfessorList[0].setIcon(blueProfessor);
+        labelProfessorList[1].setIcon(greenProfessor);
+        labelProfessorList[2].setIcon(pinkProfessor);
+        labelProfessorList[3].setIcon(redProfessor);
+        labelProfessorList[4].setIcon(yellowProfessor);
+
+        labelProfessorList[0].setBounds(1415,135,100,100);
+        labelProfessorList[1].setBounds(1170,135,100,100);
+        labelProfessorList[2].setBounds(1355,135,100,100);
+        labelProfessorList[3].setBounds(1231,135,100,100);
+        labelProfessorList[4].setBounds(1293,135,100,100);
+    }
+
+    //set the image for the winning player
+    public void winningMessage(){
+        winningImage= new ImageIcon("src/images/winningImage.jpg");
+        labelWinningImage=new JLabel();
+        labelWinningImage.setBounds(320,0,540,800);
+        labelWinningImage.setIcon(winningImage);
+
+        labelWinningMessage = new JLabel("", SwingConstants.CENTER);
+        labelWinningMessage.setBounds(365,44,450,80);
+        labelWinningMessage.setForeground(Color.darkGray);
+        labelWinningMessage.setBorder(BorderFactory.createLineBorder(Color.darkGray, 5));
+        labelWinningMessage.setFont(new Font("", Font.ITALIC,20));
+    }
+
+    //button to see the next player view and the previous one
+    public void viewOtherPLayer(){
+        buttonNextPlayerView = new JButton(">>>");
+        buttonNextPlayerView.setBounds(1470,225,65,25);
+        buttonNextPlayerView.addActionListener(this);
+        buttonNextPlayerView.setOpaque(true);
+        buttonNextPlayerView.setBackground(Color.darkGray);
+        buttonNextPlayerView.setForeground(Color.white);
+
+        buttonPreviouslyPlayerView = new JButton("<<<");
+        buttonPreviouslyPlayerView.setBounds(1184,225,65,25);
+        buttonPreviouslyPlayerView.addActionListener(this);
+        buttonPreviouslyPlayerView.setOpaque(true);
+        buttonPreviouslyPlayerView.setBackground(Color.darkGray);
+        buttonPreviouslyPlayerView.setForeground(Color.white);
+    }
+
 
     public void setLabelAssistantCardBounds(JLabel labelAssistantCard, int cardNumber){
         switch (cardNumber){
