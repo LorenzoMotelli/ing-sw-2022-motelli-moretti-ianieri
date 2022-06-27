@@ -119,8 +119,13 @@ public class CliClientInterface implements UserInterface {
         Scanner in = new Scanner(System.in);
         String username = in.nextLine();
 
-        // send username message to Server through the ClientMessageHandler
-        messageHandler.sendMessage(new Message(MessageAction.CHOSE_USERNAME, username));
+        if(username.length() < 2){
+            System.out.println("Username too short, at least 2 character");
+            askUsername();
+        }else{
+            // send username message to Server through the ClientMessageHandler
+            messageHandler.sendMessage(new Message(MessageAction.CHOSE_USERNAME, username));
+        }
     }
 
     // response to the message for the username
@@ -443,11 +448,11 @@ public class CliClientInterface implements UserInterface {
     @Override
     public void selectMotherNatureIsland(AskMotherNatureMessage message) {
         //client has to select how far mother nature has to go
-        System.out.println("Please select one islands:");
+        System.out.println("Select one island for mother nature:");
         for(int i = 0; i  < message.getIslands().size(); i++){
             System.out.print(i +") Island " + (i+message.getStartingIndexMN()+1)% message.getNumIslands() + " : ");
             for(Student student : message.getIslands().get(i).getStudents()){
-                System.out.print(student.getColor() + " ");
+                System.out.print(student.getColor() +  student.getColorString() + " " + PawnColor.RESET);
             }
             if(message.getIslands().get(i).getTowers().size() > 0) {
                 System.out.print(" | ");
