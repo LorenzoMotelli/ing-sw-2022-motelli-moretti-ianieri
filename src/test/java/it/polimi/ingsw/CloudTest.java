@@ -19,9 +19,7 @@ public class CloudTest {
         cloud = new Cloud();
         Student blueStudent = new Student(BLUE);
         Student greenStudent = new Student(GREEN);
-        //Student pinkStudent = new Student(PINK);
         Student redStudent = new Student(RED);
-        //Student yellowStudent = new Student(YELLOW);
         List<Student> studentList = new ArrayList<>();
         studentList.add(blueStudent);
         studentList.add(greenStudent);

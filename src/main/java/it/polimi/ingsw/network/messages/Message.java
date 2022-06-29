@@ -8,13 +8,11 @@ import java.io.Serializable;
 /**
  * GENERIC MESSAGE
  */
-public class Message implements Serializable
-{
+public class Message implements Serializable {
     private final MessageAction messageAction;
     private final String playerName;
 
-    public Message(MessageAction messageAction, String playerName)
-    {
+    public Message(MessageAction messageAction, String playerName) {
         this.messageAction = messageAction;
         this.playerName = playerName;
     }

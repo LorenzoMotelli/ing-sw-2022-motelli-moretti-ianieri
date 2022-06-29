@@ -20,16 +20,7 @@ public class SchoolTest {
 
     @BeforeEach
     public void setUp(){
-        List<Student> studentList = new ArrayList<>();
-        //creation of two different students
-        Student blueStudent = new Student(BLUE);
-        Student greenStudent = new Student(GREEN);
-        Student pinkStudent = new Student(PINK);
-        Student redStudent = new Student(RED);
-        Student yellowStudent = new Student(YELLOW);
-        studentList.add(blueStudent);
-        studentList.add(pinkStudent);
-        school = new School(); //creation of the test school
+        school = new School();
     }
 
     @Test

@@ -3,7 +3,6 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.AssistantCard;
 import it.polimi.ingsw.model.enumeration.PawnColor;
-import it.polimi.ingsw.model.enumeration.TowerColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
@@ -56,21 +55,10 @@ public class GeneralGameTest {
         assertEquals(2, gameWith2Players.getTable().getClouds().size());
         assertEquals(3, gameWith3Players.getTable().getClouds().size());
         //check islands, game with 2 players
-        Island islandWithNoStudents = new Island();
+        Island islandWithNoStudents;
         int indexIslandWithMN = gameWith2Players.getTable().getIslands().indexOf(gameWith2Players.getTable().getIslandWithMotherNature());
         islandWithNoStudents = gameWith2Players.getTable().getIslands().get((indexIslandWithMN+6)%12);
-        /*for(int i = 0; i < 12; i++){
-            if(gameWith2Players.getTable().getIslands().get(i).equals(gameWith2Players.getTable().getIslandWithMotherNature())) {
-                if(i < 6){
-                    islandWithNoStudents = gameWith2Players.getTable().getIslands().get((indexIslandWithMN+6)%12);
-                }
-                else{
-                    islandWithNoStudents = gameWith2Players.getTable().getIslands().get(i-6);
-                }
-                break;
-            }
-        }
-        */
+
         for (Island island: gameWith2Players.getTable().getIslands()) {
             if(island.equals(islandWithNoStudents) || island.hasMotherNature()){
                 assertEquals(0, island.getStudents().size());
@@ -1252,8 +1240,6 @@ public class GeneralGameTest {
             }
         }
     }
-
-    //TODO switch color conquer black && conquer the island where you are already the conqueror
 
     @RepeatedTest(value = 12, name = "checkInfluence_PlayersWithSameInfluence {currentRepetition}")
     public void checkInfluence_PlayersWithSameInfluence(RepetitionInfo repetitionInfo){

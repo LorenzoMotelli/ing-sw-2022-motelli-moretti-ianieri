@@ -24,30 +24,25 @@ public class IslandTest {
         //creation of a list with 5 student, one for each color
         for(int i = 0; i < 5; i++){
             switch (i) {
-                case 0: {
+                case 0 -> {
                     Student blueStudent = new Student(BLUE);
                     studentList.add(blueStudent);
-                    break;
                 }
-                case 1: {
+                case 1 -> {
                     Student greenStudent = new Student(GREEN);
                     studentList.add(greenStudent);
-                    break;
                 }
-                case 2: {
+                case 2 -> {
                     Student pinkStudent = new Student(PINK);
                     studentList.add(pinkStudent);
-                    break;
                 }
-                case 3: {
+                case 3 -> {
                     Student redStudent = new Student(RED);
                     studentList.add(redStudent);
-                    break;
                 }
-                case 4: {
+                case 4 -> {
                     Student yellowStudent = new Student(YELLOW);
                     studentList.add(yellowStudent);
-                    break;
                 }
             }
         }
@@ -65,26 +60,11 @@ public class IslandTest {
 
         for(int i = 0; i < 5; i++){
             switch (i) {
-                case 0: {
-                    assertEquals(island.getStudents().get(i).getColor(), BLUE);
-                    break;
-                }
-                case 1: {
-                    assertEquals(island.getStudents().get(i).getColor(), PawnColor.GREEN);
-                    break;
-                }
-                case 2: {
-                    assertEquals(island.getStudents().get(i).getColor(), PawnColor.PINK);
-                    break;
-                }
-                case 3: {
-                    assertEquals(island.getStudents().get(i).getColor(), PawnColor.RED);
-                    break;
-                }
-                case 4: {
-                    assertEquals(island.getStudents().get(i).getColor(), PawnColor.YELLOW);
-                    break;
-                }
+                case 0 -> assertEquals(island.getStudents().get(i).getColor(), BLUE);
+                case 1 -> assertEquals(island.getStudents().get(i).getColor(), PawnColor.GREEN);
+                case 2 -> assertEquals(island.getStudents().get(i).getColor(), PawnColor.PINK);
+                case 3 -> assertEquals(island.getStudents().get(i).getColor(), PawnColor.RED);
+                case 4 -> assertEquals(island.getStudents().get(i).getColor(), PawnColor.YELLOW);
             }
         }
     }
