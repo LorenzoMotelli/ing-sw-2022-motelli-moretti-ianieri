@@ -9,19 +9,15 @@ import it.polimi.ingsw.utils.Observer;
 /**
  * REMOTE CLIENT VIEW
  */
-public class VirtualView extends Observable<Message> implements Observer<Message>, CommandHandler
-{
+public class VirtualView extends Observable<Message> implements Observer<Message>, CommandHandler {
     //handler of connection client
     private final Connection connection;
-
     //player in the model
     private final Player player;
 
-    public VirtualView(Connection handler, Player p)
-    {
+    public VirtualView(Connection handler, Player p) {
         connection = handler;
         player = p;
-
         // give to client the commandHandler
         handler.setCommandHandler(this);
     }
@@ -44,4 +40,7 @@ public class VirtualView extends Observable<Message> implements Observer<Message
         connection.sendMessage(message);
     }
 
+    public void closeVirtualView(){
+        connection.closeConnection();
+    }
 }

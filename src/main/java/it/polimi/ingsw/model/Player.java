@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.cards.AssistantCard;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 
-import javax.swing.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

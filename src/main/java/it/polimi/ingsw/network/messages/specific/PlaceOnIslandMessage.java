@@ -1,7 +1,5 @@
 package it.polimi.ingsw.network.messages.specific;
 
-import it.polimi.ingsw.model.Island;
-import it.polimi.ingsw.model.Student;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 

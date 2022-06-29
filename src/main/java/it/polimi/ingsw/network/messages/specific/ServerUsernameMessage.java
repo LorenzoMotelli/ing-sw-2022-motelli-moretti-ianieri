@@ -5,9 +5,9 @@ import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 
 public class ServerUsernameMessage extends Message {
 
-    private boolean accepted;
-    private String username;
-    private boolean isFirst;
+    private final boolean accepted;
+    private final String username;
+    private final boolean isFirst;
 
     public ServerUsernameMessage(boolean accepted, String username, boolean isFirst) {
         super(MessageAction.CHOSE_USERNAME, null);

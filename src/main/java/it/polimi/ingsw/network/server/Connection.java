@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.server;
 
-import it.polimi.ingsw.network.messages.enumeration.MessageAction;
+import it.polimi.ingsw.network.messages.specific.DisconnectInGameMessage;
 import it.polimi.ingsw.view.CommandHandler;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.network.messages.Message;
@@ -15,16 +15,18 @@ import java.net.Socket;
  */
 public class Connection extends Observable<Message> implements Runnable {
     //
-    private Socket socket;
+    private final Socket socket;
     //
     private String name;
     // server that manages SYSTEM message
-    private Server server;
+    private final Server server;
     // handler that manages GAME message
     private CommandHandler handler;
+    private boolean running;
 
     private ObjectInputStream in;
     private ObjectOutputStream out;
+    private final Object lock = new Object();
 
     public Connection(Socket socket, Server server) {
         this.server = server;
@@ -40,47 +42,43 @@ public class Connection extends Observable<Message> implements Runnable {
 
     @Override
     public void run() {
-        while (!Thread.currentThread().isInterrupted()) {
+        boolean isRunning;
+        synchronized (lock){
+            running = true;
+            isRunning = true;
+        }
+        while (isRunning) {
             try {
+                running = true;
                 Message message = (Message) in.readObject();
 
                 switch (message.getMessageType()) {
-                    case SYSTEM:
-                        server.handleMessage(message, this);
-                        break;
-                    case GAME:
-                        handler.processCommand(message);
-                        break;
+                    case SYSTEM -> server.handleMessage(message, this);
+                    case GAME -> handler.processCommand(message);
                 }
             } catch (IOException | ClassNotFoundException e) {
-
-                try {
-                    socket.close();
-                } catch (IOException ex) {
-                    this.sendMessage(new Message(MessageAction.DISCONNECT, this.name));
+                synchronized (lock) {
+                    isRunning = running;
                 }
-
-                System.err.println("Client " + this.name + " disconnected");
-
-                server.clientConnectionException(this, this.name);
-                Thread.currentThread().interrupt();
+                if (isRunning) {
+                    System.err.println("Client " + this.name + " disconnected");
+                    closing();
+                }
+                synchronized (lock){
+                    isRunning = running;
+                }
             }
         }
     }
 
     public synchronized void sendMessage(Message message) {
-        if (!Thread.currentThread().isInterrupted()) {
+        if (running) {
             try {
-                    out.writeObject(message);
-                    out.flush();
-                    out.reset();
+                out.writeObject(message);
+                out.flush();
+                out.reset();
             } catch (IOException ex) {
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                    System.err.print((e.getMessage()));
-                }
-                Thread.currentThread().interrupt();
+                closing();
             }
         }
     }
@@ -97,4 +95,27 @@ public class Connection extends Observable<Message> implements Runnable {
         this.name = name;
     }
 
+    public void closing(){
+        synchronized (lock){
+            running = false;
+        }
+
+        server.clientConnectionException(this, this.name);
+        if(handler != null){
+            handler.processCommand(new DisconnectInGameMessage());
+        }
+    }
+
+    public void closeConnection(){
+        try{
+            synchronized (lock) {
+                in.close();
+                out.close();
+                socket.close();
+            }
+        } catch (IOException e){
+            System.out.println("Error during connection");
+            e.printStackTrace();
+        }
+    }
 }

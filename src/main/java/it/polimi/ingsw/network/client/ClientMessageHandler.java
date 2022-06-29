@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 public class ClientMessageHandler implements Observer<Message> {
     // interface that will receive messages
-    private UserInterface userInterface;
+    private final UserInterface userInterface;
     // handler for the connection to the server
     private ClientConnectionHandler clientHandlerConnection;
 
@@ -21,7 +21,12 @@ public class ClientMessageHandler implements Observer<Message> {
         this.userInterface = userInterface;
     }
 
-    // method to verify the actual connection with the given ip
+    /**
+     * method to verify the actual connection with the given ip
+     * @param host the name of the host
+     * @param port the port
+     * @return true if the connection is set, false otherwise
+     */
     public boolean connect(String host, int port) {
         try {
             clientHandlerConnection = new ClientConnectionHandler(host, port);
@@ -37,7 +42,10 @@ public class ClientMessageHandler implements Observer<Message> {
         }
     }
 
-    // method to cast the received messages
+    /**
+     * method to cast the received messages
+     * @param message the message received
+     */
     private void handleMessage(Message message) {
         MessageAction messageAction = message.getMessageAction();
 
@@ -46,7 +54,13 @@ public class ClientMessageHandler implements Observer<Message> {
             case ROOM_SIZE -> userInterface.roomSizeResponse((RoomSizeMessage) message);
             case ROOM_IS_FULL -> userInterface.roomIsFull();
             case WAITING_PLAYERS -> userInterface.waitingForOtherPlayers();
-            case DISCONNECT, DISCONNECT_IN_GAME -> userInterface.someoneDisconnected((DisconnectMessage) message);
+            case DISCONNECT -> userInterface.someoneDisconnected((DisconnectMessage) message);
+            case DISCONNECT_IN_GAME -> {
+                if (clientHandlerConnection.isRunning()) {
+                    clientHandlerConnection.closeConnection();
+                    userInterface.someoneDisconnectedInGame((DisconnectInGameMessage) message);
+                }
+            }
             case START -> userInterface.startingMatch();
             //GENERAL UPDATES
             case UPDATE_BOARD -> userInterface.boardUpdate((UpdateBoardMessage) message);
@@ -62,18 +76,18 @@ public class ClientMessageHandler implements Observer<Message> {
             case ASK_CLOUD -> userInterface.selectCloud((AskCloudMessage) message);
             //ENDING
             case END_GAME -> userInterface.endGame((WinnersMessage) message);
-            // TODO: L&G. gestire prossimi messaggi
-            /*case END_TURN -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);
-            case PLACE_IN_HALL -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);
-            case PLACE_ON_ISLAND -> throw new UnsupportedOperationException("Unimplemented case: " + messageAction);*/
             default -> throw new IllegalArgumentException("Unexpected value: " + messageAction);
         }
-
     }
 
-    // method that send a message to Server through clientHandlerConnection
+    /**
+     * method that send a message to Server through clientHandlerConnection
+     * @param message the message that will be sent
+     */
     public void sendMessage(Message message) {
-        clientHandlerConnection.sendRequestToServer(message);
+        if (clientHandlerConnection.isRunning()) {
+            clientHandlerConnection.sendRequestToServer(message);
+        }
     }
 
     @Override

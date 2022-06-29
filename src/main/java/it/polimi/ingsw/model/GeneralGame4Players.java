@@ -2,13 +2,11 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.network.messages.specific.ChangeOnIslandMessage;
-import it.polimi.ingsw.network.messages.specific.UpdateBoardMessage;
 import it.polimi.ingsw.network.messages.specific.WinnersMessage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static it.polimi.ingsw.model.enumeration.Phases.STARTING;
 import static it.polimi.ingsw.model.enumeration.TowerColor.*;
 
 public class GeneralGame4Players extends GeneralGame{
@@ -18,22 +16,6 @@ public class GeneralGame4Players extends GeneralGame{
      */
     public GeneralGame4Players(int numberOfPlayer) {
         super(numberOfPlayer);
-    }
-
-    @Override
-    public void startGeneralGame(){
-        for(int i = 0; i < getPlayers().length; i++) {
-            getPlayers()[i].getSchool().setEntranceStudent(randomStudentFromBag(7));
-            if (i % 2 == 0) {
-                getPlayers()[i].getSchool().setPlayersTowers(8, WHITE);
-                getPlayers()[i].setPlayerTeam(WHITE);
-            } else {
-                getPlayers()[i].getSchool().setPlayersTowers(8, BLACK);
-                getPlayers()[i].setPlayerTeam(BLACK);
-            }
-        }
-        nextPhase(STARTING);
-        notify(new UpdateBoardMessage(this));
     }
 
     @Override

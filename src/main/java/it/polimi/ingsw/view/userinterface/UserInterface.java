@@ -5,29 +5,45 @@ import it.polimi.ingsw.network.messages.specific.*;
 
 public interface UserInterface {
 
-    public void askUsername();
+    /**
+     * asking the username
+     */
+    void askUsername();
 
-    public void usernameResponse(ServerUsernameMessage message);
+    /**
+     * response to the message for the username
+     * @param message message in which there is the information if the name is accepted and if a room has to be initialized
+     */
+    void usernameResponse(ServerUsernameMessage message);
 
-    public void askRoomCreation();
+    /**
+     * asking first client to create a room
+     */
+    void askRoomCreation();
 
-    public void roomSizeResponse(RoomSizeMessage message);
+    /**
+     * response to the message for the roomSize
+     * @param message the message with the room size selected
+     */
+    void roomSizeResponse(RoomSizeMessage message);
 
-    public void roomIsFull();
+    void roomIsFull();
 
-    public void waitingForOtherPlayers();
+    void waitingForOtherPlayers();
 
-    public void startingMatch();
+    void startingMatch();
 
-    public void someoneDisconnected(DisconnectMessage message);
+    void someoneDisconnected(DisconnectMessage message);
 
-    public void boardUpdate(UpdateBoardMessage updateBoardMessage);
+    void someoneDisconnectedInGame(DisconnectInGameMessage message);
 
-    public void selectAssistantCard(AskAssistantCardsMessage message);
+    void boardUpdate(UpdateBoardMessage updateBoardMessage);
 
-    public void selectStudent(AskStudentMessage message);
+    void selectAssistantCard(AskAssistantCardsMessage message);
 
-    public void selectPlace(AskWherePlaceMessage message);
+    void selectStudent(AskStudentMessage message);
+
+    void selectPlace(AskWherePlaceMessage message);
 
     void selectMotherNatureIsland(AskMotherNatureMessage message);
 

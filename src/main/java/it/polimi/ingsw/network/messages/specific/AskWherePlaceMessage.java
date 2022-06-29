@@ -1,11 +1,7 @@
 package it.polimi.ingsw.network.messages.specific;
 
-import it.polimi.ingsw.model.Hall;
-import it.polimi.ingsw.model.Island;
 import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
-
-import java.util.List;
 
 public class AskWherePlaceMessage extends Message {
     private final int islandsNumAvailable;

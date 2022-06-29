@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.network.messages.Message;
+import it.polimi.ingsw.network.messages.specific.DisconnectInGameMessage;
 import it.polimi.ingsw.utils.Observable;
 
 import java.io.IOException;
@@ -13,9 +14,11 @@ import java.net.Socket;
  */
 public class ClientConnectionHandler extends Observable<Message> implements Runnable {
 
-    private Socket socket;
-    private ObjectOutputStream out;
-    private ObjectInputStream in;
+    private final Socket socket;
+    private final ObjectOutputStream out;
+    private final ObjectInputStream in;
+    private boolean running;
+    private final Object lock;
 
     public ClientConnectionHandler(String ip, int port) throws IOException {
         this.socket = new Socket(ip, port);
@@ -24,24 +27,23 @@ public class ClientConnectionHandler extends Observable<Message> implements Runn
         out = new ObjectOutputStream(socket.getOutputStream());
         out.flush();
         in = new ObjectInputStream(socket.getInputStream());
-
+        lock = new Object();
     }
 
     @Override
-    public void run()
-    {
+    public void run() {
+        synchronized (lock){
+            running = true;
+        }
         try {
-            while (!Thread.currentThread().isInterrupted()) {
+            while (running) {
                 Message message = (Message) in.readObject();
                 notify(message);
             }
         } catch (IOException | ClassNotFoundException e) {
-            try {
-                socket.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
+            if(isRunning()) {
+                notify(new DisconnectInGameMessage());
             }
-            System.err.println("Server connection closed");
         }
     }
 
@@ -50,7 +52,28 @@ public class ClientConnectionHandler extends Observable<Message> implements Runn
             out.writeObject(message);
             out.flush();
         } catch (IOException e) {
-            System.err.println("Error sending message to server");
+            synchronized (lock) {
+                Thread.currentThread().interrupt();
+            }
+            if (isRunning()) {
+                notify(new DisconnectInGameMessage());
+            }
         }
+    }
+
+    public void closeConnection(){
+        try{
+            synchronized (lock) {
+                running = false;
+            }
+            socket.close();
+        } catch (IOException e){
+            System.out.println("Error during connection");
+            e.printStackTrace();
+        }
+    }
+
+    public boolean isRunning(){
+        return running;
     }
 }

@@ -19,7 +19,7 @@ import java.util.Scanner;
  */
 public class CliClientInterface implements UserInterface {
     //
-    private InputStreamReader inputStreamReader;
+    private final InputStreamReader inputStreamReader;
     //
     Scanner cmdIn;
     // default address
@@ -29,12 +29,12 @@ public class CliClientInterface implements UserInterface {
     // client name
     private String username;
     // handler that manage the communication from the server
-    private ClientMessageHandler messageHandler;
+    private final ClientMessageHandler messageHandler;
 
     public CliClientInterface() {
         messageHandler = new ClientMessageHandler(this);
         inputStreamReader = new InputStreamReader(System.in);
-        System.out.println("\n\n\n");
+        /*System.out.println("\n\n\n");
         System.out.println(
                 "────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
 
@@ -55,7 +55,8 @@ public class CliClientInterface implements UserInterface {
                 "                                                                                                                                                           \n");
         System.out.println(
                 "────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("\n");
+        System.out.println("\n");*/
+        System.out.println("\033[0;1m" + "WELCOME TO ERYANTIS" + "\033[0;0m");
         connectToServer();
 
     }
@@ -70,7 +71,7 @@ public class CliClientInterface implements UserInterface {
             if(!addressSelected) {
                 System.out.println("Insert the server IP: ");
             }
-            if(addressSelected && !portSelected) {
+            if(addressSelected) {
                 System.out.println("Insert the server PORT: ");
             }
 
@@ -89,15 +90,13 @@ public class CliClientInterface implements UserInterface {
                 continue;
             }
 
-            if(!portSelected){
-                portSelected = true;
-                if (!choice.equals("")) {
-                    try {
-                        serverPort = Integer.parseInt(choice);
-                    }
-                    catch (NumberFormatException e) {
-                        portSelected = false;
-                    }
+            portSelected = true;
+            if (!choice.equals("")) {
+                try {
+                    serverPort = Integer.parseInt(choice);
+                }
+                catch (NumberFormatException e) {
+                    portSelected = false;
                 }
             }
 
@@ -112,7 +111,7 @@ public class CliClientInterface implements UserInterface {
         askUsername();
     }
 
-    // asking the username
+
     @Override
     public synchronized void askUsername() {
         System.out.print("Insert your username: ");
@@ -128,7 +127,6 @@ public class CliClientInterface implements UserInterface {
         }
     }
 
-    // response to the message for the username
     @Override
     public synchronized void usernameResponse(ServerUsernameMessage message) {
         if (!message.isAccepted()) {
@@ -145,9 +143,6 @@ public class CliClientInterface implements UserInterface {
         }
     }
 
-    /**
-     * asking first client to create a room
-     */
     @Override
     public synchronized void askRoomCreation() {
         System.out.print("Insert the number of players: ");
@@ -164,10 +159,6 @@ public class CliClientInterface implements UserInterface {
         messageHandler.sendMessage(new RoomSizeMessage(size, this.username));
     }
 
-    /**
-     * response to the message for the roomSize
-     * @param message the message with the room size selected
-     */
     @Override
     public synchronized void roomSizeResponse(@NotNull RoomSizeMessage message) {
         if (message.getRoomSize() == -1) {
@@ -196,13 +187,12 @@ public class CliClientInterface implements UserInterface {
 
     @Override
     public void someoneDisconnected(DisconnectMessage message) {
-        System.out.println(message.getDisconnectedClient() + " disconnected");
+        System.out.println(message.getDisconnectedClient() + " disconnected in pre game");
+    }
 
-        //TODO: G.da migliorare e implementare
-        switch (message.getMessageAction()) {
-            case DISCONNECT_IN_GAME -> System.out.println("A player has disconnected, quitting...");
-            default -> System.out.println("The server has disconnected you");
-        }
+    @Override
+    public void someoneDisconnectedInGame(DisconnectInGameMessage message) {
+        System.out.println("You have been disconnected because a player disconnected");
     }
 
     @Override
@@ -505,9 +495,10 @@ public class CliClientInterface implements UserInterface {
     @Override
     public void endGame(WinnersMessage message){
         System.out.println("THE WINNERS ARE: ");
-        for(Player player : message.getPlayers()){
+        for (Player player : message.getPlayers()) {
             System.out.print(player.getPlayerName() + " ");
         }
         System.out.println();
+        System.exit(0);
     }
 }

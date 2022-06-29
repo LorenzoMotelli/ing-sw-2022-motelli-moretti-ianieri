@@ -883,7 +883,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         buttonPreviouslyPlayerView.setForeground(Color.white);
     }
 
-
     public void setLabelAssistantCardBounds(JLabel labelAssistantCard, int cardNumber){
         switch (cardNumber){
             case 0 -> labelAssistantCard.setBounds(165, 160, 160, 235);
@@ -943,6 +942,14 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     @Override
     public void someoneDisconnected(DisconnectMessage message) {
+        // TODO
+        labelPlayerMessage.setText("# SOMEONE DISCONNECTED #");
+        endGame(new WinnersMessage(null));
+    }
+
+    @Override
+    public void someoneDisconnectedInGame(DisconnectInGameMessage message) {
+        // TODO
         labelPlayerMessage.setText("# SOMEONE DISCONNECTED #");
         endGame(new WinnersMessage(null));
     }
@@ -2138,10 +2145,10 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             buttonsSelectIslandMotherNature.get(i).setVisible(false);
         }
         for(int i = 0; i <labelMotherNatureList.length; i++){
-           if(labelMotherNatureList[i].isVisible()) {
-               shiftButtonsMotherNature((i+1)%12);
-               break;
-           }
+            if(labelMotherNatureList[i].isVisible()) {
+                shiftButtonsMotherNature((i+1)%12);
+                break;
+            }
         }
         for(int i=0;i<message.getIslands().size();i++){
             buttonsSelectIslandMotherNature.get(i).setVisible(true);

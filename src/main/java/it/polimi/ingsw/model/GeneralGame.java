@@ -53,12 +53,15 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
                 players[i].getSchool().setEntranceStudent(randomStudentFromBag(9));
                 if(0 == i){
                     players[i].getSchool().setPlayersTowers(6, WHITE);
+                    players[i].setPlayerTeam(WHITE);
                 }
                 else if(1 == i){
                     players[i].getSchool().setPlayersTowers(6, BLACK);
+                    players[i].setPlayerTeam(BLACK);
                 }
                 else{
                     players[i].getSchool().setPlayersTowers(6, GREY);
+                    players[i].setPlayerTeam(GREY);
                 }
             }
             //game with 2 player, 7 entrance student and 8 tower each player
@@ -66,9 +69,11 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
                 players[i].getSchool().setEntranceStudent(randomStudentFromBag(7));
                 if(i % 2 == 0){
                     players[i].getSchool().setPlayersTowers(8, WHITE);
+                    players[i].setPlayerTeam(WHITE);
                 }
                 else{
                     players[i].getSchool().setPlayersTowers(8, BLACK);
+                    players[i].setPlayerTeam(BLACK);
                 }
             }
         }
@@ -154,22 +159,22 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
      * when all the players ends their turn the new order for the next phase is set
      */
     public void setNewOrder(){
-       Player tmpPlayer;
-       for(int i = 0; i < players.length; i++){
-           boolean sorted = false;
-           for(int j = 0; j < players.length-1; j++)
-            if(players[j].getPlayerWeight() > players[j+1].getPlayerWeight()){
-                tmpPlayer = players[j];
-                players[j] = players[j+1];
-                players[j+1] = tmpPlayer;
-                sorted = true;
+        Player tmpPlayer;
+        for(int i = 0; i < players.length; i++){
+            boolean sorted = false;
+            for(int j = 0; j < players.length-1; j++)
+                if(players[j].getPlayerWeight() > players[j+1].getPlayerWeight()){
+                    tmpPlayer = players[j];
+                    players[j] = players[j+1];
+                    players[j+1] = tmpPlayer;
+                    sorted = true;
+                }
+            if(!sorted){
+                break;
             }
-           if(!sorted){
-               break;
-           }
-       }
-       turn = 0;
-       notify(new NewOrderMessage(players));
+        }
+        turn = 0;
+        notify(new NewOrderMessage(players));
     }
 
     /**
@@ -178,12 +183,8 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
      */
     public void nextPhase(Phases currentPhase){
         switch (currentPhase) {
-            case STARTING -> {
-                gamePhase = PLANNING;
-            }
-            case PLANNING -> {
-                gamePhase = PLACE_STUDENT;
-            }
+            case STARTING -> gamePhase = PLANNING;
+            case PLANNING -> gamePhase = PLACE_STUDENT;
             case PLACE_STUDENT -> {
                 //in a game with even players you have to place 3 students
                 if (players.length % 2 == 0) {
@@ -200,9 +201,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
                     }
                 }
             }
-            case PLACE_MOTHER_NATURE -> {
-                gamePhase = SELECT_CLOUD;
-            }
+            case PLACE_MOTHER_NATURE ->  gamePhase = SELECT_CLOUD;
             case SELECT_CLOUD -> {
                 //if initial player the round ends IF ALL THE CLOUDS HAVE NO MORE STUDENTS
                 if (allCloudsEmpty()) {
@@ -445,7 +444,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
         //tower is already placed on this island
         else{
             //the color of the towers of the conqueror
-            TowerColor conquerorColor = conqueror.getSchool().getPlayersTowers().get(0).getColor();
+            TowerColor conquerorColor = conqueror.getPlayerTeam();
             //the color of the towers on the island
             TowerColor islandColor = islandSelected.getTowers().get(0).getColor();
             //the color of the towers on the island is different from the one of the player
@@ -453,7 +452,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
                 //give back the tower to the old conqueror
                 for(Player player : players){
                     //the color of the towers of the player now checked
-                    TowerColor playerColor = player.getSchool().getPlayersTowers().get(0).getColor();
+                    TowerColor playerColor = player.getPlayerTeam();
                     //the player is the old conqueror
                     if(playerColor.equals(islandColor)){
                         //give back all the towers of the island
@@ -549,7 +548,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
             //if the island has a tower/many tower on it
             if(islandWithMotherNature.getTowers().size() > 0){
                 TowerColor islandColor = islandWithMotherNature.getTowers().get(0).getColor();
-                TowerColor playerColor = player.getSchool().getPlayersTowers().get(0).getColor();
+                TowerColor playerColor = player.getPlayerTeam();
                 if(islandColor.equals(playerColor)){
                     playerInfluence = playerInfluence + islandWithMotherNature.getTowers().size();
                 }
@@ -596,10 +595,10 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
             return null;
         }
         TowerColor islandColor = islandWithMotherNature.getTowers().get(0).getColor();
-        for(int i = 0; i < players.length; i++){
-            TowerColor playerColor = players[i].getSchool().getPlayersTowers().get(0).getColor();
-            if(playerColor.equals(islandColor)){
-                return players[i];
+        for (Player player : players) {
+            TowerColor playerColor = player.getPlayerTeam();
+            if (playerColor.equals(islandColor)) {
+                return player;
             }
         }
         return null;
@@ -675,7 +674,7 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
     public int numberProfessors(List<Player> winners, TowerColor color) {
         int professors = 0;
         for(Player player : winners){
-            if(player.getSchool().getPlayersTowers().get(0).getColor().equals(color)){
+            if(player.getPlayerTeam().equals(color)){
                 professors = professors + player.getSchool().getSchoolProfessors().size();
             }
         }

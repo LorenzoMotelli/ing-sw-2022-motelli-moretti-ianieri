@@ -11,7 +11,6 @@ public enum MessageAction {
     // GAME MESSAGE
     START(MessageType.GAME),
     DISCONNECT_IN_GAME(MessageType.GAME),
-    UPDATE(MessageType.GAME),
     UPDATE_BOARD(MessageType.GAME),
     UPDATE_ORDER(MessageType.GAME),
     UPDATE_SCHOOL(MessageType.GAME),
@@ -27,7 +26,6 @@ public enum MessageAction {
     ASK_CLOUD(MessageType.GAME),
     SELECT_CLOUD(MessageType.GAME),
     END_TURN(MessageType.GAME),
-
     END_GAME(MessageType.GAME);
 
     private final MessageType messageType;

@@ -12,11 +12,6 @@ public class DisconnectMessage extends Message {
         this.disconnectedClient = disconnectedClient;
     }
 
-    public DisconnectMessage(MessageAction messageAction, String recipient, String disconnectedClient) {
-        super(MessageAction.DISCONNECT_IN_GAME, recipient);
-        this.disconnectedClient = disconnectedClient;
-    }
-
     public String getDisconnectedClient() {
         return disconnectedClient;
     }

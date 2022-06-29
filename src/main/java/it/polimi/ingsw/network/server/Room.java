@@ -6,19 +6,11 @@ import java.util.List;
 
 public class Room {
 
-    private final int roomId;
-
-    private List<String> players = new ArrayList<>();
-
+    private final List<String> players = new ArrayList<>();
     private int roomSize;
 
-    public Room(int roomId) {
-        this.roomId = roomId;
+    public Room() {
         roomSize = 0;
-    }
-
-    public int getPlayersNumber() {
-        return players.size();
     }
 
     public boolean isFull() {
@@ -30,17 +22,14 @@ public class Room {
     }
 
     public void addClient(String playerName) {
-
         // if player is already in the room
         if (players.contains(playerName)) {
             return;
         }
-
         this.players.add(playerName);
     }
 
-    public void removeClient(String playerName)
-    {
+    public void removeClient(String playerName) {
         // if player is already in the room
         if (players.contains(playerName)) {
             this.players.remove(playerName);
@@ -51,11 +40,8 @@ public class Room {
         return players.contains(disconnectedClient);
     }
 
-    public int getRoomId() {
-        return roomId;
-    }
-
     public void setRoomSize(int roomSize) {
         this.roomSize = roomSize;
     }
 }
+

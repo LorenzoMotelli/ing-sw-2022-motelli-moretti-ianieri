@@ -33,17 +33,15 @@ public class Server {
 
     public void startServer() throws IOException {
         ExecutorService executor = Executors.newCachedThreadPool();
-
         //Method to enter server port (Default on 12345)
         insertPORT();
-
         // Thread for cli command to force server shutdown
         new Thread(() -> {
             System.out.println("'exit' to shout down the server");
             Scanner quitter = new Scanner(System.in);
 
             while (quitter.hasNext()) {
-                if (quitter.nextLine().toLowerCase().equals("exit")) {
+                if (quitter.nextLine().equalsIgnoreCase("exit")) {
                     System.out.println("Closing server ...");
                     System.exit(0);
                 }
@@ -54,12 +52,9 @@ public class Server {
             try {
                 Socket socket = serverSocket.accept();
                 System.out.println("Client " + socket.getInetAddress() + " connected\n");
-
                 // Create the connection with the client
                 Connection c = new Connection(socket, this);
-
                 // Connection registration
-                //waitingConnections.add(c);
                 executor.submit(c);
             } catch (IOException e) {
                 System.err.println("Error accepting connection");
@@ -95,36 +90,19 @@ public class Server {
 
     // Exceptions by client connection are handled here
     public void clientConnectionException(Connection conn, String disconnectedClient) {
-
         // if the client is in the waiting room
-        if (waitingRoom.getRoomSize() > 0 && waitingRoom.contains(disconnectedClient)) {
+        if (waitingRoom !=null && waitingRoom.getRoomSize() > 0 && waitingRoom.contains(disconnectedClient)) {
+            System.out.println("client disconnected while in room");
             waitingRoom.removeClient(disconnectedClient);
             waitingConnections.remove(conn);
-
             // notify other players that one has disconnected while inside the waiting room
             for (Connection connection : waitingConnections) {
                 if (connection != conn) {
                     connection.sendMessage(new DisconnectMessage(connection.getName(), disconnectedClient));
                 }
             }
-        }
-        else {
-            // if the client is in game
-            /*for (Map.Entry<Integer, List<Connection>> roomId : roomsIdConnection.entrySet()) {
-                List<Connection> connections = roomId.getValue();
-                for (Connection connection : connections) {
-                    if (connection == conn) {
-                        if (clientsConnected.containsKey(disconnectedClient)) {
-                            clientsConnected.remove(disconnectedClient);
-                        }
-                    }
-                    connection.sendMessage(
-                            new DisconnectMessage(MessageAction.DISCONNECT_IN_GAME, connection.getName(),
-                                    disconnectedClient));
-                }
-            }*/
-        }
 
+        }
     }
 
     private void createRoom(Connection c, RoomSizeMessage message) {
@@ -152,14 +130,10 @@ public class Server {
         String username = msg.getPlayerName();
 
         // verification of the correctness of the username
-        //if (clientsConnected.containsKey(username) || !username.matches("[a-zA-Z0-9]+")
-        //        || username.length() > 12 || username.length() < 3) {
-        // TODO: improve check
         for (Connection conn : waitingConnections) {
             if (conn.getName().equals(username)) {
                 Message message = new ServerUsernameMessage(false, "None", false);
                 c.sendMessage(message);
-
                 System.err.println("Username is not valid, asking again");
                 return;
             }
@@ -171,7 +145,7 @@ public class Server {
         if (waitingRoom == null) {
             // room needs to be created
             newRoom = true;
-            waitingRoom = new Room(currentRoomId);
+            waitingRoom = new Room();
             System.out.println("No room available, asking client to create a room");
         } else {
             // a room already exists
@@ -194,7 +168,7 @@ public class Server {
 
         // room size reached, the game can start
         if (waitingRoom.isFull()) {
-            controller = new Controller(this, waitingRoom.getRoomSize());
+            controller = new Controller(/*this, */waitingRoom.getRoomSize());
             for (int i = 0; i < waitingRoom.getRoomSize(); i++) {
                 Connection conn = waitingConnections.get(0);
                 controller.addClient(conn, conn.getName());
@@ -223,8 +197,6 @@ public class Server {
         }
     }
 }
-
-
 
 
 

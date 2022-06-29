@@ -4,7 +4,7 @@ import it.polimi.ingsw.network.messages.Message;
 import it.polimi.ingsw.network.messages.enumeration.MessageAction;
 
 public class RoomSizeMessage extends Message {
-    private int roomSize;
+    private final int roomSize;
 
     public RoomSizeMessage(int roomSize, String player) {
         super(MessageAction.ROOM_SIZE, player);

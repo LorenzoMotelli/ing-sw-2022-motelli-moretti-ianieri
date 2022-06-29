@@ -134,21 +134,11 @@ public class School implements Serializable {
      */
     public void placeStudentInHall(Student studentToPlace){
         switch (studentToPlace.getColor()) {
-            case BLUE -> {
-                schoolHall[0].placeStudent(studentToPlace);
-            }
-            case GREEN -> {
-                schoolHall[1].placeStudent(studentToPlace);
-            }
-            case PINK -> {
-                schoolHall[2].placeStudent(studentToPlace);
-            }
-            case RED -> {
-                schoolHall[3].placeStudent(studentToPlace);
-            }
-            case YELLOW -> {
-                schoolHall[4].placeStudent(studentToPlace);
-            }
+            case BLUE -> schoolHall[0].placeStudent(studentToPlace);
+            case GREEN -> schoolHall[1].placeStudent(studentToPlace);
+            case PINK -> schoolHall[2].placeStudent(studentToPlace);
+            case RED -> schoolHall[3].placeStudent(studentToPlace);
+            case YELLOW -> schoolHall[4].placeStudent(studentToPlace);
         }
         removeStudentFromEntrance(studentToPlace);
     }
