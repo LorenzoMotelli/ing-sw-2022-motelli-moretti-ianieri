@@ -18,9 +18,7 @@ import java.util.Scanner;
  * CLIENT INTERFACE with CLI
  */
 public class CliClientInterface implements UserInterface {
-    //
     private final InputStreamReader inputStreamReader;
-    //
     Scanner cmdIn;
     // default address
     private String serverIp = "localhost";

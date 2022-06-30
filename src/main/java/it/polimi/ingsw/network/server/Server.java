@@ -88,8 +88,12 @@ public class Server {
 
     }
 
-    // Exceptions by client connection are handled here
-    public void clientConnectionException(Connection conn, String disconnectedClient) {
+    /**
+     * client disconnection in pre-game method
+     * @param conn disconnected connection client
+     * @param disconnectedClient the name of disconnected connection
+     */
+    public void clientDisconnection(Connection conn, String disconnectedClient) {
         // if the client is in the waiting room
         if (waitingRoom !=null && waitingRoom.getRoomSize() > 0 && waitingRoom.contains(disconnectedClient)) {
             System.out.println("client disconnected while in room");

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.messages.enumeration;
 
 public enum MessageAction {
+
     // SYSTEM MESSAGE
     CHOSE_USERNAME(MessageType.SYSTEM),
     ROOM_SIZE(MessageType.SYSTEM),
@@ -8,6 +9,7 @@ public enum MessageAction {
     ROOM_IS_FULL(MessageType.SYSTEM),
     WAITING_PLAYERS(MessageType.SYSTEM),
     DISCONNECT(MessageType.SYSTEM),
+
     // GAME MESSAGE
     START(MessageType.GAME),
     DISCONNECT_IN_GAME(MessageType.GAME),
@@ -25,7 +27,6 @@ public enum MessageAction {
     SELECT_ISLAND_MOTHER_NATURE(MessageType.GAME),
     ASK_CLOUD(MessageType.GAME),
     SELECT_CLOUD(MessageType.GAME),
-    END_TURN(MessageType.GAME),
     END_GAME(MessageType.GAME);
 
     private final MessageType messageType;

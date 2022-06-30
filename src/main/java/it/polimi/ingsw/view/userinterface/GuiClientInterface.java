@@ -271,10 +271,8 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         ImageIcon logoAPP = new ImageIcon(getClass().getResource("/images/LOGO CRANIO CREATIONS_bianco.png"));
         frameLogin.setIconImage(logoAPP.getImage());
         frameLogin.setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
-        //frameLogin.setSize(760,530);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frameLogin.setSize(screenSize.width/2,screenSize.height/2);
-        //frameLogin.setLayout(null);
         frameLogin.setTitle("LOGIN TO ERYANTIS");
 
         ImageIcon backgroundLogin = new ImageIcon(getClass().getResource("/images/backgroundLogin.jpg"));
@@ -750,31 +748,22 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         }
         //images 1 slot students in the beginning hall
         labelEntranceStudents[0].setBounds(1218, 678, 100, 100);
-        //labelEntranceStudents.get(0).setBounds(1218, 678, 100, 100);
         //images 2 slot students in the beginning hall
         labelEntranceStudents[1].setBounds(1280, 678, 100, 100);
-        //labelEntranceStudents.get(1).setBounds(1280, 678, 100, 100);
         //images 3 slot students in the beginning hall
         labelEntranceStudents[2].setBounds(1280, 728, 100, 100);
-        //labelEntranceStudents.get(2).setBounds(1280, 728, 100, 100);
         //images 4 slot students in the beginning hall
         labelEntranceStudents[3].setBounds(1344, 678, 100, 100);
-        //labelEntranceStudents.get(3).setBounds(1344, 678, 100, 100);
         //images 5 slot students in the beginning hall
         labelEntranceStudents[4].setBounds(1344, 728, 100, 100);
-        //labelEntranceStudents.get(4).setBounds(1344, 728, 100, 100);
         //images 6 slot students in the beginning hall
         labelEntranceStudents[5].setBounds(1404, 678, 100, 100);
-        //labelEntranceStudents.get(5).setBounds(1404, 678, 100, 100);
         //images 7 slot students in the beginning hall
         labelEntranceStudents[6].setBounds(1404, 728, 100, 100);
-        //labelEntranceStudents.get(6).setBounds(1404, 728, 100, 100);
         //images 8 slot students in the beginning hall
         labelEntranceStudents[7].setBounds(1466, 678, 100, 100);
-        //labelEntranceStudents.get(7).setBounds(1466, 678, 100, 100);
         //images 9 slot students in the beginning hall
         labelEntranceStudents[8].setBounds(1466, 728, 100, 100);
-        //labelEntranceStudents.get(8).setBounds(1466, 728, 100, 100);
     }
 
     //create all the towers for each player
@@ -1136,7 +1125,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 buttonsSelectStudent[i].setVisible(false);
             }
             labelEntranceStudents[0].setVisible(false);
-            //labelEntranceStudents.get(0).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[1]) {
             labelPlayerMessage.setText("# STUDENT 2 SELECTED #");
@@ -1147,7 +1135,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 buttonsSelectStudent[i].setVisible(false);
             }
             labelEntranceStudents[1].setVisible(false);
-            //labelEntranceStudents.get(1).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[2]) {
             labelPlayerMessage.setText("# STUDENT 3 SELECTED #");
@@ -1158,7 +1145,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 buttonsSelectStudent[i].setVisible(false);
             }
             labelEntranceStudents[2].setVisible(false);
-            //labelEntranceStudents.get(2).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[3]) {
             labelPlayerMessage.setText("# STUDENT 4 SELECTED #");
@@ -1169,7 +1155,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 buttonsSelectStudent[i].setVisible(false);
             }
             labelEntranceStudents[3].setVisible(false);
-            //labelEntranceStudents.get(3).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[4]) {
             labelPlayerMessage.setText("# STUDENT 5 SELECTED #");
@@ -1180,7 +1165,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 buttonsSelectStudent[i].setVisible(false);
             }
             labelEntranceStudents[4].setVisible(false);
-            //labelEntranceStudents.get(4).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[5]) {
             labelPlayerMessage.setText("# STUDENT 6 SELECTED #");
@@ -1191,7 +1175,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 buttonsSelectStudent[i].setVisible(false);
             }
             labelEntranceStudents[5].setVisible(false);
-            //labelEntranceStudents.get(5).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[6]) {
             labelPlayerMessage.setText("# STUDENT 7 SELECTED #");
@@ -1202,7 +1185,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 buttonsSelectStudent[i].setVisible(false);
             }
             labelEntranceStudents[6].setVisible(false);
-            //labelEntranceStudents.get(6).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[7]) {
             labelPlayerMessage.setText("# STUDENT 8 SELECTED #");
@@ -1213,7 +1195,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 buttonsSelectStudent[i].setVisible(false);
             }
             labelEntranceStudents[7].setVisible(false);
-            //labelEntranceStudents.get(7).setVisible(false);
         }
         else if(e.getSource()== buttonsSelectStudent[8]) {
             labelPlayerMessage.setText("# STUDENT 9 SELECTED #");
@@ -1317,7 +1298,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         }
         else if(e.getSource()== buttonViewCards) {
             buttonViewCards.setVisible(false);
-            //buttonHideCards.setVisible(true);
             showCards();
         }
         else if(e.getSource()== buttonsAssistant[0]) {

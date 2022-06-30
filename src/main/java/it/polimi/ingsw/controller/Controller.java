@@ -15,6 +15,9 @@ import java.util.List;
 
 import static it.polimi.ingsw.model.enumeration.Phases.*;
 
+/**
+ * GAME CONTROLLER
+ */
 public class Controller implements Observer<Message> {
 
     private final GeneralGame game;
@@ -22,6 +25,7 @@ public class Controller implements Observer<Message> {
     boolean gameClose = false;
 
     public Controller(int players) {
+
         if(4 != players){
             this.game = new GeneralGame(players);
         }
@@ -31,6 +35,9 @@ public class Controller implements Observer<Message> {
         this.clients = new ArrayList<>();
     }
 
+    /**
+     * adding player connection to the game
+     */
     public synchronized void addClient(Connection c, String username) {
         Player player = game.addPlayer(username);
 
@@ -64,7 +71,7 @@ public class Controller implements Observer<Message> {
     }
 
     /**
-     * stat the game
+     * start the game
      */
     public void startGame() {
         System.out.println("The game can now starts");
@@ -172,9 +179,8 @@ public class Controller implements Observer<Message> {
 
     /**
      * place the student selected in the hall
-     //* @param message the message that requires a placement in the hall
      */
-    public void placeInHallSelected(/*PlaceInHallMessage message*/){
+    public void placeInHallSelected(){
         System.out.println("Student place in hall");
         game.placeStudentInHall(game.getCurrentPlayer().getStudentSelected());
 
@@ -265,7 +271,6 @@ public class Controller implements Observer<Message> {
     /**
      * determine the next action that the player can do
      * @param currentPhase the phase in which the action is performed
-    //* @param num the number of iteration of the current phase
      */
     public void nextAction(Phases currentPhase){
         game.nextPhase(currentPhase);

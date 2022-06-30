@@ -14,9 +14,8 @@ import java.net.Socket;
  * CONNECTION HANDLER WITH CLIENT
  */
 public class Connection extends Observable<Message> implements Runnable {
-    //
     private final Socket socket;
-    //
+    //player's connection name
     private String name;
     // server that manages SYSTEM message
     private final Server server;
@@ -100,7 +99,7 @@ public class Connection extends Observable<Message> implements Runnable {
             running = false;
         }
 
-        server.clientConnectionException(this, this.name);
+        server.clientDisconnection(this, this.name);
         if(handler != null){
             handler.processCommand(new DisconnectInGameMessage());
         }
