@@ -45,22 +45,22 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     private final JLabel labelSetBackground;
 
-    ImageIcon motherNatureImage = new ImageIcon("src/images/motherNature.png");
+    ImageIcon motherNatureImage = new ImageIcon(getClass().getResource("/images/motherNature.png"));
     private final JLabel[] labelMotherNatureList = new JLabel[12];
 
-    private final ImageIcon blueHallIcon = new ImageIcon("src/images/blueHall.png");
+    private final ImageIcon blueHallIcon = new ImageIcon(getClass().getResource("/images/blueHall.png"));
     private final JLabel[] labelBlueHallList = new JLabel[10];
 
-    private final ImageIcon greenHallIcon = new ImageIcon("src/images/greenHall.png");
+    private final ImageIcon greenHallIcon = new ImageIcon(getClass().getResource("/images/greenHall.png"));
     private final JLabel[] labelGreenHallList = new JLabel[10];
 
-    private final ImageIcon pinkHallIcon = new ImageIcon("src/images/pinkHall.png");
+    private final ImageIcon pinkHallIcon = new ImageIcon(getClass().getResource("/images/pinkHall.png"));
     private final JLabel[] labelPinkHallList = new JLabel[10];
 
-    private final ImageIcon redHallIcon = new ImageIcon("src/images/redHall.png");
+    private final ImageIcon redHallIcon = new ImageIcon(getClass().getResource("/images/redHall.png"));
     private final JLabel[] labelRedHallList = new JLabel[10];
 
-    private final ImageIcon yellowHall = new ImageIcon("src/images/yellowHall.png");
+    private final ImageIcon yellowHall = new ImageIcon(getClass().getResource("/images/yellowHall.png"));
     private final JLabel[] labelYellowHallList = new JLabel[10];
 
     private final JLabel[] labelEntranceStudents = new JLabel[9];
@@ -69,13 +69,13 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private final JLabel labelPlayerMessage;
     private JLabel labelWinningMessage;
 
-    private final ImageIcon whiteTowerImage = new ImageIcon("src/images/whiteTowerRaw.png");
+    private final ImageIcon whiteTowerImage = new ImageIcon(getClass().getResource("/images/whiteTowerRaw.png"));
     private final JLabel[] labelWhiteTowerList = new JLabel[8];
 
-    private final ImageIcon blackTowerIcon = new ImageIcon("src/images/blackTowerRaw.png");
+    private final ImageIcon blackTowerIcon = new ImageIcon(getClass().getResource("/images/blackTowerRaw.png"));
     private final JLabel[] labelBlackTowerList = new JLabel[8];
 
-    private final ImageIcon greyTowerIcon = new ImageIcon("src/images/greyTowerRaw.png");
+    private final ImageIcon greyTowerIcon = new ImageIcon(getClass().getResource("/images/greyTowerRaw.png"));
     private final JLabel[] labelGreyTowerList = new JLabel[8];
 
     private JLabel labelBackgroundCards;
@@ -84,25 +84,25 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     private final JLabel[] labelAssistantDeck = new JLabel[10];
 
     private final JLabel[] labelProfessorList=new JLabel[5];
-    private final ImageIcon blueProfessor = new ImageIcon("src/images/blueProfessor.png");
-    private final ImageIcon greenProfessor = new ImageIcon("src/images/greenProfessor.png");
-    private final ImageIcon pinkProfessor = new ImageIcon("src/images/pinkProfessor.png");
-    private final ImageIcon redProfessor = new ImageIcon("src/images/redProfessor.png");
-    private final ImageIcon yellowProfessor = new ImageIcon("src/images/yellowProfessor.png");
+    private final ImageIcon blueProfessor = new ImageIcon(getClass().getResource("/images/blueProfessor.png"));
+    private final ImageIcon greenProfessor = new ImageIcon(getClass().getResource("/images/greenProfessor.png"));
+    private final ImageIcon pinkProfessor = new ImageIcon(getClass().getResource("/images/pinkProfessor.png"));
+    private final ImageIcon redProfessor = new ImageIcon(getClass().getResource("/images/redProfessor.png"));
+    private final ImageIcon yellowProfessor = new ImageIcon(getClass().getResource("/images/yellowProfessor.png"));
 
     private final JLabel[] labelEmptyIsland=new JLabel[12];
 
     private final ImageIcon[] assistantsImage = {
-            new ImageIcon("src/images/assistant1.jpg"),
-            new ImageIcon("src/images/assistant2.jpg"),
-            new ImageIcon("src/images/assistant3.jpg"),
-            new ImageIcon("src/images/assistant4.jpg"),
-            new ImageIcon("src/images/assistant5.jpg"),
-            new ImageIcon("src/images/assistant6.jpg"),
-            new ImageIcon("src/images/assistant7.jpg"),
-            new ImageIcon("src/images/assistant8.jpg"),
-            new ImageIcon("src/images/assistant9.jpg"),
-            new ImageIcon("src/images/assistant10.jpg")
+            new ImageIcon(getClass().getResource("/images/assistant1.jpg")),
+            new ImageIcon(getClass().getResource("/images/assistant2.jpg")),
+            new ImageIcon(getClass().getResource("/images/assistant3.jpg")),
+            new ImageIcon(getClass().getResource("/images/assistant4.jpg")),
+            new ImageIcon(getClass().getResource("/images/assistant5.jpg")),
+            new ImageIcon(getClass().getResource("/images/assistant6.jpg")),
+            new ImageIcon(getClass().getResource("/images/assistant7.jpg")),
+            new ImageIcon(getClass().getResource("/images/assistant8.jpg")),
+            new ImageIcon(getClass().getResource("/images/assistant9.jpg")),
+            new ImageIcon(getClass().getResource("/images/assistant10.jpg"))
     };
 
     private final JLabel[] labelWhiteTowerCounter = new JLabel[12];
@@ -190,7 +190,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         //emptyIsland
         for(int i=0;i<12;i++) {
             labelEmptyIsland[i]=new JLabel();
-            ImageIcon emptyIsland = new ImageIcon("src/images/emptyIsland.png");
+            ImageIcon emptyIsland = new ImageIcon(getClass().getResource("/images/emptyIsland.png"));
             labelEmptyIsland[i].setIcon(emptyIsland);
         }
         labelEmptyIsland[0].setBounds(242,-5,235,235);
@@ -253,7 +253,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         buttonViewCards.setBackground(Color.white);
         buttonViewCards.setForeground(Color.darkGray);
 
-        ImageIcon tapToStart=new ImageIcon("src/images/tapToStart.jpg");
+        ImageIcon tapToStart=new ImageIcon(getClass().getResource("/images/tapToStart.jpg"));
         startGame = new JButton("",tapToStart);
         startGame.setBounds(0, 0, 1536, 800);
         startGame.addActionListener(this);
@@ -268,7 +268,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     //create the frame to use for the initialization of the match
     public void createLoginGui(){
         frameLogin = new JFrame();
-        ImageIcon logoAPP = new ImageIcon("src/images/LOGO CRANIO CREATIONS_bianco.png");
+        ImageIcon logoAPP = new ImageIcon(getClass().getResource("/images/LOGO CRANIO CREATIONS_bianco.png"));
         frameLogin.setIconImage(logoAPP.getImage());
         frameLogin.setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
         //frameLogin.setSize(760,530);
@@ -277,7 +277,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         //frameLogin.setLayout(null);
         frameLogin.setTitle("LOGIN TO ERYANTIS");
 
-        ImageIcon backgroundLogin = new ImageIcon("src/images/backgroundLogin.jpg");
+        ImageIcon backgroundLogin = new ImageIcon(getClass().getResource("/images/backgroundLogin.jpg"));
         JLabel labelBackgroundLogin=new JLabel();
         labelBackgroundLogin.setBounds(0,0,750,500);
         labelBackgroundLogin.setIcon(backgroundLogin);
@@ -353,7 +353,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     public void createGameGui(){
         messageHandler = new ClientMessageHandler(this);
         frameGame=new JFrame();
-        ImageIcon logoGame = new ImageIcon("src/images/logWallpaperRaw.jpg");
+        ImageIcon logoGame = new ImageIcon(getClass().getResource("/images/logWallpaperRaw.jpg"));
         frameGame.setIconImage(logoGame.getImage());
         frameGame.setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -368,7 +368,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
     //create the view of the deck with all the assistant cards
     public void createDeck(){
         //menu for cards
-        ImageIcon backgroundCards = new ImageIcon("src/images/backgroundCards.jpg");
+        ImageIcon backgroundCards = new ImageIcon(getClass().getResource("/images/backgroundCards.jpg"));
         labelBackgroundCards=new JLabel();
         labelBackgroundCards.setBounds(150, 140, 850, 531);
         labelBackgroundCards.setIcon(backgroundCards);
@@ -837,7 +837,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     //set the image for the winning player
     public void winningMessage(){
-        ImageIcon winningImage = new ImageIcon("src/images/winningImage.jpg");
+        ImageIcon winningImage = new ImageIcon(getClass().getResource("/images/winningImage.jpg"));
         labelWinningImage=new JLabel();
         labelWinningImage.setBounds(320,0,540,800);
         labelWinningImage.setIcon(winningImage);
@@ -1431,10 +1431,10 @@ public class GuiClientInterface implements UserInterface, ActionListener {
         else if (e.getSource()==startGame) {
             startGame.setVisible(false);
 
-            ImageIcon setBackground = new ImageIcon("src/images/background2Player.jpg");
+            ImageIcon setBackground = new ImageIcon(getClass().getResource("/images/background2Player.jpg"));
 
             if(size==3){
-                setBackground = new ImageIcon("src/images/background3Player.jpg");
+                setBackground = new ImageIcon(getClass().getResource("/images/background3Player.jpg"));
 
                 buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
                 buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
@@ -1456,7 +1456,7 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                 labelPinkCloudCounters[2].setBounds(625,474,25,25);
             }
             if(size==4){
-                setBackground = new ImageIcon("src/images/background4Player.jpg");
+                setBackground = new ImageIcon(getClass().getResource("/images/background4Player.jpg"));
 
                 buttonsSelectCloud[0].setBounds(430, 270, 100, 100);
                 buttonsSelectCloud[1].setBounds(630, 270, 100, 100);
