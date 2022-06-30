@@ -919,14 +919,12 @@ public class GuiClientInterface implements UserInterface, ActionListener {
 
     @Override
     public void someoneDisconnected(DisconnectMessage message) {
-        // TODO
         labelPlayerMessage.setText("# SOMEONE DISCONNECTED #");
         endGame(new WinnersMessage(null));
     }
 
     @Override
     public void someoneDisconnectedInGame(DisconnectInGameMessage message) {
-        // TODO
         labelPlayerMessage.setText("# SOMEONE DISCONNECTED #");
         endGame(new WinnersMessage(null));
     }
@@ -1642,7 +1640,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelGreyTowerList[i].setVisible(false);
         }
         switch (playerList[index].getSchool().getPlayersTowers().get(0).getColor()) {
-            //TODO improve
             case WHITE -> {
                 for (int i = 0; i < playerList[index].getSchool().getPlayersTowers().size(); i++) {
                     labelWhiteTowerList[i].setVisible(true);
@@ -1763,7 +1760,6 @@ public class GuiClientInterface implements UserInterface, ActionListener {
                     labelGreyTowerList[i].setVisible(false);
                 }
                 switch (player.getSchool().getPlayersTowers().get(0).getColor()) {
-                    //TODO improve
                     case WHITE -> {
                         for (int i = 0; i < player.getSchool().getPlayersTowers().size(); i++) {
                             labelWhiteTowerList[i].setVisible(true);
@@ -2408,7 +2404,27 @@ public class GuiClientInterface implements UserInterface, ActionListener {
             labelWinningMessage.setText(labelWinningMessage.getText().concat("WINS #"));
             hideOnlyButtonCards();
             hideAllButtonsMotherNature();
-            //TODO hide all buttons
+            hideSelectStudentButtons();
+            hideSelectIslandButtons();
+            hideSelectCloudsButtons();
+        }
+    }
+
+    public void hideSelectStudentButtons(){
+        for(int i = 0; i < 9; i++){
+            buttonsSelectStudent[i].setVisible(false);
+        }
+    }
+
+    public void hideSelectIslandButtons(){
+        for(int i = 0; i < 12; i++){
+            buttonsSelectIsland[i].setVisible(false);
+        }
+    }
+
+    public void hideSelectCloudsButtons(){
+        for(int i = 0; i < 4; i++){
+            buttonsSelectCloud[i].setVisible(false);
         }
     }
 }

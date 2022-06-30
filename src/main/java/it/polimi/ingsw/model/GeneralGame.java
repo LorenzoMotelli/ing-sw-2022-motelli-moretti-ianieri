@@ -457,6 +457,9 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
                     if(playerColor.equals(islandColor)){
                         //give back all the towers of the island
                         player.getSchool().getPlayersTowers().addAll(islandSelected.getTowers());
+                        for(Tower tower : player.getSchool().getPlayersTowers()){
+                            tower.setColor(player.getPlayerTeam());
+                        }
                         break;
                     }
                 }
@@ -558,9 +561,6 @@ public class GeneralGame extends Observable<Message> implements Serializable, Cl
                 maxInfluence = playerInfluence;
                 conqueror = player;
             }
-        }
-        if(!Objects.equals(conqueror, getCurrentPlayer())){
-            return null;
         }
         //no conqueror because the player conquers an island where it is already the leader
         if(Objects.equals(oldConqueror, conqueror)){
